@@ -1,0 +1,13 @@
+mysqlusername: ""
+password: ""
+host: "hisaabcloud.in"
+port: "3306"
+mySqlPath: "1"
+schemaName: customizedpos_staging
+projectName: customizedpos Staging
+thread_sleep: 0
+isAuditEnabled: "true"
+copyAttachmentsToBuffer: "false"
+persistentPath: "/home/ubuntu/ags_attachments/"
+queryLogEnabled: "false"
+sendEmail: "false"
