@@ -176,7 +176,7 @@ function addExpense()
 						<td>${item.expense_id}</td><td>${item.expense_name}</td>
 						<td>${item.qty}</td>
 						<td>${item.amount}</td>						
-						<td><a href="?a=showAddExpense&expenseId=${item.expense_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteExpense(${item.expense_id})">Delete</button></td>
+						<td><a href="?a=showAddExpense&expenseId=${item.expense_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteExpense('${item.expense_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -195,7 +195,7 @@ function addExpense()
     
 
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${expenseDetails.expense_id eq null}">
