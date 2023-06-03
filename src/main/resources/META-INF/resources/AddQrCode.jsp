@@ -16,7 +16,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addQrCode()
@@ -120,7 +120,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${QrCodeDetails.qr_id eq null}">

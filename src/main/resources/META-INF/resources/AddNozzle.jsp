@@ -17,7 +17,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addNozzle()
@@ -138,7 +138,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${NozzleDetails.nozzle_id eq null}">

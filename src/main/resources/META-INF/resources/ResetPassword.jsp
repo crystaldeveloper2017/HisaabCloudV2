@@ -34,7 +34,7 @@ body, html {
 <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   
-  <script>
+  <script type="javascript">
   
   
   
@@ -171,7 +171,7 @@ body, html {
 
 
 
-<script>	
+<script type="javascript">	
 	
 	function sendresetpasswordemail()
 	{
@@ -479,7 +479,7 @@ body, html {
 </html>
 
 
-<script>
+<script type="javascript">
 
 $(document).ready(function() {
     $("#show_hide_password a").on('click', function(event) {

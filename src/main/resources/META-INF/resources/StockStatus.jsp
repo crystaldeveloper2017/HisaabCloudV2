@@ -10,7 +10,7 @@
 
 
 
-<script>
+<script type="javascript">
 function deleteStock(stockId)
 {
 	
@@ -197,7 +197,7 @@ function configureLowStock(stockId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

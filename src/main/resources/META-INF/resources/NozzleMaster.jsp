@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteNozzle(nozzleId)
 {
 	
@@ -129,7 +129,7 @@ function addNozzle()
 						<td>${item.nozzle_name}</td>
 						<td>${item.item_name}</td>
 						<td>${item.dispenser_name}</td>
-						<td><a href="?a=showAddNozzle&nozzleId=${item.nozzle_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteNozzle(${item.nozzle_id})">Delete</button></td>
+						<td><a href="?a=showAddNozzle&nozzleId=${item.nozzle_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteNozzle('${item.nozzle_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -146,7 +146,7 @@ function addNozzle()
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

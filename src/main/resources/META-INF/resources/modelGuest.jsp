@@ -310,7 +310,7 @@
         <div id="copyright">
             <div class="container">
                 <div class="col-md-6">
-                    <p class="pull-left">© 2015 ${appDetails.app_name }</p>
+                    <p class="pull-left">ï¿½ 2015 ${appDetails.app_name }</p>
 
                 </div>
                 
@@ -343,7 +343,7 @@
 </html>
 
 
-<script>
+<script type="javascript">
 function searchItems()
 {
 		window.location="?a=showCategoryForGuests&appId=${param.appId}&searchString="+txtsearch.value;

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteTermsAndCondition(termsId)
 {
 	
@@ -67,7 +67,7 @@ function deleteTermsAndCondition(termsId)
 				 <c:forEach items="${message}" var="item">
 					<tr >
 						<td>${item.termsId}</td><td>${item.termscondition}</td><td>${item.order}</td>
-						<td><a href="?a=showAddTermsAndCondition&termsId=${item.termsId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteTermsAndCondition(${item.termsId})">Delete</button></td>
+						<td><a href="?a=showAddTermsAndCondition&termsId=${item.termsId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteTermsAndCondition('${item.termsId}')">Delete</button></td>
 					</tr>
 				</c:forEach>			
 				
@@ -83,7 +83,7 @@ function deleteTermsAndCondition(termsId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

@@ -19,7 +19,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addVehicle()
@@ -128,7 +128,7 @@ function addVehicle()
   
   
   
-  <script>	
+  <script type="javascript">	
   
   
   if('${vehicleDetails.vehicle_id}'!='')

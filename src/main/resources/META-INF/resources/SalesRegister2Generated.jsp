@@ -173,7 +173,7 @@
             
    
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

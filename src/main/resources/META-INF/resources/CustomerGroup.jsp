@@ -7,7 +7,7 @@
 
 
 
-<script>
+<script type="javascript">
 function deleteGroup(groupId)
 {
 	
@@ -93,7 +93,7 @@ function deleteGroup(groupId)
                   <tbody>
 				<c:forEach items="${ListofGroups}" var="group">
 					<tr >
-						<td>${group.group_id}</td><td>${group.group_name}</td><td><a href="?a=showAddGroup&groupId=${group.group_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteGroup(${group.group_id})">Delete</button></td>
+						<td>${group.group_id}</td><td>${group.group_name}</td><td><a href="?a=showAddGroup&groupId=${group.group_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteGroup('${group.group_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -110,7 +110,7 @@ function deleteGroup(groupId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

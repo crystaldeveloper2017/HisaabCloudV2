@@ -8,7 +8,7 @@
 
 
 
-<script>
+<script type="javascript">
 function deleteVisitor(visitorId)
 {
 	
@@ -113,7 +113,7 @@ function deleteVisitor(visitorId)
 						<td>${item.EmailId}</td>
 						<td>${item.in_time}</td>
 						<td><a href="?a=showAddVisitor&visitorId=${item.visitorId}">Edit</a></td>
-						<td><button class="btn btn-danger" onclick="deleteVisitor(${item.visitorId})">Delete</button></td>
+						<td><button class="btn btn-danger" onclick="deleteVisitor('${item.visitorId}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -130,7 +130,7 @@ function deleteVisitor(visitorId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

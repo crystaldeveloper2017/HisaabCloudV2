@@ -11,7 +11,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addBank()
@@ -131,7 +131,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${BankDetails.Bank_id eq null}">

@@ -15,7 +15,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 
@@ -83,7 +83,7 @@
 </div>
 </form>
 
-<script>
+<script type="javascript">
 
 function returnItems()
 {

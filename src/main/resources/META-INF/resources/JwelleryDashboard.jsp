@@ -819,8 +819,8 @@
         else
         	{
         	
-        	txtfromdate.value='${HomePageContent.get('todaysDate')}';
-        	txttodate.value='${HomePageContent.get('todaysDate')}';
+        	txtfromdate.value='${HomePageContent.get("todaysDate")}';
+        	txttodate.value='${HomePageContent.get("todaysDate")}';
 	        
         	}
         

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteSwipe(swipeMachineId)
 {
 	
@@ -132,7 +132,7 @@ function addSwipe()
 					    <td>${item.swipe_machine_short_name}</td>
 						
 						
-						<td><a href="?a=showAddSwipe&swipeMachineId=${item.swipe_machine_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteSwipe(${item.swipe_machine_id})">Delete</button></td>
+						<td><a href="?a=showAddSwipe&swipeMachineId=${item.swipe_machine_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteSwipe('${item.swipe_machine_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -149,7 +149,7 @@ function addSwipe()
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

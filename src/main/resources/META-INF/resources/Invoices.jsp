@@ -98,15 +98,15 @@
 				<c:forEach items="${message}" var="item">
 					<tr >
 					
-						<td><a href="#" onclick="showInvoice(${item.invoice_id})">${item.invoice_no}</a></td>
+						<td><a href="#" onclick="showInvoice('${item.invoice_id}')">${item.invoice_no}</a></td>
 						<td>${item.vendor_name}</td>	
 						<td>${item.invoice_date}</td>
 						<td>${item.store_name}</td>
 						<td>${item.total_amount}</td>
 						<td>${item.remarks}</td>
 						
-						<td></td><td><button class="btn btn-danger" onclick="deleteInvoice(${item.invoice_id})">Delete</button></td>
-						<td><button class="btn btn-primary" onclick="generatePdfInvoice(${item.invoice_id})">Generate PDF</button></td>
+						<td></td><td><button class="btn btn-danger" onclick="deleteInvoice('${item.invoice_id}')">Delete</button></td>
+						<td><button class="btn btn-primary" onclick="generatePdfInvoice('${item.invoice_id}')">Generate PDF</button></td>
 						
 					</tr>
 				</c:forEach>
@@ -124,7 +124,7 @@
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

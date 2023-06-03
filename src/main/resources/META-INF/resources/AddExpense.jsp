@@ -26,7 +26,7 @@
 
 
 
-<script>
+<script type="javascript">
 
 
 function addExpense()
@@ -211,7 +211,7 @@ function addExpense()
 </script>
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({
@@ -237,7 +237,7 @@ function addExpense()
 </script>
 
 
-<script>
+<script type="javascript">
 function deleteExpense(expenseId)
 {
 	

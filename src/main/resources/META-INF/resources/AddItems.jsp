@@ -23,7 +23,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addItem()
@@ -409,7 +409,7 @@ function deleteAttachment(id)
 
 
 
-<script>
+<script type="javascript">
 	<c:if test="${itemDetails.item_id ne null}">
 		document.getElementById('drpcategoryId').value='${itemDetails.parent_category_id}';
 		document.getElementById('drpdebitin').value='${itemDetails.debit_in}';

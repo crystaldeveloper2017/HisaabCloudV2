@@ -15,7 +15,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 
@@ -81,7 +81,7 @@
 
 </form>
 
-<script>
+<script type="javascript">
 	document.getElementById("divTitle").innerHTML="Configure Low Stock";
 	document.title +=" Configure Low Stock ";
 	drpstoreid.value='${stockDetails.store_id}';

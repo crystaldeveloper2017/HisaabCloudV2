@@ -15,7 +15,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addSwipe()
@@ -119,7 +119,7 @@ function addTestFuel()
   <div class="col-sm-12" align="center">
   	<div class="form-group">
    <button class="btn btn-success" type="button" onclick='addTestFuel()'>Save</button>
-		<button class="btn btn-danger" type="reset" onclick='window.location="?a=showAddPumpTest'>Cancel</button>
+		<button class="btn btn-danger" type="reset" onclick='window.location="?a=showAddPumpTest"'>Cancel</button>
 
  
       
@@ -140,7 +140,7 @@ function addTestFuel()
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${SwipeDetails.SwipeMachineId eq null}">

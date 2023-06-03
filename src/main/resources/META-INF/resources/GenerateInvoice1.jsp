@@ -42,7 +42,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function saveInvoice()
@@ -610,8 +610,8 @@ function updateItem()
 	   <button class="btn btn-primary" id="btnRegister" type="reset" onclick='window.open("?a=generateDailyInvoiceReport&type=${userdetails.invoice_type}&txtfromdate=${todaysDate}&txttodate=${todaysDate}&txtstore=${userdetails.store_id}")'>Register</button>
 	   
 	  	   
-	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice(${invoiceDetails.invoice_id});'>Generate PDF</button>
-	   <button class="btn btn-primary" style="display:none" id="generateDirectPrint" type="button" onclick='printDirectAsFonts(${invoiceDetails.invoice_no});'>Direct Print</button>
+	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+	   <button class="btn btn-primary" style="display:none" id="generateDirectPrint" type="button" onclick='printDirectAsFonts("${invoiceDetails.invoice_no}");'>Direct Print</button>
    </div>
    </div>
   
@@ -632,7 +632,7 @@ function updateItem()
 
 
 
-<script>
+<script type="javascript">
 
 function generateInvoice(invoiceId)
 {

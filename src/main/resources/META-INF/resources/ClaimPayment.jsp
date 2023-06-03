@@ -15,7 +15,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function claimPayment()
@@ -132,7 +132,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	

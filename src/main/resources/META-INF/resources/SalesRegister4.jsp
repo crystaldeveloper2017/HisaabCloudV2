@@ -144,7 +144,7 @@
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({
@@ -167,7 +167,7 @@
 </script>
 
 
-<script>
+<script type="javascript">
 function ReloadFilters()
 {
 	  window.location="?a=showSalesReport4&type=${type}&drpstoreId="

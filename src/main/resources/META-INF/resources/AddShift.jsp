@@ -16,7 +16,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addShift()
@@ -133,7 +133,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${ShiftDetails.ShiftId eq null}">

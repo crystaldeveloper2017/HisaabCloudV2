@@ -18,7 +18,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 
@@ -103,7 +103,7 @@
 
 
 
-<script>
+<script type="javascript">
 	document.getElementById("divTitle").innerHTML="Pending Orders";	
 	document.title +=" Pending Orders ";
 	function markAsServed()

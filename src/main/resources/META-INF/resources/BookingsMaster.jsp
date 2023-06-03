@@ -10,7 +10,7 @@
 <c:set var="message" value='${requestScope["outputObject"].get("ListOfBookings")}' />
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
 
-<script>
+<script type="javascript">
 function deleteBooking(bookingId)
 {
 	
@@ -232,7 +232,7 @@ function addBooking()
 						<td >
 												
 							<c:if test="${item.status eq 'O'}">
-								<button class="btn btn-danger" onclick="deleteBooking(${item.booking_id})">Delete</button>
+								<button class="btn btn-danger" onclick="deleteBooking('${item.booking_id}')">Delete</button>
 								<button class="btn btn-primary" onclick="window.location='?a=showGenerateInvoice&editInvoice=Y&booking_id=${item.booking_id}'">Generate Invoice</button>							
 							</c:if>
 							
@@ -258,7 +258,7 @@ function addBooking()
 
 
 
-<script>
+<script type="javascript">
 
 
 $( function() 

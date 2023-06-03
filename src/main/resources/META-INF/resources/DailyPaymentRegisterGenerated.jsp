@@ -50,7 +50,7 @@
 						<td>${item.name}</td>
 						<td>${item.FormattedUpdatedDate}</td>
 						
-						<td><button class="btn btn-danger" onclick="deletePayment(${item.payment_id})">Delete</button></td>
+						<td><button class="btn btn-danger" onclick="deletePayment('${item.payment_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -67,7 +67,7 @@
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({
@@ -90,7 +90,7 @@
 </script>
 
 
-<script>
+<script type="javascript">
 function deletePayment(paymentId)
 {
 	

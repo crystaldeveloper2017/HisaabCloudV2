@@ -106,7 +106,7 @@
 					   <td>${data1.collection_date}</td>
 					  <td>${data1.updated_date}</td>
 					  
-					  <td><button class="btn btn-danger" onclick="deleteSupervisorTransaction(${data1.collection_id})">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deleteSupervisorTransaction('${data1.collection_id}')">Delete</button></td>
 						
 					</tr>
 				</c:forEach>
@@ -128,7 +128,7 @@
             </div>
    
 
-<script>
+<script type="javascript">
 
 
 function deleteSupervisorTransaction(collection_id)

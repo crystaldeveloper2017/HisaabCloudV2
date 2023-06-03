@@ -15,7 +15,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addConfigureLR()
@@ -121,7 +121,7 @@ function addConfigureLR()
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${SwipeDetails.SwipeMachineId eq null}">

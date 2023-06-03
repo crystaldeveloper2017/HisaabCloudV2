@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteQrCode(qrId)
 {
 	
@@ -109,7 +109,7 @@ function deleteQrCode(qrId)
 						<td>${item.qr_id}</td>
 						<td>${item.qr_code_number}</td>						
 						<td>${item.name}</td>
-						<td><a href="?a=showAddQrCode&qr_id=${item.qr_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteQrCode(${item.qr_id})">Delete</button></td>
+						<td><a href="?a=showAddQrCode&qr_id=${item.qr_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteQrCode('${item.qr_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -126,7 +126,7 @@ function deleteQrCode(qrId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

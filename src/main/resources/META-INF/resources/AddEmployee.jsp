@@ -17,7 +17,7 @@
 
 
 
-<script>
+<script type="javascript">
 
 
 function addEmployee()
@@ -185,7 +185,7 @@ function addEmployee()
 
 
 
-<script>
+<script type="javascript">
 
 <c:if test="${employeeDetails.user_id eq null}">
 	document.getElementById("divTitle").innerHTML="Add Employee";

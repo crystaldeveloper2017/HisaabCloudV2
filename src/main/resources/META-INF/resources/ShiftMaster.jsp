@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteShift(shiftId)
 {
 	
@@ -133,7 +133,7 @@ function addShift()
 						<td>${item.to_time}</td>
 						
 						
-						<td><a href="?a=showAddShift&shiftId=${item.shift_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteShift(${item.shift_id})">Delete</button></td>
+						<td><a href="?a=showAddShift&shiftId=${item.shift_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteShift('${item.shift_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -150,7 +150,7 @@ function addShift()
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

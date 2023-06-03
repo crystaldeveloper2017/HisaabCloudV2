@@ -40,7 +40,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function saveInvoice()
@@ -582,7 +582,7 @@ function deleteAttachment(id)
 	   <button class="btn btn-primary" id="btnRegister" type="reset" onclick='window.open("?a=generateDailyInvoiceReport&txtfromdate=${todaysDate}&txttodate=${todaysDate}&txtstore=${userdetails.store_id}")'>Register</button>
 	   
 	  	   
-	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice(${invoiceDetails.invoice_id});'>Generate PDF</button>
+	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
    </div>
    </div>
   
@@ -603,7 +603,7 @@ function deleteAttachment(id)
 
 
 
-<script>
+<script type="javascript">
 
 function generateInvoice(invoiceId)
 {

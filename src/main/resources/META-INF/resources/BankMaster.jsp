@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteBank(bankId)
 {
 	
@@ -172,7 +172,7 @@ function addBank()
 						<td>${item.bank_name}</td>
 						<td>${item.account_no}</td>
 						<td>${item.ifsc_code}</td>
-						<td><a href="?a=showAddBank&bankId=${item.bank_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteBank(${item.bank_id})">Delete</button></td>
+						<td><a href="?a=showAddBank&bankId=${item.bank_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteBank('${item.bank_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -189,7 +189,7 @@ function addBank()
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

@@ -75,7 +75,7 @@
 
 
 
-	<script>
+	<script type="javascript">
 
 console.log("${userdetails}");
 	document.getElementById("divTitle").innerHTML="Create New App";	

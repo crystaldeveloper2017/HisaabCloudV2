@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteItem(itemId)
 {	
 	var answer = window.confirm("Are you sure you want to delete ?");
@@ -130,7 +130,7 @@ function deleteItem(itemId)
 						<td>${item.price}</td>
 						<td>${item.qty_available}</td>
 						<td>${item.order_no}</td>
-						<td><a href="?a=showAddItem&itemId=${item.item_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteItem(${item.item_id})">Delete</button></td>
+						<td><a href="?a=showAddItem&itemId=${item.item_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteItem('${item.item_id}')">Delete</button></td>
 						<td><a href="?a=showItemHistory&itemId=${item.item_id}">Show Item History</a></td>
 					</tr>
 				</c:forEach>
@@ -148,7 +148,7 @@ function deleteItem(itemId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

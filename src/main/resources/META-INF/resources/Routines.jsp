@@ -8,7 +8,7 @@
 
 
 
-<script>
+<script type="javascript">
 function deleteRoutine(RoutineId)
 {
 	
@@ -125,7 +125,7 @@ function deleteRoutine(RoutineId)
 						<td>${Routine.custom_rate}</td>
 						<td>${Routine.qty}</td>
 						<td>${Routine.occurance}</td>
-						<td><a href="?a=showAddRoutine&RoutineId=${Routine.routine_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteRoutine(${Routine.routine_id})">Delete</button></td>
+						<td><a href="?a=showAddRoutine&RoutineId=${Routine.routine_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteRoutine('${Routine.routine_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -142,7 +142,7 @@ function deleteRoutine(RoutineId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

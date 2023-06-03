@@ -5,7 +5,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addTermsAndCondition()
@@ -104,7 +104,7 @@ function addTermsAndCondition()
 
 
 
-<script>
+<script type="javascript">
 
 <c:if test="${termsAndConditionDetails.terms_condition_id eq null}">
 	document.getElementById("divTitle").innerHTML="Add Terms And Condition";

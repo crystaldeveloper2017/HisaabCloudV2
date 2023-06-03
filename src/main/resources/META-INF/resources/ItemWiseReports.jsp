@@ -89,7 +89,7 @@
 
 
 
-<script>
+<script type="javascript">
 
 $(function () {
   

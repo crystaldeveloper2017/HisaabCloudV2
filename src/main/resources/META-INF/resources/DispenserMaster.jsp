@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteDispenser(dispenserId)
 {
 	
@@ -127,7 +127,7 @@ function addDispenser()
 						<td>${item.dispenser_id}</td>
 						<td>${item.dispenser_name}</td>
 						
-						<td><a href="?a=showAddDispenser&dispenserId=${item.dispenser_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteDispenser(${item.dispenser_id})">Delete</button></td>
+						<td><a href="?a=showAddDispenser&dispenserId=${item.dispenser_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteDispenser('${item.dispenser_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -144,7 +144,7 @@ function addDispenser()
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

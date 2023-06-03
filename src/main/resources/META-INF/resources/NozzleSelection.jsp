@@ -98,7 +98,7 @@
 
 
 
-<script>
+<script type="javascript">
 	document.getElementById("divTitle").innerHTML=" Nozzle Selection";	
 
 	document.title +=" Nozzle Selection";

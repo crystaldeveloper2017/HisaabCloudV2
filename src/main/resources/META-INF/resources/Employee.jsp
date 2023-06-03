@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteEmployee(employeeId)
 {
 	
@@ -169,8 +169,8 @@ function resetPassword(employeeId)
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-						<td>${item.user_id}</td><td>${item.username}</td><td>${item.name}</td><td>${item.mobile}</td><td>${item.email}</td><td>${item.store_name}</td><td><a href="?a=showAddEmployee&employeeId=${item.user_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteEmployee(${item.user_id})">Delete</button></td>
-						<td><button class="btn btn-primary" onclick="resetPassword(${item.user_id})">Reset Password</button></td>
+						<td>${item.user_id}</td><td>${item.username}</td><td>${item.name}</td><td>${item.mobile}</td><td>${item.email}</td><td>${item.store_name}</td><td><a href="?a=showAddEmployee&employeeId=${item.user_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteEmployee('${item.user_id}')">Delete</button></td>
+						<td><button class="btn btn-primary" onclick="resetPassword('${item.user_id}')">Reset Password</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -187,7 +187,7 @@ function resetPassword(employeeId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

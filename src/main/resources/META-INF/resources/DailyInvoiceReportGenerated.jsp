@@ -165,8 +165,8 @@
 						<td>${item.name}</td>
 						<td>${item.store_name}</td>
 						<c:if test="${item.isActive eq '1'}">
-							<td><button class="btn btn-danger" onclick="deleteInvoice(${item.invoice_id})">Delete</button></td>
-							<td><button class="btn btn-primary" onclick="editInvoice(${item.invoice_id})">Edit</button></td>
+							<td><button class="btn btn-danger" onclick="deleteInvoice('${item.invoice_id}')">Delete</button></td>
+							<td><button class="btn btn-primary" onclick="editInvoice('${item.invoice_id}')">Edit</button></td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -184,7 +184,7 @@
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({
@@ -208,7 +208,7 @@
 </script>
 
 
-<script>
+<script type="javascript">
 function ReloadFilters()
 {
 	  window.location="?a=generateDailyInvoiceReport&type=${type}&drpstoreId="

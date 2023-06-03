@@ -111,7 +111,7 @@
 					  <td>${data1.AttendantName}</td>
 					  <td>${data1.SupervisorName}</td>
 					  
-					  <td><button class="btn btn-danger" onclick="deletePaytmTransaction(${data1.collection_id})">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deletePaytmTransaction('${data1.collection_id}')">Delete</button></td>
 					  
 					</tr>
 				</c:forEach>
@@ -131,7 +131,7 @@
             
    
 
-<script>
+<script type="javascript">
 
 
 function deletePaytmTransaction(collection_id)

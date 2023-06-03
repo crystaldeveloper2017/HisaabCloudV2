@@ -17,7 +17,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addVendor()
@@ -179,7 +179,7 @@ function addVendor()
 
 
 
-<script>
+<script type="javascript">
 	<c:if test="${vendorDetails.vendor_id ne null}">	
 		document.getElementById('vendorType').value='${vendorDetails.vendor_type}';
 		document.getElementById('vendorGroup').value='${vendorDetails.group_id}';

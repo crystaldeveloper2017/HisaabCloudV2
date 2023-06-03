@@ -109,8 +109,8 @@
 						<td>${item.payment_mode}</td>
 						<td>${item.name}</td>
 						<td>${item.store_name}</td>
-						<td><button class="btn btn-danger" onclick="deleteQuote(${item.quote_id})">Delete</button></td>
-						<td><button class="btn btn-primary" onclick="editQuote(${item.quote_id})">Edit</button></td>
+						<td><button class="btn btn-danger" onclick="deleteQuote('${item.quote_id}')">Delete</button></td>
+						<td><button class="btn btn-primary" onclick="editQuote('${item.quote_id}')">Edit</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -127,7 +127,7 @@
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({
@@ -151,7 +151,7 @@
 </script>
 
 
-<script>
+<script type="javascript">
 function ReloadFilters()
 {
 	  window.location="?a=generateDailyQuoteReport&drpstoreId="+drpstoreId.value+"&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"";;

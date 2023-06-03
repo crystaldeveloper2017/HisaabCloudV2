@@ -16,7 +16,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addSwipe()
@@ -128,7 +128,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${SwipeDetails.SwipeMachineId eq null}">

@@ -16,7 +16,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function suspensePayment(orderId,suspensValue)
@@ -103,7 +103,7 @@ function suspensePayment(orderId,suspensValue)
 
 
 
-<script>
+<script type="javascript">
 	document.getElementById("divTitle").innerHTML=" Unclaimed Payments (${lstUnclaimedPayments.size()})";	
 
 	document.title +=" Unclaimed Payments (${lstUnclaimedPayments.size()})";

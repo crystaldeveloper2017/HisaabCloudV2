@@ -16,7 +16,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addSwipe()
@@ -162,7 +162,7 @@ function addTestFuel()
 					  <td>${data.nozzle_name}</td>
 					  <td>${data.item_name}</td>
 					  
-					  <td><button class="btn btn-danger" onclick="deleteTestFuel(${data.test_id})">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deleteTestFuel('${data.test_id}')">Delete</button></td>
 						
 					</tr>
 				</c:forEach>
@@ -178,7 +178,7 @@ function addTestFuel()
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${SwipeDetails.SwipeMachineId eq null}">

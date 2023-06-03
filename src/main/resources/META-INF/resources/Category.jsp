@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteCategory(categoryId)
 {
 	
@@ -129,7 +129,7 @@ function addCategory()
 						<td>${item.categoryName}</td>
 						<td><a href="?a=showItemMaster&categoryId=${item.categoryId}">${item.cnt}</a></td>
 						<td>${item.order_no }</td>
-						<td><a href="?a=showAddCategory&categoryId=${item.categoryId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteCategory(${item.categoryId})">Delete</button></td>
+						<td><a href="?a=showAddCategory&categoryId=${item.categoryId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteCategory('${item.categoryId}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -146,7 +146,7 @@ function addCategory()
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

@@ -33,7 +33,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 function removethisitem(btn1)
 {
@@ -433,7 +433,7 @@ function saveBooking()
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 
@@ -596,10 +596,10 @@ function saveBooking()
 					    	cell0.innerHTML = "${item.item_id}";
 					    	cell1.innerHTML = "${item.product_code}";
 					    	cell2.innerHTML = "${item.item_name}";
-					    	cell3.innerHTML = " <input type='text' class='form-control input-sm' id='txtqty' onkeyup='calculateAmount(this);checkIfEnterisPressed(event)' onkeypress='digitsOnlyWithDot(event)' value='${item.quantity}'>";   	
+					    	cell3.innerHTML = "<input type='text' class='form-control input-sm' id='txtqty' onkeyup='calculateAmount(this);checkIfEnterisPressed(event)' onkeypress='digitsOnlyWithDot(event)' value='${item.quantity}'/>";   	
 					    		    	
 					    	
-					    	cell4.innerHTML = '<button type="button" class="btn btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
+					    	cell4.innerHTML = '<button type="button" class="btn btn-danger"  onclick="removethisitem(this)" id="btn11" style="cursor:pointer">Delete</button>';
 					    	
 					    	
 					    	

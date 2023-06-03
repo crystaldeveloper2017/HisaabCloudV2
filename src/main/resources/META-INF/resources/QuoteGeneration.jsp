@@ -37,7 +37,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function saveInvoice()
@@ -417,7 +417,7 @@ function updateItem()
 	   
 	   <button class="btn btn-primary" id="btnRegister" type="reset" onclick='window.open("?a=generateDailyQuoteReport&txtfromdate=${todaysDate}&txttodate=${todaysDate}&txtstore=${userdetails.store_id}")'>Quote Register</button>
 	  	   
-	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateQuote(${quoteDetails.quote_id});'>Generate PDF</button>
+	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateQuote("${quoteDetails.quote_id}");'>Generate PDF</button>
    </div>
    </div>
   
@@ -438,7 +438,7 @@ function updateItem()
 
 
 
-<script>
+<script type="javascript">
 
 function generateInvoice(invoiceId)
 {

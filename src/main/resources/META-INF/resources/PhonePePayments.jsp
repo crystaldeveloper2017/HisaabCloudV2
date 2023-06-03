@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 
 function acceptPhonePayPayment(orderId)
 {			
@@ -159,7 +159,7 @@ function acceptPhonePayPayment(orderId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

@@ -48,7 +48,7 @@
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-						<td>${item.No}</td><td>${item.customer_name}</td><td>${item.customer_reference}</td><td><a href="#" onclick="showLedger(${item.customer_id})">${item.PendingAmount} </a></td><th><b>${item.mobile_number}</b></th><th><b>${item.alternate_mobile_no}</b></th>
+						<td>${item.No}</td><td>${item.customer_name}</td><td>${item.customer_reference}</td><td><a href="#" onclick="showLedger('${item.customer_id}')">${item.PendingAmount} </a></td><th><b>${item.mobile_number}</b></th><th><b>${item.alternate_mobile_no}</b></th>
 						<td><b>${item.city}</b></td>
 					</tr>
 				</c:forEach>
@@ -66,7 +66,7 @@
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

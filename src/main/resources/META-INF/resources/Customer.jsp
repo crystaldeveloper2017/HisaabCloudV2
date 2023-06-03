@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script>
+<script type="javascript">
 function deleteCustomer(customerId)
 {
 	
@@ -153,7 +153,7 @@ function deleteCustomer(customerId)
 				<c:forEach items="${message}" var="item">
 					<tr >
 						<td>${item.customerId}</td><td>${item.customerName}</td><td>${item.mobileNumber}</td><td>${item.customerCity}</td><td>${item.customerAddress}</td><td>${item.customerType}</td>
-						<td><a href="?a=showAddCustomer&customerId=${item.customerId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteCustomer(${item.customerId})">Delete</button></td>
+						<td><a href="?a=showAddCustomer&customerId=${item.customerId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteCustomer('${item.customerId}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -170,7 +170,7 @@ function deleteCustomer(customerId)
 
 
 
-<script>
+<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({

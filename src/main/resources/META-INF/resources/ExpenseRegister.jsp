@@ -12,7 +12,7 @@
 
 
 
-<script>
+<script type="javascript">
 function deleteExpense(expenseId)
 {
 	
@@ -129,7 +129,7 @@ function deleteExpense(expenseId)
 						<td>${expense.amount}</td>
 						<td>${expense.qty}</td>						
 						<td>${expense.FormattedExpenseDate}</td>
-						<td><a href="?a=showAddExpense&expenseId=${expense.expense_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteExpense(${expense.expense_id})">Delete</button></td>
+						<td><a href="?a=showAddExpense&expenseId=${expense.expense_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteExpense('${expense.expense_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>
 				
@@ -149,7 +149,7 @@ function deleteExpense(expenseId)
 
 
 
-<script>
+<script type="javascript">
 
 
 $( function() 

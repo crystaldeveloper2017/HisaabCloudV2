@@ -40,7 +40,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function saveInvoice()
@@ -513,7 +513,7 @@ function deleteAttachment(id)
 			
 				
 				<div class="col-sm-2 col-md-4 col-lg-6" style="max-width:130px;font-size:13px" align="center">
-					<img  height="50px" width="50px"  onclick="showThisItemIntoSelection(${ouritem.item_id})"   src="BufferedImagesFolder/${ouritem.ImagePath}">
+					<img  height="50px" width="50px"  onclick="showThisItemIntoSelection('${ouritem.item_id}')"   src="BufferedImagesFolder/${ouritem.ImagePath}">
 					
 				<br>${ouritem.item_name }				
 				</div>
@@ -669,7 +669,7 @@ function deleteAttachment(id)
 	   <button class="btn btn-primary" id="btnRegister" type="reset" onclick='window.open("?a=generateDailyInvoiceReport&txtfromdate=${todaysDate}&txttodate=${todaysDate}&txtstore=${userdetails.store_id}")'>Register</button>
 	   
 	  	   
-	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice(${invoiceDetails.invoice_id});'>Generate PDF</button>
+	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
    </div>
    </div>
   
@@ -690,7 +690,7 @@ function deleteAttachment(id)
 
 
 
-<script>
+<script type="javascript">
 
 function generateInvoice(invoiceId)
 {

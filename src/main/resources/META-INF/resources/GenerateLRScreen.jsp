@@ -17,7 +17,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 function addGenerateLR()
@@ -233,7 +233,7 @@ function searchLR()
 </div>
 </form>
 
-<script>
+<script type="javascript">
 	
 	
 	<c:if test="${SwipeDetails.SwipeMachineId eq null}">

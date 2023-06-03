@@ -96,7 +96,7 @@
 					  <td>${data1.updated_by}</td>
 					 
 					  
-					  <td><button class="btn btn-danger" onclick="deleteReconcilation(${data1.reconcilation_id})">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deleteReconcilation('${data1.reconcilation_id}')">Delete</button></td>
 					  
 					</tr>
 				</c:forEach>
@@ -116,7 +116,7 @@
             
    
 
-<script>
+<script type="javascript">
 
 
 function deleteReconcilation(reconcilation_id)

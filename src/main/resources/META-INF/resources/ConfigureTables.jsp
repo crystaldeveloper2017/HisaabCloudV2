@@ -15,7 +15,7 @@
 </head>
 
 
-<script>
+<script type="javascript">
 
 
 
@@ -73,7 +73,7 @@
 
 
 
-<script>
+<script type="javascript">
 	document.getElementById("divTitle").innerHTML="Configure Tables";	
 	document.title +=" Configure Tables ";
 	function saveConfig()

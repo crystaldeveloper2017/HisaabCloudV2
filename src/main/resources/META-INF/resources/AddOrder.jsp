@@ -29,7 +29,7 @@
 
 
 
-<script>
+<script type="javascript">
 
 
 
@@ -97,7 +97,7 @@
 			
 				
 				<div class="col-sm-2 col-md-4 col-lg-6" style="max-width:130px;font-size:13px" align="center">
-					<img  height="50px" width="50px"  onclick="showThisItemIntoSelection(${ouritem.item_id})"   src="BufferedImagesFolder/${ouritem.ImagePath}">
+					<img  height="50px" width="50px"  onclick="showThisItemIntoSelection('${ouritem.item_id}')"   src="BufferedImagesFolder/${ouritem.ImagePath}">
 				<br>${ouritem.item_name }				
 				</div>
 			
@@ -217,8 +217,8 @@
 	                  		
 	                  		<td>
 	                  		<c:if test="${order.status eq 'O'}">
-	                  			<button class="btn btn-danger" onclick="cancelOrderDetail(${order.order_details_id})">Cancel</button>
-	                  			<button class="btn btn-primary" onclick="markAsServed(${order.order_details_id})">Mark As Served</button>
+	                  			<button class="btn btn-danger" onclick="cancelOrderDetail('${order.order_details_id}')">Cancel</button>
+	                  			<button class="btn btn-primary" onclick="markAsServed('${order.order_details_id}')">Mark As Served</button>
 	                  		</c:if>
 	                  		</td>
 	                  		
@@ -258,7 +258,7 @@
 
 
 
-<script>
+<script type="javascript">
 	document.getElementById("divTitle").innerHTML="Table No ${table_no}";	
 	document.title +=" Table No ${table_no} ";
 	
