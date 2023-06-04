@@ -476,3 +476,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showReconcilationRegister"
   orderNo: 1
+- elementId: 700182
+  elementName: "Checkin Register"
+  parentElementId: 26
+  elementUrl: "?a=showCheckinRegister"
+  orderNo: 1

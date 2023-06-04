@@ -296,7 +296,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("category_name"));
 		parameters.add(hm.get("app_id"));
 		return getListOfLinkedHashHashMap(parameters,
-				"select * from mst_items items, mst_category cat where items.activate_flag=1 and items.parent_category_id=cat.category_id and cat.category_name=? and items.app_id=?", con);
+				"select * from mst_items items, mst_category cat where items.activate_flag=1 and items.parent_category_id=cat.category_id and cat.category_name=? and items.app_id=? order by items.order_no ", con);
 	}
 	
 
@@ -5408,7 +5408,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "from (\r\n"
 					+ " select\r\n"
 					+ "	sum(amount) amt,\r\n"
-					+ "	tum.name, 'Cash' paymentMode,shift_id,collection_date dt,tsc.attendant_id\r\n"
+					+ "	tum.name, tsc.collection_mode paymentMode,shift_id,collection_date dt,tsc.attendant_id\r\n"
 					+ "from\r\n"
 					+ "	trn_supervisor_collection tsc ,\r\n"
 					+ "	tbl_user_mst tum\r\n"
@@ -5417,7 +5417,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "	and tsc.collection_date between ? and ? \r\n"
 					+ "	and tum.app_id=? and tsc.activate_flag=1 \r\n"
 					+ "group by\r\n"
-					+ "	tum.name,tsc.collection_date,tsc.shift_id\r\n"					
+					+ "	tum.name,tsc.collection_date,tsc.shift_id,tsc.collection_mode \r\n"					
 					+ " union all \r\n"
 					+ "\r\n"
 					+ "select\r\n"
@@ -5637,13 +5637,11 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 			parameters.add(hm.get("testQuantity"));
 			parameters.add(hm.get("testNozzle"));
 			parameters.add(hm.get("shift_id"));
-			parameters.add(hm.get("attendant_id")); // you need to get based on current user on that nozzle
-			parameters.add(hm.get("user_id")); // you need to get this from session
-			parameters.add(hm.get("app_id")); // you need to get this  also from session
+			parameters.add(hm.get("attendant_id")); 
+			parameters.add(hm.get("user_id"));
+			parameters.add(hm.get("app_id")); 
 			parameters.add(getDateASYYYYMMDD(hm.get("testDate")));
 			parameters.add(hm.get("test_type"));
-					
-					
 			
 			String insertQuery = "INSERT INTO trn_test_fuel_register\r\n"
 					+ " VALUES (default,?,?,?,?,sysdate(),?,?,?,1,?)";
@@ -5921,7 +5919,7 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 			return getListOfLinkedHashHashMap(parameters,
 					"select *,tum.name attendantName,tum2.name superVisorName from trn_test_fuel_register ttfr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
 					+ " where test_date between ? and ? and ttfr.activate_flag=1 and ttfr.app_id=? and ttfr.shift_id=shft.shift_id and "
-					+ "tum.user_id=ttfr.user_id and tum2.user_id=ttfr.updated_by and nm.nozzle_id=ttfr.nozzle_id and fm.item_id=nm.item_id",
+					+ "tum.user_id=ttfr.user_id and tum2.user_id=ttfr.updated_by and nm.nozzle_id=ttfr.nozzle_id and fm.item_id=nm.item_id order by ttfr.updated_date desc ",
 					con);
 		}
 		
@@ -5958,6 +5956,25 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					+ "tum2.user_id =tsc.updated_by;" ,
 					con);
 		}
+		
+		public List<LinkedHashMap<String, String>> getTestDataDateAndShiftWise(String collection_date,String shiftId,Connection con)
+				throws ClassNotFoundException, SQLException, ParseException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(getDateASYYYYMMDD(collection_date));
+			parameters.add(shiftId);
+			
+			return getListOfLinkedHashHashMapString(parameters,
+					"select \r\n"
+					+ "*,\r\n"
+					+ "tum.name as AttendantName,shift_name,tum2.name as SupervisorName,DATE_FORMAT(test_date,'%d/%m/%Y') AS niceTestDate\r\n"
+					+ "from trn_test_fuel_register tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2,nozzle_master nm  \r\n"
+					+ "where test_date=? and sm.shift_id=tsc.shift_id and tsc.shift_id=? and tum.user_id =tsc.user_id and nm.nozzle_id=tsc.nozzle_id \r\n"
+					+ "and \r\n"
+					+ "tum2.user_id =tsc.updated_by;" ,
+					con);
+		}
+		
+		
 		
 		
 		public LinkedHashMap<String, String> getSumOfCollectionAmount(HashMap<String, Object> hm,Connection con)
@@ -6044,7 +6061,7 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					+ "tum.name as AttendantName,shift_name,tum2.name as SupervisorName\r\n"
 					+ "from trn_supervisor_collection tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2  \r\n"
 					+ "where tsc.activate_flag=1 and tsc.app_id=? and collection_date  between ? and ? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.attendant_id\r\n"
-					+ "and paytm_order_id ='' and \r\n"
+					+ "and \r\n"
 					+ "tum2.user_id =tsc.updated_by";
 			
 			if(hm.get("attendantId")!=null && !hm.get("attendantId").equals(""))
@@ -6395,5 +6412,48 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 				parameters.add(shiftId);
 				return getListOfLinkedHashHashMap(parameters, "select distinct(username),user_id from trn_nozzle_register tnr,tbl_user_mst tum where accounting_date=? and shift_id =? and tum.user_id=tnr.attendant_id", con);
 			}
+			public List<LinkedHashMap<String, Object>> getCheckinRegister(HashMap<String, Object> hm,Connection con)
+					throws ClassNotFoundException, SQLException, ParseException {
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+				parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));			
+				parameters.add(hm.get("app_id"));
+				
+				return getListOfLinkedHashHashMap(parameters,
+						"select *,tum.name attendantName,tum2.name superVisorName from trn_nozzle_register tnr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
+						+ " where accounting_date between ? and ? and tnr.activate_flag=1 and tnr.app_id=? and tnr.shift_id=shft.shift_id and "
+						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id",
+						con);
+			}
+			public String deleteCheckin(long nozzle_id, Connection conWithF) throws Exception {
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(nozzle_id);
+				insertUpdateDuablDB("Delete from  trn_nozzle_register where nozzle_id=?",
+						parameters, conWithF);
+				return "Checkin Deleted Succesfully";
+			}
+			
+			public List<LinkedHashMap<String, Object>> getAttendantsForDateAndShiftUnclubbed(String collectiondate,String shiftId,Connection con)
+					throws ClassNotFoundException, SQLException, ParseException {
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(getDateASYYYYMMDD(collectiondate) );
+				parameters.add(shiftId);
+				return getListOfLinkedHashHashMap(parameters, "select\r\n"
+						+ "	username,name,\r\n"
+						+ "	user_id,\r\n"
+						
+						+ "	nozzle_name,tnr.nozzle_id \r\n"
+						+ "from\r\n"
+						+ "	trn_nozzle_register tnr,\r\n"
+						+ "	tbl_user_mst tum,\r\n"
+						+ "	nozzle_master nm \r\n"
+						+ "where\r\n"
+						+ "	accounting_date = ?\r\n"
+						+ "	and shift_id = ?\r\n"
+						+ "	and tum.user_id = tnr.attendant_id\r\n"
+						+ "	and nm.nozzle_id =tnr.nozzle_id;", con);
+			}
+
+
 			
 }		

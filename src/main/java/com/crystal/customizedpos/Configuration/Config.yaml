@@ -8,6 +8,6 @@ projectName: customizedpos Staging
 thread_sleep: 0
 isAuditEnabled: "true"
 copyAttachmentsToBuffer: "false"
-persistentPath: "/home/ubuntu/ags_attachments/"
+persistentPath: "/home/ubuntu/customizedpos_staging/"
 queryLogEnabled: "false"
 sendEmail: "false"

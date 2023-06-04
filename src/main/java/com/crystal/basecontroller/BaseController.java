@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.crystal.Frameworkpackage.ControllerServiceImpl;
 
-@WebServlet(name = "BaseController" , urlPatterns = {""})
-
+@WebServlet("/BaseController")
 public class BaseController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

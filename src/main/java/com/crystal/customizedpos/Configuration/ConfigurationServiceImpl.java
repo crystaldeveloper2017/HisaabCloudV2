@@ -2593,11 +2593,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String tableId = request.getParameter("table_id");
 		String bookingId = request.getParameter("booking_id");
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
+		String appType= "";
 		
 		String drpshiftid = request.getParameter("drpshiftid");
 		String nozzle_id = request.getParameter("nozzle_id");
-		String attendant_id = request.getParameter("attendant_id");
-		String paytm_order_id = request.getParameter("paytm_order_id");
+		String attendant_id = request.getParameter("attendant_id");		
 		String swipe_id = 
 				request.getParameter("swipe_id")==null 
 				||request.getParameter("swipe_id").equals("")?null:request.getParameter("swipe_id");
@@ -2625,6 +2625,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		if (appId == null || appId.equals("")) {
 			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
 		}
 		hm.put("app_id", appId);
 		hm.put("table_id", tableId);
@@ -2639,21 +2640,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customer_id", customer_id);
 		try {
 
-			if (!isValidateGrossWithIndividualAmount(hm)) {
+			if (!appType.equals("PetrolPump") && !isValidateGrossWithIndividualAmount(hm)) {
 				throw new Exception("invalid Gross with Individual Amount");
 			}
 
-			if (!isValidateTotalWithGrossMinusDiscounts(hm)) {
+			if ( !isValidateTotalWithGrossMinusDiscounts(hm)) {
 				throw new Exception("Invalid Total Amount Received Vs Calculated");
 			}
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
 			hm.put("invoice_id", returnMap.get("invoice_id"));
 
-			// debitStockAgainstInvoiceForCompositeItems(hm,con);
-
-			// lObjConfigDao.debtiStockAgainstInvoice(hm,con); // changed this when
-			// composite item was implemented
+			
 
 			String appendor = "";
 			if (tableId != null && !tableId.equals("")) {
@@ -8376,6 +8374,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("activeNozzles", lst);
 			outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("todaysDate",todaysDate );
+			outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
 			
 			outputMap.put("txtfromdate", todaysDate);
 			outputMap.put("txttodate", todaysDate);
@@ -8529,14 +8528,22 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, String> hm = new HashMap<String, String>();
+		
+		
 		String testQuantity = request.getParameter("testqty");
-		String testDate = request.getParameter("testdate");
 		String testNozzle = request.getParameter("testnozzle");
+		String shift_id = request.getParameter("shift_id");
+		String attendant_id = request.getParameter("attendant_id");
+		String testDate = request.getParameter("testdate");
+		
+		
 		
 
 		hm.put("testQuantity", testQuantity);
-		hm.put("testDate", testDate);
 		hm.put("testNozzle", testNozzle);
+		hm.put("shift_id", shift_id);
+		hm.put("attendant_id", attendant_id);
+		hm.put("testDate", testDate);		
 		hm.put("test_type", "S");
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
@@ -8544,13 +8551,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
-
-		HashMap<String, String> nozzleRegisterEntry = lObjConfigDao.getNozzleDetailsFromRegister(hm, con);
-
-		hm.putAll(nozzleRegisterEntry);
-
+		
 		lObjConfigDao.addTestFuel(con, hm);
-
+		
 		rs.setAjaxData("Data saved Succesfully");
 		return rs;
 
@@ -9776,9 +9779,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			List<LinkedHashMap<String, Object>> listofAttendants= lObjConfigDao.getAttendantsForDateAndShift(collectionDate,shift_id, con);
 			outputMap.put("listofAttendants", listofAttendants);
-			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);
-			
+			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);			
 			outputMap.put("collectionData", collectionData);
+			
+			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,con);			
+			outputMap.put("testData", testData);
 			
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));
 		} catch (Exception e) {
@@ -9787,4 +9792,81 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		}
 		return rs;
 	}
+	
+	public CustomResultObject getAttendantsForDateAndShiftUnclubbed(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+
+		String collectionDate = (request.getParameter("collection_date"));
+		String shift_id = (request.getParameter("shift_id"));
+		HashMap<String, Object> outputMap = new HashMap<>();
+		try {
+			List<LinkedHashMap<String, Object>> listofAttendants= lObjConfigDao.getAttendantsForDateAndShiftUnclubbed(collectionDate,shift_id, con);
+			outputMap.put("listofAttendants", listofAttendants);
+			
+			
+			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);			
+			outputMap.put("collectionData", collectionData);
+			
+			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,con);			
+			outputMap.put("testData", testData);
+			
+			
+			rs.setAjaxData(mapper.writeValueAsString(outputMap));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+	
+	public CustomResultObject showCheckinRegister(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException, ParseException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+		// if parameters are blank then set to defaults
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCheckinRegister(outputMap, con);
+		
+		
+		outputMap.put("lstCheckinRegister", lst);
+
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+		
+
+		rs.setViewName("../CheckinRegister.jsp");
+		rs.setReturnObject(outputMap);
+		return rs;
+
+	}
+	public CustomResultObject deleteCheckin(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		long nozzle_id = Long.valueOf(request.getParameter("nozzle_id"));
+
+		try {
+			rs.setAjaxData(lObjConfigDao.deleteCheckin(nozzle_id, con));
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+	
 }
