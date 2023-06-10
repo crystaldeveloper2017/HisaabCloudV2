@@ -17,7 +17,7 @@
 
 
 
-<script type="javascript">
+<script>
 
 
 function addEmployee()
@@ -185,18 +185,19 @@ function addEmployee()
 
 
 
-<script type="javascript">
+
+
 
 <c:if test="${employeeDetails.user_id eq null}">
+	<script>
 	document.getElementById("divTitle").innerHTML="Add Employee";
 	document.title +=" Add Employee ";
+	</script>
 </c:if>
 <c:if test="${employeeDetails.user_id ne null}">
+	<script>
 	txtstore.value="${employeeDetails.store_id}";
 	document.getElementById("divTitle").innerHTML="Update Employee";
 	document.title +=" Update Employee ";
+	</script>
 </c:if>
-	
-var arr=window.location.toString().split("/");
-callerUrl.value=(arr[0]+"//"+arr[1]+arr[2]+"/"+arr[3]+"/");	
-</script>
