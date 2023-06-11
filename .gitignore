@@ -23,3 +23,4 @@ logging.log
 
 
 src/main/resources/META-INF/resources/frameworkjsps/
+src/main/java/com/crystal/customizedpos/Configuration/Config.yaml
