@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -5310,18 +5311,19 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
-		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+		String shiftId = request.getParameter("shiftid") == null ? "0" : request.getParameter("shiftid");
+		
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
+		outputMap.put("shiftid", shiftId);
+		
 		
 		if (fromDate.equals("")) {
 			fromDate = lObjConfigDao.getDateFromDB(con);
 		}
-		if (toDate.equals("")) {
-			toDate = lObjConfigDao.getDateFromDB(con);
-		}
+		
 		outputMap.put("txtfromdate", fromDate);
-		outputMap.put("txttodate", toDate);
+		
 
 		
 		try {
@@ -5344,7 +5346,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				
 				outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 				outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
-			
+						outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
+outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				
 
 				rs.setViewName("../NozzleRegister.jsp");
@@ -5395,10 +5398,19 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				hm.put(temp.get("attendantName").toString(),existingAmount);
 			}
 		}
+
+		for(Map.Entry<String,Object> entry : hm.entrySet()) {
+			String key = entry.getKey();
+			Double value = (Double) entry.getValue();
+
+			hm.put(key, df.format(value));
+		}
+
 		return hm;
 		
 
 	}
+	DecimalFormat df = new DecimalFormat("#.00"); 
 
 	public CustomResultObject exportSalesRegister(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {

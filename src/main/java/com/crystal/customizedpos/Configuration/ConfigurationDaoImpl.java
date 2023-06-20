@@ -5338,8 +5338,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(hm.get("app_id"));
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
-			
+			parameters.add(hm.get("shiftid"));
 			
 			return getListOfLinkedHashHashMap(parameters,
 					"select totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,attendantName,check_in_time,check_out_time,opening_reading,closing_reading,testFuel,"
@@ -5365,7 +5364,9 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "	and tum.user_id = tnr.attendant_id\r\n"
 					+ "	and tum2.user_id = tnr.updated_by\r\n"
 					+ "	and shift.shift_id = tnr.shift_id\r\n"
-					+ "	and accounting_date between ? and ? \r\n"
+					+ "	and shift.shift_id = tnr.shift_id\r\n"
+					+ "	and accounting_date=? \r\n"
+					+ "	and tnr.shift_id=? \r\n"
 					+ "	and item.item_id = tnr.item_id\r\n"
 					+ "order by\r\n"
 					+ "	nozzle_name ) as T",
@@ -5377,17 +5378,17 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 			
 			
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+			parameters.add(hm.get("shiftid").toString());
 			parameters.add(hm.get("app_id"));
 		
 			
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+			parameters.add(hm.get("shiftid").toString());
 			parameters.add(hm.get("app_id"));
 			
 			
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+			parameters.add(hm.get("shiftid").toString());
 			parameters.add(hm.get("app_id"));
 			
 			
@@ -5414,7 +5415,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "	tbl_user_mst tum\r\n"
 					+ "where\r\n"
 					+ "	tsc.attendant_id = tum.user_id\r\n"
-					+ "	and tsc.collection_date between ? and ? \r\n"
+					+ "	and tsc.collection_date =? and tsc.shift_id=? \r\n"
 					+ "	and tum.app_id=? and tsc.activate_flag=1 \r\n"
 					+ "group by\r\n"
 					+ "	tum.name,tsc.collection_date,tsc.shift_id,tsc.collection_mode \r\n"					
@@ -5428,8 +5429,8 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "on rifd.invoice_id =tir.invoice_id \r\n"
 					+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
 					+ "inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id \r\n"
-					+ "where invoice_date between ? and ? and tpr.payment_mode !='Cash'\r\n"
-					+ "and tir.app_id =? and tir.activate_flag=1 group by tum.name,tpr.payment_mode,rifd.shift_id union all \r\n"
+					+ "where invoice_date =? and tpr.payment_mode !='Cash'\r\n"
+					+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,tpr.payment_mode,rifd.shift_id union all \r\n"
 					+ "\r\n"
 					+ "select\r\n"
 					+ "	sum(total_amount) amt,tum.name ,'Pending',shift_id,tir.invoice_date dt,rifd.attendant_id\r\n"
@@ -5438,8 +5439,8 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "inner join rlt_invoice_fuel_details rifd\r\n"
 					+ "on rifd.invoice_id =tir.invoice_id \r\n"
 					+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
-					+ "where invoice_date between ? and ? and tir.payment_type='Pending'\r\n"
-					+ "and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id) as T) as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id",
+					+ "where invoice_date between ? and tir.payment_type='Pending'\r\n"
+					+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id) as T) as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id",
 					con);
 		}
 		

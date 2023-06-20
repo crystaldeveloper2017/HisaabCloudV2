@@ -3,7 +3,9 @@
 	.ui-datepicker{position: relative; z-index:1000!important;}
 </style>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <br>
 
 
@@ -13,11 +15,11 @@
 <c:set var="lstNozzleRegister" value='${requestScope["outputObject"].get("lstNozzleRegister")}' />
 <c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
 <c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
-<c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
 <c:set var="lstPayments" value='${requestScope["outputObject"].get("lstPayments")}' />
 <c:set var="salesEmpWiseMap" value='${requestScope["outputObject"].get("salesEmpWiseMap")}' />
 <c:set var="paymentEmpWiseMap" value='${requestScope["outputObject"].get("paymentEmpWiseMap")}' />
-
+<c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShifts")}' />
+<c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
 
 
 
@@ -34,19 +36,25 @@
 
 	<div class="col-sm-2" align="center">
 		<div class="input-group input-group-sm" style="width: 200px;">
-		<input type="text" id="txtfromdate" onchange="checkforvalidfromtodate();ReloadFilters();"  name="txtfromdate" readonly class="form-control date_field" placeholder="From Date"/>
+		<input type="text" id="txtfromdate" onchange="ReloadFilters();"  name="txtfromdate" readonly class="form-control date_field" placeholder="From Date"/>
 		</div>
 	</div>
 	
 	<div class="col-sm-1" align="center">
-		<label for="txttodate">To Date</label>
+		<label >Shift Name</label>
 	</div>
 	
 	<div class="col-sm-2" align="center">
-		<div class="input-group input-group-sm" style="width: 200px;">
-		<td><input type="text" id="txttodate" onchange="checkforvalidfromtodate();ReloadFilters();" name="txttodate" readonly class="form-control date_field"  placeholder="To Date"/></td>						
-        </div>
-	</div>
+		<div class="input-group input-group-sm" >
+			<select class="form-control form-control-sm" name="drpshiftid" id="drpshiftid"  onchange="ReloadFilters();" >
+				<option value="-1">----------Select----------</option>
+				<c:forEach items="${lstOfShifts}" var="shift">
+						  <option value="${shift.shift_id}">${shift.shift_name}~${shift.from_time}~${shift.to_time}</option>    
+				 </c:forEach></select>
+					  
+			  </div>
+			</div>
+		
 	
 	
 	
@@ -113,7 +121,12 @@
 						
 						<td>${item.totalizer_opening_reading}</td>
 						<td>${item.totalizer_closing_reading}</td>
-						<td>${item.totalizer_closing_reading - item.totalizer_opening_reading - (item.testFuel*item.rate) }</td>
+						<td>
+							
+
+							${item.totalAmount}
+
+						</td>
 						
 						<td>${item.testFuel}</td>
 						<td>${item.diffReading}</td>
@@ -174,13 +187,13 @@
 						<td>${paym.shift_name} </td>
 						<td>${paym.dt} </td>
 						
-						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&txttodate=${txttodate}&attendant_id=${paym.attendant_id}"> ${paym.csh} </a></td>
+						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.csh} </a></td>
 						
-						<td><a href="?a=generateDailyPaymentRegister&storeId=${userdetails.store_id }&paymentFor=Invoice&paymentMode=Card&txtfromdate=${txtfromdate}&txttodate=${txttodate}&attendant_id=${paym.attendant_id}"> ${paym.cswp} </a></td>
+						<td><a href="?a=generateDailyPaymentRegister&storeId=${userdetails.store_id }&paymentFor=Invoice&paymentMode=Card&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.cswp} </a></td>
 						
-						<td><a href="?a=showPaytmTransctions&txtfromdate=${txtfromdate}&txttodate=${txttodate}&attendant_id=${paym.attendant_id}"> ${paym.pytm} </a></td>
+						<td><a href="?a=showPaytmTransctions&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pytm} </a></td>
 						
-						<td><a href="?a=generateDailyInvoiceReport&paymentType=Pending,Partial&drpstoreId=${userdetails.store_id }&txtfromdate=${txtfromdate}&txttodate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pnding} </a></td>
+						<td><a href="?a=generateDailyInvoiceReport&paymentType=Pending,Partial&drpstoreId=${userdetails.store_id }&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pnding} </a></td>
 						
 
                      						
@@ -220,9 +233,8 @@
   					<td><c:out value="${entry.value}"/></td>
   					<td><c:out value="${paymentEmpWiseMap.get(entry.key)}"/></td>
   					
-  					<td>
-  						<c:out value="${paymentEmpWiseMap.get(entry.key) - entry.value  }"/>  						
-  						<fmt:formatNumber type="number" maxFractionDigits="2" value="${paymentEmpWiseMap.get(entry.key) - entry.value}" />
+  					<td>  						
+  						<fmt:formatNumber type="number"  pattern = "###.##" value="${paymentEmpWiseMap.get(entry.key) - entry.value}" />
   							  					
   					</td>
   					  					
@@ -241,7 +253,7 @@
                
 </div>
 
-<script type="javascript">
+<script>
   $(function () {
     
     $('#example1').DataTable({
@@ -264,13 +276,12 @@
   
 
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-  $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+ 
 
 
 
   txtfromdate.value='${txtfromdate}';
-  txttodate.value='${txttodate}';
-  
+
   
   
   
@@ -279,7 +290,7 @@
   {
 	
 	  
-	  window.open("?a=exportSalesRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&customerId="+hdnSelectedCustomer.value);
+	  window.open("?a=exportSalesRegister&txtfromdate="+txtfromdate.value+"&customerId="+hdnSelectedCustomer.value);
 		return;
 	  
 	  var xhttp = new XMLHttpRequest();
@@ -295,33 +306,14 @@
 		  xhttp.send();
   }
   
-  function checkforvalidfromtodate()
-  {        	
-  	var fromDate=document.getElementById("txtfromdate").value;
-  	var toDate=document.getElementById("txttodate").value;
-  	
-  	var fromDateArr=fromDate.split("/");
-  	var toDateArr=toDate.split("/");
-  	
-  	
-  	var fromDateArrDDMMYYYY=fromDate.split("/");
-  	var toDateArrDDMMYYYY=toDate.split("/");
-  	
-  	var fromDateAsDate=new Date(fromDateArrDDMMYYYY[2],fromDateArrDDMMYYYY[1]-1,fromDateArrDDMMYYYY[0]);
-  	var toDateAsDate=new Date(toDateArrDDMMYYYY[2],toDateArrDDMMYYYY[1]-1,toDateArrDDMMYYYY[0]);
-  	
-  	if(fromDateAsDate>toDateAsDate)
-  		{
-  			alert("From Date should be less than or equal to To Date");
-  			window.location.reload();        			
-  		}
-  }
-  
+  document.getElementById("drpshiftid").value='${param.shiftid}';
+	
+	$( "#txtinvoicedate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+	
+	
   function ReloadFilters()
-  {	  
-	  //alert(hdnSelectedCustomer.value);
-	  
-  	  window.location="?a=showNozzleRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;  	  
+  {	  	
+	window.location="?a=showNozzleRegister&txtfromdate="+txtfromdate.value+"&shiftid="+drpshiftid.value;  	  
   }
   
   
