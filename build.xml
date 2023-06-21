@@ -185,7 +185,7 @@
         <copy file="src/main/java/com/crystal/customizedpos/Configuration/Roles.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Roles.yaml" overwrite="true"/>
         <copy file="src/main/java/com/crystal/customizedpos/Configuration/Elements.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Elements.yaml" overwrite="true"/>
         <copy file="src/main/java/com/crystal/customizedpos/Configuration/Config.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Config.yaml" overwrite="true"/>
-        <copy file="src/main/java/com/crystal/customizedpos/Configuration/DashboardLinkMapping.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/DashboardLinkMapping.yaml" overwrite="true"/>
+        
         
         
     </target>
