@@ -26,7 +26,7 @@
 
 
 
-<script type="javascript">
+<script>
 
 
 function addExpense()
@@ -195,23 +195,28 @@ function addExpense()
     
 
 
-<script type="javascript">
+
 	
 	
 	<c:if test="${expenseDetails.expense_id eq null}">
+	<script>
 		document.getElementById("divTitle").innerHTML="Add Expense";
 		document.title +=" Add Expense ";
+		</script>
 	</c:if>
 	<c:if test="${expenseDetails.expense_id ne null}">
+		<script>
 		document.getElementById("divTitle").innerHTML="Update Expense";
 		document.title +=" Update Expense ";
+		</script>
 	</c:if>
 	
+	
+
+
+
+<script >
 	$( "#txtdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-</script>
-
-
-<script type="javascript">
   $(function () {
     
     $('#example1').DataTable({
@@ -237,7 +242,7 @@ function addExpense()
 </script>
 
 
-<script type="javascript">
+<script >
 function deleteExpense(expenseId)
 {
 	
