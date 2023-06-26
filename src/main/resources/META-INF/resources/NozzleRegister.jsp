@@ -89,22 +89,21 @@
                  
                     <tr>                  
                       
-                     <th><b>Nozzle Name</b></th><th><b>Shift</b></th><th><b>Attendant Name</b></th><th><b>Check In Time</b></th>
-                     <th><b>Check Out Time</b></th>
+                     <th><b>Nozzle Name</b></th><th><b>Shift</b></th><th><b>Attendant Name</b></th>
+					 
                      <th><b>Opening Reading</b></th>                     
                      <th><b>Closing Reading</b></th>
                      
-                     <th><b>Totalizer Opening Amount</b></th>
-                     <th><b>Totalizer Closing Amount</b></th>                     
-                     <th><b>Totalizer Closing Minus Opening Minus Test Fuel Amount</b> </th>
+                     <th><b>Tot. Opening Amount</b></th>
+                     <th><b>Tot. Closing Amount</b></th>                     
+                     
                      
                      <th><b>Test Fuel</b> </th><th><b>Sales Qty</b> </th>     <th><b>Rate</b> </th> 
                      <th><b>Total Amount</b> </th>
                      
                      
-                     <th><b>Supervisor Name</b></th></th>
-                     <th><b>Updated Date</b></th>
-                     <th><b>Difference</b></th>
+                     
+                     
                     </tr>
                   </thead>
                   <tbody>
@@ -113,20 +112,13 @@
 						<td>${item.nozzle_name} ${item.item_name}</td>
 						<td>${item.shift_name} ${item.from_time} ${item.to_time}</td>
 						<td>${item.attendantName}</td>
-						<td>${item.check_in_time}</td>
-						<td>${item.check_out_time}</td>
 												
 						<td>${item.opening_reading}</td>
 						<td>${item.closing_reading}</td>
 						
 						<td>${item.totalizer_opening_reading}</td>
 						<td>${item.totalizer_closing_reading}</td>
-						<td>
-							
-
-							${item.totalAmount}
-
-						</td>
+						
 						
 						<td>${item.testFuel}</td>
 						<td>${item.diffReading}</td>
@@ -137,9 +129,8 @@
 
 						
 						
-						<td>${item.updated_by_supervisor}</td>
-						<td>${item.FormattedUpdatedDate}</td>
-						<td>${item.totalAmount - (item.totalizer_closing_reading - item.totalizer_opening_reading - (item.testFuel*item.rate))}</td>
+						
+						
 					</tr>
 				</c:forEach>
 				
