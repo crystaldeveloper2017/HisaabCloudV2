@@ -161,13 +161,13 @@
                  
                     <tr>                    
                      <th><b>Attendant Name</b></th>
-                     <th><b>Shift Id</b></th>
-                     <th><b>Date</b></th>
+                     <th><b>Shift</b></th>
+                     
                      
                      <th><b>Cash</b></th>
                      <th><b>Card Swipe</b></th>
-                     <th><b>PhonePay</b></th>
-                     <th><b>Pending</b></th>
+                     <th><b>Paytm</b></th>
+                     <th><b>Credit Sales</b></th>
                      
                     </tr>
                   </thead>
@@ -176,7 +176,7 @@
 					<tr >
 						<td>${paym.name} </td>
 						<td>${paym.shift_name} </td>
-						<td>${paym.dt} </td>
+						
 						
 						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.csh} </a></td>
 						
