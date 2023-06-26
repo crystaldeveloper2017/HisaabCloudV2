@@ -31,7 +31,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function saveInvoice()
@@ -380,7 +380,7 @@ function saveInvoice()
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 
 document.getElementById("divTitle").innerHTML="Generate Invoice Fuel";

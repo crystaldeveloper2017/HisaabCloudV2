@@ -17,7 +17,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addDispenser()
@@ -105,7 +105,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 	<c:if test="${DispenserDetails.DispenserId eq null}">

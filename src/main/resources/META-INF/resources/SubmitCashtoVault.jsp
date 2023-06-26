@@ -20,7 +20,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 
@@ -144,7 +144,7 @@ function saveSubmitCash()
 </div>
 </form>
 
-<script type="javascript">
+<script >
 
 function calculateTotal(){
 	

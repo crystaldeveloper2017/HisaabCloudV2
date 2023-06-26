@@ -127,7 +127,7 @@
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({
@@ -151,7 +151,7 @@
 </script>
 
 
-<script type="javascript">
+<script >
 function ReloadFilters()
 {
 	  window.location="?a=generateDailyQuoteReport&drpstoreId="+drpstoreId.value+"&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"";;

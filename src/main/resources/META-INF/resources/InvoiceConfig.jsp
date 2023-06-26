@@ -206,7 +206,7 @@
 
 
 
-<script type="javascript">
+<script >
 
 console.log("${userdetails}");
 	document.getElementById("divTitle").innerHTML="User Configurations";

@@ -92,7 +92,7 @@
     </div>
   </div>
   
-  <script type="javascript">
+  <script >
   
 <c:if test="${userDetails.user_id eq null}">
 		document.getElementById("divTitle").innerHTML="User Details";

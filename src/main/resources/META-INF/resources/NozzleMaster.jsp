@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="javascript">
+<script >
 function deleteNozzle(nozzleId)
 {
 	
@@ -146,7 +146,7 @@ function addNozzle()
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

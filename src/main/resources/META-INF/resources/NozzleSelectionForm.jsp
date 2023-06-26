@@ -35,7 +35,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 	function addNozzleCheckIn() {
 
 		document.getElementById("frm").submit();
@@ -210,7 +210,7 @@
 
 
 
-<script type="javascript">
+<script >
 
 
 $( "#accountingDate" ).datepicker({ dateFormat: 'dd/mm/yy' });

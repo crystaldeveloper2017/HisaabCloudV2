@@ -7,7 +7,7 @@
 
 
 
-<script type="javascript">
+<script >
 function deleteGroup(groupId)
 {
 	
@@ -110,7 +110,7 @@ function deleteGroup(groupId)
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

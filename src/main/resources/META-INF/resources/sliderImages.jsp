@@ -14,7 +14,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addCategory()
@@ -121,7 +121,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 	

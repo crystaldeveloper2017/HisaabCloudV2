@@ -113,14 +113,14 @@
   </div>
 
 
-<script type="javascript">
+<script >
 	
 	
 </script>
 
 
 
-<script type="javascript">
+<script >
 function searchForCustomer(searchString)
 {	
 	console.log(5);

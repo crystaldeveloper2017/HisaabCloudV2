@@ -14,7 +14,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addRoutine()
@@ -143,7 +143,7 @@ function addRoutine()
 
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 	<c:if test="${routineDetails.routine_id eq null}">

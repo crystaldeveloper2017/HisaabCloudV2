@@ -113,7 +113,7 @@
             
    
 
-<script type="javascript">
+<script >
 
 
 function deleteTestFuel(test_id)

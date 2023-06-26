@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="javascript">
+<script >
 function deleteItem(itemId)
 {	
 	var answer = window.confirm("Are you sure you want to delete ?");
@@ -148,7 +148,7 @@ function deleteItem(itemId)
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

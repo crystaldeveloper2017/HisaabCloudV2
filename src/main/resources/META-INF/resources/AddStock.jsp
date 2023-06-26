@@ -17,7 +17,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 
@@ -258,7 +258,7 @@ function printLabels()
 
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 

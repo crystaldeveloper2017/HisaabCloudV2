@@ -17,7 +17,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 function removethisitem(btn1)
 {
@@ -208,7 +208,7 @@ function saveCompositeItems()
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 

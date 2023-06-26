@@ -67,7 +67,7 @@
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({
@@ -90,7 +90,7 @@
 </script>
 
 
-<script type="javascript">
+<script >
 function deletePayment(paymentId)
 {
 	

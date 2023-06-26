@@ -12,7 +12,7 @@
 
 
 
-<script type="javascript">
+<script >
 function deleteExpense(expenseId)
 {
 	
@@ -149,7 +149,7 @@ function deleteExpense(expenseId)
 
 
 
-<script type="javascript">
+<script >
 
 
 $( function() 

@@ -16,7 +16,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addNozzleCheckOut()
@@ -175,7 +175,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 	<c:if test="${fuelDetails.fuelId eq null}">

@@ -131,7 +131,7 @@
             
    
 
-<script type="javascript">
+<script >
 
 
 function deletePaytmTransaction(collection_id)

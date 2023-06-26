@@ -14,7 +14,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addGroup()
@@ -73,7 +73,7 @@ function addGroup()
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 	<c:if test="${groupDetails.group_id eq null}">

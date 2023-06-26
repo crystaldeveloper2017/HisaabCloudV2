@@ -17,7 +17,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addCustomer()
@@ -210,7 +210,7 @@ function addCustomer()
 
 
 
-<script type="javascript">
+<script >
 	<c:if test="${customerDetails.customer_id ne null}">	
 		document.getElementById('customerType').value='${customerDetails.customer_type}';
 		document.getElementById('customerGroup').value='${customerDetails.group_id}';

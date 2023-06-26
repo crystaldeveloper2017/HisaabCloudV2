@@ -16,7 +16,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function unSuspensePayment(orderId,suspensValue)
@@ -103,7 +103,7 @@ function unSuspensePayment(orderId,suspensValue)
 
 
 
-<script type="javascript">
+<script >
 	document.getElementById("divTitle").innerHTML=" Suspended Payments (${lstSuspensePayments.size()})";
 
 	document.title +=" Suspended Payments (${lstSuspensePayments.size()})";

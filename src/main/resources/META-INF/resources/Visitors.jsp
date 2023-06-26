@@ -8,7 +8,7 @@
 
 
 
-<script type="javascript">
+<script >
 function deleteVisitor(visitorId)
 {
 	
@@ -130,7 +130,7 @@ function deleteVisitor(visitorId)
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

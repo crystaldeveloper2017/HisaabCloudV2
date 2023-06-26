@@ -16,7 +16,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addStore()
@@ -60,7 +60,7 @@ function addStore()
 
 
 
-<script type="javascript">
+<script >
 	document.getElementById("divTitle").innerHTML="Switch Store";	
 	document.title +=" Switch Store ";
 	drpstoreId.value="${userDetails.store_id}";

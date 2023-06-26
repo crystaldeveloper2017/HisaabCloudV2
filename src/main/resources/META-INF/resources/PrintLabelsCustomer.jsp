@@ -14,7 +14,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 function removethisitem(btn1)
 {
@@ -190,7 +190,7 @@ function printLabels()
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 

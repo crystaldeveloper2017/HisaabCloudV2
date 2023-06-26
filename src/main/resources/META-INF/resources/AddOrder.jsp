@@ -29,7 +29,7 @@
 
 
 
-<script type="javascript">
+<script >
 
 
 
@@ -258,7 +258,7 @@
 
 
 
-<script type="javascript">
+<script >
 	document.getElementById("divTitle").innerHTML="Table No ${table_no}";	
 	document.title +=" Table No ${table_no} ";
 	

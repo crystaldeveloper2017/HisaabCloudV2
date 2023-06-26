@@ -128,7 +128,7 @@
             </div>
    
 
-<script type="javascript">
+<script >
 
 
 function deleteSupervisorTransaction(collection_id)

@@ -14,7 +14,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addCategory()
@@ -143,7 +143,7 @@ function deleteAttachment(id)
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 	<c:if test="${categoryDetails.categoryId eq null}">

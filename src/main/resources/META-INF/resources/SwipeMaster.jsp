@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="javascript">
+<script >
 function deleteSwipe(swipeMachineId)
 {
 	
@@ -149,7 +149,7 @@ function addSwipe()
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

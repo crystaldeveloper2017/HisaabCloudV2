@@ -46,7 +46,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function saveInvoice()
@@ -743,7 +743,7 @@ function deleteAttachment(id)
 
 
 
-<script type="javascript">
+<script >
 
 function generateInvoice(invoiceId)
 {

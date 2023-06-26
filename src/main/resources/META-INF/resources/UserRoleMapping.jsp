@@ -92,7 +92,7 @@
 </datalist>
 </form>
 
-<script type="javascript">
+<script >
 	document.getElementById("divTitle").innerHTML="User Role Mapping";
 	document.title +=" User Role Mapping ";
 	

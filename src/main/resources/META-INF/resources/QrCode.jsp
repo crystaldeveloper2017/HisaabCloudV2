@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="javascript">
+<script >
 function deleteQrCode(qrId)
 {
 	
@@ -126,7 +126,7 @@ function deleteQrCode(qrId)
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

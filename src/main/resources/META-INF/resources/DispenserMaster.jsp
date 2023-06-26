@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<script type="javascript">
+<script >
 function deleteDispenser(dispenserId)
 {
 	
@@ -144,7 +144,7 @@ function addDispenser()
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

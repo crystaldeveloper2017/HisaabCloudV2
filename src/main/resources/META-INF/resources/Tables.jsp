@@ -16,7 +16,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 
@@ -80,7 +80,7 @@
 
 
 
-<script type="javascript">
+<script >
 	document.getElementById("divTitle").innerHTML=" Tables";	
 	document.title +=" Tables ";
 	function saveConfig()

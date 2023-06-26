@@ -10,7 +10,7 @@
 <c:set var="ListOfOrders" value='${requestScope["outputObject"].get("ListOfOrders")}' />
 
 
-<script type="javascript">
+<script >
 function deleteBooking(bookingId)
 {
 	
@@ -170,7 +170,7 @@ function addBooking()
 
 
 
-<script type="javascript">
+<script >
 
 
 $( function() 

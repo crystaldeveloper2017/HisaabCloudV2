@@ -343,7 +343,7 @@
 </html>
 
 
-<script type="javascript">
+<script >
 function searchItems()
 {
 		window.location="?a=showCategoryForGuests&appId=${param.appId}&searchString="+txtsearch.value;

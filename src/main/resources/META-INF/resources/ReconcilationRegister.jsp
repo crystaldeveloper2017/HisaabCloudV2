@@ -116,7 +116,7 @@
             
    
 
-<script type="javascript">
+<script >
 
 
 function deleteReconcilation(reconcilation_id)

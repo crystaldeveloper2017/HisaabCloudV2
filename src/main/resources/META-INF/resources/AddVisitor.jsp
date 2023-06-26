@@ -92,7 +92,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addVisitor()
@@ -272,7 +272,7 @@ function addVisitor()
 
 
 
-<script type="javascript">
+<script >
 
 <c:if test="${visitorDetails.visitor_id eq null}">
 	document.getElementById("divTitle").innerHTML="Add Visitor";
@@ -291,7 +291,7 @@ callerUrl.value=(arr[0]+"//"+arr[1]+arr[2]+"/"+arr[3]+"/");
 
 
 
-  <script type="javascript">
+  <script >
                 (function() {
   // The width and height of the captured photo. We will set the
   // width to the value defined here, but the height will be

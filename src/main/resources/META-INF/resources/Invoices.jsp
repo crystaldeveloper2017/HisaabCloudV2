@@ -124,7 +124,7 @@
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

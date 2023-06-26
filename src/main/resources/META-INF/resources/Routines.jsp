@@ -8,7 +8,7 @@
 
 
 
-<script type="javascript">
+<script >
 function deleteRoutine(RoutineId)
 {
 	
@@ -142,7 +142,7 @@ function deleteRoutine(RoutineId)
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

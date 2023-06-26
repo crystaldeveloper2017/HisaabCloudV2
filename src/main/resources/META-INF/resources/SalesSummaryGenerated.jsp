@@ -130,7 +130,7 @@
 
 
 
-<script type="javascript">
+<script >
 
 
 function exportPDFForSalesSummary()

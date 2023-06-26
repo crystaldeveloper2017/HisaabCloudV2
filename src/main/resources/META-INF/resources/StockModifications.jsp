@@ -5,7 +5,7 @@
 
 <c:set var="listOfStore" value='${requestScope["outputObject"].get("listOfStore")}' />
 
-<script type="javascript">
+<script >
 function deleteStock(stockId)
 {
 	
@@ -178,7 +178,7 @@ function configureLowStock(stockId)
 
 
 
-<script type="javascript">
+<script >
   $(function () {
     
     $('#example1').DataTable({

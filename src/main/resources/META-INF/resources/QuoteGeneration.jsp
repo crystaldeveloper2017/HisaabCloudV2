@@ -37,7 +37,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function saveInvoice()
@@ -438,7 +438,7 @@ function updateItem()
 
 
 
-<script type="javascript">
+<script >
 
 function generateInvoice(invoiceId)
 {

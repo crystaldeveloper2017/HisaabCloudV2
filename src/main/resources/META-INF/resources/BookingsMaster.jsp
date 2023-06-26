@@ -10,7 +10,7 @@
 <c:set var="message" value='${requestScope["outputObject"].get("ListOfBookings")}' />
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
 
-<script type="javascript">
+<script >
 function deleteBooking(bookingId)
 {
 	
@@ -258,7 +258,7 @@ function addBooking()
 
 
 
-<script type="javascript">
+<script >
 
 
 $( function() 

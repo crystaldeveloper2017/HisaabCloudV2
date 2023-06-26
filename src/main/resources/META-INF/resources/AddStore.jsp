@@ -5,7 +5,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function addStore()
@@ -152,7 +152,7 @@ function addStore()
 
 
 
-<script type="javascript">
+<script >
 
 <c:if test="${storeDetails.store_id eq null}">
 	document.getElementById("divTitle").innerHTML="Add Store";

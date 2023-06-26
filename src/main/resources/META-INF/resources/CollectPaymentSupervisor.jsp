@@ -21,7 +21,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function saveCollectPaymentSupervisorNew()
@@ -265,7 +265,7 @@ function deleteAttachment(id)
               </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 
 

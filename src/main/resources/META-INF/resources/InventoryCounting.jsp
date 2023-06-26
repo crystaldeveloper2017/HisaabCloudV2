@@ -17,7 +17,7 @@
 </head>
 
 
-<script type="javascript">
+<script >
 
 
 function calculateDifferenceAmount(textbox)
@@ -286,7 +286,7 @@ function printLabels()
 </div>
 </form>
 
-<script type="javascript">
+<script >
 	
 	
 
