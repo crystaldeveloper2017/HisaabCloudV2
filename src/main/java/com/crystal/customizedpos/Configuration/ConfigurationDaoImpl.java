@@ -5439,7 +5439,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "inner join rlt_invoice_fuel_details rifd\r\n"
 					+ "on rifd.invoice_id =tir.invoice_id \r\n"
 					+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
-					+ "where invoice_date between ? and tir.payment_type='Pending'\r\n"
+					+ "where invoice_date =? and tir.payment_type='Pending'\r\n"
 					+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id) as T) as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id",
 					con);
 		}
