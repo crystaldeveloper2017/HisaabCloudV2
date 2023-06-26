@@ -5343,7 +5343,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 			return getListOfLinkedHashHashMap(parameters,
 					"select totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,attendantName,check_in_time,check_out_time,opening_reading,closing_reading,testFuel,"
 					+ "updated_by_supervisor,FormattedUpdatedDate"
-					+ ",closing_reading-opening_reading-COALESCE(TestFuel,0) diffReading,rate,round((closing_reading-opening_reading-COALESCE(TestFuel,0))*rate,2) totalAmount from ( select\r\n"
+					+ ",closing_reading-opening_reading-COALESCE(TestFuel,0) diffReading,rate,round(totalizer_closing_reading-totalizer_opening_reading - (COALESCE(TestFuel,0) * rate),2) totalAmount from ( select\r\n"
 					+ "	totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,check_in_time,check_out_time,opening_reading,closing_reading,\r\n"
 					+ "	date_format(tnr.updated_date, '%d/%m/%Y %H:%i:%s') as FormattedUpdatedDate,rate,\r\n"
 					+ "	tum.name attendantName,\r\n"
