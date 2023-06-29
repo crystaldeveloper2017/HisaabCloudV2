@@ -108,8 +108,16 @@
                   </thead>
                   <tbody>
 				<c:forEach items="${lstNozzleRegister}" var="item">
-					<tr >
+				<c:if test="${item.item_name eq 'Petrol'}">
+					<tr style="background-color:lightgreen">
+				</c:if>
+
+				<c:if test="${item.item_name eq 'Diesel'}">
+					<tr style="background-color:lightblue">
+				</c:if>
+					
 						<td>${item.nozzle_name} ${item.item_name}</td>
+					
 						<td>${item.shift_name} ${item.from_time} ${item.to_time}</td>
 						<td>${item.attendantName}</td>
 												
@@ -168,6 +176,7 @@
                      <th><b>Card Swipe</b></th>
                      <th><b>Paytm</b></th>
                      <th><b>Credit Sales</b></th>
+					 <th><b>Loyalty Points</b></th>
                      
                     </tr>
                   </thead>
@@ -185,6 +194,8 @@
 						<td><a href="?a=showPaytmTransctions&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pytm} </a></td>
 						
 						<td><a href="?a=generateDailyInvoiceReport&paymentType=Pending,Partial&drpstoreId=${userdetails.store_id }&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pnding} </a></td>
+
+						<td><a href="?a=showPaytmTransctions&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.loyaltyPoints} </a></td>
 						
 
                      						
@@ -307,6 +318,14 @@
 	window.location="?a=showNozzleRegister&txtfromdate="+txtfromdate.value+"&shiftid="+drpshiftid.value;  	  
   }
   
+  if("${param.shiftid}"!="")
+  {
+  	drpshiftid.value="${param.shiftid}";
+  }
+  else
+  {
+	drpshiftid.value=-1;
+  }
   
  
   

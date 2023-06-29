@@ -5338,10 +5338,13 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(hm.get("app_id"));
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(hm.get("shiftid"));
-			
-			return getListOfLinkedHashHashMap(parameters,
-					"select totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,attendantName,check_in_time,check_out_time,opening_reading,closing_reading,testFuel,"
+
+			if(!hm.get("shiftid").equals("-1"))
+			{
+				parameters.add(hm.get("shiftid"));
+			}
+
+			String query="select totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,attendantName,check_in_time,check_out_time,opening_reading,closing_reading,testFuel,"
 					+ "updated_by_supervisor,FormattedUpdatedDate"
 					+ ",closing_reading-opening_reading-COALESCE(TestFuel,0) diffReading,rate,round(totalizer_closing_reading-totalizer_opening_reading - (COALESCE(TestFuel,0) * rate),2) totalAmount from ( select\r\n"
 					+ "	totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,check_in_time,check_out_time,opening_reading,closing_reading,\r\n"
@@ -5363,13 +5366,19 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "	and nm.nozzle_id = tnr.nozzle_id\r\n"
 					+ "	and tum.user_id = tnr.attendant_id\r\n"
 					+ "	and tum2.user_id = tnr.updated_by\r\n"
-					+ "	and shift.shift_id = tnr.shift_id\r\n"
-					+ "	and shift.shift_id = tnr.shift_id\r\n"
+					+ "	and shift.shift_id = tnr.shift_id\r\n"					
 					+ "	and accounting_date=? \r\n"
 					+ "	and tnr.shift_id=? \r\n"
 					+ "	and item.item_id = tnr.item_id\r\n"
 					+ "order by\r\n"
-					+ "	nozzle_name ) as T",
+					+ "	shift_name,nozzle_name ) as T";
+
+			if(hm.get("shiftid").equals("-1"))
+			{
+				query=query.replaceAll("and tnr.shift_id=\\?", "");
+			}
+			return getListOfLinkedHashHashMap(parameters,
+					query,
 					con);
 		}
 		public List<LinkedHashMap<String, Object>> getPaymentsForDatesAttendantWise (HashMap<String, Object> hm,Connection con)
@@ -5378,26 +5387,38 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 			
 			
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(hm.get("shiftid").toString());
+			if(!hm.get("shiftid").equals("-1"))
+			{
+				parameters.add(hm.get("shiftid").toString());
+			}
+
+
 			parameters.add(hm.get("app_id"));
 		
 			
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(hm.get("shiftid").toString());
+			if(!hm.get("shiftid").equals("-1"))
+			{
+				parameters.add(hm.get("shiftid").toString());
+			}
+			
 			parameters.add(hm.get("app_id"));
 			
 			
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-			parameters.add(hm.get("shiftid").toString());
+			if(!hm.get("shiftid").equals("-1"))
+			{
+				parameters.add(hm.get("shiftid").toString());
+			}
 			parameters.add(hm.get("app_id"));
-			
-			
-			return getListOfLinkedHashHashMap(parameters,
-					"select name,\r\n"
+
+
+			String query="select name,\r\n"
 					+ "sum(Cash) csh,\r\n"
 					+ "sum(Card) cswp,\r\n"
 					+ "sum(Paytm) pytm,\r\n"
 					+ "sum(Pending) pnding,\r\n"
+					+ "sum(LoyaltyPoints) loyaltyPoints,\r\n"
 					+ "shift_name,from_time,to_time,dt,attendant_id from \r\n"
 					+ "(select \r\n"
 					+ "name,\r\n"
@@ -5405,6 +5426,7 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "case when paymentMode='Card' then amt else 0 end Card,\r\n"
 					+ "case when paymentMode='Paytm' then amt else 0 end Paytm,\r\n"
 					+ "case when paymentMode='Pending' then amt else 0 end Pending,\r\n"
+					+ "case when paymentMode='LoyaltyPoints' then amt else 0 end LoyaltyPoints,\r\n"
 					+ "shift_id,dt,attendant_id\r\n"
 					+ "from (\r\n"
 					+ " select\r\n"
@@ -5440,7 +5462,17 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 					+ "on rifd.invoice_id =tir.invoice_id \r\n"
 					+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
 					+ "where invoice_date =? and tir.payment_type='Pending'\r\n"
-					+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id) as T) as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id",
+					+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id) as T) as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id";
+			
+			if(hm.get("shiftid").equals("-1"))
+			{
+				query=query.replaceAll("and tsc.shift_id=\\?", "");
+				query=query.replaceAll("and rifd.shift_id=\\?", "");
+				query=query.replaceAll("and rifd.shift_id=\\?", "");
+			}
+			
+			return getListOfLinkedHashHashMap(parameters,
+					query,
 					con);
 		}
 		

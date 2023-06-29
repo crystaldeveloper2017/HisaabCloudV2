@@ -248,6 +248,7 @@ function saveInvoice()
       <select class="form-control form-control-sm" name="drppaymentmode" id="drppaymentmode" onchange="checkIfMachinetoBeDisplayed()">      	    
 			    <option value="Cash">Cash</option>
 			    <option value="Card">Card</option>
+				<option value="LoyaltyPoints">Loyalty Points</option>
 	   </select>
             
     </div>
