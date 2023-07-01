@@ -1502,6 +1502,17 @@ public List<LinkedHashMap<String, Object>> getVehicleMaster(HashMap<String, Obje
 				, con);
 		
 	}
+
+public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, Object> hm, Connection con) throws ClassNotFoundException, SQLException{
+		
+		ArrayList<Object> parameters = new ArrayList<>();
+		
+		parameters.add(hm.get("customer_id"));
+		
+		return getListOfLinkedHashHashMap(parameters, "SELECT * FROM mst_vehicle mv WHERE customer_id = ? AND activate_flag = 1"
+				, con);
+		
+	}
 	
 	public long updateVendor(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
