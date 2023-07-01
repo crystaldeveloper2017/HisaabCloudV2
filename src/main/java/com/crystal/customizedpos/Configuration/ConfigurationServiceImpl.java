@@ -1444,6 +1444,23 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject getVehicleIdForCustomer(HttpServletRequest request, Connection con) throws SQLException {
+
+		CustomResultObject rs = new CustomResultObject();
+
+		try {
+			HashMap<String, Object> outputMap = new HashMap<>();
+			outputMap.put("customer_id", request.getParameter("customerId"));
+			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getVehicleOfCustomer(outputMap, con)));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+
+	}
+
+
 	public CustomResultObject showGeneratePurchaseInvoice(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();

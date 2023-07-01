@@ -17,6 +17,7 @@
 <c:set var="lstOfActiveNozzles" value='${requestScope["outputObject"].get("lstOfActiveNozzles")}' />
 <c:set var="lstOfSwipeMaster" value='${requestScope["outputObject"].get("lstOfSwipeMaster")}' />
 <c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
+<c:set var="vehicleMaster" value='${requestScope["outputObject"].get("vehicleMaster")}' />
 <c:set var="itemList" value='${requestScope["outputObject"].get("itemList")}' />
 <c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
 
@@ -185,6 +186,12 @@ function saveInvoice()
 					<option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}</option>
 				</c:forEach>
 			</datalist>
+
+			<datalist id="vehicleList">
+				<c:forEach items="${vehicleMaster}" var="vehicle">
+					<option id="${vehicle.vehicle_id}">${vehicle.vehicle_name}~${vehicle.vehicle_number}</option>
+				</c:forEach>
+			</datalist>
 			
 			<datalist id="itemList">
 <c:forEach items="${itemList}" var="item">
@@ -240,6 +247,24 @@ function saveInvoice()
             
     </div>
   </div>
+
+  
+    <div class="col-6" name="customerVehicleElements">
+  	<div class="form-group">
+      
+      <label for="txtsearchcustomervehicle">Customer Vehicle</label>
+      <input type="text" class="form-control form-control-sm" id="txtsearchcustomervehicle"    placeholder="Search For Vehicle" name="txtsearchcustomervehicle"  autocomplete="off" list='vehicleList'>
+                  <div class="input-group input-group-sm">
+                  <span class="input-group-append">
+                    <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomerVehicle()">Reset</button>
+                  </span>
+				  </div>
+
+				  <input  type="hidden" name="hdnSelectedCustomerVehicle" id="hdnSelectedCustomerVehicle" value=""> 
+            
+    </div>
+  </div>
+  
   
   <div class="col-6" name="paymentModeElements">
   	<div class="form-group">
@@ -275,7 +300,7 @@ function saveInvoice()
   	      <label for="email">Customer Name</label>
   	
   	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off" list='customerList' oninput="checkforMatchCustomer()">
+                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off" list='customerList' oninput="checkforMatchCustomer(), checkforMatchCustomerVehicle()">
                   
                   <span class="input-group-append">
                     <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
@@ -294,7 +319,7 @@ function saveInvoice()
    			      
     </div>
   </div>
-  
+
   
   <div class="col-sm-12" id="divsearchforitems">
   	
@@ -436,6 +461,60 @@ if('${param.order_id}'!='')
 			}
 		
 		
+		
+	}
+
+	function checkforMatchCustomerVehicle()
+	{
+		
+		var searchString= document.getElementById("txtsearchcustomer").value;
+		var customerId=document.getElementById("hdnSelectedCustomer").value;;	
+		var options1=document.getElementById("vehicleList").options;
+		var txtsearchcustomervehicle=document.getElementById("txtsearchcustomervehicle");
+		var vehicleId=0;
+		for(var x=0;x<options1.length;x++)
+			{
+				if(searchString==options1[x].value)
+					{
+						vehicleId=options1[x].id;
+						
+						break;
+					}
+			}
+		if(vehicleId!=0)
+			{
+				document.getElementById("hdnSelectedCustomervehicle").value=vehicleId;			
+				document.getElementById("txtsearchcustomervehicle").disabled=true;			
+					
+			}	
+
+			document.getElementById("closebutton").style.display='none';
+	   document.getElementById("loader").style.display='block';
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	var details=JSON.parse(xhttp.responseText);	    	
+	    	if(details!=undefined)
+	    		{
+					for (var i = 0; i < details.length; i++){
+						options1.text = details[i].vehicle_number;
+						options1.value = details[i].vehicle_number;
+						options1.id = details[i].vehicle_id;
+						txtsearchcustomervehicle.add(options1);
+					}
+	    		}
+	    	else
+	    		{
+	    			alert("no pending amount for this customer");
+	    			//window.location.reload();
+	    		}
+		}
+	  };
+		alert(customerId);
+		xhttp.open("GET","?a=getVehicleIdForCustomer&customerId="+customerId, true);    
+	  	xhttp.send();
 		
 	}
 	
@@ -712,9 +791,14 @@ if('${param.order_id}'!='')
 			if(selection=="Pending")
 			{
 				var paymentModeElements=document.getElementsByName('paymentModeElements');
+				var customerVehicleElements=document.getElementsByName('customerVehicleElements');
 				for(var x=0;x<paymentModeElements.length;x++)
 				{
 					paymentModeElements[x].style="display:none";
+				}
+				for(var x=0;x<customerVehicleElements.length;x++)
+				{
+					customerVehicleElements[x].style="display:";
 				}
 				
 				drppaymentmode.value="NA";
@@ -722,9 +806,14 @@ if('${param.order_id}'!='')
 			else
 			{
 				var paymentModeElements=document.getElementsByName('paymentModeElements');
+				var customerVehicleElements=document.getElementsByName('customerVehicleElements');
 				for(var x=0;x<paymentModeElements.length;x++)
 				{
 					paymentModeElements[x].style="display:";
+				}
+				for(var x=0;x<customerVehicleElements.length;x++)
+				{
+					customerVehicleElements[x].style="display:none";
 				}
 				drppaymentmode.value="Cash";
 			}
