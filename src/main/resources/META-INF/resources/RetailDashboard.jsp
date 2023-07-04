@@ -231,7 +231,49 @@
         <div class="row">
           
           
-		
+		<div class="col-sm-4">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">Cost Sheet</h3>
+
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool" data-card-widget="collapse">
+									<i class="fas fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-tool" data-card-widget="remove">
+									<i class="fas fa-times"></i>
+								</button>
+							</div>
+						</div>
+						<div class="card-body table-responsive p-0">
+							<table class="table table-striped table-valign-middle">
+								
+								<tbody>
+
+
+									<tr>
+										<td> <div class="input-group">	  					
+				    <input type="number" class="form-control form-control-sm" placeholder="Search for J S No"  id="txtinvoiceno" onkeypress="checkIfEnterIsPressed(event)" name="txtinvoiceno">
+				    <div class="input-group-append">
+				      <button class="btn btn-secondary btn-sm" type="button" onclick="searchInvoice()">
+				        <i class="fa fa-search fa-sm"></i>
+				      </button>
+				    </div>
+				  </div></td>
+									</tr>
+
+
+
+
+
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+
+
+				</div>
 		
 		
 		<div class="col-sm-12">
@@ -846,11 +888,25 @@
             
           } );
         
+         function searchInvoice()
+        {
+        	  window.location="?a=showGenerateInvoice&editInvoice=Y&invoice_id="+txtinvoiceno.value;
+        }
         
         function reloadData()
         {
         	window.location="?a=showHomePage&fromDate="+txtfromdate.value+"&toDate="+txttodate.value;
-        }   
+        } 
+        
+        function checkIfEnterIsPressed(e)
+        {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) { //Enter keycode
+
+        searchInvoice();
+        
+        }
+      }
         
         if('${param.fromDate}'!='')
         	{
