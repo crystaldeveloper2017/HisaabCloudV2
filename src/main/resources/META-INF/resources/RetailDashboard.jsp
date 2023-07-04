@@ -253,7 +253,7 @@
 
 									<tr>
 										<td> <div class="input-group">	  					
-				    <input type="number" class="form-control form-control-sm" placeholder="Search for J S No"  id="txtinvoiceno" onkeypress="checkIfEnterIsPressed(event)" name="txtinvoiceno">
+				    <input type="number" class="form-control form-control-sm" placeholder="Search for Invoice No"  id="txtinvoiceno" onkeypress="checkIfEnterIsPressed(event)" name="txtinvoiceno">
 				    <div class="input-group-append">
 				      <button class="btn btn-secondary btn-sm" type="button" onclick="searchInvoice()">
 				        <i class="fa fa-search fa-sm"></i>
