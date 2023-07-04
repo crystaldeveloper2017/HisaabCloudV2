@@ -234,7 +234,7 @@
 		<div class="col-sm-4">
 					<div class="card card-primary">
 						<div class="card-header">
-							<h3 class="card-title">Cost Sheet</h3>
+							<h3 class="card-title">Search for Invoice</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool" data-card-widget="collapse">
