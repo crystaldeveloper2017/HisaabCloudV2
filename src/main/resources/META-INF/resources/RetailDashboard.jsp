@@ -888,10 +888,36 @@
             
           } );
         
-         function searchInvoice()
-        {
-        	  window.location="?a=showGenerateInvoice&editInvoice=Y&invoice_id="+txtinvoiceno.value;
-        }
+   
+
+        function searchInvoice()
+{
+	
+	
+
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	if(xhttp.responseText=="No Invoice Found")
+	    		{
+	    			alert(xhttp.responseText);
+	    		}
+	    	else
+	    		{
+	    			window.location="?a=showGenerateInvoice&editInvoice=Y&invoice_id="+xhttp.responseText;
+	    		}
+	      
+		  
+		}
+	  };
+	  xhttp.open("GET","?a=getInvoiceIdByInvoiceNo&invoiceNo="+txtinvoiceno.value, true);    
+	  xhttp.send();
+	
+	
+	
+}
         
         function reloadData()
         {
