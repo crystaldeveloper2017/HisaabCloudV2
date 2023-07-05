@@ -1,9 +1,7 @@
-FROM tomcat:jre17
+FROM tomcat:9.0.76-jre17
 
 # Some code that copies the war into the webapps folder
 COPY customizedpos_staging.war /usr/local/tomcat/webapps/
 
-# run the tomcat server
-CMD ["catalina.sh", "run"]
-
+# Expose the port
 EXPOSE 8080
