@@ -11,7 +11,7 @@
 	<groupId>jrout.tutorial</groupId>
 	<artifactId>spring-boot-servlet-jsp-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>spring-boot-servlet-jsp-spring</name>
 	<description>Demo project for Spring Boot</description>
 

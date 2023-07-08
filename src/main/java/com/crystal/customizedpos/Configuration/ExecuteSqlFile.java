@@ -11,6 +11,9 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 
 import com.crystal.Login.LoginDaoImpl;
 import com.crystal.Login.LoginServiceImpl;
+
+import ch.qos.logback.classic.Logger;
+
 import com.crystal.Frameworkpackage.CommonFunctions;
 
 public class ExecuteSqlFile {
@@ -27,6 +30,7 @@ public class ExecuteSqlFile {
 		      if(!mysqlUrl.contains("localhost"))
 		      {
 		    	  System.out.println("seems you are not running for localhost");
+				  System.out.println("This feature is only enabled for localhost");				  
 		    	  System.exit(0);
 		      }
 		      con= DriverManager.getConnection(mysqlUrl, CommonFunctions.username, CommonFunctions.password);
