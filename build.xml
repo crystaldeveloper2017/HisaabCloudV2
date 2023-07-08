@@ -184,7 +184,6 @@
         <copy file="src/main/java/com/crystal/customizedpos/Configuration/Application.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Application.yaml" overwrite="true"/>
         <copy file="src/main/java/com/crystal/customizedpos/Configuration/Roles.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Roles.yaml" overwrite="true"/>
         <copy file="src/main/java/com/crystal/customizedpos/Configuration/Elements.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Elements.yaml" overwrite="true"/>
-        <copy file="src/main/java/com/crystal/customizedpos/Configuration/Config.yaml" tofile="build/classes/com/crystal/customizedpos/Configuration/Config.yaml" overwrite="true"/>
         
         
         
@@ -195,7 +194,7 @@
               	<target name="war" depends="build">
               			<mkdir dir="${build-directory}" />
               			<delete file="${build-directory}/${war-file-name}" />
-              			<war warfile="/home/adnan/apache-tomcat-9.0.76/webapps/customizedpos_staging.war" webxml="${web-xml-file}">
+              			<war warfile="customizedpos_staging.war" webxml="${web-xml-file}">
               				<classes dir="${classes-directory}" />
               				<fileset dir="${web-directory}">
               					<!-- Need to exclude it since webxml is an attribute of the war tag above -->
