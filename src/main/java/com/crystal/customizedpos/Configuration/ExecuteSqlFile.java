@@ -34,6 +34,9 @@ public class ExecuteSqlFile {
 		    	  System.exit(0);
 		      }
 		      con= DriverManager.getConnection(mysqlUrl, CommonFunctions.username, CommonFunctions.password);
+
+			  // Select the database to use
+			  	con.setCatalog(CommonFunctions.schemaName);
 		      
 		      ScriptRunner sr = new ScriptRunner(con);
 		      Reader reader = new BufferedReader(new FileReader("mybackup.sql"));
