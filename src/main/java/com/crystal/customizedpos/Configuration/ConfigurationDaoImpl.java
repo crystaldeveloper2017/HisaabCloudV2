@@ -851,7 +851,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		
 		if(hm.get("shift_id")!=null && !hm.get("shift_id").equals(""))
 		{
-			insertUpdateCustomParameterized("insert into rlt_invoice_fuel_details values (default,:invoice_id,:shift_id,:attendant_id,:nozzle_id,sysdate(),:swipe_id)", hm, conWithF);
+			insertUpdateCustomParameterized("insert into rlt_invoice_fuel_details values (default,:invoice_id,:shift_id,:attendant_id,:nozzle_id,sysdate(),:swipe_id,:slot_id)", hm, conWithF);
 			
 				
 		}
@@ -6486,16 +6486,16 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 						+ "	username,name,\r\n"
 						+ "	user_id,\r\n"
 						
-						+ "	nozzle_name,tnr.nozzle_id \r\n"
+						+ "	nozzle_name,tnr.nozzle_id,item.item_name \r\n"
 						+ "from\r\n"
 						+ "	trn_nozzle_register tnr,\r\n"
 						+ "	tbl_user_mst tum,\r\n"
-						+ "	nozzle_master nm \r\n"
+						+ "	nozzle_master nm,mst_items item \r\n"
 						+ "where\r\n"
 						+ "	accounting_date = ?\r\n"
 						+ "	and shift_id = ?\r\n"
 						+ "	and tum.user_id = tnr.attendant_id\r\n"
-						+ "	and nm.nozzle_id =tnr.nozzle_id;", con);
+						+ "	and nm.nozzle_id =tnr.nozzle_id and item.item_id=nm.item_id;", con);
 			}
 
 

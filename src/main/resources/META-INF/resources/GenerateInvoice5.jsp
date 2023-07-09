@@ -1,4 +1,8 @@
 <style>
+	.date_field {position: relative; z-index:1000;}
+	.ui-datepicker{position: relative; z-index:1000!important;}
+</style>
+<style>
 	.aligncenterclass
 	{
 		text-align:center;
@@ -90,11 +94,13 @@ function saveInvoice()
 	"&total_cgst=0"+
 	"&total_sgst=0"+
 	"&drpshiftid="+drpshiftid.value+
-	"&nozzle_id="+nozzDetails[6]+
+	"&slot_id="+$("#drpshiftid option:selected").text().split("~")[3]+
+	"&nozzle_id="+drpnozzle.value+
 	"&swipe_id="+drpmachinename.value+
-	"&attendant_id="+nozzDetails[5]+
+	"&attendant_id="+nozzDetails[4]+
 	"&paytm_order_id=${param.order_id}"+
 	"&itemDetails="+itemString; 
+	console.log(reqString);
 	
 	
 	
@@ -204,7 +210,7 @@ function saveInvoice()
 			<div class="col-6">
   	<div class="form-group">	
   	<label for="email">Invoice Date</label>
-  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
+  		<input type="text" id="txtinvoicedate" onchange="getAttendantList()" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
   	</div>
   </div>
 
@@ -212,11 +218,23 @@ function saveInvoice()
   	<div class="form-group">
       
     <label for="email">Shift Name</label>  
-      <select class="form-control form-control-sm" name="drpshiftid" id="drpshiftid">
+      <select class="form-control form-control-sm" name="drpshiftid" id="drpshiftid" onchange="getAttendantList()">
       <option value="-1">----------Select----------</option>
       <c:forEach items="${lstOfShifts}" var="shift">
-			    <option value="${shift.shift_id}">${shift.shift_name}~${shift.from_time}~${shift.to_time}</option>    
-	   </c:forEach></select>
+		<c:if test="${shift.shift_name ne '3'}">
+			    <option value="${shift.shift_id}">${shift.shift_name}~${shift.from_time}~${shift.to_time}~0</option>    
+		</c:if>
+
+		<c:if test="${shift.shift_name eq '3'}">
+			<option value="${shift.shift_id}">${shift.shift_name}~22:00:00~00:00:00~1</option>
+			<option value="${shift.shift_id}">${shift.shift_name}~00:00:00~06:00:00~2</option>
+		</c:if>
+	
+
+
+	   </c:forEach>
+	   
+	</select>
             
     </div>
   </div>
@@ -227,10 +245,8 @@ function saveInvoice()
       <label for="email">Nozzle</label>
       <select class="form-control form-control-sm" name="drpnozzle" id="drpnozzle" onchange="checkForNozzleChangeAndGetItem()">
       <option value="-1">----------Select----------</option>
-      <c:forEach items="${lstOfActiveNozzles}" var="nozzle">
-			    <option value="${nozzle.nozzle_id}">${nozzle.name }~Checked In to ~Nozzle No : ${nozzle.nozzle_name}~${nozzle.item_name} at ~(${nozzle.check_in_time }) ~ ${nozzle.attendant_id } ~ ${nozzle.nozzle_id}</option>    
-	   </c:forEach></select>
-            
+	  
+	  </select>
     </div>
   </div>
   
@@ -248,19 +264,41 @@ function saveInvoice()
     </div>
   </div>
 
+  <div class="col-6">
+	<div class="form-group">
+	
+	
+	
+		  <label for="email">Customer Name</label>
+	
+	<div class="input-group input-group-sm">
+				<input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off" list='customerList' oninput="checkforMatchCustomer()">
+				
+				<span class="input-group-append">
+				  <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
+				</span>
+				
+				
+  </div>
+	
+	
+				
+	
+		  
+	<input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
+			 <input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
+			 <input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
+				   
+  </div>
+</div>
+
   
     <div class="col-6" name="customerVehicleElements">
   	<div class="form-group">
       
       <label for="txtsearchcustomervehicle">Customer Vehicle</label>
-      <input type="text" class="form-control form-control-sm" id="txtsearchcustomervehicle"    placeholder="Search For Vehicle" name="txtsearchcustomervehicle"  autocomplete="off" list='vehicleList'>
-                  <div class="input-group input-group-sm">
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomerVehicle()">Reset</button>
-                  </span>
-				  </div>
-
-				  <input  type="hidden" name="hdnSelectedCustomerVehicle" id="hdnSelectedCustomerVehicle" value=""> 
+      <select class="form-control form-control-sm" id="drpvehicledetails"    placeholder="Search For Vehicle" name="drpvehicledetails">
+      </select>            
             
     </div>
   </div>
@@ -292,33 +330,7 @@ function saveInvoice()
   </div>
   
   
-  <div class="col-6">
-  	<div class="form-group">
-  	
-  	
-  	
-  	      <label for="email">Customer Name</label>
-  	
-  	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off" list='customerList' oninput="checkforMatchCustomer(), checkforMatchCustomerVehicle()">
-                  
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
-                  </span>
-                  
-                  
-    </div>
-  	
-  	
-        	      
-      
-            
-      <input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
-   			<input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
-   			<input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
-   			      
-    </div>
-  </div>
+ 
 
   
   <div class="col-sm-12" id="divsearchforitems">
@@ -453,7 +465,7 @@ if('${param.order_id}'!='')
 				document.getElementById("hdnSelectedCustomer").value=customerId;			
 				document.getElementById("txtsearchcustomer").disabled=true;			
 				document.getElementById("hdnSelectedCustomerType").value=document.getElementById("txtsearchcustomer").value.split("~")[2];
-					
+				checkforMatchCustomerVehicle();
 			}
 		else
 			{
@@ -467,7 +479,6 @@ if('${param.order_id}'!='')
 	function checkforMatchCustomerVehicle()
 	{
 		
-		var searchString= document.getElementById("txtsearchcustomer").value;
 		var customerId=document.getElementById("hdnSelectedCustomer").value;;	
 		var options1=document.getElementById("vehicleList").options;
 		var txtsearchcustomervehicle=document.getElementById("txtsearchcustomervehicle");
@@ -496,23 +507,17 @@ if('${param.order_id}'!='')
 	    if (xhttp.readyState == 4 && xhttp.status == 200) 
 	    { 		      
 	    	var details=JSON.parse(xhttp.responseText);	    	
-	    	if(details!=undefined)
-	    		{
-					for (var i = 0; i < details.length; i++){
-						options1.text = details[i].vehicle_number;
-						options1.value = details[i].vehicle_number;
-						options1.id = details[i].vehicle_id;
-						txtsearchcustomervehicle.add(options1);
-					}
-	    		}
-	    	else
-	    		{
-	    			alert("no pending amount for this customer");
-	    			//window.location.reload();
-	    		}
+	    	console.log("checkforMatchCustomerVehicle");
+			console.log(details);
+			var reqString="";
+			for(var m=0;m<details.length;m++)
+			{
+				reqString+="<option value="+details[m].vehicle_id+">"+details[m].vehicle_name+"~ "+details[m].vehicle_number+" </option>"
+			}
+			drpvehicledetails.innerHTML=reqString;
+
 		}
 	  };
-		alert(customerId);
 		xhttp.open("GET","?a=getVehicleIdForCustomer&customerId="+customerId, true);    
 	  	xhttp.send();
 		
@@ -821,6 +826,36 @@ if('${param.order_id}'!='')
 	}
 
 
+	function getAttendantList()
+{
+	var shift=drpshiftid.options[drpshiftid.selectedIndex].value;
+	
+		const xhttp = new XMLHttpRequest();
+		xhttp.onload = function() {
+		var lsitofattendants=JSON.parse(this.responseText)["listofAttendants"];
+		console.log("List of attendants are");
+		console.log(lsitofattendants);
+		var reqString="";
+		for(var m=0;m<lsitofattendants.length;m++)
+		{
+			//console.log(lsitofattendants.name+" "+ lsitofattendants[m].nozzle_name +" ");
+			reqString+="<option value="+lsitofattendants[m].nozzle_id+">"+" "+lsitofattendants[m].name+"~Checked In to ~Nozzle No : "+lsitofattendants[m].nozzle_name+"~"+lsitofattendants[m].item_name+"~"+lsitofattendants[m].user_id+"</option>";
+		}
+		//<option value="${nozzle.nozzle_id}">${nozzle.name }~Checked In to ~Nozzle No : ${nozzle.nozzle_name}~${nozzle.item_name} at ~(${nozzle.check_in_time }) ~ ${nozzle.attendant_id } ~ ${nozzle.nozzle_id}</option>    
+		
+		drpnozzle.innerHTML=reqString;
+
+ 
+    
+    }
+    xhttp.open("GET", "?a=getAttendantsForDateAndShiftUnclubbed&collection_date="+txtinvoicedate.value+"&shift_id="+shift);
+    xhttp.send();
+	
+	
+	
+}
+
+getAttendantList();
 
 </script>
 

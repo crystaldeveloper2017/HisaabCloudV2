@@ -2615,7 +2615,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		
 		String drpshiftid = request.getParameter("drpshiftid");
 		String nozzle_id = request.getParameter("nozzle_id");
-		String attendant_id = request.getParameter("attendant_id");		
+		String attendant_id = request.getParameter("attendant_id");	
+		String slot_id = request.getParameter("slot_id");	
+			
 		String swipe_id = 
 				request.getParameter("swipe_id")==null 
 				||request.getParameter("swipe_id").equals("")?null:request.getParameter("swipe_id");
@@ -2627,6 +2629,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("nozzle_id", nozzle_id);
 		hm.put("attendant_id", attendant_id);
 		hm.put("swipe_id", swipe_id);
+		hm.put("slot_id", slot_id);
+		
 		
 		
 			
