@@ -45,7 +45,7 @@ public class ExecuteSqlFile {
 			      ConfigurationDaoImpl lobjConfigDaoimpl=new ConfigurationDaoImpl();
 					LoginDaoImpl loginDao= new LoginDaoImpl();
 					
-					long userId =lobjConfigDaoimpl.saveNewApp("Test App","31/03/2028","Test Store","testadmin","PetrolPump", con);					
+					long userId =lobjConfigDaoimpl.saveNewApp("Test App","31/03/2028","Test Store","testadmin","Retail", con);					
 					loginDao.changePassword("testadmin", "1", con);
 					
 					
