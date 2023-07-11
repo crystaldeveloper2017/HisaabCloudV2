@@ -8866,7 +8866,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		
+			String slot_id = request.getParameter("slot_id");	
 		
 		outputMap.put("txtcollectiondate", collectionDate);
 		
@@ -8879,7 +8879,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("drpshiftid", shiftId);
 		outputMap.put("user_id", userId);
 		outputMap.put("app_id", appId);
-		
+		outputMap.put("slot_id", slot_id);
 		
 
 

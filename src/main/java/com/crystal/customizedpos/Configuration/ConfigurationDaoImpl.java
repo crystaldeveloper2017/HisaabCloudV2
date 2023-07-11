@@ -5506,7 +5506,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 	        valuesMap.put("app_id", hm.get("app_id"));
 	        valuesMap.put("collection_mode", hm.get("mode") );
 	        valuesMap.put("shift_date", getDateASYYYYMMDD(hm.get("shift_date").toString()) );
-	        
+	         valuesMap.put("slot_id", hm.get("slot_id") );
 	        
 	        Query q=new Query("trn_supervisor_collection", "insert", valuesMap);			        
 	        return  insertUpdateEnhanced(q,conWithF);
