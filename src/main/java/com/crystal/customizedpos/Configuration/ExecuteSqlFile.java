@@ -12,7 +12,6 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import com.crystal.Login.LoginDaoImpl;
 import com.crystal.Login.LoginServiceImpl;
 
-import ch.qos.logback.classic.Logger;
 
 import com.crystal.Frameworkpackage.CommonFunctions;
 
