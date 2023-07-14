@@ -38,7 +38,7 @@ function saveCollectPaymentSupervisorNew()
 	var shiftId=document.getElementById('drpshift').value
 	
 
-	var stringToSend="mode="+drpmode.value+"&shiftId="+shiftId+"&txtcollectiondate="+txtcollectiondate.value+"&collectionData="+collectionData;	
+	var stringToSend="mode="+drpmode.value+"&shiftId="+shiftId+"&txtcollectiondate="+txtcollectiondate.value+"&collectionData="+collectionData+"&slot_id="+$("#drpshift option:selected").text().split("~")[3];	
 	
 
 	var xhttp = new XMLHttpRequest();
@@ -141,21 +141,31 @@ function deleteAttachment(id)
             
     </div>
   </div>
+  <div class="col-4">
+	<div class="form-group">
+	
+  <label for="email">Shift No</label>  
+	<select class="form-control form-control-sm" name="drpshift" id="drpshift" onchange="getAttendantList()">
+	<option value="-1">----------Select----------</option>
+	<c:forEach items="${lstOfShifts}" var="shift">
+	  <c:if test="${shift.shift_name ne '3'}">
+			  <option value="${shift.shift_id}">${shift.shift_name}~${shift.from_time}~${shift.to_time}~0</option>    
+	  </c:if>
+
+	  <c:if test="${shift.shift_name eq '3'}">
+		  <option value="${shift.shift_id}">${shift.shift_name}~22:00:00~00:00:00~0</option>
+		  <option value="${shift.shift_id}">${shift.shift_name}~00:00:00~06:00:00~1</option>
+	  </c:if>
   
-  <div class="col-sm-4">
-  	<div class="form-group">
-      <label for="email">Shift No</label>
-    
-    
-        <select class="form-control" name="drpshift" id="drpshift" onchange="getAttendantList()">
-      
-      
-      <c:forEach items="${lstOfShifts}" var="shift">
-			    <option value="${shift.shift_id}">${shift.shift_name}</option>    
-	   </c:forEach></select>
-	            
-    </div>
+
+
+	 </c:forEach>
+	 
+  </select>
+		  
   </div>
+</div>
+  
 
     <div class="col-sm-4">
   	<div class="form-group">
@@ -330,6 +340,7 @@ function getAttendantList()
       
       
       var collectionData=JSON.parse(this.responseText)["collectionData"];
+	  $("#example1 tr").remove();
       var table = document.getElementById("example1");	    	
   	var row = table.insertRow(-1);	    	
   	var cell1 = row.insertCell(0);

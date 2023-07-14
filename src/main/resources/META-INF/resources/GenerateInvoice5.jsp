@@ -226,8 +226,8 @@ function saveInvoice()
 		</c:if>
 
 		<c:if test="${shift.shift_name eq '3'}">
-			<option value="${shift.shift_id}">${shift.shift_name}~22:00:00~00:00:00~1</option>
-			<option value="${shift.shift_id}">${shift.shift_name}~00:00:00~06:00:00~2</option>
+			<option value="${shift.shift_id}">${shift.shift_name}~22:00:00~00:00:00~0</option>
+			<option value="${shift.shift_id}">${shift.shift_name}~00:00:00~06:00:00~1</option>
 		</c:if>
 	
 
