@@ -22,7 +22,7 @@ buildNumber.properties
 # Config.yaml Contains Credentials and Application Configurations
 
 logging.log
-
+ROOT.war
 
 src/main/resources/META-INF/resources/frameworkjsps/
 src/main/java/com/crystal/customizedpos/Configuration/Config.yaml
