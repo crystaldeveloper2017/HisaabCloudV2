@@ -1,5 +1,7 @@
 # Default Maven Ignore Files
 target/
+build/
+tmp/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

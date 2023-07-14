@@ -2,6 +2,8 @@ package com.crystal.customizedpos.Configuration;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +14,7 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import com.crystal.Login.LoginDaoImpl;
 import com.crystal.Login.LoginServiceImpl;
 
-import ch.qos.logback.classic.Logger;
+
 
 import com.crystal.Frameworkpackage.CommonFunctions;
 
@@ -22,12 +24,11 @@ public class ExecuteSqlFile {
 	 public static void main(String argv[]) throws SQLException {
 		  Connection con=null;
 	    try {
-			  CommonFunctions cf = new CommonFunctions();
-		    	cf.initializeApplication(new Class[] {ConfigurationServiceImpl.class,LoginServiceImpl.class});
+			  
 
 		      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 		      String mysqlUrl = CommonFunctions.url+":"+CommonFunctions.port;
-		      if(!mysqlUrl.contains("localhost"))
+		      if(!mysqlUrl.contains("localhost") && !mysqlUrl.contains("mysqldb-container"))
 		      {
 		    	  System.out.println("seems you are not running for localhost");
 				  System.out.println("This feature is only enabled for localhost");				  
@@ -39,7 +40,8 @@ public class ExecuteSqlFile {
 			  	con.setCatalog(CommonFunctions.schemaName);
 		      
 		      ScriptRunner sr = new ScriptRunner(con);
-		      Reader reader = new BufferedReader(new FileReader("mybackup.sql"));
+			  InputStream in = ExecuteSqlFile.class.getResourceAsStream("mybackup.sql");
+		      Reader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 		      sr.runScript(reader);
 			      
 			      ConfigurationDaoImpl lobjConfigDaoimpl=new ConfigurationDaoImpl();
