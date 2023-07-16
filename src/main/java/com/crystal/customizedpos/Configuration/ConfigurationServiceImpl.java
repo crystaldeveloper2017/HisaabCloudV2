@@ -2611,8 +2611,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String tableId = request.getParameter("table_id");
 		String bookingId = request.getParameter("booking_id");
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
-		String appType= "";
-		
+		String appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
 		String drpshiftid = request.getParameter("drpshiftid");
 		String nozzle_id = request.getParameter("nozzle_id");
 		String attendant_id = request.getParameter("attendant_id");	
@@ -2646,8 +2645,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		}
 
 		if (appId == null || appId.equals("")) {
-			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");			
 		}
 		hm.put("app_id", appId);
 		hm.put("table_id", tableId);
@@ -6768,6 +6766,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		String storeId = request.getParameter("store_id");
 		String appId = request.getParameter("appId");
+		String appType="";
 
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
 		request.setAttribute("invoiceId", hdnPreviousInvoiceId);
@@ -6777,6 +6776,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		if (appId == null || appId.equals("")) {
 			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+			
 		}
 		hm.put("app_id", appId);
 		hm.put("stringTermsArray", stringTermsArray);
@@ -8563,21 +8563,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		HashMap<String, String> hm = new HashMap<String, String>();
 		
 		
-		String testQuantity = request.getParameter("testqty");
-		String testNozzle = request.getParameter("testnozzle");
 		String shift_id = request.getParameter("shift_id");
-		String attendant_id = request.getParameter("attendant_id");
-		String testDate = request.getParameter("testdate");
+		String testDate = request.getParameter("testDate");
 		
-		
-		
-
-		hm.put("testQuantity", testQuantity);
-		hm.put("testNozzle", testNozzle);
-		hm.put("shift_id", shift_id);
-		hm.put("attendant_id", attendant_id);
-		hm.put("testDate", testDate);		
-		hm.put("test_type", "S");
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		hm.put("user_id", userId);
@@ -8585,7 +8573,37 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
 		
-		lObjConfigDao.addTestFuel(con, hm);
+
+		hm.put("shift_id", shift_id);
+		hm.put("testDate", testDate);		
+		hm.put("test_type", "S");
+
+		String testInputData=request.getParameter("testInputData");		
+		String[] listTestdata=testInputData.split("\\|");
+		for(String s:listTestdata)
+		{
+			String[] testData=s.split("~");
+			hm.put("attendant_id", testData[0]);	
+			hm.put("testNozzle", testData[1]);	
+			hm.put("testQuantity", testData[2]);	
+			if(!testData[2].equals("0"))
+			{
+				lObjConfigDao.addTestFuel(con, hm);
+			}	
+			
+		}
+
+
+		
+		
+		
+		
+
+		
+
+		
+		
+		
 		
 		rs.setAjaxData("Data saved Succesfully");
 		return rs;
