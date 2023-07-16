@@ -189,7 +189,7 @@
 						
 						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.csh} </a></td>
 						
-						<td><a href="?a=generateDailyPaymentRegister&storeId=${userdetails.store_id }&paymentFor=Invoice&paymentMode=Card&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.cswp} </a></td>
+						<td><a href="?a=generateDailyPaymentRegister&storeId=${userdetails.store_id }&paymentFor=Invoice&paymentMode=Card&txtfromdate=${txtfromdate}&txttodate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.cswp} </a></td>
 						
 						<td><a href="?a=showPaytmTransctions&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pytm} </a></td>
 						
