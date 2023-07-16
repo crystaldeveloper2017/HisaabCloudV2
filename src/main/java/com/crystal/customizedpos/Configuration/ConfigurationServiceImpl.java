@@ -4396,6 +4396,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String type = request.getParameter("type") == null ? "" : request.getParameter("type");
 		String customerId = request.getParameter("customerId") == null ? "" : request.getParameter("customerId");
 		String attendant_id = request.getParameter("attendant_id") == null ? "" : request.getParameter("attendant_id");
+		String paymentMode = request.getParameter("paymentMode") == null ? "" : request.getParameter("paymentMode");
+
 
 		boolean deleteFlag = request.getParameter("deleteFlag") == null ? false
 				: new Boolean(request.getParameter("deleteFlag").toString());
@@ -4419,6 +4421,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("deleteFlag", deleteFlag);
 		hm.put("customerId", customerId);
 		hm.put("attendant_id", attendant_id);
+		hm.put("paymentMode", paymentMode);
+		
 
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;

@@ -1820,6 +1820,19 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			questionMarks=questionMarks.substring(0,questionMarks.length()-1);
 			query += " and inv.payment_type in ("+questionMarks+")";
 		}
+		if (hm1.get("paymentMode")!=null && !hm1.get("paymentMode").equals("")) 
+		{
+						
+			String questionMarks="";
+			for(String s:hm1.get("paymentMode").toString().split(","))
+			{
+				questionMarks+="?"+",";
+				parameters.add(s);
+			}
+			questionMarks=questionMarks.substring(0,questionMarks.length()-1);
+			query += " and paymnt.payment_mode in ("+questionMarks+")";
+		}
+		
 		
 		if(hm1.get("discount")!=null && !hm1.get("discount").equals(""))
 		{
