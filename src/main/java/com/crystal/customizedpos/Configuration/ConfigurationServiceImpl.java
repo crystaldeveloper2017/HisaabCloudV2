@@ -2611,7 +2611,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String tableId = request.getParameter("table_id");
 		String bookingId = request.getParameter("booking_id");
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
-		String appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		String appType="";
+		if(request.getSession().getAttribute("userdetails")!=null)
+		{
+			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		}
 		String drpshiftid = request.getParameter("drpshiftid");
 		String nozzle_id = request.getParameter("nozzle_id");
 		String attendant_id = request.getParameter("attendant_id");	
