@@ -53,10 +53,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.crystal.CustomExceptions.CustomerMobileAlreadyExist;
-import com.crystal.Login.LoginDaoImpl;
 import com.crystal.Frameworkpackage.CommonFunctions;
 import com.crystal.Frameworkpackage.CustomResultObject;
 import com.crystal.Frameworkpackage.Role;
+import com.crystal.Login.LoginDaoImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.Document;
@@ -1326,10 +1326,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 					.get("store_id");
 			
-			
-			
 			String invoiceTypeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
-					.get("invoice_type");
+			.get("invoice_type");
+
+			String invoiceType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+			.get("app_type");
+
+			System.out.println("invoiceType" + invoiceType);
+
 
 			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 			boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
@@ -1429,11 +1433,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				outputMap.put("listUniqueModelNo", lObjConfigDao.getUniqueModelNoForThisApp(con, appId));
 			}
 
-			if (invoiceTypeId.equals("0")) {
-				rs.setViewName("../GenerateInvoice.jsp");
-			} else {
-				rs.setViewName("../GenerateInvoice" + invoiceTypeId + ".jsp");
-			}
+			rs.setViewName("../GenerateInvoice" + invoiceType + ".jsp");
 
 			rs.setReturnObject(outputMap);
 

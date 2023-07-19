@@ -3,6 +3,8 @@ appTypes:
    roles: 0,1,2,3,4,5,8,9,10,11,12,13,14,15,16
  - appType: Retail
    roles: 2,3,4,5,8,9,11
+ - appType: Services
+   roles: 2,3,4,5,8,9,11
  - appType: PetrolPump
    roles: 13,14,15,16
  - appType: Jwellery
