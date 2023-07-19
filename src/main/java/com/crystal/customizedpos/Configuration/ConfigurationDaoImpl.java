@@ -1659,19 +1659,6 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 				con);
 
 	}
-
-	public List<LinkedHashMap<String, Object>> getInvoiceTypeForId(String invoiceTypeId, Connection con)
-			throws ClassNotFoundException, SQLException {
-		ArrayList<Object> parameters = new ArrayList<>();	
-		parameters.add(invoiceTypeId);
-		return getListOfLinkedHashHashMap(parameters,
-				"select * from invoice_types where invoice_type_id=?",
-				con);
-
-	}
-	
-	
-	
 	
 
 	public LinkedHashMap<String, String> getStoreDetails(long storeId, Connection con) throws SQLException {
