@@ -1660,9 +1660,6 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 
 	}
 	
-	
-	
-	
 
 	public LinkedHashMap<String, String> getStoreDetails(long storeId, Connection con) throws SQLException {
 

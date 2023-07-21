@@ -29,17 +29,6 @@
 	    </div>
 	</div>
 
-	<div class="col-sm-12">
-	  	<div class="form-group">
-	      <label for="email">Invoice Type</label>     
-	      <select class="form-control" name="drpinvoicetype" id="drpinvoicetype" >
-	      <c:forEach items="${listOfInvoiceTypes}" var="invoicetype">
-				    <option value="${invoicetype.invoice_type_id}">${invoicetype.invoice_type_name}</option>			    
-		   </c:forEach></select>   
-	    </div>
-	</div>
-	
-	
 	
 		<div class="col-sm-12">
 	
