@@ -1332,9 +1332,6 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String invoiceType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 			.get("app_type");
 
-			System.out.println("invoiceType" + invoiceType);
-
-
 			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 			boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
 			
