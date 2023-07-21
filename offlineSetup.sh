@@ -54,29 +54,6 @@ run_hisaabcloud_container() {
     echo "Hisaab Cloud container has been started."
 }
 
-wait_for_mysql() {
-    local container_name="mysqldb-container"
-    local max_attempts=30
-    local sleep_duration=1
-    local i=1
-
-    echo "Waiting for MySQL container to start..."
-    while [ "$i" -le "$max_attempts" ]; do
-        if [sudo docker inspect -f '{{.State.Running}}' "$container_name" 2>/dev/null | grep -q "true"]; then
-            echo "MySQL container is ready."
-            return 0
-        else
-            echo "mysql container isn't running yet"
-            i=$((i+1))
-            sleep $sleep_duration
-        fi
-
-    done
-
-    echo "Timed out waiting for MySQL container to start."
-    return 1
-}
-
 # Check if Docker is installed
 if check_docker_installed; then
     echo "Docker is already installed."
@@ -86,8 +63,6 @@ fi
 
 # Run the MySQL container
 run_mysql_container
-
-wait_for_mysql
 
 # Run the Hisaab Cloud container
 run_hisaabcloud_container
