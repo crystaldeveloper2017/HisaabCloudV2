@@ -10,10 +10,9 @@ function Check-DockerInstalled {
 # Function to install Docker
 function Install-Docker {
     Write-Host "Docker is not installed. Installing Docker..."
-
-    # Install Docker using Chocolatey (a popular package manager for Windows)
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    choco install docker -y
+    # Add the Docker repository and install Docker
+    Invoke-WebRequest -UseBasicParsing -OutFile dockerInstall.ps1 https://get.docker.com/windows
+    .\dockerInstall.ps1
 
     Write-Host "Docker has been installed successfully."
 }
@@ -25,7 +24,7 @@ function Run-MySQLContainer {
     Write-Host "MySQL container has been started."
 }
 
-# Function to run the Hisaab Cloud container
+# Function to run the hisaabcloud container
 function Run-HisaabCloudContainer {
     Write-Host "Running Hisaab Cloud container..."
     docker run -d --link mysqldb-container -p 8080:8080 `
@@ -46,28 +45,27 @@ function Run-HisaabCloudContainer {
     Write-Host "Hisaab Cloud container has been started."
 }
 
-# Function to wait until MySQL container is running
 function Wait-ForMySQL {
-    $containerName = "mysqldb-container"
-    $maxAttempts = 30
-    $sleepDuration = 1
+    $container_name = "mysqldb-container"
+    $max_attempts = 30
+    $sleep_duration = 1
     $i = 1
 
     Write-Host "Waiting for MySQL container to start..."
-    while ($i -le $maxAttempts) {
-        $running = (docker inspect -f '{{.State.Running}}' $containerName 2> $null) -eq "true"
-        if ($running) {
+    while ($i -le $max_attempts) {
+        if (docker ps --filter "name=mysqldb-container" --format "{{.Status}}" | ForEach-Object { $_ -match "Up" }) {
+
             Write-Host "MySQL container is ready."
-            return
+            return $true
         } else {
-            Write-Host "MySQL container isn't running yet."
+            Write-Host "mysql container isn't running yet"
             $i++
-            Start-Sleep -Seconds $sleepDuration
+            Start-Sleep $sleep_duration
         }
     }
 
     Write-Host "Timed out waiting for MySQL container to start."
-    throw "MySQL container not ready."
+    return $false
 }
 
 # Check if Docker is installed
@@ -80,7 +78,6 @@ if (Check-DockerInstalled) {
 # Run the MySQL container
 Run-MySQLContainer
 
-# Wait for the MySQL container to start
 Wait-ForMySQL
 
 # Run the Hisaab Cloud container
