@@ -272,7 +272,7 @@ function getAttendantList()
   	cell3.innerHTML = '<b>Test Quantity';
   	cell4.innerHTML = '<b>Updated By';
   	cell5.innerHTML = '<b>Updated Date';
-  	cell6.innerHTML = '<b>Shift Id';
+  	cell6.innerHTML = '<b>Shift No';
   	cell7.innerHTML = '<b>Test Date';  	
   	
   	

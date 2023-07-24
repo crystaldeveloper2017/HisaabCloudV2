@@ -6505,7 +6505,7 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 						+ "	accounting_date = ?\r\n"
 						+ "	and shift_id = ?\r\n"
 						+ "	and tum.user_id = tnr.attendant_id\r\n"
-						+ "	and nm.nozzle_id =tnr.nozzle_id and item.item_id=nm.item_id;", con);
+						+ "	and nm.nozzle_id =tnr.nozzle_id and item.item_id=nm.item_id order by nozzle_name,name", con);
 			}
 
 

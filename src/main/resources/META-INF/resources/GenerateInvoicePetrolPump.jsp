@@ -17,6 +17,8 @@
 <c:set var="SupervisorDetails" value='${requestScope["outputObject"].get("SupervisorDetails")}' />
 <c:set var="userList" value='${requestScope["outputObject"].get("userList")}' />
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
+<c:set var="txtinvoicedate" value='${requestScope["outputObject"].get("txtinvoicedate")}' />
+
 <c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShifts")}' />
 <c:set var="lstOfActiveNozzles" value='${requestScope["outputObject"].get("lstOfActiveNozzles")}' />
 <c:set var="lstOfSwipeMaster" value='${requestScope["outputObject"].get("lstOfSwipeMaster")}' />
@@ -118,8 +120,8 @@ function saveInvoice()
 	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
 	    	}
 	    	
-	    	
-	    		window.location.reload();	    		
+	    	//alert(txtinvoicedate.value);
+	    	window.location="?a=showGenerateInvoice&txtinvoicedate="+txtinvoicedate.value;	    		
 	      	return;
 	      	
 	      	if(typeof chkprintinvoice !='undefined' && chkprintinvoice.checked==true)
@@ -210,7 +212,7 @@ function saveInvoice()
 			<div class="col-6">
   	<div class="form-group">	
   	<label for="email">Invoice Date</label>
-  		<input type="text" id="txtinvoicedate" onchange="getAttendantList()" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
+  		<input type="text" id="txtinvoicedate" onchange="getAttendantList()" name="txtinvoicedate" class="form-control form-control-sm" value="" placeholder="Invoice Date" readonly/>
   	</div>
   </div>
 
@@ -856,6 +858,16 @@ if('${param.order_id}'!='')
 }
 
 getAttendantList();
+
+
+if("${param.txtinvoicedate}"!="")
+{
+	txtinvoicedate.value="${param.txtinvoicedate}";
+}
+else
+{	
+	txtinvoicedate.value="${todaysDate}";
+}
 
 </script>
 

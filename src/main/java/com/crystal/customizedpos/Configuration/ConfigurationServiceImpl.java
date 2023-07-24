@@ -1320,6 +1320,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String tableId = request.getParameter("table_id");
 			String bookingId = request.getParameter("booking_id");
 			String MobilebookingId = request.getParameter("mobile_booking_id");
+			String txtinvoicedate = request.getParameter("txtinvoicedate");
+			
 
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
@@ -1344,6 +1346,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("app_id", appId);
 			outputMap.put("table_id", tableId);
 			outputMap.put("invoice_no", invoiceNo);
+			outputMap.put("txtinvoicedate", txtinvoicedate);
+			
 
 			if (invoiceId != null) {
 				outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
