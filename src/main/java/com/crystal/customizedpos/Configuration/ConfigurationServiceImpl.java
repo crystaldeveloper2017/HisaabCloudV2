@@ -5401,7 +5401,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			totalAmount+=Double.parseDouble(temp.get("pytm").toString());
 			totalAmount+=Double.parseDouble(temp.get("cswp").toString());
 			totalAmount+=Double.parseDouble(temp.get("pnding").toString());
-			hm.put(temp.get("name").toString(),totalAmount);
+			if(hm.get(temp.get("name").toString())==null)
+			{
+				hm.put(temp.get("name").toString(),totalAmount);
+			}
+			else
+			{
+				Double existingValue=Double.parseDouble(hm.get(temp.get("name").toString()).toString());
+				hm.put(temp.get("name").toString(),existingValue+totalAmount);				
+			}
 		}
 		return hm;
 	}
