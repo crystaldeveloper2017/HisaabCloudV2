@@ -121,7 +121,7 @@ public class LoginServiceImpl extends CommonFunctions {
 				if(appType.equals("Jwellery"))
 						{
 					
-						rs.setViewName("../JwelleryDashboard.jsp");
+						rs.setViewName("../RetailDashboard.jsp");
 					
 						}
 				else
