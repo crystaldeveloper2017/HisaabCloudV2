@@ -111,19 +111,13 @@ public class LoginServiceImpl extends CommonFunctions {
 			
 			
 			
-			if(appType.equals("Retail") || appType.equals("Master"))
+			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery"))
 					{
-					outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
+						outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
+					
 					rs.setViewName("../RetailDashboard.jsp");
 				
-					}
-			else
-				if(appType.equals("Jwellery"))
-						{
-					
-						rs.setViewName("../RetailDashboard.jsp");
-					
-						}
+					}			
 				else
 					if(appType.equals("PetrolPump"))
 							{
