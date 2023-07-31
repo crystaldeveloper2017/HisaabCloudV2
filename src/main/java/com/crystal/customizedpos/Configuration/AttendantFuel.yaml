@@ -1,0 +1,31 @@
+- roleId: 16
+  roleName: "AttendantFuel"
+  actions:
+    - getVehicleIdForCustomer
+    - acceptPhonePayPayment
+    - showPhonePePayments
+    - changePassword
+    - showChangePassword
+    - generateDailyInvoiceReport
+    - showCheckInScreen
+    - showHomePage
+    - checkInNozzle
+    - showGenerateInvoice
+    - checkOutNozzle
+    - showCheckOutScreen
+    - showAddTestFuel
+    - addTestFuel
+    - showUnclaimedPayments
+    - showUserRoleMapping
+    - showUserDetails
+  elements:
+    - 700165
+    - 700190
+    - 700168
+    - 21
+    - 7
+    - 700180
+    - 700195
+    - 700197
+    - 700178
+    - 26
