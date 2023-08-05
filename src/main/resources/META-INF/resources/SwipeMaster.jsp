@@ -64,6 +64,7 @@ function addSwipe()
 
 
 <c:set var="ListOfSwipe" value='${requestScope["outputObject"].get("ListOfSwipe")}' />
+<c:set var="ListOfBanks" value='${requestScope["outputObject"].get("ListOfBanks")}' />
 
 
 
@@ -116,7 +117,7 @@ function addSwipe()
                   <thead>
                     <tr>
                      <th><b>Swipe Machine Id</b></th><th><b>Swipe Machine Name</b></th>
-                     <th><b>Swipe Machine Bank</b></th><th><b>Swipe Machine Account No</b></th>
+                     <th><b>Swipe Machine Bank</b></th>
                      <th><b>Swipe Machine Short Name</b></th>
                     
                      <th></th><th></th>
@@ -128,7 +129,7 @@ function addSwipe()
 						<td>${item.swipe_machine_id}</td>
 						<td>${item.swipe_machine_name}</td>
 						<td>${item.swipe_machine_bank}</td>
-						<td>${item.swipe_machine_account_no}</td>
+					
 					    <td>${item.swipe_machine_short_name}</td>
 						
 						

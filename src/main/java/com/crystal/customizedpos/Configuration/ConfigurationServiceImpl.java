@@ -8767,7 +8767,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		try {
 
 			String[] colNames = { "swipe_machine_id", "swipe_machine_name", "swipe_machine_bank",
-					"swipe_machine_account_no", "swipe_machine_short_name", "activate_flag", "updated_by",
+					 "swipe_machine_short_name", "activate_flag", "updated_by",
 					"updated_date" };
 			outputMap.put("app_id", appId);
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getSwipeMaster(outputMap, con);
@@ -8777,6 +8777,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 						"CategoryMaster");
 			} else {
 				outputMap.put("ListOfSwipe", lst);
+				outputMap.put("ListOfBanks", lst);	
 				rs.setViewName("../SwipeMaster.jsp");
 				rs.setReturnObject(outputMap);
 			}
@@ -8802,6 +8803,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				outputMap.put("SwipeDetails", lObjConfigDao.getSwipeDetails(outputMap, connections));
 			}
 			outputMap.put("lisitOfSwipe", lObjConfigDao.getSwipeMaster(outputMap, connections));
+			outputMap.put("BankList", lObjConfigDao.getBankMaster(outputMap, connections));
 			rs.setViewName("../AddSwipe.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
