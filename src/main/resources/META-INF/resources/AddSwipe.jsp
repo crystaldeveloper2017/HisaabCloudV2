@@ -5,8 +5,10 @@
 
 
 <c:set var="SwipeDetails" value='${requestScope["outputObject"].get("SwipeDetails")}' />
+
 <c:set var="BankDetails" value='${requestScope["outputObject"].get("BankDetails")}' />
 <c:set var="ListOfBanks" value='${requestScope["outputObject"].get("ListOfBanks")}' />
+
    
 
 
@@ -93,9 +95,10 @@ function deleteAttachment(id)
     </div>
   </div>
   
+
   <div class="col-sm-12">
 	  	<div class="form-group">
-      <label for="email">Account Id </label>     
+      <label for="email">Bank Details </label>     
       <select class="form-control" name="txtaccountid" id="txtaccountid">
       <c:forEach items="${ListOfBanks}" var="item">
        <option value="${item.bank_id}">${item.bank_name} - ${item.account_no} -${item.ifsc_code}</option>	
@@ -109,6 +112,7 @@ function deleteAttachment(id)
   </div>
   
   
+
   
   <div class="col-sm-12">
   	<div class="form-group">

@@ -8766,7 +8766,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		try {
 
+
 			String[] colNames = { "swipe_machine_id", "swipe_machine_name", "bank_details",
+
 					 "swipe_machine_short_name", "activate_flag", "updated_by",
 					"updated_date" };
 			outputMap.put("app_id", appId);
@@ -8777,7 +8779,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 						"CategoryMaster");
 			} else {
 				outputMap.put("ListOfSwipe", lst);
+
 				outputMap.put("BankDetails", lst);
+
 				rs.setViewName("../SwipeMaster.jsp");
 				rs.setReturnObject(outputMap);
 			}
@@ -8806,6 +8810,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			}
 			outputMap.put("lisitOfSwipe", lObjConfigDao.getSwipeMaster(outputMap, connections));
 			outputMap.put("ListOfBanks", lObjConfigDao.getBankMaster(outputMap, connections));
+
 			rs.setViewName("../AddSwipe.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {

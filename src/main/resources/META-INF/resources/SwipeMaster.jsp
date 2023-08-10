@@ -64,6 +64,7 @@ function addSwipe()
 
 
 <c:set var="ListOfSwipe" value='${requestScope["outputObject"].get("ListOfSwipe")}' />
+
 <c:set var="BankDetails" value='${requestScope["outputObject"].get("BankDetails")}' />
 
 
@@ -119,6 +120,7 @@ function addSwipe()
                      <th><b>Swipe Machine Id</b></th><th><b>Swipe Machine Name</b></th>
                      <th><b>Bank Details</b></th>
                       <th><b>Swipe Machine Short Name</b></th>
+
                     
                      <th></th><th></th>
                     </tr>
@@ -132,6 +134,7 @@ function addSwipe()
 						<td> ${item.swipe_machine_short_name} </td>
            
 					 
+
 						
 						
 						<td><a href="?a=showAddSwipe&swipeMachineId=${item.swipe_machine_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteSwipe('${item.swipe_machine_id}')">Delete</button></td>

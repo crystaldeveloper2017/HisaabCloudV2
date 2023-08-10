@@ -36,6 +36,7 @@
       <input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value="">
 	  <input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">      
     </div>
+	
   </div>
   
   <div class="col-sm-3">
