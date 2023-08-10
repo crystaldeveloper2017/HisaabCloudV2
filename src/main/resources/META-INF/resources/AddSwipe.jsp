@@ -6,10 +6,8 @@
 
 <c:set var="SwipeDetails" value='${requestScope["outputObject"].get("SwipeDetails")}' />
 
-<c:set var="message" value='${requestScope["outputObject"].get("ListOfBanks")}' />
 <c:set var="BankDetails" value='${requestScope["outputObject"].get("BankDetails")}' />
-
-
+<c:set var="ListOfBanks" value='${requestScope["outputObject"].get("ListOfBanks")}' />
 
    
 
@@ -97,17 +95,22 @@ function deleteAttachment(id)
     </div>
   </div>
   
+
+  <div class="col-sm-12">
+	  	<div class="form-group">
+      <label for="email">Bank Details </label>     
+      <select class="form-control" name="txtaccountid" id="txtaccountid">
+      <c:forEach items="${ListOfBanks}" var="item">
+       <option value="${item.bank_id}">${item.bank_name} - ${item.account_no} -${item.ifsc_code}</option>	
+       <script>
+				    var element = document.getElementById('txtaccountid');
+				    element.value = ${bankDetails.txtaccountid};
+			    </script>
+       </c:forEach>
+	  </select>     
+    </div>
+  </div>
   
- 	<div class="col-sm-12">
-  	<div class="form-group">
-      <label for="email">Swipe Machine Bank</label>
-	  <select class="form-control" name="swipe_machine_bank" id="swipe_machine_bank">
-	  <c:forEach items="${ListOfBanks}" var="cat">
-	 	<option value="${cat.bank_id}">${cat.bank_name} - ${cat.account_no} </option>	 
-	</c:forEach>
-			</select>     
-		</div>
-	</div>
   
 
   

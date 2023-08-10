@@ -5799,7 +5799,14 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(hm.get("app_id"));
 			return getListOfLinkedHashHashMap(parameters,
-					"select * from swipe_machine_master where app_id=? and activate_flag=1",
+					"select\r\n" + //
+							"\t*\r\n" + //
+							"from\r\n" + //
+							"\tswipe_machine_master smm,\r\n" + //
+							"\tmst_bank mb\r\n" + //
+							"where\r\n" + //
+							"\tmb.bank_id = smm.account_id\r\n" + //
+							"\tand smm.activate_flag = 1 and smm.app_id=? ",
 					con);
 	
 
@@ -5810,8 +5817,8 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 		
 		public long addSwipe(Connection conWithF, HashMap<String, Object> hm) throws SQLException {
 			
-			String insertQuery = "insert into swipe_machine_master  values (default,:swipe_machine_name,:swipe_machine_bank,"
-					+ ":swipe_machine_account_no,:swipe_machine_short_name,1,:app_id,:user_id,sysdate()) ";
+			String insertQuery = "insert into swipe_machine_master  values (default,:swipe_machine_name,:txtaccountid,"
+					+ ":swipe_machine_short_name,1,:app_id,:user_id,sysdate()) ";
 			return insertUpdateCustomParameterized(insertQuery, hm, conWithF);
 		}
 		
@@ -5879,20 +5886,19 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 		
 
 		
-		public String updateSwipe(long hdnSwipeMachineId,String  swipe_machine_name,String swipe_machine_bank,String swipe_machine_account_no,String swipe_machine_short_name,String userId,Connection con) throws Exception 
+		public String updateSwipe(long hdnSwipeMachineId,String  swipe_machine_name,String txtaccountid,String swipe_machine_short_name,String userId,Connection con) throws Exception 
 		{
 			ArrayList<Object> parameters = new ArrayList<>();
 			
 			
 			parameters.add(swipe_machine_name);
-			parameters.add(swipe_machine_bank);
-			parameters.add(swipe_machine_account_no);
+			parameters.add(txtaccountid);
 			parameters.add(swipe_machine_short_name);
 			parameters.add(userId);
 			parameters.add(hdnSwipeMachineId);
 			
 						
-			insertUpdateDuablDB("update swipe_machine_master set swipe_machine_name=?,swipe_machine_bank=?,swipe_machine_account_no=?,swipe_machine_short_name=?,updated_by=?,updated_date=sysdate() where swipe_machine_id=?",parameters, con);
+			insertUpdateDuablDB("update swipe_machine_master set swipe_machine_name=?,account_id=?,swipe_machine_short_name=?,updated_by=?,updated_date=sysdate() where swipe_machine_id=?",parameters, con);
 			return "Swipe Updated Succesfully";
 		}
 		

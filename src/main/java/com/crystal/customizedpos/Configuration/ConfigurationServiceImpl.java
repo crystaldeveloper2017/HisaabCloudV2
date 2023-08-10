@@ -8766,7 +8766,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		try {
 
-			String[] colNames = { "swipe_machine_id", "swipe_machine_name", "swipe_machine_bank",
+
+			String[] colNames = { "swipe_machine_id", "swipe_machine_name", "bank_details",
+
 					 "swipe_machine_short_name", "activate_flag", "updated_by",
 					"updated_date" };
 			outputMap.put("app_id", appId);
@@ -8777,7 +8779,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 						"CategoryMaster");
 			} else {
 				outputMap.put("ListOfSwipe", lst);
-				outputMap.put("ListOfBanks", lst);	
+
+				outputMap.put("BankDetails", lst);
+
 				rs.setViewName("../SwipeMaster.jsp");
 				rs.setReturnObject(outputMap);
 			}
@@ -8799,11 +8803,14 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
+			
 			if (swipeMachineId != 0) {
 				outputMap.put("SwipeDetails", lObjConfigDao.getSwipeDetails(outputMap, connections));
+				outputMap.put("BankDetails", lObjConfigDao.getBankDetail(outputMap ,connections));
 			}
 			outputMap.put("lisitOfSwipe", lObjConfigDao.getSwipeMaster(outputMap, connections));
-			outputMap.put("BankList", lObjConfigDao.getBankMaster(outputMap, connections));
+			outputMap.put("ListOfBanks", lObjConfigDao.getBankMaster(outputMap, connections));
+
 			rs.setViewName("../AddSwipe.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
@@ -8838,13 +8845,11 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		}
 
 		String swipe_machine_name = hm.get("swipe_machine_name").toString();
-		String swipe_machine_bank = hm.get("swipe_machine_bank").toString();
-		String swipe_machine_account_no = hm.get("swipe_machine_account_no").toString();
+		String txtaccountid = hm.get("txtaccountid").toString();
 		String swipe_machine_short_name = hm.get("swipe_machine_short_name").toString();
 
 		hm.put("swipe_machine_name", swipe_machine_name);
-		hm.put("swipe_machine_bank", swipe_machine_bank);
-		hm.put("swipe_machine_account_no", swipe_machine_account_no);
+		hm.put("txtaccountid", txtaccountid);
 		hm.put("swipe_machine_short_name", swipe_machine_short_name);
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
@@ -8860,8 +8865,8 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			if (hdnSwipeMachineId == 0) {
 				hdnSwipeMachineId = lObjConfigDao.addSwipe(con, hm);
 			} else {
-				lObjConfigDao.updateSwipe(hdnSwipeMachineId, swipe_machine_name, swipe_machine_bank,
-						swipe_machine_account_no, swipe_machine_short_name, userId, con);
+				lObjConfigDao.updateSwipe(hdnSwipeMachineId, swipe_machine_name, txtaccountid,
+						 swipe_machine_short_name, userId, con);
 			}
 
 			rs.setReturnObject(outputMap);
