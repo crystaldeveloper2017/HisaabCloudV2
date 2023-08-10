@@ -5,8 +5,8 @@
 
 
 <c:set var="SwipeDetails" value='${requestScope["outputObject"].get("SwipeDetails")}' />
-
-
+<c:set var="BankDetails" value='${requestScope["outputObject"].get("BankDetails")}' />
+<c:set var="ListOfBanks" value='${requestScope["outputObject"].get("ListOfBanks")}' />
    
 
 
@@ -93,22 +93,22 @@ function deleteAttachment(id)
     </div>
   </div>
   
-  
   <div class="col-sm-12">
-  	<div class="form-group">
-      <label for="email">Swipe Machine Bank</label>
-      <input type="text" class="form-control" id="swipe_machine_bank" value="${SwipeDetails.swipe_machine_bank}"  placeholder="eg. Swipe Bank" name="swipe_machine_bank">
-      
+	  	<div class="form-group">
+      <label for="email">Account Id </label>     
+      <select class="form-control" name="txtaccountid" id="txtaccountid">
+      <c:forEach items="${ListOfBanks}" var="item">
+       <option value="${item.bank_id}">${item.bank_name} - ${item.account_no} -${item.ifsc_code}</option>	
+       <script>
+				    var element = document.getElementById('txtaccountid');
+				    element.value = ${bankDetails.txtaccountid};
+			    </script>
+       </c:forEach>
+	  </select>     
     </div>
   </div>
   
-  <div class="col-sm-12">
-  	<div class="form-group">
-      <label for="email">Swipe Machine Account No</label>
-      <input type="text" class="form-control" id="swipe_machine_account_no" value="${SwipeDetails.swipe_machine_account_no}"  placeholder="eg. Swipe Account No" name="swipe_machine_account_no">
-      
-    </div>
-  </div>
+  
   
   <div class="col-sm-12">
   	<div class="form-group">
