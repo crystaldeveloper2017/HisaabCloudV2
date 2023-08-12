@@ -101,11 +101,7 @@ function deleteAttachment(id)
       <label for="email">Bank Details </label>     
       <select class="form-control" name="txtaccountid" id="txtaccountid">
       <c:forEach items="${ListOfBanks}" var="item">
-       <option value="${item.bank_id}">${item.bank_name} - ${item.account_no} -${item.ifsc_code}</option>	
-       <script>
-				    var element = document.getElementById('txtaccountid');
-				    element.value = ${bankDetails.txtaccountid};
-			    </script>
+       <option value="${item.bank_id}">${item.bank_name} - ${item.account_no} -${item.ifsc_code}</option>
        </c:forEach>
 	  </select>     
     </div>
@@ -135,14 +131,17 @@ function deleteAttachment(id)
 <script >
 	
 	
-	<c:if test="${SwipeDetails.SwipeMachineId eq null}">
+	<c:if test="${SwipeDetails.swipe_machine_id eq null}">
 		document.getElementById("divTitle").innerHTML="Add Swipe";
 		document.title +=" Add Swipe ";
 	</c:if>
-	<c:if test="${SwipeDetails.SwipeMachineId ne null}">
+	<c:if test="${SwipeDetails.swipe_machine_id ne null}">
 		document.getElementById("divTitle").innerHTML="Update Swipe";
 		document.title +=" Update Swipe ";
+		txtaccountid.value='${SwipeDetails.account_id}';	
+		
 	</c:if>
+	
 </script>
 
 
