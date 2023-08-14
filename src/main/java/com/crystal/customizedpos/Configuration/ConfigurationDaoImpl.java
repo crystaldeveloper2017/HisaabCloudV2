@@ -2552,7 +2552,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 		return "Updated Succesfully";
 	}
 	
-	public String updateConfigurationForThisUser(long invoiceFormat,String invoice_default_checked_print,String invoice_default_checked_generatepdf,String restaurant_default_checked_generatepdf ,String user_total_payments,String user_payment_collections,String user_counter_sales,String user_payment_sales,String user_store_sales,String user_store_bookings,String user_store_expenses,String userId,String invoiceType, Connection conWithF) throws SQLException {
+	public String updateConfigurationForThisUser(long invoiceFormat,String invoice_default_checked_print,String invoice_default_checked_generatepdf,String restaurant_default_checked_generatepdf ,String user_total_payments,String user_payment_collections,String user_counter_sales,String user_payment_sales,String user_store_sales,String user_store_bookings,String user_store_expenses,String userId, Connection conWithF) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(invoiceFormat);
 		
@@ -2566,14 +2566,14 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 		parameters.add(user_store_sales);
 		parameters.add(user_store_bookings);
 		parameters.add(user_store_expenses);
-		parameters.add(invoiceType);
+	
 		
 		
 		parameters.add(userId);
 		insertUpdateDuablDB("update user_configurations set invoice_format=?,invoice_default_checked_print=?,"
 				+ "invoice_default_checked_generatepdf=?,restaurant_default_checked_generatepdf=?,user_total_payments=?,"
 				+ "user_payment_collections=?,user_counter_sales=?,user_payment_sales=?,user_store_sales=?,user_store_bookings=?,"
-				+ "user_store_expenses=?,invoice_type=? where user_id=?", parameters, conWithF);
+				+ "user_store_expenses=? where user_id=?", parameters, conWithF);
 		return "Updated Succesfully";
 	}
 	

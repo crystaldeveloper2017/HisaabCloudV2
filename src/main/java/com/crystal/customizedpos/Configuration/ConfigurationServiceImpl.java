@@ -1717,7 +1717,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 
 			long userId = lObjConfigDao.saveNewApp(appname, txtvalidtill, txtstorename, txtusername,appType, con);
-			lObjConfigDao.updateConfigurationForThisUser(1, "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "1",
+			lObjConfigDao.updateConfigurationForThisUser(1, "N", "N", "N", "N", "N", "N", "N", "N", "N",  "1",
 					String.valueOf(userId), con);
 
 			rs.setAjaxData("App Created Succesfully");
@@ -4993,7 +4993,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		CustomResultObject rs = new CustomResultObject();
 
 		long formatId = Integer.parseInt(request.getParameter("formatId"));
-		String invoice_type = (request.getParameter("invoice_type"));
+		
 
 		String invoice_default_checked_print = request.getParameter("invoice_default_checked_print").equals("true")
 				? "Y"
@@ -5018,7 +5018,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					lObjConfigDao.updateConfigurationForThisUser(formatId, invoice_default_checked_print,
 							invoice_default_checked_generatepdf, restaurant_default_checked_generatepdf,
 							user_total_payments, user_payment_collections, user_counter_sales, user_payment_sales,
-							user_store_sales, user_store_bookings, user_store_expenses, userId, invoice_type, con));
+							user_store_sales, user_store_bookings, user_store_expenses, userId, con));
 			HashMap<String, String> hm = (HashMap<String, String>) request.getSession().getAttribute("userdetails");
 			hm.put("invoice_format", String.valueOf(formatId));
 
@@ -5032,9 +5032,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("user_store_sales", user_store_sales);
 			hm.put("user_store_bookings", user_store_bookings);
 			hm.put("user_store_expenses", user_store_expenses);
-			hm.put("invoice_type", String.valueOf(invoice_type));
-			hm.put("invoice_type", String.valueOf(invoice_type));
-
+			
 			request.getSession().setAttribute("userdetails", hm);
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
