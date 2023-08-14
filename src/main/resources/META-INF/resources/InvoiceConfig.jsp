@@ -201,7 +201,7 @@ console.log("${userdetails}");
 	document.getElementById("divTitle").innerHTML="User Configurations";
 	document.title +=" User Configurations ";
 	drpinvoiceid.value="${userdetails.invoice_format}";
-	drpinvoicetype.value="${userdetails.invoice_type}";
+	
 	
 	
 	<c:if test="${userdetails.invoice_default_checked_print eq 'Y'}">
@@ -269,7 +269,7 @@ console.log("${userdetails}");
 			  
 			}
 		  };
-		  xhttp.open("GET","?a=changeInvoiceFormat&formatId="+drpinvoiceid.value+"&invoice_type="+drpinvoicetype.value+"&invoice_default_checked_print="+invchkprint.checked
+		  xhttp.open("GET","?a=changeInvoiceFormat&formatId="+drpinvoiceid.value+"&invoice_default_checked_print="+invchkprint.checked
 				  +"&invoice_default_checked_generatepdf="+invchkpdf.checked
 				  +"&restaurant_default_checked_generatepdf="+reschkpdf.checked
 				  +"&user_total_payments="+totalpayment.checked
