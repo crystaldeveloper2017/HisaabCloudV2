@@ -67,7 +67,7 @@ public class ExecuteSqlFile {
 					
 					
 					
-					lobjConfigDaoimpl.updateConfigurationForThisUser(1, "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "1", String.valueOf(userId), con);
+					lobjConfigDaoimpl.updateConfigurationForThisUser(1, "N", "N", "N", "N", "N", "N", "N", "N", "N",  "1", String.valueOf(userId), con);
 					
 					
 					
