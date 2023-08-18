@@ -109,6 +109,9 @@
     - showSupervisorCollection
     - showPaytmTransctions
     - showUserDetails
+    - getrecondata
+    - saveSplitInvoice
+    - settleThisTransaction
   elements:
     - 700160
     - 700182

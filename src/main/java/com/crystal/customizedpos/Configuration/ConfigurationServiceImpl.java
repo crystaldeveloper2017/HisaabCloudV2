@@ -9057,7 +9057,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		try {
 
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getShiftData(outputMap, con);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getReconcilationRegister(outputMap, con);
 
 			outputMap.put("lstOfShiftData", lst);
 			rs.setViewName("../ReconcilationReport.jsp");
@@ -9943,5 +9943,87 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		}
 		return rs;
 	}
+	public CustomResultObject getrecondata(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		String bank_id = (request.getParameter("bank_id"));
+		String reconcilationDate =(request.getParameter("recondate"));
+
+		try {
+			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getRecondata(reconcilationDate,bank_id,con)));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	public CustomResultObject saveSplitInvoice(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		String invoiceid = (request.getParameter("invoiceid"));
+		String amount1 =(request.getParameter("amount1"));
+		String amount2 =(request.getParameter("amount2"));
+		try {
+
+
+			
+			
+			//get the invoice data
+			
+			LinkedHashMap<String, Object> invoiceDetails=lObjConfigDao.getInvoiceDetails(invoiceid, con);
+			long invoiceIdtoDelete=Long.valueOf(invoiceDetails.get("invoice_id").toString());
+			//get the rlt fuel data
+			LinkedHashMap<String, Object> rltInvoiceDetails=lObjConfigDao.getRltInvoiceDetails(invoiceid, con);
+
+			//save with amount 1
+				//save trn_invoice_register
+				invoiceDetails.put("amountModify", amount1);
+				long invoiceId1=lObjConfigDao.saveToTrnInvoiceRegister(invoiceDetails,con);
+				rltInvoiceDetails.put("invoice_id", String.valueOf(invoiceId1));
+				rltInvoiceDetails.put("slot_id", "0");
+				lObjConfigDao.saveToRltInvoiceDetails(rltInvoiceDetails,con);
+
+
+
+				invoiceDetails.put("amountModify", amount2);
+				long invoiceId2=lObjConfigDao.saveToTrnInvoiceRegister(invoiceDetails,con);
+				rltInvoiceDetails.put("invoice_id", String.valueOf(invoiceId2));
+				rltInvoiceDetails.put("slot_id", "1");
+				lObjConfigDao.saveToRltInvoiceDetails(rltInvoiceDetails,con);
+
+			lObjConfigDao.deleteInvoice(invoiceIdtoDelete,"0",con);
+
+			rs.setAjaxData("Done Successfully");
+			
+
+
+			
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	public CustomResultObject settleThisTransaction(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		String invoice_id = (request.getParameter("invoiceid"));
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
+
+		try {
+			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.settleThistransaction(invoice_id,userId,con)));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	
+
+	
+	
+
+
 	
 }

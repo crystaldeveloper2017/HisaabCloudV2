@@ -6449,7 +6449,10 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 				parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
 				
 				
-				String query="select * from trn_bank_reconcilation where reconcilation_date between ? and ? and activate_flag=1 order by reconcilation_date desc ";
+				String query="select * from rlt_settelment_register rsr,\r\n" + //
+						"trn_invoice_register tir,tbl_user_mst tum \r\n" + //
+						"where tir.invoice_id =rsr.invoice_id \r\n" + //
+						"and tir.invoice_date between ? and ? and tum.user_id=rsr.updated_by";
 				
 			
 				
@@ -6513,6 +6516,108 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 						+ "	and tum.user_id = tnr.attendant_id\r\n"
 						+ "	and nm.nozzle_id =tnr.nozzle_id and item.item_id=nm.item_id order by nozzle_name,name", con);
 			}
+
+			public List<LinkedHashMap<String, Object>> getRecondata(String reconcilationDate,String bankId,Connection con)
+					throws ClassNotFoundException, SQLException, ParseException {
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(getDateASYYYYMMDD(reconcilationDate) );
+				parameters.add(bankId);
+				return getListOfLinkedHashHashMap(parameters, "select mb.bank_name ,\r\n" + //
+						"smm.swipe_machine_name ,\r\n" + //
+						"tir.total_amount,\r\n" + //
+						"rifd.slot_id,\r\n" + //
+						"tir.activate_flag,\r\n" + //
+						"tir.invoice_id,\r\n" + //
+						"mb.bank_id,rsr.invoice_id\r\n" + //
+						"from \r\n" + //
+						"rlt_invoice_fuel_details rifd,\r\n" + //
+						"swipe_machine_master smm,\r\n" + //
+						"mst_bank mb ,\r\n" + //
+						"trn_invoice_register tir\r\n" + //
+						"left outer join rlt_settelment_register rsr on tir.invoice_id =rsr.invoice_id \r\n" + //
+						"where tir.activate_flag =1 and tir.app_id =208 and invoice_date =?  and rifd.invoice_id =tir.invoice_id \r\n" + //
+						"and smm.swipe_machine_id =rifd.swipe_id \r\n" + //
+						"and mb.bank_id =smm.account_id and tir.payment_type !='Pending' and mb.bank_id =? and rsr .invoice_id is null\r\n" + //
+						"order by bank_name,slot_id,smm.swipe_machine_name,tir.updated_date ;\r\n" + //
+						"", con);
+			}
+
+
+	public LinkedHashMap<String,Object> getRltInvoiceDetails(String invoiceId, Connection con) throws SQLException, ClassNotFoundException
+	{
+		ArrayList<Object> parameters=new ArrayList<>();		
+		parameters.add(invoiceId);		
+		return getMapReturnObject(parameters, "select * from rlt_invoice_fuel_details where invoice_id=?", con);
+	}
+
+	public long saveToTrnInvoiceRegister(LinkedHashMap<String, Object> hm, Connection con) throws NumberFormatException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		
+		
+		
+		String invoiceNo;
+				if(hm.get("invoice_no")==null)
+				{
+					invoiceNo=String.valueOf(getPkForThistable("trn_invoice_register",Long.valueOf(hm.get("app_id").toString()),con));
+				}
+				else
+				{
+					invoiceNo=hm.get("invoice_no").toString();
+				}
+		
+		
+		
+		
+		parameters.add(hm.get("customer_id"));
+		parameters.add(hm.get("amountModify")); // gross amount
+		parameters.add(hm.get("item_discount"));
+		parameters.add(hm.get("invoice_discount"));
+		parameters.add(hm.get("amountModify")); // total_amount
+		parameters.add(hm.get("payment_type"));
+
+		parameters.add(getDateASYYYYMMDD(hm.get("theInvoiceDate").toString()));
+		parameters.add(hm.get("user_id"));
+		parameters.add(hm.get("store_id"));
+		parameters.add(hm.get("remarks"));
+		parameters.add(hm.get("app_id"));
+		
+		parameters.add(invoiceNo);
+		parameters.add(hm.get("total_gst"));
+		
+		parameters.add(hm.get("model_no"));
+		parameters.add(hm.get("unique_no"));
+		
+		parameters.add(hm.get("total_sgst"));
+		parameters.add(hm.get("total_cgst"));
+		
+		
+		
+		long invoiceId=insertUpdateDuablDB(
+				"insert into trn_invoice_register values (default,?,?,?,?,?,?,?,?,sysdate(),1,?,?,?,?,?,?,?,?,?)", parameters,
+				con);
+		return invoiceId;
+	}
+
+	public long saveToRltInvoiceDetails(LinkedHashMap<String, Object> hm, Connection con) throws NumberFormatException, SQLException, ParseException {
+	
+	return insertUpdateCustomParameterized("insert into rlt_invoice_fuel_details values (default,:invoice_id,:shift_id,:attendant_id,:nozzle_id,sysdate(),:swipe_id,:slot_id)", hm, con);
+
+	}
+
+	public Object settleThistransaction(String invoice_id,String updatedby, Connection con) throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoice_id);
+		parameters.add(updatedby);
+		String insertQuery = "insert into rlt_settelment_register values (default,?,?,sysdate(),1)";
+		return insertUpdateDuablDB(insertQuery, parameters, con);
+	}
+	
+
+            
+
+				
+		
+			
 
 
 			

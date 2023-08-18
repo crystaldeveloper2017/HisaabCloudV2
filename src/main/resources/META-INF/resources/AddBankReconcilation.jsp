@@ -80,7 +80,7 @@ function deleteAttachment(id)
 
 
 
-<br>
+
 
 <div class="container" style="padding:20px;background-color:white">
 
@@ -88,12 +88,12 @@ function deleteAttachment(id)
 <div class="row">
   
   
-   <div class="col-sm-3">
+   <div class="col-sm-6">
   	<div class="form-group">
-      <label for="email" id="lblBankId">Bank Id</label> 
+      <label for="email" id="lblBankId">Bank Name</label> 
       
       <input type="hidden" name="hdnReconcilationId" value="${BankDetails.bank_id}" id="hdnReconcilationId">
-      <select id="drpBankId" name="drpBankId" class="form-control">
+      <select id="drpBankId" name="drpBankId" class="form-control" onchange="getReconcilationDataForThisDate()">
       
       <c:forEach items="${ListOfBanks}" var="BankDetails">
 						<option id="${BankDetails.bank_id}" value="${BankDetails.bank_id}">${BankDetails.bank_name} ${BankDetails.account_no}
@@ -104,55 +104,43 @@ function deleteAttachment(id)
       
     </div>
   </div>
-  <div class="col-sm-3">
+  <div class="col-sm-6">
 					<div class="form-group" >
 						<label>Reconcilation Date</label>
 						<input type="text" id="txtreconcilationdate" name="txtreconcilationdate"
-							class="form-control form-control-sm" value="${reconcilationDate}"
+							class="form-control form-control-sm" value="${reconcilationDate}" onchange="getReconcilationDataForThisDate()"
 							placeholder="Reconcilation Date" readonly />
 					</div>
-				</div>
+   </div>
+
+
+
+  
  
   
  
-  <div class="col-sm-3">
-  	<div class="form-group">
-      <label for="email">Expected Amount</label>
-      <input type="text" class="form-control" id="amount" value="${BankDetails.amount}"  placeholder="Amount" name="expectedamount" readonly >
-      
-    </div>
-  </div>
-  <div class="col-sm-3">
-  	<div class="form-group">
-      <label for="email">Amount</label>
-      <input type="text" class="form-control" id="amount" value="${BankDetails.amount}"  placeholder="Amount" name="amount">
-      
-    </div>
-  </div>
+  
+  
   
   
  
   
   
   
-  <div class="col-sm-12">
-  <c:if test="${action ne 'Update'}">
-		
-		<button class="btn btn-success" type="button" onclick='addBank()'>Save</button>
-		<button class="btn btn-danger" type="reset" onclick='window.location="?a=showBankMasterNew"'>Cancel</button>
-		
-		
-		</c:if>
-		
-		
-		
-		<c:if test="${action eq 'Update'}">	
-				
-				<input type="button" type="button" class="btn btn-success" onclick='addBankReconcilation()' value="update">		
-		</c:if> 
-		</div>
+  
+</div>
 </div>
 </form>
+
+
+
+<br>
+
+<div class="container" style="padding:20px;background-color:white">
+	<div class="row" id="someRowId">
+
+	</div>
+</div>
 
 <script >
 	
@@ -167,6 +155,130 @@ function deleteAttachment(id)
 		drpheadid.value='${BankDetails.user_id}';
 		drpBankId.value="${BankDetails.bank_name}";
 	</c:if>
+
+
+	function getReconcilationDataForThisDate()
+	{
+		$.get("?a=getrecondata&bank_id="+drpBankId.value+"&recondate="+txtreconcilationdate.value, function(data, status){
+    		//alert("Data: " + data + "\nStatus: " + status);
+			var lstOfTransactions=JSON.parse(data);
+
+			var textMachineName=`<div class="col-sm-3">
+					<div class="form-group" >
+						<label>Machine Name</label>
+						<input type="text" class="form-control form-control-sm" value="machineNameGoesHere"
+							placeholder="Reconcilation Date" readonly />
+					</div>
+   </div>`;
+
+   var textSlotName=`<div class="col-sm-3">
+					<div class="form-group" >
+						<label>Slot Name</label>
+						<input type="text" class="form-control form-control-sm" value="slotNameGoesHere"
+							placeholder="Reconcilation Date" readonly />
+					</div>
+   </div>`;
+
+   var textAmount=`<div class="col-sm-3">
+					<div class="form-group" >
+						<label>Amount Name</label>
+						<input type="text" class="form-control form-control-sm" value="amountGoesHere"
+							placeholder="Reconcilation Date" readonly />
+					</div>
+   </div>`;
+   var buttons=`<div class="col-sm-3">
+					<div class="form-group" >	
+					<button type="button" class="btn btn-success btn-flat" onclick="settleThisTransaction('invoiceIdgoeshere')">Settle</button>
+					<button type="button" class="btn btn-primary btn-flat" onclick="showSplitModal('invoiceIdgoeshere','totalAmountGoeshere')">Split</button>
+					</div>
+   </div>`;
+   
+   
+   var finalString="";
+			for(var m=0;m<lstOfTransactions.length;m++)
+			{
+				//console.log(lstOfTransactions[m]);
+				finalString+=textMachineName.replaceAll("machineNameGoesHere",lstOfTransactions[m].swipe_machine_name);				
+				finalString+=textSlotName.replaceAll("slotNameGoesHere",lstOfTransactions[m].slot_id);				
+
+				finalString+=textAmount.replaceAll("amountGoesHere",lstOfTransactions[m].total_amount);
+
+
+				buttonsString=buttons.replaceAll("invoiceIdgoeshere",lstOfTransactions[m].invoice_id);
+				buttonsString=buttonsString.replaceAll("totalAmountGoeshere",lstOfTransactions[m].total_amount);
+
+				finalString+=buttonsString;
+			}
+			someRowId.innerHTML=finalString;
+
+
+
+
+  		});
+	}
+
+
+	function showSplitModal(invoiceId,amount)
+	{
+		
+		var modalContent=`
+		<div class="row">
+			
+			<div class="col-sm-6">
+				<label> Total Amount</label>
+				<input type="text" class="form-control" id="txttotalamount" value=`+amount+` readonly/>
+			</div>
+
+			<div class="col-sm-3">
+				<label> Amount 1</label>
+				<input type="text" class="form-control" id="txtamount1" onkeyup="calculateTextboxAmount()"  value="0" />
+			</div>
+
+			<div class="col-sm-3">
+				<label> Amount 2</label>
+				<input type="text" class="form-control" id="txtamount2" value="0" readonly />
+			</div>
+
+			<div class="col-sm-12">				
+				<button type="button" class="btn btn-primary btn-flat" onclick="saveSplitEntries(`+invoiceId+`)">Save</button>
+			</div>
+
+		</div>
+		 `;
+
+		document.getElementById("responseText").innerHTML=modalContent;
+			  document.getElementById("closebutton").style.display='block';
+			  document.getElementById("loader").style.display='none';
+			  $("#myModal").modal();
+	}
+
+	function calculateTextboxAmount()
+	{
+		txtamount2.value=Number(txttotalamount.value)- Number(txtamount1.value);
+	}
+	function saveSplitEntries(invoiceid)
+	{
+
+		  $.get("?a=saveSplitInvoice&invoiceid="+invoiceid+"&amount1="+txtamount1.value+"&amount2="+txtamount2.value, function(data, status){
+    		alert("Data: " + data + "\nStatus: " + status);
+  		  });		
+	}
+
+	function settleThisTransaction(invoiceid)
+	{
+
+		  $.get("?a=settleThisTransaction&invoiceid="+invoiceid, function(data, status){
+    		//alert("Data: " + data + "\nStatus: " + status);
+			window.location.reload();
+  		  });		
+	}
+
+	
+
+	txtreconcilationdate.value="26/07/2023";
+	drpBankId.value="4";
+	getReconcilationDataForThisDate();
+	
 </script>
 
 

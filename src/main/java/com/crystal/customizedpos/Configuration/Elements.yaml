@@ -49,11 +49,6 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCategoryWiseStoreWiseSales"
   orderNo: 8
-- elementId: 700174
-  elementName: "Reconciliation Report"
-  parentElementId: 26
-  elementUrl: "?a=showReconciliationReport"
-  orderNo: 1
 - elementId: 700175
   elementName: "Test Fuel Register"
   parentElementId: 26

@@ -69,12 +69,12 @@
               
               
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 480px;">                
+              <div class="card-body table-responsive p-0" style="height: 800px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
                  
                     <tr>
-                    <th><b>Bank Account Id</b></th>                  
+                    <th><b>Settelment Id</b></th>                  
                     <th><b>Reconcilation Date</b>
                     <th><b>Amount</b>
                     <th><b>Updated By </b>
@@ -88,12 +88,10 @@
 					<tr >
 					  
 					  
-					  <td>${data1.bank_account_id}</td>
-					  <td>${data1.reconcilation_date}</td>
-					  
-					  <td>${data1.amount}</td>
-					  
-					  <td>${data1.updated_by}</td>
+					  <td>${data1.settelment_id}</td>
+					  <td>${data1.invoice_date}</td>					  
+					  <td>${data1.total_amount}</td>					  
+					  <td>${data1.name}</td>
 					 
 					  
 					  <td><button class="btn btn-danger" onclick="deleteReconcilation('${data1.reconcilation_id}')">Delete</button></td>
@@ -110,9 +108,7 @@
 </div>
             
             
-   <div class="col-12" align="Center">
-		<label for="txtfromdate">Total Amount ${ totalReconcilationAmount}</label>
-            </div>    
+   
             
    
 
@@ -162,7 +158,7 @@ function deleteReconcilation(reconcilation_id)
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 50,
+      "pageLength": 100,
       "order": [[ 2, 'desc' ]]
 
     });
@@ -178,7 +174,7 @@ function deleteReconcilation(reconcilation_id)
  
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showPaytmTransctions&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&attendant_id="+drpattendantid.value;
+  	  		window.location="?a=showReconcilationRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
 		  
   }
   
@@ -232,6 +228,28 @@ function deleteReconcilation(reconcilation_id)
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   
-  drpattendantid.value='${param.attendant_id}';
+  
+
+  function checkforvalidfromtodate()
+  {        	
+  	var fromDate=document.getElementById("txtfromdate").value;
+  	var toDate=document.getElementById("txttodate").value;
+  	
+  	var fromDateArr=fromDate.split("/");
+  	var toDateArr=toDate.split("/");
+  	
+  	
+  	var fromDateArrDDMMYYYY=fromDate.split("/");
+  	var toDateArrDDMMYYYY=toDate.split("/");
+  	
+  	var fromDateAsDate=new Date(fromDateArrDDMMYYYY[2],fromDateArrDDMMYYYY[1]-1,fromDateArrDDMMYYYY[0]);
+  	var toDateAsDate=new Date(toDateArrDDMMYYYY[2],toDateArrDDMMYYYY[1]-1,toDateArrDDMMYYYY[0]);
+  	
+  	if(fromDateAsDate>toDateAsDate)
+  		{
+  			alert("From Date should be less than or equal to To Date");
+  			window.location.reload();        			
+  		}
+  }
 
 </script> 
