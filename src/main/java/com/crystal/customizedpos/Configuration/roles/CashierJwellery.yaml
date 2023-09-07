@@ -13,9 +13,15 @@
     - generateDailyInvoiceReport
     - showSalesReport3
     - getInvoiceDetailsByNoAjax
+    - showChangePassword
+    - changePassword
+    - showInvoiceConfig
+    - changeInvoiceFormatService
   elements:
     - 1
     - 700129
     - 700138
     - 26
     - 700161
+    - 700143
+    - 700132
