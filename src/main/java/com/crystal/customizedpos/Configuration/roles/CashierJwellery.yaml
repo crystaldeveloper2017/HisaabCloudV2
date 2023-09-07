@@ -1,0 +1,21 @@
+- roleId: 17
+  roleName: "Cashier Jwellery"
+  actions:    
+    - showHomePage
+    - showGenerateInvoice
+    - saveInvoiceService
+    - showAddExpense
+    - addExpenseNew
+    - showVisitors
+    - showAddVisitor
+    - addVisitor
+    - getInvoiceIdByInvoiceNo
+    - generateDailyInvoiceReport
+    - showSalesReport3
+    - getInvoiceDetailsByNoAjax
+  elements:
+    - 1
+    - 700129
+    - 700138
+    - 26
+    - 700161
