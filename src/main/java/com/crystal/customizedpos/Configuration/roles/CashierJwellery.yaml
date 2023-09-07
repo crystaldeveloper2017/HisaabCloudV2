@@ -17,6 +17,7 @@
     - changePassword
     - showInvoiceConfig
     - changeInvoiceFormatService
+    - getItemsForThisCategoryNameByAjax
   elements:
     - 1
     - 700129
