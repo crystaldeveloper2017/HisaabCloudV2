@@ -35,17 +35,12 @@ public class LoginServiceImpl extends CommonFunctions {
 			HashMap<String, String> loginDetails = lObjLoginDao.validateLoginUSingJDBC(Username, Password, con);
 			if (loginDetails != null && !loginDetails.isEmpty() ) {
 				Long user_id = Long.valueOf(loginDetails.get("user_id").toString());				
-				List<String> roles = lObjLoginDao.getRoles(user_id, con);
-				List<String> roleIds = lObjLoginDao.getRoleIds(user_id, con);
+				List<String> roles = lObjLoginDao.getRoles(user_id, con);				
 				request.getSession().setAttribute("username", Username);
-				request.getSession().setAttribute("userdetails", loginDetails);
-				request.getSession().setAttribute("listOfRoles", roles);
+				request.getSession().setAttribute("userdetails", loginDetails);				
 				boolean isAdmin=roles.contains("SuperAdmin") || roles.contains("Admin") || roles.contains("AdminServices") || roles.contains("AdminJwellery") ||roles.contains("AdminFuel");
-				request.getSession().setAttribute("adminFlag", isAdmin);
-				request.getSession().setAttribute("elements", getElementsNewLogic(roleIds,CommonFunctions.elements,CommonFunctions.roles));
-				request.getSession().setAttribute("actions", getActionsForthisUserDecoupled(user_id, con,CommonFunctions.roles));
-				request.getSession().setAttribute("projectName", projectName);
-				
+				request.getSession().setAttribute("adminFlag", isAdmin);			
+				request.getSession().setAttribute("projectName", projectName);				
 				copyImagesFromDBToBufferFolder(request.getServletContext(),con);
 				returnString = "Succesfully Logged In";
 			} else {
