@@ -18,6 +18,8 @@
     - showInvoiceConfig
     - changeInvoiceFormatService
     - getItemsForThisCategoryNameByAjax
+    - showCustomerLedger
+    - generateDailyPaymentRegister
   elements:
     - 1
     - 700129
