@@ -6542,6 +6542,17 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 						"", con);
 			}
 
+			public List<LinkedHashMap<String, Object>> getRecondataForPaytm(String reconcilationDate,Connection con)
+					throws ClassNotFoundException, SQLException, ParseException {
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(getDateASYYYYMMDD(reconcilationDate) );				
+				return getListOfLinkedHashHashMap(parameters, "select sum(amount) total_amount,slot_id,'Paytm' swipe_machine_name  from  trn_supervisor_collection where \r\n" + //
+						"\tcollection_mode ='paytm' and collection_date =? and activate_flag =1\r\n" + //
+						"\t group by slot_id;", con);
+			}
+
+			
+
 
 	public LinkedHashMap<String,Object> getRltInvoiceDetails(String invoiceId, Connection con) throws SQLException, ClassNotFoundException
 	{

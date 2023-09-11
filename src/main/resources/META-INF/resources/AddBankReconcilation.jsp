@@ -87,8 +87,20 @@ function deleteAttachment(id)
 <form id="frm" action="?a=addBankReconcilation" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 <div class="row">
   
+
+  <div class="col-sm-3">
+  	<div class="form-group">
+      <label for="email" id="lblBankId">Reconcilation Type</label> 
+	  
+	  <select id="drprecontype" name="drprecontype" class="form-control" onchange="changeReconType()">
+		<option value="Card Swipe">Card Swipe</option>
+		<option value="Paytm">Paytm</option>
+	  </select>
+      
+    </div>
+  </div>
   
-   <div class="col-sm-6">
+   <div class="col-sm-3" id="divbanktype">
   	<div class="form-group">
       <label for="email" id="lblBankId">Bank Name</label> 
       
@@ -159,7 +171,7 @@ function deleteAttachment(id)
 
 	function getReconcilationDataForThisDate()
 	{
-		$.get("?a=getrecondata&bank_id="+drpBankId.value+"&recondate="+txtreconcilationdate.value, function(data, status){
+		$.get("?a=getrecondata&recontype="+drprecontype.value+"&bank_id="+drpBankId.value+"&recondate="+txtreconcilationdate.value, function(data, status){
     		//alert("Data: " + data + "\nStatus: " + status);
 			var lstOfTransactions=JSON.parse(data);
 
@@ -278,6 +290,21 @@ function deleteAttachment(id)
 	txtreconcilationdate.value="26/07/2023";
 	drpBankId.value="4";
 	getReconcilationDataForThisDate();
+
+
+	function changeReconType()
+	{
+		
+		if(drprecontype.value=="Paytm")
+		{
+			document.getElementById("divbanktype").style="display:none";
+		}
+		else
+		{
+			document.getElementById("divbanktype").style="display:block";
+		}
+		getReconcilationDataForThisDate();
+	}
 	
 </script>
 

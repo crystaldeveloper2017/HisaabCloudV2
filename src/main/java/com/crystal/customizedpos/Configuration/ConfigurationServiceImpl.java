@@ -9943,11 +9943,22 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 	}
 	public CustomResultObject getrecondata(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
+		
+		String recontype = (request.getParameter("recontype"));
 		String bank_id = (request.getParameter("bank_id"));
 		String reconcilationDate =(request.getParameter("recondate"));
+		List<LinkedHashMap<String, Object>> reconData;
 
 		try {
-			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getRecondata(reconcilationDate,bank_id,con)));
+			if(recontype.equals("Paytm"))
+			{
+				reconData=lObjConfigDao.getRecondataForPaytm(reconcilationDate,con);
+			}
+			else
+			{
+				 reconData=lObjConfigDao.getRecondata(reconcilationDate,bank_id,con);
+			}
+			rs.setAjaxData(mapper.writeValueAsString(reconData));
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
