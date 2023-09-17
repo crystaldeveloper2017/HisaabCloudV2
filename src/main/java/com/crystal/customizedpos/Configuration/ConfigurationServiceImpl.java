@@ -10017,10 +10017,11 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		CustomResultObject rs = new CustomResultObject();
 		String invoice_id = (request.getParameter("invoiceid"));
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String transactionType = (request.getParameter("transactionType"));
 		
 
 		try {
-			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.settleThistransaction(invoice_id,userId,con)));
+			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.settleThistransaction(invoice_id,userId,transactionType,con)));
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);

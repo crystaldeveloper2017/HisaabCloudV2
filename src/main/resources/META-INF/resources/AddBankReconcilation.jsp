@@ -175,7 +175,17 @@ function deleteAttachment(id)
     		//alert("Data: " + data + "\nStatus: " + status);
 			var lstOfTransactions=JSON.parse(data);
 
-			var textMachineName=`<div class="col-sm-3">
+
+var checkbox=`<div class="col-sm-2">
+					<div class="form-group" >		
+						<label>Select</label>				
+						<input type="checkbox" class="form-control form-control-sm" 
+							placeholder="Reconcilation Date" readonly />
+					</div>
+   </div>`;
+
+
+			var textMachineName=`<div class="col-sm-2">
 					<div class="form-group" >
 						<label>Machine Name</label>
 						<input type="text" class="form-control form-control-sm" value="machineNameGoesHere"
@@ -183,7 +193,7 @@ function deleteAttachment(id)
 					</div>
    </div>`;
 
-   var textSlotName=`<div class="col-sm-3">
+   var textSlotName=`<div class="col-sm-2">
 					<div class="form-group" >
 						<label>Slot Name</label>
 						<input type="text" class="form-control form-control-sm" value="slotNameGoesHere"
@@ -191,14 +201,14 @@ function deleteAttachment(id)
 					</div>
    </div>`;
 
-   var textAmount=`<div class="col-sm-3">
+   var textAmount=`<div class="col-sm-2">
 					<div class="form-group" >
 						<label>Amount Name</label>
 						<input type="text" class="form-control form-control-sm" value="amountGoesHere"
 							placeholder="Reconcilation Date" readonly />
 					</div>
    </div>`;
-   var buttons=`<div class="col-sm-3">
+   var buttons=`<div class="col-sm-4">
 					<div class="form-group" >	
 					<button type="button" class="btn btn-success btn-flat" onclick="settleThisTransaction('invoiceIdgoeshere')">Settle</button>
 					<button type="button" class="btn btn-primary btn-flat" onclick="showSplitModal('invoiceIdgoeshere','totalAmountGoeshere')">Split</button>
@@ -210,6 +220,7 @@ function deleteAttachment(id)
 			for(var m=0;m<lstOfTransactions.length;m++)
 			{
 				//console.log(lstOfTransactions[m]);
+				finalString+=checkbox;
 				finalString+=textMachineName.replaceAll("machineNameGoesHere",lstOfTransactions[m].swipe_machine_name);				
 				finalString+=textSlotName.replaceAll("slotNameGoesHere",lstOfTransactions[m].slot_id);				
 
@@ -279,7 +290,7 @@ function deleteAttachment(id)
 	function settleThisTransaction(invoiceid)
 	{
 
-		  $.get("?a=settleThisTransaction&invoiceid="+invoiceid, function(data, status){
+		  $.get("?a=settleThisTransaction&invoiceid="+invoiceid+"&transactionType="+drprecontype.value, function(data, status){
     		//alert("Data: " + data + "\nStatus: " + status);
 			window.location.reload();
   		  });		
@@ -287,8 +298,8 @@ function deleteAttachment(id)
 
 	
 
-	txtreconcilationdate.value="26/07/2023";
-	drpBankId.value="4";
+	//txtreconcilationdate.value="26/07/2023";
+	//drpBankId.value="4";
 	getReconcilationDataForThisDate();
 
 

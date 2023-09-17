@@ -1,5 +1,6 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "automatic",    
-    "git.detectSubmodules": true
+    "git.detectSubmodules": true,
+    "editor.inlayHints.enabled": "off"
 }

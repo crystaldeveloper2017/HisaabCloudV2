@@ -6546,9 +6546,18 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					throws ClassNotFoundException, SQLException, ParseException {
 				ArrayList<Object> parameters = new ArrayList<>();
 				parameters.add(getDateASYYYYMMDD(reconcilationDate) );				
-				return getListOfLinkedHashHashMap(parameters, "select sum(amount) total_amount,slot_id,'Paytm' swipe_machine_name  from  trn_supervisor_collection where \r\n" + //
-						"\tcollection_mode ='paytm' and collection_date =? and activate_flag =1\r\n" + //
-						"\t group by slot_id;", con);
+				return getListOfLinkedHashHashMap(parameters, "select\r\n" + //
+						"\tcollection_id invoice_id ,\r\n" + //
+						"\tamount total_amount,\r\n" + //
+						"\tslot_id,\r\n" + //
+						"\t'Paytm' swipe_machine_name\r\n" + //
+						"from\r\n" + //
+						"\ttrn_supervisor_collection tsc left outer join rlt_settelment_register rsr on rsr.invoice_id=tsc.collection_id \r\n" + //
+						"\tand rsr.settelment_type='Paytm'\r\n" + //
+						"where\r\n" + //
+						"\tcollection_mode = 'paytm' \r\n" + //
+						"\tand collection_date =? \r\n" + //
+						"\tand tsc.activate_flag = 1 and rsr.settelment_id is null", con);
 			}
 
 			
@@ -6615,11 +6624,12 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 
 	}
 
-	public Object settleThistransaction(String invoice_id,String updatedby, Connection con) throws SQLException {
+	public Object settleThistransaction(String invoice_id,String updatedby,String trnansactiontype, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(invoice_id);
 		parameters.add(updatedby);
-		String insertQuery = "insert into rlt_settelment_register values (default,?,?,sysdate(),1)";
+		parameters.add(trnansactiontype);
+		String insertQuery = "insert into rlt_settelment_register values (default,?,?,sysdate(),1,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
 	
