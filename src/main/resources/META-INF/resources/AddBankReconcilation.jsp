@@ -176,16 +176,10 @@ function deleteAttachment(id)
 			var lstOfTransactions=JSON.parse(data);
 
 
-var checkbox=`<div class="col-sm-2">
-					<div class="form-group" >		
-						<label>Select</label>				
-						<input type="checkbox" class="form-control form-control-sm" 
-							placeholder="Reconcilation Date" readonly />
-					</div>
-   </div>`;
 
 
-			var textMachineName=`<div class="col-sm-2">
+
+			var textMachineName=`<div class="col-sm-3">
 					<div class="form-group" >
 						<label>Machine Name</label>
 						<input type="text" class="form-control form-control-sm" value="machineNameGoesHere"
@@ -193,7 +187,7 @@ var checkbox=`<div class="col-sm-2">
 					</div>
    </div>`;
 
-   var textSlotName=`<div class="col-sm-2">
+   var textSlotName=`<div class="col-sm-3">
 					<div class="form-group" >
 						<label>Slot Name</label>
 						<input type="text" class="form-control form-control-sm" value="slotNameGoesHere"
@@ -201,14 +195,14 @@ var checkbox=`<div class="col-sm-2">
 					</div>
    </div>`;
 
-   var textAmount=`<div class="col-sm-2">
+   var textAmount=`<div class="col-sm-3">
 					<div class="form-group" >
 						<label>Amount Name</label>
 						<input type="text" class="form-control form-control-sm" value="amountGoesHere"
 							placeholder="Reconcilation Date" readonly />
 					</div>
    </div>`;
-   var buttons=`<div class="col-sm-4">
+   var buttons=`<div class="col-sm-3">
 					<div class="form-group" >	
 					<button type="button" class="btn btn-success btn-flat" onclick="settleThisTransaction('invoiceIdgoeshere')">Settle</button>
 					<button type="button" class="btn btn-primary btn-flat" onclick="showSplitModal('invoiceIdgoeshere','totalAmountGoeshere')">Split</button>
@@ -220,7 +214,7 @@ var checkbox=`<div class="col-sm-2">
 			for(var m=0;m<lstOfTransactions.length;m++)
 			{
 				//console.log(lstOfTransactions[m]);
-				finalString+=checkbox;
+				
 				finalString+=textMachineName.replaceAll("machineNameGoesHere",lstOfTransactions[m].swipe_machine_name);				
 				finalString+=textSlotName.replaceAll("slotNameGoesHere",lstOfTransactions[m].slot_id);				
 
