@@ -3965,18 +3965,13 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 	}
 	
 	
-	public List<LinkedHashMap<String, Object>> getAuditListByUser(String username,Connection con) throws ClassNotFoundException, SQLException 
+	public List<LinkedHashMap<String, Object>> getAuditListByUserAndSchema(String username,String schemaName,Connection con) throws ClassNotFoundException, SQLException 
 	{
 		ArrayList<Object> parameters = new ArrayList<>();
-		parameters.add(username);
 		parameters.add(username);		
-		return getListOfLinkedHashHashMap(parameters,"select * from \r\n"
-				+ "(\r\n"
-				+ "select * from (select * from customizedpos.frm_audit_trail where user_name=?  order by accessed_time desc limit 100 ) as a\r\n"
-				+ "union all\r\n"
-				+ "select * from (select * from student_attendance.frm_audit_trail where user_name=? order by accessed_time desc  limit 100 ) as b\r\n"
-				+ " \r\n"
-				+ ") m order by accessed_time  desc limit 100",con);
+		String query="select * from schemaName.frm_audit_trail where user_name=? order by accessed_time desc limit 100 ";
+		query=query.replaceAll("schemaName", schemaName);
+		return getListOfLinkedHashHashMap(parameters,query,con);
 	}
 	
 	
@@ -3987,11 +3982,17 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 	{
 		ArrayList<Object> parameters = new ArrayList<>();
 		
-		return getListOfLinkedHashHashMap(parameters,"	select max(accessed_time) as T1,user_name,'HisaabCloud' appName from customizedpos.frm_audit_trail fat group by user_name having user_name is not null union all \r\n"
-				+ "	select max(accessed_time) as T1,user_name,'AGS' from  student_attendance.frm_audit_trail fat group by user_name having user_name is not null \r\n"
-				+ "	\r\n"
-				+ "	order by T1 desc\r\n"
-				+ "	limit 20;",con);
+		return getListOfLinkedHashHashMap(parameters,"select max(accessed_time) as T1,user_name,'customizedpos' appName from customizedpos.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null \r\n" + //
+				"union all \r\n" + //
+				"select max(accessed_time) as T1,user_name,'agserp' from  agserp.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null \r\n" + //
+				"union all \r\n" + //
+				"select max(accessed_time) as T1,user_name,'ssegpl' from  ssegpl.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
+				"union all \r\n" + //
+				"select max(accessed_time) as T1,user_name,'society_maintenance_staging' from  society_maintenance_staging.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
+				"union all \r\n" + //
+				"select max(accessed_time) as T1,user_name,'skpsecuritygate' from  skpsecuritygate.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
+				"order by T1 desc\r\n" + //
+				"limit 30;",con);
 	}
 
 	

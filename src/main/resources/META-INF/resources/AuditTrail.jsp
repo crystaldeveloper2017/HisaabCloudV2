@@ -89,7 +89,7 @@
 			<tbody>
 				<c:forEach items="${latestUserHits}" var="item">
 					<tr>
-						<td><a href="?a=showAuditTrail&username=${item.user_name}">${item.user_name}</a></td>
+						<td><a href="?a=showAuditTrail&username=${item.user_name}&schemaname=${item.appName}">${item.user_name}</a></td>
 						<td>${item.T1}</td>
 						<td>${item.appName}</td>						
 					</tr>

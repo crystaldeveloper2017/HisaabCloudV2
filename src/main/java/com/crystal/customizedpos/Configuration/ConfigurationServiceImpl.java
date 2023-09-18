@@ -946,8 +946,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 
 			String username = request.getParameter("username");
+			String schemaname = request.getParameter("schemaname");
 			if (username != null && !username.equals("")) {
-				outputMap.put("auditList", lObjConfigDao.getAuditListByUser(username, con));
+				outputMap.put("auditList", lObjConfigDao.getAuditListByUserAndSchema(username,schemaname, con));
 			}
 			outputMap.put("memoryStats", cf.getMemoryStats());
 			outputMap.put("activeConnections", cf.getActiveConnections(con));
