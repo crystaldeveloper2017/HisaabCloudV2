@@ -73,6 +73,8 @@ function saveInvoice()
 	    "~"+Number(rows[x].childNodes[1].childNodes[1].value)+ // RATE
 	    "~"+Number(rows[x].childNodes[1].childNodes[1].value)+ // Custom RATE	    	    
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
+		"~0~0~0~0~0~0~0"+ // Item Name
+		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
 	    "|";       
 	}
 	
@@ -527,10 +529,7 @@ if('${param.order_id}'!='')
 	
 	
 	function checkforMatchItem()
-	{
-		
-		
-		
+	{		
 		var searchString= document.getElementById("txtitem").value;	
 		var options1=document.getElementById("itemList").options;
 		

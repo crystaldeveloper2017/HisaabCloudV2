@@ -112,6 +112,13 @@
     - getrecondata
     - saveSplitInvoice
     - settleThisTransaction
+    - showAddVendor
+    - addVendor
+    - savePurchaseInvoice
+    - showStockStatus
+    - showStockModifications
+    - showStockRegister
+    - generateStockRegister
   elements:
     - 700160
     - 700182
@@ -160,3 +167,6 @@
     - 700184
     - 700195
     - 700197
+    - 700151
+    - 2
+    - 19

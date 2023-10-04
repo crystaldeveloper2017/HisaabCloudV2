@@ -2577,23 +2577,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						itemDetailsMap.put("gst_amount", itemDetails[9]);
 						itemDetailsMap.put("weight", itemDetails[10]);
 						itemDetailsMap.put("size", itemDetails[11]);
-						itemDetailsMap.put("purchaseDetailsId", itemDetails[12]);
-
-						if (itemDetails.length >= 14) {
-							itemDetailsMap.put("RSPH", itemDetails[13]);
-							itemDetailsMap.put("RCYL", itemDetails[14]);
-							itemDetailsMap.put("RAXIS", itemDetails[15]);
-							itemDetailsMap.put("RADD", itemDetails[16]);
-							itemDetailsMap.put("RVA", itemDetails[17]);
-							itemDetailsMap.put("RIPD", itemDetails[18]);
-
-							itemDetailsMap.put("LSPH", itemDetails[19]);
-							itemDetailsMap.put("LCYL", itemDetails[20]);
-							itemDetailsMap.put("LAXIS", itemDetails[21]);
-							itemDetailsMap.put("LADD", itemDetails[22]);
-							itemDetailsMap.put("LVA", itemDetails[23]);
-							itemDetailsMap.put("LIPD", itemDetails[24]);
-						}
+						itemDetailsMap.put("purchaseDetailsId", itemDetails[12].trim());
 
 					}
 					itemDetailsMap.put("debit_in", lObjConfigDao.getDebitInForItem(itemDetails[0], con));
@@ -2676,6 +2660,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
 			hm.put("invoice_id", returnMap.get("invoice_id"));
+
+
+			
 
 			
 
