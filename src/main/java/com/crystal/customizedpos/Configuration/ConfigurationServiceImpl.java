@@ -2577,7 +2577,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						itemDetailsMap.put("gst_amount", itemDetails[9]);
 						itemDetailsMap.put("weight", itemDetails[10]);
 						itemDetailsMap.put("size", itemDetails[11]);
-						itemDetailsMap.put("purchaseDetailsId", itemDetails[12].trim());
+						String purchaseDetailsId=itemDetails[12].trim().equals("")?"0":itemDetails[12].trim();
+						itemDetailsMap.put("purchaseDetailsId", purchaseDetailsId);
 
 					}
 					itemDetailsMap.put("debit_in", lObjConfigDao.getDebitInForItem(itemDetails[0], con));
