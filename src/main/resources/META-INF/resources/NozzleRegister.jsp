@@ -17,6 +17,7 @@
 <c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
 <c:set var="lstPayments" value='${requestScope["outputObject"].get("lstPayments")}' />
 <c:set var="salesEmpWiseMap" value='${requestScope["outputObject"].get("salesEmpWiseMap")}' />
+<c:set var="LubeSales" value='${requestScope["outputObject"].get("LubeSales")}' />
 <c:set var="paymentEmpWiseMap" value='${requestScope["outputObject"].get("paymentEmpWiseMap")}' />
 <c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShifts")}' />
 <c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
@@ -86,7 +87,11 @@
               <div class="card-body table-responsive p-0" style="height: 480px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
-                 
+                 <tr align="center">
+				 	<th colspan="20" >
+					Petrol / Diesel Sales
+					</th>
+				 </tr>
                     <tr>                  
                       
                      <th><b>Nozzle Name</b></th><th><b>Shift</b></th><th><b>Attendant Name</b></th>
@@ -151,9 +156,55 @@
               
                
 </div>
-            
-            
-            
+
+
+	<div class="card">
+ <br>
+
+<div class="row">
+
+	
+              
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 480px;">                
+                <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                
+                 
+				 <tr  align="center">
+				 	<th colspan="20">
+					Lube Sales
+					</th>
+				 </tr>
+                    <tr>                    
+                     <th><b>Attendant Name</b></th>
+                     <th><b>Shift</b></th>
+					 <th><b>Amount</b></th>
+					 <th><b>Item Name</b></th>					 
+                     
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+				<c:forEach items="${LubeSales}" var="paym">
+					<tr >
+						<td>${paym.name} </td>
+						<td>${paym.shift_name} </td>
+						<td>${paym.total_amount} </td>
+						<td>${paym.item_name} </td>			
+						
+					</tr>
+				</c:forEach>
+				
+				
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              
+              
+               
+</div>        
+       
        
    <div class="card">
  <br>
@@ -166,7 +217,11 @@
               <div class="card-body table-responsive p-0" style="height: 480px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
-                 
+                 <tr  align="center">
+				 	<th colspan="20">
+					Payments
+					</th>
+				 </tr>
                     <tr>                    
                      <th><b>Attendant Name</b></th>
                      <th><b>Shift</b></th>
@@ -224,6 +279,11 @@
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
                  
+				 <tr  align="center">
+				 	<th colspan="20">
+					Difference 
+					</th>
+				 </tr>
                   <th>Name</th>
                   <th>Sales</th>
                   <th>Payments</th>

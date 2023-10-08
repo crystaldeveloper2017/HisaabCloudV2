@@ -5350,6 +5350,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			
 			List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
 			TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPayments);
+
+
+
+			List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
 			
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
@@ -5360,6 +5364,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				outputMap.put("lstPayments", lstPayments);
 				
 				outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
+				outputMap.put("LubeSales", lstLubeSales);
+				
 				outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
 						outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
 outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));

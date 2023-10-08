@@ -5403,6 +5403,45 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 					query,
 					con);
 		}
+
+
+		public List<LinkedHashMap<String, Object>> getLubeSales (HashMap<String, Object> hm,Connection con)
+				throws ClassNotFoundException, SQLException, ParseException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("app_id"));
+			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+
+			String query="select *,tum.name attendantName,tir.total_amount totalAmount from\n" + 
+			"trn_invoice_register tir ,\n" + 
+			"trn_invoice_details tid ,\n" + 
+			"rlt_invoice_fuel_details rifd,\n" + 
+			"tbl_user_mst tum,\n" + 
+			"shift_master sm,\n" + 
+			"mst_items mi\n" + 
+			"where\n" + 
+			"tir.invoice_id =tid.invoice_id\n" + 
+			"and rifd.invoice_id =tid.invoice_id\n" + 
+			"and tum.user_id =rifd.attendant_id \n" + 
+			"and rifd.shift_id =sm.shift_id \n" + 
+			"and tid.item_id =mi.item_id \n" + 
+			"and tir.app_id =? \n" + 
+			"and tir.invoice_date =?\n";
+			if(!hm.get("shiftid").equals("0") && !hm.get("shiftid").equals("-1"))
+			{
+				parameters.add(hm.get("shiftid"));
+				query+=" and rifd.shift_id=?";
+			}
+
+			
+			
+
+			
+			return getListOfLinkedHashHashMap(parameters,
+					query,
+					con);
+		}
+
+
 		public List<LinkedHashMap<String, Object>> getPaymentsForDatesAttendantWise (HashMap<String, Object> hm,Connection con)
 				throws ClassNotFoundException, SQLException, ParseException {
 			ArrayList<Object> parameters = new ArrayList<>();
