@@ -142,7 +142,7 @@ function deleteCustomer(customerId)
               
               
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 580px;">                
+              <div class="card-body table-responsive p-0" >                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>

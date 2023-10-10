@@ -3577,10 +3577,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					"customerType" };
 
 			List<LinkedHashMap<String, Object>> lst =null;
-			if(searchInput!="" && groupId!=null && customerType!=null)
-				{
+			
 					lst=lObjConfigDao.getCustomerMaster(outputMap, con);				
-				}
+				
 
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
