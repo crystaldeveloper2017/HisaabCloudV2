@@ -119,6 +119,7 @@
     - showStockModifications
     - showStockRegister
     - generateStockRegister
+    - showInvoices
   elements:
     - 700160
     - 700182

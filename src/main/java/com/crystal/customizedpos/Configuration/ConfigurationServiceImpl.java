@@ -5345,7 +5345,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					"BilledQty", "rate", "custom_rate", "DiscountAmount", "ItemAmount", "formattedUpdatedDate" };
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleRegister(outputMap, con);
 			
-			TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(lst);
+			
 			
 			List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
 			TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPayments);
@@ -5353,6 +5353,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 
 			List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
+			List<LinkedHashMap<String, Object>> salesEmpWiseList=lst;
+			salesEmpWiseList.addAll(lstLubeSales);
+			TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
 			
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
@@ -5402,6 +5405,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				Double existingValue=Double.parseDouble(hm.get(temp.get("name").toString()).toString());
 				hm.put(temp.get("name").toString(),existingValue+totalAmount);				
 			}
+		}
+
+		for(Map.Entry<String,Object> entry : hm.entrySet()) {
+			String key = entry.getKey();
+			Double value = (Double) entry.getValue();
+
+			hm.put(key, df.format(value));
 		}
 		return hm;
 	}
