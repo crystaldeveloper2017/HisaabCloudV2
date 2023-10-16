@@ -120,6 +120,7 @@
     - showStockRegister
     - generateStockRegister
     - showInvoices
+    - generateDailyInvoiceReport
   elements:
     - 700160
     - 700182
@@ -171,3 +172,4 @@
     - 700151
     - 2
     - 19
+    - 25
