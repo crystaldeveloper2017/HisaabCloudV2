@@ -8700,58 +8700,50 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, String> hm = new HashMap<String, String>();
-		HashMap<String, Object> hmObject = new HashMap<String, Object>();
-		String testQuantity = request.getParameter("testqty");
-		String testDate = request.getParameter("testdate");
-		String testNozzle = request.getParameter("testnozzle");
+		
+		
+		String shift_id = request.getParameter("shift_id");
+		String testDate = request.getParameter("testDate");
 		
 
-		hm.put("testQuantity", testQuantity);
-		hm.put("testDate", testDate);
-		hm.put("testNozzle", testNozzle);
-		hmObject.put("nozzle_id", testNozzle);
-		LinkedHashMap<String, String> nozzleDetails = lObjConfigDao.getNozzleDetails(testNozzle, con);
-		String ItemId = nozzleDetails.get("item_id");
-		hmObject.put("item_id", ItemId);
-		
-
-		HashMap<String, String> nozzleRegisterEntry = lObjConfigDao.getNozzleDetailsFromRegister(hm, con);
-		
-		String shift_id = nozzleRegisterEntry.get("shift_id");
-		
-		hmObject.put("drpshiftid", shift_id);
-		
-		String appIdItem = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		hmObject.put("app_id", appIdItem);
-		LinkedHashMap<String, Object> ItemDetails = lObjConfigDao.getItemdetailsById(hmObject, con);
-		Object itemPrice = ItemDetails.get("price");
-		hm.put("test_type", "A");
-		
-		hmObject.put("drpemployee", "-1");
-		
-		double amount = Double.parseDouble((itemPrice).toString()) * Double.parseDouble(testQuantity) * -1;
-		
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		hmObject.put("user_id", userId);
-		
-		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		
-		hmObject.put("app_id", appId);
-		
-		hmObject.put("txtcollectiondate", testDate);
-		
-		hmObject.put("amount", amount);
-		
-		lObjConfigDao.saveCollectionSupervisor(con, hmObject);
-		
 		hm.put("user_id", userId);
 
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
+		
 
-		hm.putAll(nozzleRegisterEntry);
+		hm.put("shift_id", shift_id);
+		hm.put("testDate", testDate);		
+		hm.put("test_type", "A");
 
-		lObjConfigDao.addTestFuel(con, hm);
+		String testInputData=request.getParameter("testInputData");		
+		String[] listTestdata=testInputData.split("\\|");
+		for(String s:listTestdata)
+		{
+			String[] testData=s.split("~");
+			hm.put("attendant_id", testData[0]);	
+			hm.put("testNozzle", testData[1]);	
+			hm.put("testQuantity", testData[2]);	
+			if(!testData[2].equals("0"))
+			{
+				lObjConfigDao.addTestFuel(con, hm);
+			}	
+			
+		}
 
+
+		
+		
+		
+		
+
+		
+
+		
+		
+		
+		
 		rs.setAjaxData("Data saved Succesfully");
 		return rs;
 
@@ -9083,6 +9075,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("app_id", appId);
 
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String type = request.getParameter("type") == null ? "" : request.getParameter("type");
 		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
 
 		// if parameters are blank then set to defaults
@@ -9095,6 +9088,8 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
+		outputMap.put("type", type);
+		
 
 		List<LinkedHashMap<String, Object>> testData = lObjConfigDao.getTestData(outputMap, con);
 		outputMap.put("testData", testData);
@@ -9850,6 +9845,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		String collectionDate = (request.getParameter("collection_date"));
 		String shift_id = (request.getParameter("shift_id"));
+		String type = (request.getParameter("type"));
 		HashMap<String, Object> outputMap = new HashMap<>();
 		
 
@@ -9859,7 +9855,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);			
 			outputMap.put("collectionData", collectionData);
 			
-			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,con);			
+			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,type,con);			
 			outputMap.put("testData", testData);
 			
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));
@@ -9875,6 +9871,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		String collectionDate = (request.getParameter("collection_date"));
 		String shift_id = (request.getParameter("shift_id"));
+		String type = (request.getParameter("type"));
 		HashMap<String, Object> outputMap = new HashMap<>();
 		try {
 			List<LinkedHashMap<String, Object>> listofAttendants= lObjConfigDao.getAttendantsForDateAndShiftUnclubbed(collectionDate,shift_id, con);
@@ -9884,7 +9881,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);			
 			outputMap.put("collectionData", collectionData);
 			
-			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,con);			
+			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,type,con);			
 			outputMap.put("testData", testData);
 			
 			

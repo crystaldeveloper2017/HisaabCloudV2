@@ -121,6 +121,8 @@
     - generateStockRegister
     - showInvoices
     - generateDailyInvoiceReport
+    - showAddPumpTest
+    - addPumpTest
   elements:
     - 700160
     - 700182
@@ -173,3 +175,4 @@
     - 2
     - 19
     - 25
+    - 700201

@@ -30,7 +30,7 @@
 		</div>
 		
 		<div class="col-sm-1" align="center">
-		<&nbsp>
+
 			<label for="txttodate">To Date</label>
 		</div>
 		
@@ -40,7 +40,23 @@
 			</div>
 		</div>
 		
-		
+		     
+                <div class="card-tools">
+  <div class="input-group input-group-sm">
+				  <div class="input-group input-group-sm" style="width: 200px;">
+  			
+  					<select id="drptype" name="drptype" class="form-control float-right" onchange='ReloadFilters()' style="margin-right: 15px;" >
+  						
+  						<option value='-1'>--Select--</option>
+                        <option value="A">A</option>
+		                <option value="S">S</option>
+		  						
+  													
+  					</select>
+				</div>
+			</div>
+		</div> 
+              
 		<input  type="hidden" name="customerId" id="customerId" value="">
 		
 		
@@ -59,14 +75,12 @@
 		</div>
 	</div>
 	<br>
-              
-              
-               
+          
                 
               
               
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 480px;">                
+              <div class="card-body table-responsive p-0" style="height: 800px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
                  
@@ -158,7 +172,7 @@ function deleteTestFuel(test_id)
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 50,
+      "pageLength": 100,
       "order": [[ 2, 'desc' ]]
 
     });
@@ -229,8 +243,8 @@ function deleteTestFuel(test_id)
   
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showTestFuelRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
-		  
+  	  		window.location="?a=showTestFuelRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&type="+drptype.value;
+		
   }
   
   function checkforMatchCustomer()
@@ -282,5 +296,6 @@ function deleteTestFuel(test_id)
   
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+  drptype.value="${param.type}";
 
 </script> 

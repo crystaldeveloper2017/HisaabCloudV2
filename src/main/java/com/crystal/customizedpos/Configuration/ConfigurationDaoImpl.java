@@ -6015,11 +6015,12 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 			parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));			
 			parameters.add(hm.get("app_id"));
+			parameters.add(hm.get("type"));
 			
 			return getListOfLinkedHashHashMap(parameters,
 					"select *,tum.name attendantName,tum2.name superVisorName from trn_test_fuel_register ttfr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
 					+ " where test_date between ? and ? and ttfr.activate_flag=1 and ttfr.app_id=? and ttfr.shift_id=shft.shift_id and "
-					+ "tum.user_id=ttfr.user_id and tum2.user_id=ttfr.updated_by and nm.nozzle_id=ttfr.nozzle_id and fm.item_id=nm.item_id order by ttfr.updated_date desc ",
+					+ "tum.user_id=ttfr.user_id and tum2.user_id=ttfr.updated_by and nm.nozzle_id=ttfr.nozzle_id and fm.item_id=nm.item_id and ttfr.test_type=? order by ttfr.updated_date desc ",
 					con);
 		}
 		
@@ -6057,11 +6058,12 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					con);
 		}
 		
-		public List<LinkedHashMap<String, String>> getTestDataDateAndShiftWise(String collection_date,String shiftId,Connection con)
+		public List<LinkedHashMap<String, String>> getTestDataDateAndShiftWise(String collection_date,String shiftId,String type,Connection con)
 				throws ClassNotFoundException, SQLException, ParseException {
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(getDateASYYYYMMDD(collection_date));
 			parameters.add(shiftId);
+			parameters.add(type);
 			
 			return getListOfLinkedHashHashMapString(parameters,
 					"select \r\n"
@@ -6070,7 +6072,7 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					+ "from trn_test_fuel_register tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2,nozzle_master nm  \r\n"
 					+ "where test_date=? and sm.shift_id=tsc.shift_id and tsc.shift_id=? and tum.user_id =tsc.user_id and nm.nozzle_id=tsc.nozzle_id \r\n"
 					+ "and \r\n"
-					+ "tum2.user_id =tsc.updated_by;" ,
+					+ "tum2.user_id =tsc.updated_by and tsc.test_type=?;" ,
 					con);
 		}
 		

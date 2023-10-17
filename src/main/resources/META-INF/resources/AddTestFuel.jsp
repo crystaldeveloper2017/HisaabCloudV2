@@ -302,7 +302,7 @@ function getAttendantList()
       
       
     }
-    xhttp.open("GET", "?a=getAttendantsForDateAndShiftUnclubbed&collection_date="+txttestdate.value+"&shift_id="+shift);
+    xhttp.open("GET", "?a=getAttendantsForDateAndShiftUnclubbed&collection_date="+txttestdate.value+"&shift_id="+shift+"&type=S");
     xhttp.send();
 	
 	
