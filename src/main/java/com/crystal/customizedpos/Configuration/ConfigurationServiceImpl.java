@@ -5346,14 +5346,16 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleRegister(outputMap, con);
 			
 			
+			List<LinkedHashMap<String, Object>> lstPumpTest = lObjConfigDao.getPumpTests(outputMap, con);
 			
+
 			List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
 			TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPayments);
 
 
 
 			List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
-			List<LinkedHashMap<String, Object>> salesEmpWiseList=lst;
+			List<LinkedHashMap<String, Object>> salesEmpWiseList=new ArrayList<>(lst);
 			salesEmpWiseList.addAll(lstLubeSales);
 			TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
 			
@@ -5367,6 +5369,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				
 				outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 				outputMap.put("LubeSales", lstLubeSales);
+				outputMap.put("lstPumpTest", lstPumpTest);
+				
 				
 				outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
 						outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));

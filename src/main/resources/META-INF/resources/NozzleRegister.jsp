@@ -21,6 +21,7 @@
 <c:set var="paymentEmpWiseMap" value='${requestScope["outputObject"].get("paymentEmpWiseMap")}' />
 <c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShifts")}' />
 <c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
+<c:set var="lstPumpTest" value='${requestScope["outputObject"].get("lstPumpTest")}' />
 
 
 
@@ -299,6 +300,50 @@
   						<fmt:formatNumber type="number"  pattern = "###.##" value="${paymentEmpWiseMap.get(entry.key) - entry.value}" />
   							  					
   					</td>
+  					  					
+  				 </tr>
+  				   					
+				 </c:forEach>  
+				
+				
+				
+                  
+                </table>
+              </div>
+              <!-- /.card-body -->
+              
+              
+               
+</div>
+
+
+<div class="row">
+
+	
+              
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 480px;">                
+                <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                
+                 
+				 <tr  align="center">
+				 	<th colspan="20">
+					Pump Tests 
+					</th>
+				 </tr>
+                  <th>Name</th>
+                  <th>Test Qty</th>
+                  <th>Rate</th>
+                  <th>Total Amount Cash</th>
+                 <c:forEach var="pump" items="${lstPumpTest}">
+                 
+                 <tr>
+  					
+  					<td> ${pump.username}</td>
+					<td> ${pump.test_quantity}</td>
+					<td> ${pump.price}</td>
+					<td> ${pump.totalAmountCash}</td>
+					
   					  					
   				 </tr>
   				   					

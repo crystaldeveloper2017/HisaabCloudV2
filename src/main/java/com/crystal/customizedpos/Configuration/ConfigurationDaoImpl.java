@@ -5441,6 +5441,36 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 					con);
 		}
 
+		public List<LinkedHashMap<String, Object>> getPumpTests (HashMap<String, Object> hm,Connection con)
+				throws ClassNotFoundException, SQLException, ParseException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("app_id"));
+			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+
+			String query="select\n" + 
+			"ttfr.test_quantity ,mi.price,tum.username,ttfr.test_quantity*mi.price totalAmountCash\n" + 
+			"from\n" + 
+			"trn_test_fuel_register ttfr,trn_nozzle_register tnr ,mst_items mi,tbl_user_mst tum \n" + 
+			"where\n" + 
+			"ttfr.app_id=? and test_type = 'A' \n" + 
+			"and ttfr.nozzle_id =tnr.nozzle_id\n" + 
+			"and tnr.item_id = mi.item_id\n" + 
+			"and\ttest_date = ?  and tum.user_id=tnr.attendant_id ";
+			if(!hm.get("shiftid").equals("0") && !hm.get("shiftid").equals("-1"))
+			{
+				parameters.add(hm.get("shiftid"));
+				query+=" and ttfr.shift_id =?";
+			}
+
+			
+			
+
+			
+			return getListOfLinkedHashHashMap(parameters,
+					query,
+					con);
+		}
+
 
 		public List<LinkedHashMap<String, Object>> getPaymentsForDatesAttendantWise (HashMap<String, Object> hm,Connection con)
 				throws ClassNotFoundException, SQLException, ParseException {
