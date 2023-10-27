@@ -9157,6 +9157,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
 		String attendantId = request.getParameter("attendant_id") == null ? "" : request.getParameter("attendant_id");
+		String collection_mode = request.getParameter("collection_mode") == null ? "" : request.getParameter("collection_mode");
 		
 		
 		if (fromDate.equals("")) {
@@ -9168,6 +9169,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
 		outputMap.put("attendantId", attendantId);
+		outputMap.put("collection_mode", collection_mode);
 		
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);

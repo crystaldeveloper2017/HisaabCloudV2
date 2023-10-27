@@ -5455,7 +5455,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			"ttfr.app_id=? and test_type = 'A' \n" + 
 			"and ttfr.nozzle_id =tnr.nozzle_id\n" + 
 			"and tnr.item_id = mi.item_id\n" + 
-			"and\ttest_date = ?  and tum.user_id=tnr.attendant_id ";
+			"and\ttest_date = ?  and tum.user_id=tnr.attendant_id and ttfr.activate_flag=1";
 			if(!hm.get("shiftid").equals("0") && !hm.get("shiftid").equals("-1"))
 			{
 				parameters.add(hm.get("shiftid"));
@@ -6195,7 +6195,14 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					+ "where tsc.activate_flag=1 and tsc.app_id=? and collection_date  between ? and ? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.attendant_id\r\n"
 					+ "and \r\n"
 					+ "tum2.user_id =tsc.updated_by";
+
+					
 			
+			if(hm.get("collection_mode")!=null && !hm.get("collection_mode").equals(""))
+			{
+				query+=" and tsc.collection_mode=?";
+				parameters.add(hm.get("collection_mode"));
+			}
 			if(hm.get("attendantId")!=null && !hm.get("attendantId").equals(""))
 			{
 				query+=" and tsc.attendant_id=?";

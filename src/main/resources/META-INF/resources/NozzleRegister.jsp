@@ -243,11 +243,11 @@
 						<td>${paym.shift_name} </td>
 						
 						
-						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.csh} </a></td>
+						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}&collection_mode=Cash"> ${paym.csh} </a></td>
 						
 						<td><a href="?a=generateDailyInvoiceReport&drpstoreId=${userdetails.store_id }&paymentMode=Card&txtfromdate=${txtfromdate}&txttodate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.cswp} </a></td>
 						
-						<td><a href="?a=showPaytmTransctions&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pytm} </a></td>
+						<td><a href="?a=showSupervisorCollection&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}&collection_mode=Paytm"> ${paym.pytm} </a></td>
 						
 						<td><a href="?a=generateDailyInvoiceReport&paymentType=Pending,Partial&drpstoreId=${userdetails.store_id }&txtfromdate=${txtfromdate}&attendant_id=${paym.attendant_id}"> ${paym.pnding} </a></td>
 
