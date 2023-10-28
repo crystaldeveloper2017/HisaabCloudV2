@@ -123,6 +123,19 @@
 		
 		</div>
 
+<div class="row">
+  <div class="col-md-2">
+    <div class="list-group">
+      <c:forEach items="${itemList}" var="item">
+        <button type="button" class="list-group-item" onclick="showThisItemIntoSelection('${item.item_id}')">
+          <img src="/BufferedImagesFolder/${item.ImagePath}" alt="${item.item_name}" style="max-width: 50px; max-height: 50px;">
+          ${item.item_name}
+        </button>
+        <br>
+      </c:forEach>
+    </div>
+  </div>
+  <div class="col-md-10">
  <div class="col-sm-12">   
     <div class="input-group">
     <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
@@ -130,7 +143,7 @@
     </div>
   </div>
   </div>
-  
+
   
   <div class="col-sm-12">  
 	  <div class="card-body table-responsive p-0" style="height: 370px;">                
@@ -177,7 +190,8 @@
      </div>
    </div>
 
-
+</div>
+</div>
 
 
  <div class="col-sm-12">  
