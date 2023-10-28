@@ -124,30 +124,36 @@
 		</div>
 
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-8">
     <div class="list-group">
-      <c:forEach items="${itemList}" var="item">
-        <button type="button" class="list-group-item" onclick="showThisItemIntoSelection('${item.item_id}')">
-          <img src="/BufferedImagesFolder/${item.ImagePath}" alt="${item.item_name}" style="max-width: 50px; max-height: 50px;">
-          ${item.item_name}
-        </button>
-        <br>
-      </c:forEach>
+      <div class="row">
+        <c:forEach items="${itemList}" var="item">
+          <div class="col-md-3">
+            <button style type="button" class="list-group-item" onclick="showThisItemIntoSelection('${item.item_id}')">
+              <img src="/BufferedImagesFolder/${item.ImagePath}" alt="${item.item_name}" style="max-width: 50px; max-height: 50px;">
+              ${item.item_name}
+            </button>
+			<br>
+          </div>
+        </c:forEach>
+      </div>
     </div>
   </div>
-  <div class="col-md-10">
- <div class="col-sm-12">   
-    <div class="input-group">
-    <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
-    <div class="input-group-append">      
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">   
+        <div class="input-group">
+          <input type="text" class="form-control form-control-sm" placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
+          <div class="input-group-append">      
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-
   
-  <div class="col-sm-12">  
-	  <div class="card-body table-responsive p-0" style="height: 370px;">                
-	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+    <div class="row">  
+      <div class="col-md-12">  
+        <div class="card-body table-responsive p-0" style="height: 370px;">                
+          <table id="tblitems" class="table table-head-fixed table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center">
 	                     <th style="z-index:0">Sr</th>
