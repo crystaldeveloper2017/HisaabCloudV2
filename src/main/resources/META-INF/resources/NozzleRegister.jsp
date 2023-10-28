@@ -332,7 +332,9 @@
 					</th>
 				 </tr>
                   <th>Name</th>
-                  <th>Test Qty</th>
+                  <th>Shift Name</th>
+				  <th>Nozzle Name</th>
+				  <th>Test Qty</th>
                   <th>Rate</th>
                   <th>Total Amount Cash</th>
                  <c:forEach var="pump" items="${lstPumpTest}">
@@ -340,6 +342,8 @@
                  <tr>
   					
   					<td> ${pump.username}</td>
+					<td> ${pump.shift_name}</td>
+					<td> ${pump.nozzle_name}</td>
 					<td> ${pump.test_quantity}</td>
 					<td> ${pump.price}</td>
 					<td> ${pump.totalAmountCash}</td>

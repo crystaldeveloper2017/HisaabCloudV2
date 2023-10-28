@@ -5448,14 +5448,14 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 
 			String query="select\n" + 
-			"ttfr.test_quantity ,mi.price,tum.username,ttfr.test_quantity*mi.price totalAmountCash\n" + 
+			"ttfr.test_quantity ,mi.price,tum.username,ttfr.test_quantity*mi.price totalAmountCash,shift_name,nm.nozzle_name\n" + 
 			"from\n" + 
-			"trn_test_fuel_register ttfr,trn_nozzle_register tnr ,mst_items mi,tbl_user_mst tum \n" + 
+			"trn_test_fuel_register ttfr,trn_nozzle_register tnr ,mst_items mi,tbl_user_mst tum,shift_master sm,nozzle_master nm \n" + 
 			"where\n" + 
 			"ttfr.app_id=? and test_type = 'A' \n" + 
 			"and ttfr.nozzle_id =tnr.nozzle_id\n" + 
 			"and tnr.item_id = mi.item_id\n" + 
-			"and\ttest_date = ?  and tum.user_id=tnr.attendant_id and ttfr.activate_flag=1";
+			"and\ttest_date = ?  and tum.user_id=tnr.attendant_id and ttfr.activate_flag=1 and ttfr.shift_id=sm.shift_id and tnr.shift_id =ttfr.shift_id and tnr.nozzle_id=nm.nozzle_id ";
 			if(!hm.get("shiftid").equals("0") && !hm.get("shiftid").equals("-1"))
 			{
 				parameters.add(hm.get("shiftid"));
