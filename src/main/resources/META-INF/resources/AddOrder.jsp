@@ -65,6 +65,11 @@
 									href="#custom-tabs-one-${fn:replace(category.category_name,' ', '')}" role="tab"
 									aria-controls="custom-tabs-one-${fn:replace(category.category_name,' ', '')}" aria-selected="false">${fn:replace(category.category_name,' ', '')}</a></li>
 							</c:forEach>
+							<script>
+								$(document).ready(function() {
+									$("#custom-tabs-one-tab li:first-child a").tab("show");
+								});
+							</script>
 						</ul>
 	</div>
 
