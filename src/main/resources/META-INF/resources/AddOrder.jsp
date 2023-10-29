@@ -51,23 +51,11 @@
 
 <div class="col-sm-12">
 
-<div class="card card-primary" >
-              <div class="card-header" data-card-widget="collapse">
-                <h3 class="card-title" >Menu</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" id="btnhidder" data-card-widget="collapse"  >
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    
-                  </button>
-                </div>
-              </div>
-              <div class="card-body table-responsive p-0">
-                <div class="card card-primary card-tabs">
-	<div class="card-header p-0 pt-1">
-		<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+	<div class="col-sm-12">
+		<div class="card-body table-responsive p-0">
+		  <div class="card card-primary card-tabs">
+			<div class="card-header p-0 pt-1">
+			  <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 			
 
 
@@ -77,8 +65,23 @@
 									href="#custom-tabs-one-${fn:replace(category.category_name,' ', '')}" role="tab"
 									aria-controls="custom-tabs-one-${fn:replace(category.category_name,' ', '')}" aria-selected="false">${fn:replace(category.category_name,' ', '')}</a></li>
 							</c:forEach>
+							<script>
+								$(document).ready(function() {
+									$("#custom-tabs-one-tab li:first-child a").tab("show");
+								});
+							</script>
 						</ul>
 	</div>
+
+</div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+		
+		
+		</div>
+
+<div class="row">
 	<div class="card-body">
 		<div class="tab-content" id="custom-tabs-one-tabContent">
 			
@@ -115,26 +118,22 @@
 				
 		</div>
 	</div>
-</div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-		
-		
-		</div>
-
- <div class="col-sm-12">   
-    <div class="input-group">
-    <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
-    <div class="input-group-append">      
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-md-12">   
+        <div class="input-group">
+          <input type="text" class="form-control form-control-sm" placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
+          <div class="input-group-append">      
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
+
   
-  
-  <div class="col-sm-12">  
-	  <div class="card-body table-responsive p-0" style="height: 370px;">                
-	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+    <div class="row">  
+      <div class="col-md-12">  
+        <div class="card-body table-responsive p-0" style="height: 370px;">                
+          <table id="tblitems" class="table table-head-fixed table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center">
 	                     <th style="z-index:0">Sr</th>
@@ -177,7 +176,8 @@
      </div>
    </div>
 
-
+</div>
+</div>
 
 
  <div class="col-sm-12">  
