@@ -51,23 +51,11 @@
 
 <div class="col-sm-12">
 
-<div class="card card-primary" >
-              <div class="card-header" data-card-widget="collapse">
-                <h3 class="card-title" >Menu</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" id="btnhidder" data-card-widget="collapse"  >
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    
-                  </button>
-                </div>
-              </div>
-              <div class="card-body table-responsive p-0">
-                <div class="card card-primary card-tabs">
-	<div class="card-header p-0 pt-1">
-		<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+	<div class="col-sm-12">
+		<div class="card-body table-responsive p-0">
+		  <div class="card card-primary card-tabs">
+			<div class="card-header p-0 pt-1">
+			  <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 			
 
 
@@ -79,6 +67,16 @@
 							</c:forEach>
 						</ul>
 	</div>
+
+</div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+		
+		
+		</div>
+
+<div class="row">
 	<div class="card-body">
 		<div class="tab-content" id="custom-tabs-one-tabContent">
 			
@@ -115,30 +113,6 @@
 				
 		</div>
 	</div>
-</div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-		
-		
-		</div>
-
-<div class="row">
-  <div class="col-md-8">
-    <div class="list-group">
-      <div class="row">
-        <c:forEach items="${itemList}" var="item">
-          <div class="col-md-3">
-            <button style type="button" class="list-group-item" onclick="showThisItemIntoSelection('${item.item_id}')">
-              <img src="/BufferedImagesFolder/${item.ImagePath}" alt="${item.item_name}" style="max-width: 50px; max-height: 50px;">
-              ${item.item_name}
-            </button>
-			<br>
-          </div>
-        </c:forEach>
-      </div>
-    </div>
-  </div>
   <div class="col-md-4">
     <div class="row">
       <div class="col-md-12">   
@@ -149,6 +123,7 @@
         </div>
       </div>
     </div>
+
   
     <div class="row">  
       <div class="col-md-12">  
