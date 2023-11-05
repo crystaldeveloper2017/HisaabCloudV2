@@ -123,6 +123,7 @@
     - generateDailyInvoiceReport
     - showAddPumpTest
     - addPumpTest
+    - exportNozzleRegister
   elements:
     - 700160
     - 700182

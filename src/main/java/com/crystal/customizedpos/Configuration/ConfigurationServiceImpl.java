@@ -69,6 +69,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import pdfGeneration.InvoiceHistoryPDFHelper;
+import pdfGeneration.NozzleRegisterPDFHelper;
 import pdfGeneration.QuotePDFHelper;
 
 public class ConfigurationServiceImpl extends CommonFunctions {
@@ -5343,7 +5344,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			String[] colNames = { "formattedInvoiceDate", "invoice_id", "item_name", "qty", "qty_to_return",
 					"BilledQty", "rate", "custom_rate", "DiscountAmount", "ItemAmount", "formattedUpdatedDate" };
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleRegister(outputMap, con);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSales(outputMap, con);
+			List<LinkedHashMap<String, Object>> lstGroupByItemShift = lObjConfigDao.getNozzleSalesGroupByItemShift(outputMap, con);
 			
 			
 			List<LinkedHashMap<String, Object>> lstPumpTest = lObjConfigDao.getPumpTests(outputMap, con);
@@ -5483,6 +5485,71 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("ListOfItemDetails", lst);
 			new InvoiceHistoryPDFHelper().generatePDFForCustomerInvoiceHistory(DestinationPath, outputMap, con);
 			outputMap.put("listReturnData", lst);
+			outputMap.put(filename_constant, appenders);
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
+
+
+	public CustomResultObject exportNozzleRegister(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") +delimiter;
+		String fromDate = request.getParameter("txtfromdate").toString();
+		String shiftid = request.getParameter("shiftid").toString();
+		String fromDateWithoutSlashes=fromDate.replaceAll("\\/", "");
+		String appenders=fromDateWithoutSlashes+"-"+shiftid+".pdf";
+		
+		outputMap.put("app_id", appId);
+		outputMap.put("shiftid", shiftid);
+		
+		DestinationPath+=appenders;
+		outputMap.put("txtfromdate", fromDate);
+
+		
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSalesGroupByItemShift(outputMap, con);
+		outputMap.put("lstNozzleSales", lst);
+			
+		
+		List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
+		outputMap.put("lstLubeSales", lstLubeSales);
+
+		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
+		outputMap.put("lstPayments", lstPayments);
+
+		List<LinkedHashMap<String, Object>> lstCreditSales = lObjConfigDao.getCreditSalesForthisDate(outputMap, con);
+		outputMap.put("lstCreditSales", lstCreditSales);
+
+		//sales
+			// get petrol Sales
+			// get diesel Sales
+			// get lube sales
+
+		// payment details
+			//get cash details
+			// get paytm details
+			// get card swipe details
+			// get credit parties details
+			// FSM Unadjusted
+
+		
+		
+		
+
+		try {
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");			
+			new NozzleRegisterPDFHelper().generateNozzleRegister(BufferedImagesFolder,DestinationPath, outputMap, con);
 			outputMap.put(filename_constant, appenders);
 			rs.setReturnObject(outputMap);
 

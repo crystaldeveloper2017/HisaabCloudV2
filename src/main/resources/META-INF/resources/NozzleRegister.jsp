@@ -66,7 +66,7 @@
 			<div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
 				<div class="icon-bar" style="font-size:22px;color:firebrick">
 				<a title="Download Excel" onclick="downloadExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a> 
- 						<a title="Download PDF" onclick="exportSalesRegister()"><i class="fa fa-file-pdf-o"></i></a>
+ 						<a title="Download PDF" onclick="exportNozzleRegister()"><i class="fa fa-file-pdf-o"></i></a>
   						<a title="Download Text"  onclick="downloadText()"><i class="fa fa-file-text-o"></i></a> 
 				</div>          
 			</div>
@@ -181,6 +181,7 @@
                      <th><b>Shift</b></th>
 					 <th><b>Amount</b></th>
 					 <th><b>Item Name</b></th>					 
+					 <th><b>Qty</b></th>					 
                      
                      
                     </tr>
@@ -192,6 +193,7 @@
 						<td>${paym.shift_name} </td>
 						<td>${paym.total_amount} </td>
 						<td>${paym.item_name} </td>			
+						<td>${paym.qty} </td>			
 						
 					</tr>
 				</c:forEach>
@@ -397,24 +399,10 @@
   
   
   
-  function exportSalesRegister()
+  function exportNozzleRegister()
   {
-	
-	  
-	  window.open("?a=exportSalesRegister&txtfromdate="+txtfromdate.value+"&customerId="+hdnSelectedCustomer.value);
+	  window.open("?a=exportNozzleRegister&txtfromdate="+txtfromdate.value+"&shiftid="+drpshiftid.value);
 		return;
-	  
-	  var xhttp = new XMLHttpRequest();
-		  xhttp.onreadystatechange = function() 
-		  {
-		    if (xhttp.readyState == 4 && xhttp.status == 200) 
-		    { 		      
-		    	//window.location="BufferedImagesFolder/"+xhttp.responseText;		    	
-		    	window.open("BufferedImagesFolder/"+xhttp.responseText,'_blank','height=500,width=500,status=no, toolbar=no,menubar=no,location=no');
-			}
-		  };
-		  xhttp.open("GET","?a=exportSalesRegister", true);    
-		  xhttp.send();
   }
   
   document.getElementById("drpshiftid").value='${param.shiftid}';
@@ -435,6 +423,9 @@
   {
 	drpshiftid.value=-1;
   }
+
+
+  
   
  
   
