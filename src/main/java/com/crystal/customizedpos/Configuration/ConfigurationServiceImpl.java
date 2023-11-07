@@ -5519,6 +5519,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		
 		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSalesGroupByItemShift(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstOld = lObjConfigDao.getNozzleSales(outputMap, con);
 		outputMap.put("lstNozzleSales", lst);
 			
 		
@@ -5526,10 +5527,21 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("lstLubeSales", lstLubeSales);
 
 		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
 		outputMap.put("lstPayments", lstPayments);
 
 		List<LinkedHashMap<String, Object>> lstCreditSales = lObjConfigDao.getCreditSalesForthisDate(outputMap, con);
 		outputMap.put("lstCreditSales", lstCreditSales);
+		
+		List<LinkedHashMap<String, Object>> salesEmpWiseList=new ArrayList<>(lstOld);
+		salesEmpWiseList.addAll(lstLubeSales);
+		TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);	
+		TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPaymentsOld);
+
+
+		outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
+		outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
+		
 
 		//sales
 			// get petrol Sales

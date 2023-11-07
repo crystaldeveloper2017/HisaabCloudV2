@@ -336,6 +336,7 @@
                   <th>Name</th>
                   <th>Shift Name</th>
 				  <th>Nozzle Name</th>
+				  <th>Item Name</th>
 				  <th>Test Qty</th>
                   <th>Rate</th>
                   <th>Total Amount Cash</th>
@@ -343,9 +344,10 @@
                  
                  <tr>
   					
-  					<td> ${pump.username}</td>
+  					<td> ${pump.name}</td>
 					<td> ${pump.shift_name}</td>
 					<td> ${pump.nozzle_name}</td>
+					<td> ${pump.item_name}</td>
 					<td> ${pump.test_quantity}</td>
 					<td> ${pump.price}</td>
 					<td> ${pump.totalAmountCash}</td>

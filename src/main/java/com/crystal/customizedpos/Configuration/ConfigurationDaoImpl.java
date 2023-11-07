@@ -5374,7 +5374,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 					+ "	tum.name attendantName,\r\n"
 					+ "	tum2.name updated_by_supervisor,\r\n"
 					+ "	(select sum(test_quantity) from trn_test_fuel_register ttfr\r\n"
-					+ "where test_date =accounting_date and user_id=tnr.attendant_id and ttfr.activate_flag=1 and shift_id =tnr.shift_id and ttfr.nozzle_id=tnr.nozzle_id)\r\n"
+					+ "where test_date =accounting_date and user_id=tnr.attendant_id and ttfr.test_type='S' and ttfr.activate_flag=1 and shift_id =tnr.shift_id and ttfr.nozzle_id=tnr.nozzle_id)\r\n"
 					+ "as testFuel \r\n"
 					+ "from\r\n"
 					+ "	trn_nozzle_register tnr,\r\n"
@@ -5506,7 +5506,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 
 			String query="select\n" + 
-			"ttfr.test_quantity ,mi.price,tum.username,ttfr.test_quantity*mi.price totalAmountCash,shift_name,nm.nozzle_name\n" + 
+			"mi.item_name,ttfr.test_quantity ,mi.price,tum.username,tum.name,ttfr.test_quantity*mi.price totalAmountCash,shift_name,nm.nozzle_name\n" + 
 			"from\n" + 
 			"trn_test_fuel_register ttfr,trn_nozzle_register tnr ,mst_items mi,tbl_user_mst tum,shift_master sm,nozzle_master nm \n" + 
 			"where\n" + 

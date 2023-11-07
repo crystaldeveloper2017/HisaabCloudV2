@@ -11,6 +11,8 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.crystal.Frameworkpackage.CommonFunctions;
 import com.itextpdf.text.Document;
@@ -55,6 +57,9 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 		List<LinkedHashMap<String, Object>> lstLubeSales= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstLubeSales")	;
 		List<LinkedHashMap<String, Object>> lstPayments= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstPayments")	;
 		List<LinkedHashMap<String, Object>> lstCreditSales= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstCreditSales")	;
+		TreeMap<String, Object> salesEmpWiseMap= (TreeMap<String, Object>) nozzleRegisterDetails.get("salesEmpWiseMap")	;
+		TreeMap<String, Object> paymentEmpWiseMap= (TreeMap<String, Object>) nozzleRegisterDetails.get("paymentEmpWiseMap")	;
+		
 		
 		
 		
@@ -76,6 +81,19 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 		  
 	        PdfPCell cell;	        
 			PdfPTable table;
+
+
+			table = new PdfPTable(2);
+			table.setWidthPercentage(100f);
+			cell = new PdfPCell(new Phrase("Nozzle Register Report : "+nozzleRegisterDetails.get("txtfromdate"),font));	        
+	        cell.setColspan(2);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	      
+
+			document.add(table);
+
+			document.add(new Paragraph("\n"));
+
 			
 			table = new PdfPTable(5);
 			cell = new PdfPCell(new Phrase("Nozzle Sales",font));	        
@@ -217,7 +235,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			table = new PdfPTable(2);
-
+			table.setWidthPercentage(100f);
 			cell = new PdfPCell(new Phrase("Payment Details",font));	        	        
 			cell.setColspan(2);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -305,6 +323,71 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+
+
+
+			table = new PdfPTable(4);
+			cell = new PdfPCell(new Phrase("Difference FSM",font));	        
+	        cell.setColspan(4);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+
+	        table.setWidthPercentage(100f);
+			cell = new PdfPCell(new Phrase("Employee Name",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("Sales Amount",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("Payment Amount",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("Difference",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	
+
+					
+			
+				
+
+			for (Map.Entry<String, Object> entry : salesEmpWiseMap.entrySet()) 
+			{
+
+
+				cell = new PdfPCell(new Phrase(entry.getKey().toString(),font));	        	        	
+	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	table.addCell(cell);	        
+
+				cell = new PdfPCell(new Phrase(entry.getValue().toString(),font));	        	        	
+	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	table.addCell(cell);	        
+				String paymentValue=paymentEmpWiseMap.get(entry.getKey()) == null ? "0" :paymentEmpWiseMap.get(entry.getKey()).toString();
+				cell = new PdfPCell(new Phrase(paymentValue,font));	        	        	
+	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	table.addCell(cell);	    
+
+
+				Double difference= Double.parseDouble(paymentValue) - Double.parseDouble(entry.getValue().toString());
+				String formattedValue=new DecimalFormat("#.00").format(difference);
+				     
+				cell = new PdfPCell(new Phrase(String.valueOf(formattedValue),font));	        	        	
+	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	table.addCell(cell);	    
+
+				
+			}
+	        
+	        
+			document.add(table);
+
+
+
 			
 		  	document.close();
 
@@ -324,4 +407,4 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	
 			
 	
-}
+	}
