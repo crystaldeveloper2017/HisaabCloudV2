@@ -5471,7 +5471,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			parameters.add(hm.get("app_id"));
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 
-			String query="select *,tum.name attendantName,tir.total_amount totalAmount from\n" + 
+			String query="select *,tum.name attendantName,tid.qty*tid.rate itemAmount, tir.total_amount totalAmount,tir.invoice_no,tir.invoice_id from\n" + 
 			"trn_invoice_register tir ,\n" + 
 			"trn_invoice_details tid ,\n" + 
 			"rlt_invoice_fuel_details rifd,\n" + 
