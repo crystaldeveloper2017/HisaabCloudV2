@@ -20,12 +20,15 @@
 <c:set var="txtinvoicedate" value='${requestScope["outputObject"].get("txtinvoicedate")}' />
 
 <c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShifts")}' />
-<c:set var="lstOfActiveNozzles" value='${requestScope["outputObject"].get("lstOfActiveNozzles")}' />
+
 <c:set var="lstOfSwipeMaster" value='${requestScope["outputObject"].get("lstOfSwipeMaster")}' />
 <c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
 <c:set var="vehicleMaster" value='${requestScope["outputObject"].get("vehicleMaster")}' />
 <c:set var="itemList" value='${requestScope["outputObject"].get("itemList")}' />
 <c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
+
+
+<c:set var="invoiceDetails" value='${requestScope["outputObject"].get("invoiceDetails")}' />
 
 
 
@@ -99,6 +102,7 @@ function saveInvoice()
 	"&total_sgst=0"+
 	"&drpshiftid="+drpshiftid.value+
 	"&slot_id="+$("#drpshiftid option:selected").text().split("~")[3]+
+	"&vehicle_id="+drpvehicledetails.value+	
 	"&nozzle_id="+drpnozzle.value+
 	"&swipe_id="+drpmachinename.value+
 	"&attendant_id="+nozzDetails[4]+
@@ -503,8 +507,7 @@ if('${param.order_id}'!='')
 					
 			}	
 
-			document.getElementById("closebutton").style.display='none';
-	   document.getElementById("loader").style.display='block';
+			
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() 
 	  {
@@ -856,7 +859,7 @@ if('${param.order_id}'!='')
 	
 }
 
-getAttendantList();
+
 
 
 if("${param.txtinvoicedate}"!="")
@@ -867,6 +870,76 @@ else
 {	
 	txtinvoicedate.value="${todaysDate}";
 }
+if(txtinvoicedate.value!='')
+{
+	getAttendantList();
+}
+
+
+
+if("${param.invoice_id}"!="")
+{
+
+	txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";		
+	drpshiftid.value="${invoiceDetails.shift_id}";	
+	txtpaymenttype.value="${invoiceDetails.payment_type}";
+	drppaymentmode.value="${invoiceDetails.payment_mode}";
+	txtsearchcustomer.value="${invoiceDetails.customer_name}";
+	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
+	
+
+	getAttendantList();
+	checkforMatchCustomerVehicle();
+
+
+	// sleeping 1 second so that the attendant list is populated
+	sleep(1000).then(() => {    
+	drpnozzle.value="${invoiceDetails.nozzle_id}";
+	});
+
+
+
+
+
+	var m=0;
+	<c:forEach items="${invoiceDetails.listOfItems}" var="item">
+		
+		m++;
+		tableNo='${item.table_no}';
+		var table = document.getElementById("tblitems");	    	
+    	var row = table.insertRow(-1);	    	
+    	var cell1 = row.insertCell(0);
+    	var cell2 = row.insertCell(1);
+    	var cell3 = row.insertCell(2);
+    	
+    	
+    	
+    	
+    	
+    	cell1.innerHTML = '<a href="#">${item.item_name} ( )</a>';
+    	
+    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
+    	
+    	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
+    	cell3.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';
+    	
+    	
+		</c:forEach>
+
+		calculateTotal();
+
+		disableAllComponents();
+		
+	
+}
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
 
 </script>
 

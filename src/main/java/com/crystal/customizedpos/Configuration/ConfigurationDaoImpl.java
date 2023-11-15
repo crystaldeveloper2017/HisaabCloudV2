@@ -851,7 +851,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		
 		if(hm.get("shift_id")!=null && !hm.get("shift_id").equals(""))
 		{
-			insertUpdateCustomParameterized("insert into rlt_invoice_fuel_details values (default,:invoice_id,:shift_id,:attendant_id,:nozzle_id,sysdate(),:swipe_id,:slot_id)", hm, conWithF);
+			insertUpdateCustomParameterized("insert into rlt_invoice_fuel_details values (default,:invoice_id,:shift_id,:attendant_id,:nozzle_id,sysdate(),:swipe_id,:slot_id,:vehicle_id)", hm, conWithF);
 			
 				
 		}
@@ -2295,6 +2295,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage \r\n" + " from\r\n"
 				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
 				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
+				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
 				+ "where invoice.invoice_id=? order by dtls.details_id", con);
 
 		parameters = new ArrayList<>();
@@ -2309,6 +2310,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 						+ "from mst_items item  inner join trn_invoice_details dtls on item.item_id=dtls.item_id "						
 						+ "inner join mst_category cat on cat.category_id=item.parent_category_id \r\n"
 						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
+						
 						+ "where\r\n" + "invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
 		return itemDetailsMap;
 

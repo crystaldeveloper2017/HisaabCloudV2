@@ -1418,13 +1418,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			List<LinkedHashMap<String, Object>> lstOfActiveNozzles=lObjConfigDao.getActiveNozzles(outputMap, con);
 			
 			
-			if(adminFlag) 
-			{
-				lstOfActiveNozzles.addAll( lObjConfigDao.getPastTwoDaysNozzles(outputMap, con));
-
-			}
 			
-			outputMap.put("lstOfActiveNozzles", lstOfActiveNozzles);
+			
+			
 			outputMap.put("lstOfSwipeMaster", lObjConfigDao.getSwipeMaster(outputMap, con));
 			outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
 			outputMap.put("categoriesWithItem", reqHm);
@@ -2608,6 +2604,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String nozzle_id = request.getParameter("nozzle_id");
 		String attendant_id = request.getParameter("attendant_id");	
 		String slot_id = request.getParameter("slot_id");	
+		String vehicle_id = request.getParameter("vehicle_id");	
+		
 			
 		String swipe_id = 
 				request.getParameter("swipe_id")==null 
@@ -2621,6 +2619,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("attendant_id", attendant_id);
 		hm.put("swipe_id", swipe_id);
 		hm.put("slot_id", slot_id);
+		hm.put("vehicle_id", vehicle_id);
+		
 		
 		
 		
