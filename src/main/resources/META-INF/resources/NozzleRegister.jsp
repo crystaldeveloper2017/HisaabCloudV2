@@ -194,7 +194,7 @@
 						<td>${paym.shift_name} </td>
 						
 						<td><a href="?a=showGenerateInvoice&invoice_id=${paym.invoice_id}&type=${type}">${paym.invoice_no}</a></td>
-						<td>${paym.itemAmount} </td>
+						<td>${paym.totalAmount} </td>
 						<td>${paym.item_name} </td>			
 						<td>${paym.qty} </td>			
 						
