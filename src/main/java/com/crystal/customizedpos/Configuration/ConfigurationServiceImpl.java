@@ -9359,13 +9359,14 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-		
+				
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 	
 		
 		try {
 			
 			
+			System.gc();	
 			List<LinkedHashMap<String, Object>> lstUserRoleDetails = lObjConfigDao.getUserRoleDetails(Long.valueOf(userId), con);
 			HashMap<String,Object> hm = new HashMap<>();
 			hm.put("lstUserRoleDetails", lstUserRoleDetails);
