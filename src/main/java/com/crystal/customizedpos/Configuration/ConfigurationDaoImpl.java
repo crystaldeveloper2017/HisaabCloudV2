@@ -5484,7 +5484,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			"and tum.user_id =rifd.attendant_id \n" + 
 			"and rifd.shift_id =sm.shift_id \n" + 
 			"and tid.item_id =mi.item_id and (mi.item_name!='Petrol') and (mi.item_name!='Diesel') \n" + 
-			"and tir.app_id =? \n" + 
+			"and tir.app_id =? and tir.activate_flag=1\n" + 
 			"and tir.invoice_date =?\n";
 			if(hm.get("shiftid")!=null && !hm.get("shiftid").equals("0") && !hm.get("shiftid").equals("-1"))
 			{
