@@ -5538,9 +5538,11 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);	
 		TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPaymentsOld);
 
+		String cashAgainstPumpTest=lObjConfigDao.getPumpTestEquivalentCash(fromDate, shiftid,  con).get("CashAmount");
 
 		outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 		outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
+		outputMap.put("cashAgainstPumpTest", cashAgainstPumpTest);
 		
 
 		//sales
@@ -8808,6 +8810,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			hm.put("attendant_id", testData[0]);	
 			hm.put("testNozzle", testData[1]);	
 			hm.put("testQuantity", testData[2]);	
+			hm.put("item_price", lObjConfigDao.getNozzleDetails(testData[1],con).get("price"));	
 			if(!testData[2].equals("0"))
 			{
 				lObjConfigDao.addTestFuel(con, hm);

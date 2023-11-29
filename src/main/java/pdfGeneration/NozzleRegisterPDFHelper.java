@@ -59,6 +59,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 		List<LinkedHashMap<String, Object>> lstCreditSales= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstCreditSales")	;
 		TreeMap<String, Object> salesEmpWiseMap= (TreeMap<String, Object>) nozzleRegisterDetails.get("salesEmpWiseMap")	;
 		TreeMap<String, Object> paymentEmpWiseMap= (TreeMap<String, Object>) nozzleRegisterDetails.get("paymentEmpWiseMap")	;
+		String cashAgainstPumpTest= (String) nozzleRegisterDetails.get("cashAgainstPumpTest")	;
 		
 		
 		
@@ -243,8 +244,11 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 			cell = new PdfPCell(new Phrase("Cash",font));	        	        
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	        
-			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("cashsum").toString(),font));
+	        table.addCell(cell);	
+			Double cashPayments=Double.valueOf(lstPayments.get(0).get("cashsum").toString());
+			Double cashAgainstPumpTestDoouble=Double.valueOf(cashAgainstPumpTest);
+			Double FinalCash=cashPayments-cashAgainstPumpTestDoouble;
+			cell = new PdfPCell(new Phrase( String.valueOf(FinalCash),font));
 	    	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
 

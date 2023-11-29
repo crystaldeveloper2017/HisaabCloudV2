@@ -5960,9 +5960,10 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			parameters.add(hm.get("app_id")); 
 			parameters.add(getDateASYYYYMMDD(hm.get("testDate")));
 			parameters.add(hm.get("test_type"));
+			parameters.add(hm.get("item_price"));
 			
 			String insertQuery = "INSERT INTO trn_test_fuel_register\r\n"
-					+ " VALUES (default,?,?,?,?,sysdate(),?,?,?,1,?)";
+					+ " VALUES (default,?,?,?,?,sysdate(),?,?,?,1,?,?)";
 			
 			return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 		}
@@ -6299,6 +6300,30 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 					+ "tum2.user_id =tsc.updated_by and tsc.test_type=?;" ,
 					con);
 		}
+
+		public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date,String shiftId,Connection con)
+				throws ClassNotFoundException, SQLException, ParseException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(getDateASYYYYMMDD(collection_date));
+
+			String query="select \r\n"
+			+ "\r\n"
+			+ "sum( tsc.item_price * test_quantity) as CashAmount from trn_test_fuel_register tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2,nozzle_master nm  \r\n"
+			+ "where test_date=? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.user_id and nm.nozzle_id=tsc.nozzle_id \r\n"
+			+ "and \r\n"
+			+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' ";
+
+			if(!shiftId.equals("-1"))
+			{	
+				query+=" and tsc.shift_id=?";
+				parameters.add(shiftId);
+			}
+			
+			return getMap(parameters,
+					query,
+					con);
+		}
+
 		
 		
 		
