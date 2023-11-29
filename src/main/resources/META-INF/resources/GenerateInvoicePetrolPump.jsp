@@ -772,6 +772,12 @@ if('${param.order_id}'!='')
 	}
 	function calculateQtyFromAmountAndAddToTable(itemId,amount)
 	{
+
+		// hardcoded this will need to fix later
+		if (itemId!=587284 && itemId!=587285)
+		{return;}
+
+
 		var existingRate=document.getElementById("txtrate"+itemId).value;
 		var calculatedQty=Number(amount)/Number(existingRate);
 		
