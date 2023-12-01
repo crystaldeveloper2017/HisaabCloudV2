@@ -1415,7 +1415,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			outputMap.put("lsitOfCategories", lObjConfigDao.getCategoriesWithAtLeastOneItem(outputMap, con));
 			outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
-			List<LinkedHashMap<String, Object>> lstOfActiveNozzles=lObjConfigDao.getActiveNozzles(outputMap, con);
+			
 			
 			
 			
