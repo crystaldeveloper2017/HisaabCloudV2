@@ -1,4 +1,6 @@
 <style>
+
+
 	th
 	{
 		vertical-align:middle!important;
@@ -33,7 +35,8 @@
    
 
 <%-- <script src="js/1ice.js"></script> --%>
-
+<script src="Test_files/app.js"></script>
+<script src="Test_files/iconv-lite.bundle.js.download" charset="utf-8"></script>
 
 
 
@@ -66,50 +69,45 @@ function saveInvoice()
 	{   
 	    // ID, QTY, RATE,CustomRate,Item Name,gst amount
 	    
-	    var arrayReq=rows[x].childNodes[0].childNodes[1].value.split('~');
+	    var arrayReq=rows[x].childNodes[0].childNodes[0].childNodes[0].value.split('~');
 	    var itemId=arrayReq[0];
 	    var productDetailsId=arrayReq[1];
 	    
 	    itemString+=
 	    	itemId+ 
-	    "~"+Number(rows[x].childNodes[2].childNodes[0].childNodes[1].value)+
-	    "~"+Number(rows[x].childNodes[3].childNodes[0].value)+
-	    "~"+Number(rows[x].childNodes[4].childNodes[0].value)+
-	    "~"+rows[x].childNodes[1]	.childNodes[0].innerHTML+
-	    "~"+rows[x].childNodes[7].childNodes[0].value+
-	    "~"+"0"+ // hard coded weight
-	    "~"+"0"+ // hard coded size
-	    "~"+productDetailsId+
+	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value)+
+	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+
+	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+
+	    "~"+rows[x].childNodes[1].childNodes[0].innerHTML+	    
 	    "|";
 	    
-	    var availableQty=Number(rows[x].childNodes[1].childNodes[0].innerHTML.split("(")[1].split(")")[0]);
+	    /* var availableQty=Number(rows[x].childNodes[1].childNodes[0].innerHTML.split("(")[1].split(")")[0]);
 	    var invoiceQty=Number(rows[x].childNodes[2].childNodes[0].childNodes[1].value);
 	    if(invoiceQty>availableQty)
 	    	{	    
 	    		messageToShow+=rows[x].childNodes[1].childNodes[0].innerHTML+ " Available Stock Quantity ("+availableQty+") vs required quantity ("+invoiceQty+") \n";
 	    		showAlert=true;
-	    	}   
+	    	} */   
 	}
 	
 	
 	
-	var reqString="customer_id="+hdnSelectedCustomer.value+
+	var reqString="customer_id=0"+
 	"&gross_amount="+grossAmount.innerHTML+
-	"&item_discount="+txtitemdiscount.innerHTML+
-	"&invoice_discount="+txtinvoicediscount.value+
-	"&total_amount="+totalAmount.innerHTML+
+	"&item_discount=0"+
+	"&invoice_discount=0"+
+	"&total_amount="+grossAmount.innerHTML+
 	"&payment_type="+txtpaymenttype.value+
 	"&payment_mode="+drppaymentmode.value+
 	"&paid_amount="+txtpaidamount.value+
 	"&invoice_date="+txtinvoicedate.value+
 	"&remarks="+txtremarks.value+
-	"&hdnPreviousInvoiceId="+hdnPreviousInvoiceId.value+
+	"&hdnPreviousInvoiceId="+
 	"&table_id="+'${param.table_id}'+
 	"&booking_id="+'${param.booking_id}'+
 	"&appId=${userdetails.app_id}"+
 	"&store_id=${userdetails.store_id}"+
-	"&user_id=${userdetails.user_id}"+
-	"&total_gst="+gst.innerHTML+
+	"&user_id=${userdetails.user_id}"+	
 	"&itemDetails="+itemString;
 	
 	
@@ -131,12 +129,16 @@ function saveInvoice()
 	      			return;
 	      		}
 	      	
+	      	printDirectAsFonts(invoiceId[0],0);
+	      	
 	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
 	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
 	    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
 	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
 	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
 	    	}
+	    	window.location.reload();
+	    	btnsave.disabled=false;
 	      	
 	      	
 	      	
@@ -145,25 +147,9 @@ function saveInvoice()
 	      	
 	      	
 	      	
-	      	if(typeof chkprintinvoice !='undefined' && chkprintinvoice.checked==true)
-      		{
-      		
-      			// code to communicate with server
-      			
-      			generateInvoicePdfPrint(invoiceId[1]);
-      			return;
-      			
-      		
-      			
-      		}
 	      	
 	      	
-	      	if(typeof chkgeneratePDF !='undefined' && chkgeneratePDF.checked==true)
-	      		{
-	      		
-	      			generateInvoice(invoiceId[1]);
-	      			
-	      		}
+	      	
 	      	
 	      	resetField();
 	      	 if(invoiceId.length==3)
@@ -330,45 +316,10 @@ function deleteAttachment(id)
 
 
 
-<div class="col-sm-3">
-  	<div class="form-group">
-  	
-  	
-  	
-  	
-  	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off" list='customerList' oninput="checkforMatchCustomer()">
-                  
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
-                  </span>
-                  
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-primary btn-flat" onclick="addCustomer()">Add</button>
-                  </span>
-    </div>
-  	
-  	
-        	      
-      
-            
-      <input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
-   			<input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
-   			<input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
-   			      
-    </div>
-  </div>
+
   
-  <div class="col-sm-1">
-  	<div class="form-group" align="center"> 	
-  		<label><a href="#" onclick="showLedger()">Due</a> </label>  		
-  	</div>
-  </div>
-   <div class="col-sm-1">
-  	<div class="form-group"> 	
-  		<input type="text" id="txtcustomerpendingamount" name="txtcustomerpendingamount" class="form-control form-control-sm" value="0" readonly/>  		
-  	</div>
-  </div>
+  
+   
 
   <div class="col-sm-2">
   	<div class="form-group">	
@@ -397,54 +348,47 @@ function deleteAttachment(id)
 	  <div class="card-body table-sm table-responsive p-0" style="height: 370px;">                
 	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
-	                    <tr align="center">
+	                    <tr align="center" style="font-size:10px">
 	                     
 	  			<th style="z-index:0">Name</th>
 	  			<th style="z-index:0">Qty</th>	  			
 	  			<th style="z-index:0">Rate</th>
 	  			<th style="z-index:0">Amount</th>	  			
 	  			
-	  			<th></th>
+	  			
 	                    </tr>
 	                  </thead>
 	                </table>
 	   </div>	
   </div>
   
-  <div class="col-sm-12">  
-	  <div class="card-body table-responsive p-0">                
-	                <table id="tblTotalItems"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-	                  <thead>	                   
-	                  
-	                  	                  	                  
-	                  
-	                  
-	                    <tr>
-	                        <th colspan="2" class="text-right">Total Quantity : <span id="totalQty">0</span></th>
-	                        
-	                        <th colspan="2"class="text-right">Gross Amount : <span id="grossAmount">0</span></th>
-	                        	  	
-	                        <th colspan="2" class="text-right">Item Discount : <span id="txtitemdiscount">0</span></th> 
-	  			
-	  			
-	  			<th colspan="2" >Invoice Discount</th>	  
-	  			<th ><input type="text" class='form-control form-control-sm' id="txtinvoicediscount" value="0" onkeypress="digitsOnlyWithDot(event)" onkeyup="calculateTotal()"></th>		
-	  			
-	  			
-	  			<th ></th>
-	  			<th ></th>	  			
-	                    </tr>
-	                    <tr>
-	                        <th colspan="2" class="text-center">Payment Type
-	                        <select class='form-control form-control-sm' onchange="paymentTypeChanged(this.value)" id="txtpaymenttype">
+  
+  <div class="col-sm-12" align="center">
+  <label>Payment Type</label>
+  		<select class='form-control form-control-sm' onchange="paymentTypeChanged(this.value)" id="txtpaymenttype">
 	                				<option value="Paid">Paid</option>
 	                				<option value="Partial">Partial</option>
 	                				<option value="Pending">Pending</option>
-	                			</select>   
-	                        </th>
-	                        
-	                        
-	                        <th colspan="2" class="text-center" name="paymentModeElements">Payment Mode
+	    </select>
+  </div>
+  
+  
+  <div class="col-sm-12" align="center">
+  <div name="partialPaymentElements" style="display:none">
+	  <label name="partialPaymentElements" style="display:none">Paid Amount</label>
+	  <th name="partialPaymentElements" style="display:none"><input type='text' id="txtpaidamount" onkeypress="digitsOnly(event)" onkeyup="calculateTotal()" class='form-control form-control-sm'></th>
+	  <th name="partialPaymentElements" style="display:none">Pending Amount :-<span id="txtpendingamount">0</span></th>
+  </div>
+  
+  
+	  						
+	  					
+  
+  
+  <div class="col-sm-12" align="center">
+  
+  		<div colspan="2" class="text-center" name="paymentModeElements">
+  		<label>Payment Mode</label>
 		                       <select class='form-control form-control-sm' id="drppaymentmode">		                       
 					  				<option value="Cash">Cash</option>		  				
 					  				<option value="Paytm">Paytm</option>
@@ -458,52 +402,39 @@ function deleteAttachment(id)
 	  								</c:if>				
 			  					</select>
 	                        </th>
-	                
-	                 
-	  			
-	  				<th name="partialPaymentElements" style="display:none">Paid Amount</th>
-	  				<th name="partialPaymentElements" style="display:none"><input type='text' id="txtpaidamount" onkeypress="digitsOnly(event)" onkeyup="calculateTotal()" class='form-control form-control-sm'></th>		
-	  				<th name="partialPaymentElements" style="display:none">Pending Amount :-<span id="txtpendingamount">0</span></th>	
-	  			<th  class="text-right">Total Amount : <span id="totalAmount">0</span></th>
-	  			<th colspan="2" class="text-right" onclick="simulateCheck()">GST : <span id="gst">0</span> <br><input type="checkbox" style="display:none" readonly id="chkgstEnabled" onclick="getGSTForAllItems();"></th>
-	  			<td colspan="4"><input type="text" id="txtremarks" name="txtremarks" class="form-control form-control-sm" placeholder="Remarks"></td>	
-	                    </tr>
-	                    
-	                  </thead>
-	                </table>
-	   </div>	
   </div>
+  
+  <div class="col-sm-12" align="center">
+  		<label>Total Quantity : </label> <span id="totalQty">0</span></th>
+  </div>
+  
+  <div class="col-sm-12" align="center">  		
+  		<label>Total Amount : </label> <span id="grossAmount">0</span></th>
+  		<input type="hidden" id="txtinvoicediscount"></input>
+  		<input type="hidden" id="totalAmount"></input>
+  		<input type="hidden" id="txtitemdiscount"></input>
+  		<input type="hidden" id="txtdiscount"></input>
+  </div>
+  
+   <div class="col-sm-12" align="center">  		
+  		<label>Remarks : </label>
+  		<input type="text" id="txtremarks" name="txtremarks" class="form-control form-control-sm" placeholder="Remarks">
+  </div>
+  
+  
+  
+  
+  
+  
+  
   
    
   
   
 	   	
-   <div class="col-sm-6">
-	  	 <div class="form-group" align="center">	  
-		   <input type="checkbox" class="form-check-input" id="chkgeneratePDF">
-	    	<label class="form-check-label" for="chkgeneratePDF">Generate PDF</label>
-	    	<br>
-	    	<label class="form-check-label" >Amount From Customer</label>	    	
-	    	<input type="text" class="form-control" id="givenByCustomer" onkeypress='digitsOnlyWithDot(event)' onkeyup='calculateReturnAmount()'>    	
-	   	 </div>
-	   	 
-	   	 	   	 
-   </div>
-   
-   <div class="col-sm-6">
-  	 <div class="form-group" align="center">	  
-	   <input type="checkbox" class="form-check-input" id="chkprintinvoice">
-	   
-    	<label class="form-check-label" for="chkprintinvoice">Print Invoice</label>
-    	<br>
-	    	<label class="form-check-label" >Amount To Return</label>
-    	<input type="text" readonly class="form-control" id="toReturn">    	
-   </div>
    
    
    
-   
-   </div>
    
    	
   
@@ -752,7 +683,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	
 	    	console.log(itemDetails);
 	    	var table = document.getElementById("tblitems");	    	
-	    	var row = table.insertRow(-1);	    	
+	    	var row = table.insertRow(1);	    	
 	    	var cell1 = row.insertCell(0);
 	    	var cell2 = row.insertCell(1);
 	    	var cell3 = row.insertCell(2);
@@ -765,13 +696,13 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	
 	    	
 	    	
-	    	cell1.innerHTML = "</div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+"<a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemDetails[0] + " "+ "(" + itemDetails[10]+ " ) </a>";
+	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+"<a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'> <span style='font-size:12px'>"+ itemDetails[0] + "</span></a> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
-	    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div>';
+	    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="number" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div>';
 	    	
 	    	//cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="'+itemDetails[1]+'" id="txtrate'+itemId+'">'; // Sana Rate
-	    	cell3.innerHTML = "<input type='text' class='form-control form-control-sm' id='txtcustomrate"+itemId+"'   onkeyup='calculateAmount("+itemId+");checkIfEnterisPressed(event,this)' onkeypress='digitsOnlyWithDot(event)' value="+getPriceForThisCustomer(itemDetails)+">";
+	    	cell3.innerHTML = "<input type='number' class='form-control form-control-sm' id='txtcustomrate"+itemId+"'   onkeyup='calculateAmount("+itemId+");checkIfEnterisPressed(event,this)' onkeypress='digitsOnlyWithDot(event)' value="+getPriceForThisCustomer(itemDetails)+">";
 	    	
 	    	//cell6.innerHTML = 0;
 	    	cell4.innerHTML = "<input type='text' class='form-control form-control-sm' value='0' id='txtamount"+itemId+"' onkeyup='calculateQtyFromAmount("+itemId+")'>";
@@ -786,6 +717,10 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	calculateAmount(itemId);
 	    	document.getElementById("txtqty"+itemId).select();
 	    	document.getElementById("txtqty"+itemId).focus();
+	    	
+	    	$("#txtqty"+itemId).focus(function() { $(this).select(); } );
+	    	$("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
+	    	$("#txtamount"+itemId).focus(function() { $(this).select(); } );
 	    	
 			
 }
@@ -913,14 +848,7 @@ function calculateTotal()
 		
 		txtpendingamount.innerHTML=Number(total-txtpaidamount.value).toFixed(2);
 		// 
-		if(chkgstEnabled.checked)
-			{
-				//gst.innerHTML=Number(totalGSTCalculated).toFixed(2);
-			}
-		else
-			{
-				gst.innerHTML=0;
-			}
+		
 		
 		
 		//calculateReturnAmount();
@@ -1107,7 +1035,7 @@ function calculateQtyFromAmount(itemId)
 
 function formatQty(qtyTextBox)
 {
-	qtyTextBox.value=Number(qtyTextBox.value).toFixed(3);
+	qtyTextBox.value=Number(qtyTextBox.value).toFixed(0);
 		
 }
 function showItems(categoryname)
@@ -1192,17 +1120,6 @@ function showThisItemIntoSelection(itemId)
 
 function getPriceForThisCustomer(itemDetails)
 {
-	
-	var customerType=document.getElementById('hdnSelectedCustomerType').value;
-	
-	if(customerType=="WholeSeller"){return itemDetails[2];}
-	if(customerType=="Franchise"){return itemDetails[3];}
-	if(customerType=="LoyalCustomer3"){return itemDetails[4];}
-	if(customerType=="LoyalCustomer2"){return itemDetails[5];}
-	if(customerType=="LoyalCustomer1"){return itemDetails[6];}
-	if(customerType=="Distributor"){return itemDetails[7];}
-	if(customerType=="Business2Business"){return itemDetails[8];;}
-	if(customerType=="shrikhand"){return itemDetails[9];}
 	
 	return itemDetails[1];	
 }
@@ -1318,15 +1235,8 @@ function getGSTForAllItems()
 }
 function simulateCheck()
 {
-	if(chkgstEnabled.checked)
-		{
-			chkgstEnabled.checked=false;	
-		}
-	else
-		{
-			chkgstEnabled.checked=true;
-		}
-	getGSTForAllItems();
+	
+	
 	
 }
 
@@ -1337,10 +1247,7 @@ categoryPopulate.style="display:none";
 
 function setDefaultChecks()
 {
-	if("${userdetails.invoice_default_checked_print}"=='Y')
-		{
-			chkprintinvoice.checked=true;		
-		}
+	
 	
 	if("${userdetails.invoice_default_checked_generatepdf}"=='Y')
 	{
@@ -1356,6 +1263,220 @@ function showLedger()
 {
 	window.open('?a=showCustomerLedger&txtfromdate=${todaysDateMinusOneMonth}&txttodate='+txtinvoicedate.value+'&customerId='+hdnSelectedCustomer.value);
 }
+
+
+function printDirectAsFonts(invoiceNo,pendAmount) 
+{
+	
+	
+	
+	try
+	{
+		
+		if(invoiceNo==null)
+			{
+				alert("invoice No found as null");
+				return;
+			}
+	
+	var xhttp = new XMLHttpRequest();
+	var invoiceResponse;
+	var invoiceDetails;
+	var listOfItems;
+	
+		  xhttp.onreadystatechange = function() 
+		  {
+		    if (xhttp.readyState == 4 && xhttp.status == 200) 
+		    { 		      
+		    	console.log(xhttp.responseText);
+		       invoiceResponse=JSON.parse(xhttp.responseText);
+		       invoiceDetails=(invoiceResponse.invoiceDetails);
+		       listOfItems=invoiceDetails.listOfItems;
+		       console.log(listOfItems);
+		   		
+			}
+		  };
+		  xhttp.open("GET","?a=getInvoiceDetailsByNoAjax&invoiceNo="+invoiceNo, false);    
+		  xhttp.send();
+		
+		  console.log(invoiceDetails.invoice_no);
+		  var topay=Number(invoiceDetails.total_amount)-Number(invoiceDetails.paid_amount);
+			
+    var c = new PosPrinterJob(getCurrentDriver(), getCurrentTransport());
+    c.initialize();
+     c.printText("Invoice Estimate: "+invoiceDetails.invoice_no, c.ALIGNMENT_CENTER, c.FONT_SIZE_MEDIUM2); // Invoice no   
+    c.printText(invoiceDetails.store_name, c.ALIGNMENT_CENTER, c.FONT_SIZE_BIG).bold(true); // store name
+    
+    c.printText(invoiceDetails.address_line_1 + invoiceDetails.address_line_2, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // address line 1
+    c.printText(invoiceDetails.address_line_3, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // address line 2     
+    
+    //c.printText(invoiceDetails.city+" - "+invoiceDetails.pincode, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // city pincode
+    
+    c.printText("Phone:- "+invoiceDetails.mobile_no, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    c.printText("Store Timings:- "+invoiceDetails.store_timing, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // timings
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    
+		    c.printText("Name : "+invoiceDetails.customer_name, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Name
+		    c.printText("Date & Time : "+invoiceDetails.theUpdatedDate, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Date & Time
+		    c.printText("Payment Type : "+invoiceDetails.payment_type, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
+    if(invoiceDetails.payment_type!='Pending')
+    	{
+    		c.printText("Payment Mode : "+invoiceDetails.payment_mode, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
+    	}
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    
+    c.printText("SR       ITEM NAME      QTY       WT.     Amount", c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    var template="$sr$itemName0123456789$QTY5678901$WT456789$Amount";
+    var totalWeight=0;
+    var totalQty=0;
+    for(var m=0;m<listOfItems.length;m++)
+    	{
+    	var srnumber=m+1;
+    	if(srnumber<=9)
+    		{
+    			srnumber="0"+srnumber;
+    		}
+    	
+    	var oneLiner=template.replace("$sr",srnumber);
+    	totalWeight+=Number(listOfItems[m].weight);
+    	totalQty+=Number(listOfItems[m].qty);    	
+    	
+    	var custom_rate=listOfItems[m].custom_rate;
+    	var qtyNum=listOfItems[m].qty;
+    	var Amount=Number(custom_rate)*Number(qtyNum);    	
+    	Amount=Amount.toFixed(0);
+    	
+    	var catName=listOfItems[m].category_name
+    	for(k=0;k<18;k++)
+    		{
+	    		if(catName.length<18)
+	    		{
+	    			if(k%2==0){catName+=" ";}
+	    			if(k%2!=0){catName=" "+catName;}
+	    		}
+    		}
+    	
+    	var qtyWithWhiteSpaces=listOfItems[m].qty;
+    	for(k=0;k<12;k++)
+    		{
+	    		if(qtyWithWhiteSpaces.toString().length<12)
+	    		{
+	    			if(k%2==0){qtyWithWhiteSpaces+=" ";}
+	    			if(k%2!=0){qtyWithWhiteSpaces=" "+qtyWithWhiteSpaces;}	    					
+	    		}
+    		}
+    	
+    	
+    	var weightWithWhiteSpace=Number(listOfItems[m].weight).toFixed(3);
+    	for(k=0;k<9;k++)
+    		{
+	    		if(weightWithWhiteSpace.toString().length<9)
+	    		{
+	    			if(k%2==0){weightWithWhiteSpace+=" ";}
+	    			if(k%2!=0){weightWithWhiteSpace=" "+weightWithWhiteSpace;}	    					
+	    		}
+    		}
+    	
+    	var amountWithSpaces=Amount;
+    	for(k=0;k<7;k++)
+    		{
+	    		if(amountWithSpaces.toString().length<7)
+	    		{
+	    			if(k%2==0){amountWithSpaces+=" ";}
+	    			if(k%2!=0){amountWithSpaces=" "+amountWithSpaces;}	    					
+	    		}
+    		}
+    	
+    	oneLiner=oneLiner.replace("$itemName0123456789",catName);
+    	oneLiner=oneLiner.replace("$QTY5678901",qtyWithWhiteSpaces);
+    	oneLiner=oneLiner.replace("$WT456789",weightWithWhiteSpace);
+    	oneLiner=oneLiner.replace("$Amount",amountWithSpaces);
+    	
+    	c.printText(oneLiner, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
+    	var size1=listOfItems[m].size==""?"":" Size : ("+listOfItems[m].size+") ";
+    	c.printText(listOfItems[m].item_name+size1, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); 
+    	
+    
+    	}
+    
+        
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    
+    c.printText("Total Weight : "+totalWeight.toFixed(3), c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
+    c.printText("Total Qty : "+totalQty, c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
+    
+    if(invoiceDetails.invoice_discount!='' && invoiceDetails.invoice_discount!='0.00')
+	{
+	    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+	    c.printText("Invoice Discount :  "+invoiceDetails.invoice_discount, c.ALIGNMENT_RIGHT, c.FONT_SIZE_SMALL); // Remarks
+	}
+    
+    if(invoiceDetails.remarks!='')
+	{
+	    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+	    c.printText("Remarks :  "+invoiceDetails.remarks, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Remarks
+	}
+    
+    var topay=invoiceDetails.total_amount;
+    
+    if(invoiceDetails.payment_type=='Partial')
+    	{    	
+    	
+    	// need to discuss and implement
+    	c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+        c.printText("Total Amount :  "+Number(invoiceDetails.total_amount), c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1);         
+        
+    	c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+        c.printText("Partially Paid Amount :  "+invoiceDetails.paid_amount, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
+        topay=Number(invoiceDetails.total_amount)-Number(invoiceDetails.paid_amount);
+    	}
+    
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    c.printText("Previous Due Amount :  "+pendAmount, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type
+    
+    
+    
+    
+    
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    c.printText("Payable Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
+    
+  
+    
+    
+   
+
+    c.printText("****************************************************************", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    c.printText("*Thank You, Visit Again*", c.ALIGNMENT_CENTER, c.FONT_SIZE_NORMAL);
+    
+
+
+    
+        
+    c.feed(3);
+    c.execute();
+    
+
+	}
+	catch(ex)
+	{
+		alert(ex.message);
+	}
+    
+
+}
+
+
+
+
+
+
 
 
 

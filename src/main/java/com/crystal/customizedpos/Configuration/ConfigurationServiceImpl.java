@@ -2652,7 +2652,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customer_id", customer_id);
 		try {
 
-			if (!appType.equals("PetrolPump") && !isValidateGrossWithIndividualAmount(hm)) {
+			if (!appType.equals("RetailMobile") && !appType.equals("PetrolPump") && !isValidateGrossWithIndividualAmount(hm)) {
 				throw new Exception("invalid Gross with Individual Amount");
 			}
 
