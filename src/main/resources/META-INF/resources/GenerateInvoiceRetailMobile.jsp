@@ -32,7 +32,7 @@
 
    
 
-<script src="js/searchinvoice.js"></script>
+<%-- <script src="js/1ice.js"></script> --%>
 
 
 
@@ -328,74 +328,7 @@ function deleteAttachment(id)
 
 
 
-<c:if test="${param.invoice_id eq null}">
-<div class="col-sm-2">
-  	<div class="form-group">
-  	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="customerName"
-                   placeholder="New Customer Name" name="customerName">                           
-    </div>
-    </div>
-  </div>
-  
-  <div class="col-sm-4">
-  	<div class="form-group">
-  	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="mobileNumber"
-                   placeholder="Mobile Number" name="mobileNumber" maxlength="10" onkeypress="digitsOnly(event)">                           
-    </div>
-    </div>
-  </div>
-  
-  <div class="col-sm-3">
-  	<div class="form-group">
-  	<div class="input-group input-group-sm">  		
-  				<select id="customerType" name="customerType" class="form-control" >
-  				
-  				
-  					
-	  				
-  				
-  				
-  				
-  				
-  					
-	  				<option value="LoyalCustomer1">Loyal Customer 1</option>
-	  				<option value="LoyalCustomer2">Loyal Customer 2</option>
-  				
-  				
-  				
-  				<option value="LoyalCustomer3">Loyal Customer 3</option>
-  				<option value="Franchise">Franchise</option>
-  				<option value="WholeSeller">WholeSeller</option>
-  				<option value="Distributor">Distributor</option>
-  				<option value="Business2Business">Business2Business</option>
-  				
-  				<c:if test="${userdetails.app_id eq '1'}">
-  					<option value="shrikhand">Shrikhand Buyers</option>
-  				</c:if>
-  				
-  				<option value="New Customer" selected>New Customer</option>
-  				</select>                                             
-    </div>
-    </div>
-  </div>
-  
-   
-  
 
-  
-  <div class="col-sm-2">
-  	<div class="form-group">
-  	<div class="input-group input-group-sm">
-                 <span class="input-group-append">
-                    <button type="button" class="btn btn-primary btn-flat" onclick="quickAddCustomer()">Quick Add Customer</button>
-                  </span>                         
-    </div>
-    </div>
-  </div>
-
-</c:if>
 
 <div class="col-sm-3">
   	<div class="form-group">
@@ -824,8 +757,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	var cell2 = row.insertCell(1);
 	    	var cell3 = row.insertCell(2);
 	    	var cell4 = row.insertCell(3);
-	    	var cell5 = row.insertCell(4);
-	    	
+
 	    	
 	    	
 	    	
@@ -848,7 +780,6 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	
 		    //cell6.innerHTML = "<input type='text' class='form-control form-control-sm' value='0' readonly id='gst"+itemId+"' onkeyup='calculateAmount("+itemId+")'> <input type='hidden' id='hdngst"+itemId+"' value=" +itemDetails[11]+ ">";
 		    
-	    	cell5.innerHTML = '<button type="button" style="color:red" class="btn btn-default btn-sm" onclick=removethisitem(this)><i class="far fa-trash-alt"></i></button>';
 	    	
 	    	
 	    	
@@ -864,27 +795,15 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 function calculateAmount(itemId)
 {
 	var customrate=document.getElementById('txtcustomrate'+itemId).value;
-	var rate=document.getElementById('txtrate'+itemId).value;
 	var qty=document.getElementById('txtqty'+itemId).value;
 	var amount=(Number(customrate) *Number(qty) ).toFixed(2);
 		 
 	
-	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.childNodes[6].childNodes[0].value= (Number(customrate) *Number(qty) ).toFixed(2);
-	
-	var itemDiscount=(Number(rate) - Number(customrate)) *  Number(qty);
+	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.childNodes[3].childNodes[0].value= (Number(customrate) *Number(qty) ).toFixed(2);
 	
 	
-	var itemGSTPercentage=document.getElementById('hdngst'+itemId).value;
 	
-	var GSTAmount=0;
-	if(chkgstEnabled.checked)
-		{
-			GSTAmount=(Number(customrate) *Number(qty) )*itemGSTPercentage / 100;
-		}
 	
-	document.getElementById('gst'+itemId).value=GSTAmount;
-	
-	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.childNodes[5].innerHTML=Number(itemDiscount).toFixed(2);
 	
 	
 	calculateTotal();
@@ -968,10 +887,10 @@ function calculateTotal()
 		var rows=tblitems.rows;
 		for(var x=1;x<rows.length;x++)
 			{
-				var itemTotalAmount=Number(rows[x].childNodes[6].childNodes[0].value);
+				var itemTotalAmount=Number(rows[x].childNodes[3].childNodes[0].value);
 				total+=itemTotalAmount;
 				
-				var itemQty=Number(rows[x].childNodes[2].childNodes[0].childNodes[1].value);
+				var itemQty=Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value);
 				
 				totalQtyCalculated+=itemQty;
 				
@@ -982,7 +901,7 @@ function calculateTotal()
 				grossAmountCalculated+=grossItemAmount;
 				
 				
-				totalGSTCalculated+=Number(rows[x].childNodes[7].childNodes[0].value)
+				//totalGSTCalculated+=Number(rows[x].childNodes[7].childNodes[0].value)
 			}
 		
 		
@@ -996,7 +915,7 @@ function calculateTotal()
 		// 
 		if(chkgstEnabled.checked)
 			{
-				gst.innerHTML=Number(totalGSTCalculated).toFixed(2);
+				//gst.innerHTML=Number(totalGSTCalculated).toFixed(2);
 			}
 		else
 			{
@@ -1004,7 +923,7 @@ function calculateTotal()
 			}
 		
 		
-		calculateReturnAmount();
+		//calculateReturnAmount();
 }
 
 function removethisitem(btn1)
@@ -1081,7 +1000,6 @@ if('${invoiceDetails.invoice_id}'!='')
     	var cell6 = row.insertCell(5);
     	var cell7 = row.insertCell(6);
     	var cell8 = row.insertCell(7);
-    	var cell9 = row.insertCell(8);
     	
     	
     	
@@ -1097,7 +1015,6 @@ if('${invoiceDetails.invoice_id}'!='')
     	cell7.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';
     	cell8.innerHTML ="<input type='text' class='form-control form-control-sm' value='${item.gst_amount}' readonly id='gst${item.item_id}' onkeyup='calculateAmount(${item.item_id})'> <input type='hidden' id='hdngst${item.item_id}' value='${item.gst}'>";//
     	
-		cell9.innerHTML = '<button type="button" class="btn btn-sm btn-danger"  onclick=removethisitem(this) id="btn11" name="deleteButtons" style="cursor:pointer">Delete</button> <button type="button" class="btn btn-primary"  onclick=returnThisItem("${item.details_id}") name="returnButtons" id="btn11" style="cursor:pointer">Return (${item.ReturnedQty})</button>';
     	
 		
 	    		//alert('${item.item_id}'+'-${item.item_name}'+'-${item.qty}'+'-${item.rate}'+'-${item.custom_rate}');			    
