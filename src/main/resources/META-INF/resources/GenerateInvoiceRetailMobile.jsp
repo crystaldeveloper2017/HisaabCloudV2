@@ -1326,11 +1326,11 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     	}
     
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    
-    c.printText("SR       ITEM NAME      QTY       WT.     Amount", c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
-    
+    c.printText("SR              ITEM NAME       Qty        Rate          AMOUNT", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // Payment Type
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    var template="$sr$itemName0123456789$QTY5678901$WT456789$Amount";
+    
+    
+    var template="$sr$itemName01234567890123456789$QTY5678901$RT456789$Amount";
     var totalWeight=0;
     var totalQty=0;
     for(var m=0;m<listOfItems.length;m++)
@@ -1350,13 +1350,14 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     	var Amount=Number(custom_rate)*Number(qtyNum);    	
     	Amount=Amount.toFixed(0);
     	
-    	var catName=listOfItems[m].category_name
-    	for(k=0;k<18;k++)
+    	var itemAllocatedSpace=28;
+    	var itemName=listOfItems[m].item_name
+    	for(k=0;k<itemAllocatedSpace;k++)
     		{
-	    		if(catName.length<18)
+	    		if(itemName.length<itemAllocatedSpace)
 	    		{
-	    			if(k%2==0){catName+=" ";}
-	    			if(k%2!=0){catName=" "+catName;}
+	    			if(k%2==0){itemName+="~";}
+	    			if(k%2!=0){itemName="~"+itemName;}
 	    		}
     		}
     	
@@ -1371,13 +1372,13 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     		}
     	
     	
-    	var weightWithWhiteSpace=Number(listOfItems[m].weight).toFixed(3);
+    	var priceWithSpaces=Number(listOfItems[m].custom_rate).toFixed(3);
     	for(k=0;k<9;k++)
     		{
-	    		if(weightWithWhiteSpace.toString().length<9)
+	    		if(priceWithSpaces.toString().length<9)
 	    		{
-	    			if(k%2==0){weightWithWhiteSpace+=" ";}
-	    			if(k%2!=0){weightWithWhiteSpace=" "+weightWithWhiteSpace;}	    					
+	    			if(k%2==0){priceWithSpaces+=" ";}
+	    			if(k%2!=0){priceWithSpaces=" "+priceWithSpaces;}	    					
 	    		}
     		}
     	
@@ -1391,14 +1392,12 @@ function printDirectAsFonts(invoiceNo,pendAmount)
 	    		}
     		}
     	
-    	oneLiner=oneLiner.replace("$itemName0123456789",catName);
+    	oneLiner=oneLiner.replace("$itemName01234567890123456789",itemName);
     	oneLiner=oneLiner.replace("$QTY5678901",qtyWithWhiteSpaces);
-    	oneLiner=oneLiner.replace("$WT456789",weightWithWhiteSpace);
+    	oneLiner=oneLiner.replace("$RT456789",priceWithSpaces);
     	oneLiner=oneLiner.replace("$Amount",amountWithSpaces);
     	
-    	c.printText(oneLiner, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
-    	var size1=listOfItems[m].size==""?"":" Size : ("+listOfItems[m].size+") ";
-    	c.printText(listOfItems[m].item_name+size1, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); 
+    	c.printText(oneLiner, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type    	 
     	
     
     	}
@@ -1406,7 +1405,7 @@ function printDirectAsFonts(invoiceNo,pendAmount)
         
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
     
-    c.printText("Total Weight : "+totalWeight.toFixed(3), c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
+    //c.printText("Total Weight : "+totalWeight.toFixed(3), c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
     c.printText("Total Qty : "+totalQty, c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
     
     if(invoiceDetails.invoice_discount!='' && invoiceDetails.invoice_discount!='0.00')
@@ -1456,11 +1455,11 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     c.printText("*Thank You, Visit Again*", c.ALIGNMENT_CENTER, c.FONT_SIZE_NORMAL);
     
 
-
-    
-        
     c.feed(3);
     c.execute();
+    
+        
+    
     
 
 	}
