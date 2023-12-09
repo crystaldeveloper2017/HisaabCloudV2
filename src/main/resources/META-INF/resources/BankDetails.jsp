@@ -412,17 +412,12 @@ body, html {
 
 
 
-
-
-
-    <div class="container">
-        <div class="card card-container" style="max-width:800px">
-        
-        
-      
-
-     
-<table class="table table-hover text-nowrap">
+<div class="row">
+<div class="col-lg-6">
+<div class="card">
+<div class="card-body">
+<p class="card-text">
+<table class="table table-hover text-nowrap" >
 <thead>
 <tr >
 <th align="center" colspan="2">Bank Details</th>
@@ -448,11 +443,16 @@ body, html {
 </tr>
 
 </tbody>
-</table>        </div>
+</table>  
+</p>
+</div>
 
 
-		</div>
+  
+      
 
+     
+  
     
         
         
