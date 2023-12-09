@@ -7452,7 +7452,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-		rs.setViewName("../ResetPassword.jsp");
+		rs.setViewName("ResetPassword.jsp");
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
@@ -10122,18 +10122,18 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 	
 
 	public CustomResultObject showBankDetails(HttpServletRequest request, Connection con) throws SQLException {
-		CustomResultObject rs = new CustomResultObject();
-		HashMap<String, Object> outputMap = new HashMap<>();
-
+						CustomResultObject rs = new CustomResultObject();
+				HashMap<String, Object> outputMap = new HashMap<>();
+		
 				
-		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
 	
 		
-				rs.setViewName("../BankDetails.jsp");
+				rs.setViewName("BankDetails.jsp");
 				rs.setReturnObject(outputMap);
-			
+							
 		
-		rs.setReturnObject(outputMap);
+rs.setReturnObject(outputMap);
 		return rs;
 	}
 	
