@@ -137,7 +137,7 @@ function saveInvoice()
 	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
 	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
 	    	}
-	    	window.location.reload();
+	    	//window.location.reload();
 	    	btnsave.disabled=false;
 	      	
 	      	
@@ -1162,6 +1162,7 @@ function addremoveQuantity(itemId,addRemoveFlag) // 0 removes and 1 adds
 	
 	if(quantity==1 && addRemoveFlag==0)
 		{
+			qtyElement.parentNode.parentNode.parentNode.remove();
 			return;
 		}
 	
@@ -1317,7 +1318,10 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
     
-		    c.printText("Name : "+invoiceDetails.customer_name, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Name
+    if(invoiceDetails.customer_name!=null)
+    	{
+    		c.printText("Name : "+invoiceDetails.customer_name, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Name
+    	}
 		    c.printText("Date & Time : "+invoiceDetails.theUpdatedDate, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Date & Time
 		    c.printText("Payment Type : "+invoiceDetails.payment_type, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
     if(invoiceDetails.payment_type!='Pending')
@@ -1326,79 +1330,82 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     	}
     
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    c.printText("SR              ITEM NAME       Qty        Rate          AMOUNT", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // Payment Type
+    c.printText("SR              ITEM NAME       Qty        Rate        AMOUNT  ", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // Payment Type
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
     
     
-    var template="$sr$itemName01234567890123456789$QTY5678901$RT456789$Amount";
+    
     var totalWeight=0;
     var totalQty=0;
     for(var m=0;m<listOfItems.length;m++)
     	{
+    	
+    	totalWeight+=Number(listOfItems[m].weight);
+    	totalQty+=Number(listOfItems[m].qty);
+    	
+    	var spaceCharacter=" ";
+    	var finalLine="";
+    	
     	var srnumber=m+1;
     	if(srnumber<=9)
     		{
     			srnumber="0"+srnumber;
-    		}
+    		}    	
+    	finalLine+=srnumber;  	
     	
-    	var oneLiner=template.replace("$sr",srnumber);
-    	totalWeight+=Number(listOfItems[m].weight);
-    	totalQty+=Number(listOfItems[m].qty);    	
     	
-    	var custom_rate=listOfItems[m].custom_rate;
-    	var qtyNum=listOfItems[m].qty;
-    	var Amount=Number(custom_rate)*Number(qtyNum);    	
-    	Amount=Amount.toFixed(0);
-    	
-    	var itemAllocatedSpace=28;
+    	var itemAllocatedSpace=29;
     	var itemName=listOfItems[m].item_name
     	for(k=0;k<itemAllocatedSpace;k++)
     		{
 	    		if(itemName.length<itemAllocatedSpace)
 	    		{
-	    			if(k%2==0){itemName+="~";}
-	    			if(k%2!=0){itemName="~"+itemName;}
+	    			if(k%2==0){itemName+=spaceCharacter;}
+	    			if(k%2!=0){itemName=spaceCharacter+itemName;}
 	    		}
     		}
-    	
+    	finalLine+=" "+itemName;
+    	var qtyAllocattedspace=4;
+    	var qtyNum=listOfItems[m].qty;
     	var qtyWithWhiteSpaces=listOfItems[m].qty;
-    	for(k=0;k<12;k++)
+    	for(k=0;k<qtyAllocattedspace;k++)
     		{
-	    		if(qtyWithWhiteSpaces.toString().length<12)
+	    		if(qtyWithWhiteSpaces.toString().length<qtyAllocattedspace)
 	    		{
-	    			if(k%2==0){qtyWithWhiteSpaces+=" ";}
-	    			if(k%2!=0){qtyWithWhiteSpaces=" "+qtyWithWhiteSpaces;}	    					
+	    			if(k%2==0){qtyWithWhiteSpaces+=spaceCharacter;}
+	    			if(k%2!=0){qtyWithWhiteSpaces=spaceCharacter+qtyWithWhiteSpaces;}	    					
+	    		}
+    		}    	
+    	finalLine+=" "+qtyWithWhiteSpaces;
+    	
+    	var priceAllocatedSpace=11;
+    	var priceWithSpaces=Number(listOfItems[m].custom_rate).toFixed(0);
+    	for(k=0;k<priceAllocatedSpace;k++)
+    		{
+	    		if(priceWithSpaces.toString().length<priceAllocatedSpace)
+	    		{
+	    			if(k%2==0){priceWithSpaces+=spaceCharacter;}
+	    			if(k%2!=0){priceWithSpaces=spaceCharacter+priceWithSpaces;}	    					
 	    		}
     		}
+    	finalLine+=" "+priceWithSpaces;
     	
-    	
-    	var priceWithSpaces=Number(listOfItems[m].custom_rate).toFixed(3);
-    	for(k=0;k<9;k++)
-    		{
-	    		if(priceWithSpaces.toString().length<9)
-	    		{
-	    			if(k%2==0){priceWithSpaces+=" ";}
-	    			if(k%2!=0){priceWithSpaces=" "+priceWithSpaces;}	    					
-	    		}
-    		}
-    	
+    	var amountAllocatedSpace=13;
+    	var Amount=Number(listOfItems[m].custom_rate)*Number(qtyNum);    	
+    	Amount=Amount.toFixed(0);    	
     	var amountWithSpaces=Amount;
-    	for(k=0;k<7;k++)
+    	for(k=0;k<amountAllocatedSpace;k++)
     		{
-	    		if(amountWithSpaces.toString().length<7)
+	    		if(amountWithSpaces.toString().length<amountAllocatedSpace)
 	    		{
-	    			if(k%2==0){amountWithSpaces+=" ";}
-	    			if(k%2!=0){amountWithSpaces=" "+amountWithSpaces;}	    					
+	    			if(k%2==0){amountWithSpaces+=spaceCharacter;}
+	    			if(k%2!=0){amountWithSpaces=spaceCharacter+amountWithSpaces;}	    					
 	    		}
     		}
-    	
-    	oneLiner=oneLiner.replace("$itemName01234567890123456789",itemName);
-    	oneLiner=oneLiner.replace("$QTY5678901",qtyWithWhiteSpaces);
-    	oneLiner=oneLiner.replace("$RT456789",priceWithSpaces);
-    	oneLiner=oneLiner.replace("$Amount",amountWithSpaces);
-    	
-    	c.printText(oneLiner, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type    	 
-    	
+    	finalLine+=" "+amountWithSpaces;
+
+    	console.log(finalLine);
+    	c.printText(finalLine, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type
     
     	}
     
@@ -1435,16 +1442,15 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     	}
     
     
+    
+    
+    
+    
+    
+    
+    
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-    c.printText("Previous Due Amount :  "+pendAmount, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type
-    
-    
-    
-    
-    
-    
-    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-    c.printText("Payable Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
+    c.printText("Total Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
     
   
     
