@@ -246,9 +246,10 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	
 			Double cashPayments=Double.valueOf(lstPayments.get(0).get("cashsum").toString());
+			cashAgainstPumpTest=cashAgainstPumpTest==null? "0":cashAgainstPumpTest;
 			Double cashAgainstPumpTestDoouble=Double.valueOf(cashAgainstPumpTest);
-			Double FinalCash=cashPayments-cashAgainstPumpTestDoouble;
-			cell = new PdfPCell(new Phrase( String.valueOf(FinalCash),font));
+			Double finalCash=cashPayments-cashAgainstPumpTestDoouble;
+			cell = new PdfPCell(new Phrase( String.valueOf(finalCash),font));
 	    	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
 
