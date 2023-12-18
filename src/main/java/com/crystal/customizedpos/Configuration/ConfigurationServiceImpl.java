@@ -2713,11 +2713,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		double calculatedTotalAmount = GrossAmount - itemDiscount - invoiceDiscount + totalGst;
 
+		String formattedDouble=df.format(calculatedTotalAmount);
+
+		double formattedDoubleValue=new Double(formattedDouble);
+
 		System.out.println(
-				"calculatedTotalAmount " + calculatedTotalAmount + " vs " + totalAmount + "total Amount Received");
+				"calculatedTotalAmount " + formattedDoubleValue + " vs " + totalAmount + "total Amount Received");
 
 		return Double.valueOf(new DecimalFormat("0.").format(totalAmount))
-				.equals(Double.valueOf(new DecimalFormat("0.").format(calculatedTotalAmount)));
+				.equals(Double.valueOf(new DecimalFormat("0.").format(formattedDoubleValue)));
 	}
 
 	private void debitStockAgainstInvoiceForCompositeItems(HashMap<String, Object> hm, Connection conWithF)
