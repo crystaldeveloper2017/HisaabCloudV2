@@ -139,18 +139,22 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 				cell = new PdfPCell(new Phrase(sale.get("rate").toString(),font));	        
 	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        	table.addCell(cell);	        
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        	table.addCell(cell);
+				
+				
+
+				String formattedNumber = String.format("%.3f", sale.get("SalesSum"));
 
 
-				cell = new PdfPCell(new Phrase(sale.get("SalesSum").toString(),font));	        
+				cell = new PdfPCell(new Phrase(formattedNumber,font));	        
 	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
 
 				cell = new PdfPCell(new Phrase(sale.get("totalAmountSum").toString(),font));	        
 	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
 
 				
@@ -211,17 +215,17 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 				cell = new PdfPCell(new Phrase(sale.get("rate").toString(),font));	        
 	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
 
 
 				cell = new PdfPCell(new Phrase(sale.get("qty").toString(),font));
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase(sale.get("total_amount").toString(),font));	        
 	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
 
 				
@@ -250,21 +254,21 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 			Double cashAgainstPumpTestDoouble=Double.valueOf(cashAgainstPumpTest);
 			Double finalCash=cashPayments-cashAgainstPumpTestDoouble;
 			cell = new PdfPCell(new Phrase( String.valueOf(finalCash),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 
 			cell = new PdfPCell(new Phrase("Paytm",font));	        	        
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("paytmsum").toString(),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 
 			cell = new PdfPCell(new Phrase("Card Swipe",font));	        	        
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("cardswipesum").toString(),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 
 
@@ -272,7 +276,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("pendingSum").toString(),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 			
 			
@@ -315,7 +319,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 				cell = new PdfPCell(new Phrase(sale.get("total_amount").toString(),font));	        
 	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
 
 				     
@@ -370,11 +374,11 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        	table.addCell(cell);	        
 
 				cell = new PdfPCell(new Phrase(entry.getValue().toString(),font));	        	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
 				String paymentValue=paymentEmpWiseMap.get(entry.getKey()) == null ? "0" :paymentEmpWiseMap.get(entry.getKey()).toString();
 				cell = new PdfPCell(new Phrase(paymentValue,font));	        	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	    
 
 
@@ -382,7 +386,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 				String formattedValue=new DecimalFormat("#.00").format(difference);
 				     
 				cell = new PdfPCell(new Phrase(String.valueOf(formattedValue),font));	        	        	
-	        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	    
 
 				
