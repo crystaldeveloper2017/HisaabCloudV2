@@ -1,6 +1,7 @@
 
 package pdfGeneration;
 
+import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.crystal.Frameworkpackage.CommonFunctions;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -55,11 +57,14 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 		
 		List<LinkedHashMap<String, Object>> lstNozzleSales= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstNozzleSales")	;
 		List<LinkedHashMap<String, Object>> lstLubeSales= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstLubeSales")	;
+		
 		List<LinkedHashMap<String, Object>> lstPayments= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstPayments")	;
 		List<LinkedHashMap<String, Object>> lstCreditSales= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstCreditSales")	;
 		TreeMap<String, Object> salesEmpWiseMap= (TreeMap<String, Object>) nozzleRegisterDetails.get("salesEmpWiseMap")	;
 		TreeMap<String, Object> paymentEmpWiseMap= (TreeMap<String, Object>) nozzleRegisterDetails.get("paymentEmpWiseMap")	;
 		String cashAgainstPumpTest= (String) nozzleRegisterDetails.get("cashAgainstPumpTest")	;
+		Double totalLubeSales= (Double) nozzleRegisterDetails.get("totalLubeSales")	;
+		
 		
 		
 		
@@ -79,15 +84,18 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 		  document.open();     
 		  
 		  
+		  document.add(new Paragraph("\n"));
+		  document.add(new Paragraph("\n"));
 		  
 	        PdfPCell cell;	        
 			PdfPTable table;
 
-
+			
 			table = new PdfPTable(2);
 			table.setWidthPercentage(100f);
-			cell = new PdfPCell(new Phrase("Nozzle Register Report : "+nozzleRegisterDetails.get("txtfromdate"),font));	        
-	        cell.setColspan(2);
+			cell = new PdfPCell(new Phrase("Nozzle Register Report : "+nozzleRegisterDetails.get("txtfromdate"),new Font(base, 14, Font.BOLD)));	        
+	        
+			cell.setColspan(2);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	      
 
@@ -99,6 +107,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 			table = new PdfPTable(5);
 			cell = new PdfPCell(new Phrase("Nozzle Sales",font));	        
 	        cell.setColspan(5);
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 
@@ -122,6 +131,13 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 			cell = new PdfPCell(new Phrase("Amount",font));
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
+
+
+			double sumAmountPetrol=0;
+			double sumQtyPetrol=0;
+
+			double sumAmountDiesel=0;
+			double sumQtyDiesel=0;
 
 
 			for(LinkedHashMap<String, Object> sale: lstNozzleSales)
@@ -155,12 +171,68 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 				cell = new PdfPCell(new Phrase(sale.get("totalAmountSum").toString(),font));	        
 	        	
 	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        	table.addCell(cell);	        
+	        	table.addCell(cell);	  
+				
+				if(sale.get("item_name").toString().equals("Petrol"))
+				{
+					sumAmountPetrol+=Double.valueOf(sale.get("totalAmountSum").toString());
+					sumQtyPetrol+=Double.valueOf(sale.get("SalesSum").toString()); 
+				}
+
+				if(sale.get("item_name").toString().equals("Diesel"))
+				{
+					sumAmountDiesel+=Double.valueOf(sale.get("totalAmountSum").toString());
+					sumQtyDiesel+=Double.valueOf(sale.get("SalesSum").toString()); 
+				}
+
 
 				
 			}
 	        
-	        
+
+
+
+			cell = new PdfPCell(new Phrase("Diesel",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
+			cell.setColspan(3);	        
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			String sumQtyDieselString=new DecimalFormat("#.00").format(sumQtyDiesel);
+
+			cell = new PdfPCell(new Phrase(sumQtyDieselString,font));	        
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase(String.valueOf(sumAmountDiesel),font));	
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));        
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase("Petrol",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
+			cell.setColspan(3);	        
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			
+			String sumQtyPetrolString=new DecimalFormat("#.00").format(sumQtyPetrol);
+
+			cell = new PdfPCell(new Phrase(String.valueOf(sumQtyPetrolString),font));	        
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase(String.valueOf(sumAmountPetrol),font));	
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));        
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+			
+
 			document.add(table);	  
 
 
@@ -173,6 +245,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 			table = new PdfPTable(5);
 			cell = new PdfPCell(new Phrase("Lube Sales",font));	        
 	        cell.setColspan(5);
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 
@@ -230,6 +303,26 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 				
 			}
+
+			cell = new PdfPCell(new Phrase("",font));	        
+			cell.setColspan(3);
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);	        
+
+			cell = new PdfPCell(new Phrase("Total Amount",font));	        
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);	        
+
+			cell = new PdfPCell(new Phrase(String.valueOf(totalLubeSales),font));	        
+			cell.setColspan(2);
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);	        
+
 	        
 	        
 			document.add(table);	  
@@ -241,7 +334,8 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 			table = new PdfPTable(2);
 			table.setWidthPercentage(100f);
-			cell = new PdfPCell(new Phrase("Payment Details",font));	        	        
+			cell = new PdfPCell(new Phrase("Payment Details",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
 			cell.setColspan(2);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
@@ -272,13 +366,32 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);
 
 
-			cell = new PdfPCell(new Phrase("Credit Sales",font));	        	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell = new PdfPCell(new Phrase("Credit Sales",font));
+		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("pendingSum").toString(),font));
 	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
+
+			double paytmSum=Double.valueOf( lstPayments.get(0).get("paytmsum").toString());
+			double cardswipesum= Double.valueOf(lstPayments.get(0).get("cardswipesum").toString());
+			double creditsalessum= Double.valueOf(lstPayments.get(0).get("pendingSum").toString());
 			
+			double TotalAmount=finalCash+paytmSum+ cardswipesum+creditsalessum; 
+			
+
+			String TotalAmountString=new DecimalFormat("#.00").format(TotalAmount);
+
+			cell = new PdfPCell(new Phrase("Total",font));	 
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+       	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+			cell = new PdfPCell(new Phrase(String.valueOf(TotalAmountString),font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
 			
 			document.add(table);
 
@@ -291,6 +404,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 			table = new PdfPTable(2);
 			cell = new PdfPCell(new Phrase("Credit Sales Details",font));	        
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));
 	        cell.setColspan(2);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
@@ -326,6 +440,20 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 				
 			}
+			
+
+			cell = new PdfPCell(new Phrase("Total",font));	 
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+       	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+			cell = new PdfPCell(new Phrase(String.valueOf(creditsalessum),font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			
 	        
 	        
 			document.add(table);
@@ -339,7 +467,8 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			table = new PdfPTable(4);
-			cell = new PdfPCell(new Phrase("Difference FSM",font));	        
+			cell = new PdfPCell(new Phrase("Difference FSM",font));	  
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));      
 	        cell.setColspan(4);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        

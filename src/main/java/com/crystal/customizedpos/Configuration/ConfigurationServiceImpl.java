@@ -1879,6 +1879,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return ReqTotal;
 	}
 
+	private double getTotalLubeSales(List<LinkedHashMap<String, Object>> expenseList) {
+		double ReqTotal = 0;
+		for (LinkedHashMap<String, Object> hm : expenseList) {
+			ReqTotal += Double.valueOf(hm.get("totalAmount").toString());
+		}
+		return ReqTotal;
+	}
+
+
 	public CustomResultObject showAddRoutine(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -5361,6 +5370,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 
 			List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
+			
 			List<LinkedHashMap<String, Object>> salesEmpWiseList=new ArrayList<>(lst);
 			salesEmpWiseList.addAll(lstLubeSales);
 			TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
@@ -5372,6 +5382,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 				outputMap.put("lstNozzleRegister", lst);
 				outputMap.put("lstPayments", lstPayments);
+				outputMap.put("totalLubeSales",getTotalLubeSales(lstLubeSales));
 				
 				outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 				outputMap.put("LubeSales", lstLubeSales);
@@ -5528,6 +5539,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			
 		
 		List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
+		outputMap.put("totalLubeSales",getTotalLubeSales(lstLubeSales));
 		outputMap.put("lstLubeSales", lstLubeSales);
 
 		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);

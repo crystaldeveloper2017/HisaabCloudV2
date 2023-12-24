@@ -22,6 +22,7 @@
 <c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShifts")}' />
 <c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
 <c:set var="lstPumpTest" value='${requestScope["outputObject"].get("lstPumpTest")}' />
+<c:set var="totalLubeSales" value='${requestScope["outputObject"].get("totalLubeSales")}' />
 
 
 
@@ -180,10 +181,10 @@
                      <th><b>Attendant Name</b></th>
                      <th><b>Shift</b></th>
 					 <th><b>Invoice No</b></th>
-					 <th><b>Amount</b></th>
+					 <th><b>Qty</b></th>	
 					 <th><b>Item Name</b></th>					 
-					 <th><b>Qty</b></th>					 
-                     
+					 				 
+                     <th><b>Amount</b></th>
                      
                     </tr>
                   </thead>
@@ -194,12 +195,19 @@
 						<td>${paym.shift_name} </td>
 						
 						<td><a href="?a=showGenerateInvoice&invoice_id=${paym.invoice_id}&type=${type}">${paym.invoice_no}</a></td>
-						<td>${paym.totalAmount} </td>
-						<td>${paym.item_name} </td>			
 						<td>${paym.qty} </td>			
+						
+						<td>${paym.item_name} </td>			
+						<td>${paym.totalAmount} </td>
 						
 					</tr>
 				</c:forEach>
+
+				<tr>
+					<td colspan="4"></td>
+					<td colspan="1">Total</td>
+					<td colspan="1">${totalLubeSales}</td>
+				</tr>
 				
 				
                   </tbody>
