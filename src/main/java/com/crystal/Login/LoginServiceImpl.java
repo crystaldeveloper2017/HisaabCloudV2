@@ -106,7 +106,7 @@ public class LoginServiceImpl extends CommonFunctions {
 			
 			
 			
-			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery") || appType.equals("RetailMobile"))
+			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery") || appType.equals("RetailMobile") || appType.equals("Battery"))
 					{
 						outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
 					

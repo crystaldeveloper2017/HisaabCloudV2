@@ -1317,6 +1317,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		try {
 
+			String appType="";
+		if(request.getSession().getAttribute("userdetails")!=null)
+		{
+			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		}
 			String invoiceId = request.getParameter("invoice_id");
 			String invoiceNo = request.getParameter("invoice_no");
 			String tableId = request.getParameter("table_id");
@@ -1333,8 +1338,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String invoiceTypeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 			.get("invoice_type");
 
-			String invoiceType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
-			.get("app_type");
+			
 
 			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 			boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
@@ -1431,8 +1435,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			{
 				outputMap.put("listUniqueModelNo", lObjConfigDao.getUniqueModelNoForThisApp(con, appId));
 			}
+			
+			if(appType.equals("Battery"))
+			{
+				outputMap.put("vehicleMaster", lObjConfigDao.getListOfUniqueVehicleName(con,appId));
+			}
 
-			rs.setViewName("../GenerateInvoice" + invoiceType + ".jsp");
+
+			rs.setViewName("../GenerateInvoice" + appType + ".jsp");
 
 			rs.setReturnObject(outputMap);
 
@@ -2048,7 +2058,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 			rs.setReturnObject(outputMap);
-			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showItemMaster';</script>");
+			rs.setAjaxData("<script>window.location='" + "?a=showItemMaster';</script>");
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
@@ -2562,6 +2572,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		Enumeration<String> params = request.getParameterNames();
 		HashMap<String, Object> hm = new HashMap<>();
 		List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
+		String appType="";
+		if(request.getSession().getAttribute("userdetails")!=null)
+		{
+			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		}
 		while (params.hasMoreElements()) {
 			String paramName = params.nextElement();
 			if (paramName.equals("itemDetails")) {
@@ -2586,6 +2601,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						String purchaseDetailsId=itemDetails[12].trim().equals("")?"0":itemDetails[12].trim();
 						itemDetailsMap.put("purchaseDetailsId", purchaseDetailsId);
 
+						if(appType.equals("Battery"))
+						{
+							itemDetailsMap.put("battery_no", itemDetails[13]);
+							itemDetailsMap.put("vehicle_name", itemDetails[14]);
+							itemDetailsMap.put("vehicle_no", itemDetails[15]);
+							itemDetailsMap.put("warranty", itemDetails[16]);
+						}
+
 					}
 					itemDetailsMap.put("debit_in", lObjConfigDao.getDebitInForItem(itemDetails[0], con));
 					itemListRequired.add(itemDetailsMap);
@@ -2604,11 +2627,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String tableId = request.getParameter("table_id");
 		String bookingId = request.getParameter("booking_id");
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
-		String appType="";
-		if(request.getSession().getAttribute("userdetails")!=null)
-		{
-			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
-		}
+		
 		String drpshiftid = request.getParameter("drpshiftid");
 		String nozzle_id = request.getParameter("nozzle_id");
 		String attendant_id = request.getParameter("attendant_id");	
@@ -2629,6 +2648,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("swipe_id", swipe_id);
 		hm.put("slot_id", slot_id);
 		hm.put("vehicle_id", vehicle_id);
+		hm.put("app_type", appType);
 		
 		
 		
@@ -2661,11 +2681,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customer_id", customer_id);
 		try {
 
-			if (!appType.equals("RetailMobile") && !appType.equals("PetrolPump") && !isValidateGrossWithIndividualAmount(hm)) {
+			if (!appType.equals("PetrolPump") && !appType.equals("Battery") && !isValidateGrossWithIndividualAmount(hm)) {
 				throw new Exception("invalid Gross with Individual Amount");
 			}
 
-			if ( !isValidateTotalWithGrossMinusDiscounts(hm)) {
+			if ( !appType.equals("Battery") && !isValidateTotalWithGrossMinusDiscounts(hm)) {
 				throw new Exception("Invalid Total Amount Received Vs Calculated");
 			}
 
@@ -4404,6 +4424,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String customerId = request.getParameter("customerId") == null ? "" : request.getParameter("customerId");
 		String attendant_id = request.getParameter("attendant_id") == null ? "" : request.getParameter("attendant_id");
 		String paymentMode = request.getParameter("paymentMode") == null ? "" : request.getParameter("paymentMode");
+		String battery_no = request.getParameter("battery_no") == null ? "" : request.getParameter("battery_no");		
+		
 
 
 		boolean deleteFlag = request.getParameter("deleteFlag") == null ? false
@@ -4429,6 +4451,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customerId", customerId);
 		hm.put("attendant_id", attendant_id);
 		hm.put("paymentMode", paymentMode);
+		hm.put("battery_no", battery_no);
+		
 		
 
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
@@ -6457,6 +6481,31 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			String invoiceId=lObjConfigDao.getInvoiceIdByInvoiceNo(invoiceNo, appId, con).get("invoice_id");
 			
 			outputMap.put("app_id", appId);
+			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
+			
+			rs.setAjaxData(mapper.writeValueAsString(outputMap));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	public CustomResultObject getInvoiceDetailsByIdBypassed(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+
+		
+
+		try {
+			
+			
+			HashMap<String, Object> outputMap = new HashMap<>();
+			String invoiceId = request.getParameter("invoice_id");
+			
+			
+			
+			
+			
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
 			
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));

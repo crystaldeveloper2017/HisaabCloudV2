@@ -855,6 +855,9 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			
 				
 		}
+
+		
+
 		
 
 		List<HashMap<String, Object>> itemDetailsList = (List<HashMap<String, Object>>) hm.get("itemDetails");
@@ -924,6 +927,21 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			
 			
 			parameters.clear();
+
+			hm.put("details_id", detailsId);
+			hm.put("battery_no", item.get("battery_no"));
+			hm.put("vehicle_name", item.get("vehicle_name"));
+			hm.put("vehicle_no", item.get("vehicle_no"));
+			hm.put("warranty", item.get("warranty"));
+
+
+			if(hm.get("app_type").equals("Battery"))
+			{
+				insertUpdateCustomParameterized("insert into rlt_invoice_battery_details values (default,:details_id,:battery_no,:vehicle_name,:vehicle_no,:warranty,sysdate(),:app_id)", hm, conWithF);				
+					
+			}
+
+
 			if(item.get("RSPH")!=null)
 			{
 				
@@ -1775,7 +1793,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 				+ " left outer join mst_customer cust on inv.customer_id=cust.customer_id and inv.app_id=cust.app_id  "
 				+ "left outer join tbl_user_mst usertbl on inv.updated_by = usertbl.user_id "
 				+ " left outer join trn_payment_register paymnt on inv.invoice_id =paymnt.ref_id and paymnt.activate_flag=1 and paymnt.payment_for='invoice' and paymnt.app_id = inv.app_id "
-				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id "
+				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id left outer join trn_invoice_details tid on tid.invoice_id=inv.invoice_id left outer join rlt_invoice_battery_details ribd on ribd.details_id=tid.details_id "
 				+ "where date(invoice_date) between ? and ?  and inv.app_id=?   "
 				+ "and usertbl.app_id=inv.app_id and store1.app_id=inv.app_id and inv.activate_flag=1 ";
 
@@ -1844,10 +1862,18 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			
 			parameters.add(hm1.get("attendant_id"));
 		}
+
+
+		if(hm1.get("battery_no")!=null && !hm1.get("battery_no").equals(""))
+		{
+			
+			query += " and ribd.battery_no like ? ";			
+			parameters.add("%"+hm1.get("battery_no")+"%");
+		}
 		
 		
 		
-		query += " order by invoice_date,rifd.invoice_id asc ";
+		query += "group by tid.details_id order by invoice_date,rifd.invoice_id asc ";
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
@@ -6930,6 +6956,13 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 		parameters.add(trnansactiontype);
 		String insertQuery = "insert into rlt_settelment_register values (default,?,?,sysdate(),1,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
+	}
+
+	public List<String> getListOfUniqueVehicleName(Connection con, String appId) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(appId);
+		return getListOfString(parameters, "select distinct(vehicle_name) from rlt_invoice_battery_details where app_id=?", con);
 	}
 
 
