@@ -1873,7 +1873,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 		
 		
 		
-		query += "group by tid.details_id order by invoice_date,rifd.invoice_id asc ";
+		query += "group by tid.invoice_id order by invoice_date,rifd.invoice_id asc ";
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
