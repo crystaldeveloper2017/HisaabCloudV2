@@ -85,8 +85,8 @@ function saveInvoice()
 	    itemString+=
 	    	rows[x].childNodes[0].childNodes[0].value.split('~')[0]+ // ID
 	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value)+ // QTY
-	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // RATE
-	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // Custom RATE	    	    
+	    "~"+Number(rows[x].childNodes[1].childNodes[1].value)+ // RATE
+	    "~"+Number(rows[x].childNodes[1].childNodes[1].value)+ // Custom RATE	    	    
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
 		"~0~0~0~0~0~0~0"+ // Item Name
 		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
@@ -118,7 +118,6 @@ function saveInvoice()
 	"&total_sgst=0"+	
 	"&itemDetails="+itemString; 
 	console.log(reqString);
-	
 	
 	
 	
@@ -285,7 +284,7 @@ function saveInvoice()
 			
 			<datalist id="itemList">
 <c:forEach items="${itemList}" var="item">
-			    <option id="${item.item_id}"> ${item.category_name} ${item.item_name} (${item.product_code}) ~ PR ${item.PurchaseInvoiceNo} ~${item.purchase_details_id} ~ ${item.QtyAvailable}</option>
+			    <option id="${item.item_id}"> ${item.category_name}  ${item.item_name} (${item.product_code}) ~ PR ${item.PurchaseInvoiceNo} ~${item.purchase_details_id} ~ ${item.QtyAvailable}</option>
 			    <input type="hidden" id="hdn${item.item_id}" value="${item.item_name}~${item.price}~${item.wholesale_price}~${item.franchise_rate}~${item.loyalcustomerrate3}~${item.loyalcustomerrate2}~${item.loyalcustomerrate1}~${item.distributor_rate}~${item.b2b_rate}~${item.shrikhand}~${item.qty_available}~${item.sgst}~${item.cgst}~${item.category_name}">			    
 	   </c:forEach>	   	   	
 </datalist>
@@ -627,14 +626,14 @@ if('${param.order_id}'!='')
 		    	
 		    	
 		    	
-		    	cell1.innerHTML = "<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'><a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemDetails[13] +" "+ itemDetails[0]  + " "+ "(" + itemDetails[10]+ " ) </a>";
+		    	cell1.innerHTML = "<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'><a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemDetails[13] + itemDetails[0] + " "+ "(" + itemDetails[10]+ " ) </a>";
 		    	
 		    	cell1.style.width = '10%';
 		    	
 		    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button id="btnminus'+itemId+'" class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div><input type="hidden" value='+itemDetails[1]+' id="txtrate'+itemId+'">';
 		    	cell2.style.width = '10%';
 
-				cell3.innerHTML = '<input type="text" onfocus="this.select()" onkeyup="calculateTotal()" style="width:100%" class="form-control" value="'+itemDetails[1]+'">';
+				cell3.innerHTML = '<input type="text" onfocus="this.select()" style="width:100%" class="form-control" value="'+itemDetails[1]+'">';
 		    	cell3.style.width = '10%';
 
 				cell4.innerHTML = '<input type="text" onfocus="this.select()" style="width:100%" class="form-control">';
@@ -660,13 +659,13 @@ if('${param.order_id}'!='')
 		    	document.getElementById("txtqty"+itemId).select();
 		    	document.getElementById("txtqty"+itemId).focus();
 
-				calculateTotal(row);
+				calculateTotal();
 		    	
 				
 	}
 
 
-	function calculateAmount(row)
+	function calculateAmount(itemId)
 	{		
 		var rate=document.getElementById('txtrate'+itemId).value;
 		var qty=document.getElementById('txtqty'+itemId).value;
@@ -746,7 +745,7 @@ if('${param.order_id}'!='')
 		
 		qtyElement.value=quantity;
 		formatQty(document.getElementById("txtqty"+itemId));
-		
+		calculateTotal();
 	}
 	
 	function formatQty(qtyTextBox)
