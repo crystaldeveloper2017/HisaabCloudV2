@@ -85,8 +85,8 @@ function saveInvoice()
 	    itemString+=
 	    	rows[x].childNodes[0].childNodes[0].value.split('~')[0]+ // ID
 	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value)+ // QTY
-	    "~"+Number(rows[x].childNodes[1].childNodes[1].value)+ // RATE
-	    "~"+Number(rows[x].childNodes[1].childNodes[1].value)+ // Custom RATE	    	    
+	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // RATE
+	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // Custom RATE	    	    
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
 		"~0~0~0~0~0~0~0"+ // Item Name
 		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
@@ -617,6 +617,7 @@ if('${param.order_id}'!='')
 				var cell5 = row.insertCell(4);
 				var cell6 = row.insertCell(5);
 				var cell7 = row.insertCell(6);
+		    	var cell8 = row.insertCell(7);
 		    	
 		    	
 		    	
@@ -625,15 +626,14 @@ if('${param.order_id}'!='')
 		    	
 		    	
 		    	
-		    	
-		    	cell1.innerHTML = "<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'><a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemDetails[13] + itemDetails[0] + " "+ "(" + itemDetails[10]+ " ) </a>";
+		    	cell1.innerHTML = "<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'><a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemDetails[13]+ " " + itemDetails[0] + " "+ "(" + itemDetails[10]+ " ) </a>";
 		    	
 		    	cell1.style.width = '10%';
 		    	
-		    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button id="btnminus'+itemId+'" class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div><input type="hidden" value='+itemDetails[1]+' id="txtrate'+itemId+'">';
+				cell2.innerHTML = '<input type="text" onfocus="this.select()"  style="width:100%" id="txtqty'+itemId+'" class="form-control" value="1" readonly>';
 		    	cell2.style.width = '10%';
 
-				cell3.innerHTML = '<input type="text" onfocus="this.select()" style="width:100%" class="form-control" value="'+itemDetails[1]+'">';
+				cell3.innerHTML = '<input type="text" onfocus="this.select()"  onkeyup="calculateTotal()" style="width:100%" class="form-control" value="'+itemDetails[1]+'">';
 		    	cell3.style.width = '10%';
 
 				cell4.innerHTML = '<input type="text" onfocus="this.select()" style="width:100%" class="form-control">';
@@ -648,6 +648,7 @@ if('${param.order_id}'!='')
 				cell7.innerHTML = '<input type="text" onfocus="this.select()" style="width:100%" class="form-control">';
 		    	cell7.style.width = '30%';
 
+				cell8.innerHTML = '<button type="button" class="btn btn-sm btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
 				
 		    	
 
@@ -665,7 +666,7 @@ if('${param.order_id}'!='')
 	}
 
 
-	function calculateAmount(itemId)
+	function calculateAmount(row)
 	{		
 		var rate=document.getElementById('txtrate'+itemId).value;
 		var qty=document.getElementById('txtqty'+itemId).value;
@@ -689,7 +690,7 @@ if('${param.order_id}'!='')
 					
 					
 					
-					var itemQty=Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value);
+					var itemQty=Number(rows[x].childNodes[1].childNodes[0].value);
 					var amount=Number(rows[x].childNodes[2].childNodes[0].value);					
 					
 					totalQtyCalculated+=itemQty;
@@ -720,6 +721,16 @@ if('${param.order_id}'!='')
 		reshuffleSrNos();
 		
 		calculateTotal(); 
+	}
+
+	function reshuffleSrNos()
+	{
+		var rows1=tblitems.rows;
+		for(var x=1;x<rows1.length;x++)
+			{
+				rows1[x].childNodes[0].childNodes[0].innerHTML=x;
+			}
+	
 	}
 
 	function addremoveQuantity(itemId,addRemoveFlag) // 0 removes and 1 adds
