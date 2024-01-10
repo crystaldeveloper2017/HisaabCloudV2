@@ -1476,7 +1476,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		try {
 
-			String invoiceId = request.getParameter("invoice_id");
+			String invoiceId = request.getParameter("invoiceId");
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 			String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 					.get("store_id");
@@ -1485,7 +1485,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("app_id", appId);
 
 			if (invoiceId != null) {
-				outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
+				outputMap.put("invoiceDetails", lObjConfigDao.getPurchaseInvoiceDetails(invoiceId, con));
 			}
 
 			if (invoiceId == null) {
@@ -2478,10 +2478,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String type = "";
 		if (request.getParameter("invoiceId") != null) {
 			invoiceId = request.getParameter("invoiceId");
-			type = request.getParameter("invoiceId");
+			type = request.getParameter("type");
 		} else {
 			invoiceId = request.getAttribute("invoiceId").toString();
-			type = request.getAttribute("invoiceId").toString();
+			type = request.getAttribute("type").toString();
 		}
 		long invoiceIdLong = Long.parseLong(invoiceId);
 

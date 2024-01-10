@@ -2329,20 +2329,36 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 
 		
 		itemDetailsMap.put("listOfItems",
-				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,"
+				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,"
 						+ "(select case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from tbl_attachment_mst tam2 "
 						+ "where tam2.file_id=item.item_id and tam2.type='Image' limit 1 ) ImagePath,"
 						+ " sum(coalesce(qty_to_return,0)) ReturnedQty,dtls.details_id theDetailsId \r\n"
 						+ "from mst_items item  inner join trn_invoice_details dtls on item.item_id=dtls.item_id "						
 						+ "inner join mst_category cat on cat.category_id=item.parent_category_id \r\n"
-						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
-						
+						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
+						+" left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"				
+						+" left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"				
 						+ "where\r\n" + "invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
 		return itemDetailsMap;
 
 	}
 	
-	
+	public LinkedHashMap<String, Object> getPurchaseInvoiceDetails(String invoiceId, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		LinkedHashMap<String, Object> itemDetailsMap = new LinkedHashMap<>();
+		itemDetailsMap = getMapReturnObject(parameters, "select *, date_format(tpir.invoice_date,'%d/%m/%Y') purchaseDate from trn_purchase_invoice_register tpir,mst_vendor vend where invoice_id =? and tpir.vendor_id=vend.vendor_id", con);
+
+		parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+
+		
+		itemDetailsMap.put("listOfItems",
+				getListOfLinkedHashHashMap(parameters, "select * from trn_purchase_invoice_details tpid,mst_items mi where invoice_id=? and mi.item_id=tpid.item_id", con));
+		return itemDetailsMap;
+
+	}
 	
 	
 	
@@ -4825,7 +4841,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			
 			
 			String query="select * from trn_purchase_invoice_register tpr,mst_vendor cust, mst_store store"
-					+ " where cust.vendor_id=tpr.customer_id and store.store_id=tpr.store_id and tpr.activate_flag=1 ";		
+					+ " where cust.vendor_id=tpr.vendor_id and store.store_id=tpr.store_id and tpr.activate_flag=1 ";		
 			
 			String storeId=hm.get("storeId").toString();
 			String fromDate=hm.get("txtfromdate").toString();

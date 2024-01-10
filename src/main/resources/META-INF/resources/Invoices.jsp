@@ -248,7 +248,7 @@ function showInvoice(invoiceId)
 {
 	if("${param.type}"=='P')
 		{
-			window.location='?a=showGeneratePI&invoiceId='+invoiceId;
+			window.location='?a=showGeneratePurchaseInvoice&invoiceId='+invoiceId;
 		}
 	else
 		{

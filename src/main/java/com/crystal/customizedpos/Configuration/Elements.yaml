@@ -402,7 +402,7 @@ elements:
 - elementId: 700152
   elementName: "Purchase  Invoice Report"
   parentElementId: 7
-  elementUrl: "?a=showInvoices"
+  elementUrl: "?a=showInvoices&type=P"
   orderNo: 1
 - elementId: 700155
   elementName: "Terms And Condition"

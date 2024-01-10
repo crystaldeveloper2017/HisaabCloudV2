@@ -769,9 +769,14 @@ document.title +=" Generate Purchase Invoice:- "+ " ${tentativeSerialNo} ";
 
 
 $( "#txtinvoicedate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+
 if('${invoiceDetails.invoice_id}'!='')
 	{
 		
+	document.getElementById("divTitle").innerHTML="Purchase Invoice :- "+'${invoiceDetails.invoice_no}';
+	txtsearchcustomer.value='${invoiceDetails.vendor_name}';
+	txtinvoicedate.value='${invoiceDetails.purchaseDate}';
+
 	var elems = document.getElementsByTagName('input');
 	var len = elems.length;
 
@@ -800,11 +805,11 @@ if('${invoiceDetails.invoice_id}'!='')
 		
 		
 		document.getElementById("hdnSelectedCustomerType").value='${invoiceDetails.customer_type}';
-		txtinvoicedate.value="${invoiceDetails.invoice_date}";
 		
-		totalQty.innerHTML="${invoiceDetails.totalQuantities}";
+		
+		
 		grossAmount.innerHTML="${invoiceDetails.gross_amount}";
-		gstAmount.innerHTML="${invoiceDetails.total_gst}";
+		
 
 		
 		
@@ -819,6 +824,7 @@ if('${invoiceDetails.invoice_id}'!='')
 		
 		var m=0;
 		var tableNo="";
+		var totalQuantities=0;
 		<c:forEach items="${invoiceDetails.listOfItems}" var="item">
 		
 		m++;
@@ -832,77 +838,31 @@ if('${invoiceDetails.invoice_id}'!='')
     	var cell5 = row.insertCell(4);
     	var cell6 = row.insertCell(5);
     	var cell7 = row.insertCell(6);
-    	var cell8 = row.insertCell(7);
-    	var cell9 = row.insertCell(8);
+    	
     	
     	
     	
     	cell1.innerHTML = '<div>'+m+'</div><input type="hidden" value="${item.item_id}">';    	
     	cell2.innerHTML = '${item.item_name}';    	
-    	cell3.innerHTML = '${item.job_sheet_no}';
-    	cell4.innerHTML = '${item.qty}';
-    	cell5.innerHTML = '${item.rate}';
-    	cell6.innerHTML = '<div class="input-group"><input type="text" readonly="" class="form-control form-control-sm" name="txtgstamountgroup" id="txtgstamount895" value="${item.gst_amount}" style="width:50%"><input type="text" style="width:50%" class="form-control form-control-sm" onkeyup="calculateAmount(895)" id="txtgstpercent895" value="${item.gst_percentage}"></div>';
+    	
+    	cell3.innerHTML = '${item.qty}';
+    	cell4.innerHTML = '${item.rate}';
+    	cell5.innerHTML = '<div class="input-group"><input type="text" readonly="" class="form-control form-control-sm" name="txtgstamountgroup" id="txtgstamount895" value="${item.gst_amount}" style="width:50%"><input type="text" style="width:50%" class="form-control form-control-sm" readonly onkeyup="calculateAmount(895)" id="txtgstpercent895" value="${item.gst_percentage}"></div>';
     	
     	
     	
-    	cell7.innerHTML = '${item.item_amount}';	
-    	cell8.innerHTML = '<button type="button" class="btn btn-sm btn-danger"  onclick=removethisitem(this) id="btn11" name="deleteButtons" style="cursor:pointer">Delete</button> <button type="button" class="btn btn-primary"  onclick=returnThisItem("${item.details_id}") name="returnButtons" id="btn11" style="cursor:pointer">Return (${item.ReturnedQty})</button>';
+    	cell6.innerHTML = '${item.item_amount}';	
+		totalQuantities+=Number('${item.qty}');
     	
 		
 	    		//alert('${item.item_id}'+'-${item.item_name}'+'-${item.qty}'+'-${item.rate}'+'-${item.custom_rate}');			    
 		</c:forEach>
+
+		totalQty.innerHTML=totalQuantities;
  
 		
-		if('${param.editInvoice}'=='Y')
-			{
-				hdnPreviousInvoiceId.value="${invoiceDetails.invoice_id}";
-				var returnButtons=document.getElementsByName('returnButtons');
-				for(var m=0;m<returnButtons.length;m++)
-					{
-						returnButtons[m].style="display:none";
-					}
-				txtsearchcustomer.disabled=true;
-				txtinvoicedate.disabled=true;
-				document.getElementById("divTitle").innerHTML="Edit Invoice:-"+"${invoiceDetails.invoice_no}";
-				document.title +=" Edit Invoice:- " + " ${invoiceDetails.invoice_no} ";
-			}
-		else
-			{
-				$("#frm :input").prop('disabled', true);
-				$("[name=returnButtons]").prop('disabled', false);
-				
-				
-				var deleteButtons=document.getElementsByName('deleteButtons');
-				for(var m=0;m<deleteButtons.length;m++)
-					{
-						deleteButtons[m].style="display:none";
-					}
-			}
 		
-		if('${param.table_id}'!='')
-			{
-				calculateTotal();
-				txtpaymenttype.value='Paid';
-				drppaymentmode.value='Cash';
-				txtsearchcustomer.disabled=false;
-				txtinvoicedate.disabled=false;
-				document.getElementById("divTitle").innerHTML="Invoice For Table No:-"+tableNo;
-				document.title +=" Invoice For Table No:- " +tableNo ;
-				txtinvoicediscount.value=0;
-			}
 		
-		if('${param.booking_id}'!='')
-		{
-			calculateTotal();
-			txtpaymenttype.value='Paid';
-			drppaymentmode.value='Cash';
-			txtsearchcustomer.disabled=true;
-			txtinvoicedate.disabled=false;
-			document.getElementById("divTitle").innerHTML="Invoice For Booking Id - ${param.booking_id}";
-			document.title +=" Invoice For Booking Id - ${param.booking_id} ";
-			txtinvoicediscount.value=0;
-		}
 		
 		document.getElementById("generatePDF").style="display:";
 		generatePDF.disabled=false;

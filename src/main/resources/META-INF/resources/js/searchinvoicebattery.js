@@ -1,8 +1,5 @@
 
-setTimeout(
-	function() {
-		document.getElementById("txtsearchinvoiceno").focus();
-	}, 500);
+
 
 function searchInvoice()
 {
