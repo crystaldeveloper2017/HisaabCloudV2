@@ -857,19 +857,12 @@ if("${param.invoice_id}"!="")
 	drppaymentmode.value="${invoiceDetails.payment_mode}";
 	txtsearchcustomer.value="${invoiceDetails.customer_name}";
 	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
-	
 
-	
-	
-
-
-	
-
-
-
+	document.getElementById("divTitle").innerHTML="Invoice No : "+"${invoiceDetails.invoice_no}";
 
 
 	var m=0;
+	var totalQty=0;
 	<c:forEach items="${invoiceDetails.listOfItems}" var="item">
 		
 		m++;
@@ -893,6 +886,7 @@ if("${param.invoice_id}"!="")
     	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
     	
     	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
+		totalQty+=Number('${item.qty}');
     	cell3.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';
 		cell4.innerHTML ='${item.battery_no}';
 		cell5.innerHTML ='${item.vehicle_name}';
@@ -904,7 +898,10 @@ if("${param.invoice_id}"!="")
     	
 		</c:forEach>
 
+		
+
 		calculateTotal();
+		lbltotalqty.innerHTML=totalQty;
 
 		disableAllComponents();
 		
