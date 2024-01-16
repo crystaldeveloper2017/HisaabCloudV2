@@ -446,7 +446,7 @@ function saveInvoice()
     
 <button class="btn btn-success" id="btnsave" type="button" onclick='saveInvoice()'>Save</button>
 		<button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>    
-  
+	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
   </div>
 		
 		
@@ -883,15 +883,15 @@ if("${param.invoice_id}"!="")
     	
     	cell1.innerHTML = '<a href="#">${item.item_name} ( )</a>';
     	
-    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
+    	cell2.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.qty}" id="txtqty${item.item_id}" >';
     	
     	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
 		totalQty+=Number('${item.qty}');
-    	cell3.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';
-		cell4.innerHTML ='${item.battery_no}';
-		cell5.innerHTML ='${item.vehicle_name}';
-		cell6.innerHTML ='${item.vehicle_no}';
-		cell7.innerHTML ='${item.warranty}';
+    	cell3.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="'+itemTotal+'">';
+		cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.battery_no}" id="txtbatteryno${item.item_id}">';
+    	cell5.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.vehicle_name}" id="txtvehiclename${item.item_id}">';
+    	cell6.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.vehicle_no}" id="txtvehicleno${item.item_id}">';    	
+    	cell7.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.warranty}" id="txtwarranty${item.item_id}">';  
 
 		
     	
@@ -904,6 +904,8 @@ if("${param.invoice_id}"!="")
 		lbltotalqty.innerHTML=totalQty;
 
 		disableAllComponents();
+		document.getElementById("generatePDF").style="display:";
+		generatePDF.disabled=false;
 		
 	
 }
@@ -911,6 +913,22 @@ if("${param.invoice_id}"!="")
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function generateInvoice(invoiceId)
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generateInvoicePDFBattery&invoiceId="+invoiceId, false);    
+	  xhttp.send();
 }
 
 function quickAddCustomer()

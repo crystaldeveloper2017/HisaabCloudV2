@@ -5743,6 +5743,61 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		return rs;
 	}
+
+	public CustomResultObject generateInvoicePDFBattery(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+
+		String invoiceId = request.getParameter("invoiceId");
+
+		String appenders = "Invoice" + invoiceId + ".pdf";
+
+		try {
+
+			generateInvoicePDFBatteryService(request, con);
+
+			rs.setAjaxData(appenders);
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
+
+	public HashMap<String, Object> generateInvoicePDFBatteryService(HttpServletRequest request, Connection con) throws SQLException {
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolderPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+
+		String invoiceId = request.getParameter("invoiceId");
+
+		String appenders = "Invoice" + invoiceId + ".pdf";
+		DestinationPath += appenders;
+
+		String userId = request.getParameter("userId");
+		if (userId == null || userId.equals("")) {
+			userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		}
+
+		outputMap.put("user_id", userId);
+
+		try {
+
+			String invoiceFormatName = lObjConfigDao.getInvoiceFormatName(outputMap, con).get("format_name");
+
+			new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchBattery(DestinationPath, BufferedImagesFolderPath,
+						lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
+
+			outputMap.put("returnData", appenders);
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			e.printStackTrace();
+
+		}
+
+		return outputMap;
+	}
 	
 	public CustomResultObject generateInvoicePDFServiceAjax(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
