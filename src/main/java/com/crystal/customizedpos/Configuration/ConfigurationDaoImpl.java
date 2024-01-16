@@ -4032,7 +4032,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 				"union all \r\n" + //
 				"select max(accessed_time) as T1,user_name,'ssegpl' from  ssegpl.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
 				"union all \r\n" + //
-				"select max(accessed_time) as T1,user_name,'society_maintenance_staging' from  society_maintenance_staging.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
+				"select max(accessed_time) as T1,user_name,'society_maintenance' from  society_maintenance.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
 				"union all \r\n" + //
 				"select max(accessed_time) as T1,user_name,'skpsecuritygate' from  skpsecuritygate.frm_audit_trail fat where user_name !='' group by user_name having user_name is not null\r\n" + //
 				"order by T1 desc\r\n" + //
