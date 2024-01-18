@@ -245,6 +245,7 @@
     - claimPayment
     - showReconciliationReport
     - showUserDetails
+    - generateInvoicePDFBattery
   elements:
     - 700181
     - 700180
