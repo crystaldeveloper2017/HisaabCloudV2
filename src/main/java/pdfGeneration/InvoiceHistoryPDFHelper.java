@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.crystal.Frameworkpackage.CommonFunctions;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -3404,6 +3405,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		Font font = new Font(base, 12, Font.NORMAL); 
 
 		Font fontnew = new Font(base, 9, Font.NORMAL); 
+		Font fontBold = new Font(base, 9, Font.BOLD);
 
 		
 		int fixedSize=320;
@@ -3505,10 +3507,10 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	       
 	        document.add(table);
 		  
-		  	table = new PdfPTable(8);
+		  	table = new PdfPTable(5);
 		  	table.setWidthPercentage(100);
 		  
-	      	table.setWidths(new int[]{6,12,9,14,12,12,12,15});
+	      	table.setWidths(new int[]{6,30,12,12,12});
 
 		  	table.setSpacingBefore(10);
 	      
@@ -3522,30 +3524,13 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        cell.setPadding(0);
 	        table.addCell(cell);
-	        
-	        
+	           
 	        cell = new PdfPCell(new Phrase("Item Qty",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        table.addCell(cell);
-	  
-	        
+	       
 	        cell = new PdfPCell(new Phrase("Amount",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase("Battery No",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase("Vehicle Name",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase("Vehicle No",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        table.addCell(cell);
@@ -3565,16 +3550,23 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        		cell = new PdfPCell(new Phrase(String.valueOf(srno++),fontnew ));
 				  	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  	cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        table.addCell(cell);
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("item_name").toString(),fontnew ));
+			        table.addCell(cell);       
+					
+					Phrase p = new Phrase();
+					p.add(new Chunk(prod.get("category_name").toString() +" "+ prod.get("item_name").toString(),fontBold));
+					p.add(new Chunk("\n"+prod.get("vehicle_no").toString(),fontnew));
+					p.add(new Chunk("\n"+prod.get("battery_no").toString(),fontnew));
+					p.add(new Chunk("\n"+prod.get("vehicle_name").toString(),fontnew));
+
+			        cell = new PdfPCell(p);
 			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        cell.setPaddingLeft(3);
 			        table.addCell(cell);
 			        
 			        totalQty+=Double.parseDouble(prod.get("qty").toString());
-			        cell = new PdfPCell(new Phrase(prod.get("qty").toString(),fontnew ));
+					String[] parts = prod.get("qty").toString().split("\\.");
+			        cell = new PdfPCell(new Phrase(parts[0],fontnew ));
 			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        table.addCell(cell);			        
@@ -3583,27 +3575,9 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        table.addCell(cell);
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("battery_no").toString(),fontnew ));
-			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        cell.setPaddingLeft(3);
-			        table.addCell(cell);			        
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("vehicle_name").toString(),fontnew ));
-			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        cell.setPaddingLeft(3);
-			        table.addCell(cell);
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("vehicle_no").toString(),fontnew ));
-			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        cell.setPaddingLeft(3);
-			        table.addCell(cell);
 
 					cell = new PdfPCell(new Phrase(prod.get("warranty").toString(),fontnew ));
-			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        cell.setPaddingLeft(3);
 			        table.addCell(cell);

@@ -84,7 +84,7 @@ function saveInvoice()
 		
 	    itemString+=
 	    	rows[x].childNodes[0].childNodes[0].value.split('~')[0]+ // ID
-	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value)+ // QTY
+	    "~"+Number(rows[x].childNodes[1].childNodes[0].value)+ // QTY
 	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // RATE
 	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // Custom RATE	    	    
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
