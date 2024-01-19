@@ -290,7 +290,7 @@ function deleteInvoice(invoiceId)
 		  
 		}
 	  };
-	  xhttp.open("GET","?a=deleteInvoice&user_id=${userdetails.user_id}&app_id=${userdetails.app_id}&store_id=${userdetails.store_id}&invoiceId="+invoiceId, true);    
+	  xhttp.open("GET","?a=deleteInvoice&user_id=${userdetails.user_id}&app_id=${userdetails.app_id}&store_id=${userdetails.store_id}&invoiceId="+invoiceId+"&type=${param.type}", true);    
 	  xhttp.send();
 }
 

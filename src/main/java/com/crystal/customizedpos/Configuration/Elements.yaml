@@ -217,7 +217,7 @@ elements:
 - elementId: 25
   elementName: "Sales Invoice Report"
   parentElementId: 7
-  elementUrl: "?a=generateDailyInvoiceReport"
+  elementUrl: "?a=generateDailyInvoiceReport&type=S"
   orderNo: 1
 - elementId: 27
   elementName: "Payment Register"
