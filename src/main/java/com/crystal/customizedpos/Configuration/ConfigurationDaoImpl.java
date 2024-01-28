@@ -5764,6 +5764,72 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 					query,
 					con);
 		}
+
+
+
+		public List<LinkedHashMap<String, Object>> getCardSwipes (HashMap<String, Object> hm,Connection con)
+		throws ClassNotFoundException, SQLException, ParseException {
+	ArrayList<Object> parameters = new ArrayList<>();
+	
+	
+	String query="select mb.bank_name ,slot_id,sum(amount) cardAmount from\n" + 
+	"trn_payment_register tpr,\n" + 
+	"trn_invoice_register tir ,\n" + 
+	"rlt_invoice_fuel_details rifd ,\n" + 
+	"swipe_machine_master smm ,\n" + 
+	"mst_bank mb\n" + 
+	"where\n" + 
+	"payment_date=? and tpr.app_id =?\n" + 
+	"and payment_mode ='Card' and tpr.ref_id =tir.invoice_id\n" + 
+	"and rifd.invoice_id =tir.invoice_id and rifd.swipe_id =smm.swipe_machine_id and mb.bank_id =smm.account_id\n";
+
+	parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+	parameters.add(hm.get("app_id").toString());
+	
+	if(hm.get("shiftid")!=null && !hm.get("shiftid").equals("-1"))
+	{
+		query+=" and rifd.shift_id =?";
+		parameters.add(hm.get("shiftid").toString());
+	}
+
+	query+="group by mb.bank_name,slot_id ";
+
+	return getListOfLinkedHashHashMap(parameters,
+			query,
+			con);
+}
+
+public List<LinkedHashMap<String, Object>> getPaytmSlotWise (HashMap<String, Object> hm,Connection con)
+		throws ClassNotFoundException, SQLException, ParseException {
+	ArrayList<Object> parameters = new ArrayList<>();
+	
+	
+	String query="select\n" + 
+	"slot_id,sum(amount) paytmAmount\n" + 
+	"from\n" + 
+	"trn_supervisor_collection tsc where app_id =? and collection_date = ?\n" + 
+	"and collection_mode = 'Paytm' ";
+
+	
+	parameters.add(hm.get("app_id").toString());
+	parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+	
+	if(hm.get("shiftid")!=null && !hm.get("shiftid").equals("-1"))
+	{
+		query+=" and shift_id =?";
+		parameters.add(hm.get("shiftid").toString());
+	}
+
+	query+="group by slot_id ";
+
+	return getListOfLinkedHashHashMap(parameters,
+			query,
+			con);
+}
+
+
+
+
 		
 		
 		public long saveCollectionSupervisor(Connection conWithF, HashMap<String, Object> hm) throws SQLException, ParseException {
@@ -5880,6 +5946,8 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			}
 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 			parameters.add(hm.get("app_id"));
+
+			query+=" order by mc.customer_name ";
 			
 	
 

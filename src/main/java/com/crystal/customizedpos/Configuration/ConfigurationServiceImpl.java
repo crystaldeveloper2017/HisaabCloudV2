@@ -5568,7 +5568,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
 		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstCardSwipes = lObjConfigDao.getCardSwipes(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstPaytmSlotwise = lObjConfigDao.getPaytmSlotWise(outputMap, con);
+		
+		
+		outputMap.put("lstCardSwipes", lstCardSwipes);
 		outputMap.put("lstPayments", lstPayments);
+		outputMap.put("lstPaytmSlotwise", lstPaytmSlotwise);
+		
+		
 
 		List<LinkedHashMap<String, Object>> lstCreditSales = lObjConfigDao.getCreditSalesForthisDate(outputMap, con);
 		outputMap.put("lstCreditSales", lstCreditSales);

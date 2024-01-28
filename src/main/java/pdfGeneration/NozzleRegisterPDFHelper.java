@@ -76,6 +76,8 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 		Font font = new Font(base, 12, Font.NORMAL);
 		
 		  Document document = new Document (PageSize.A4, 20, 20, 0, 60);
+		  document.setMargins(50, 36, 36, 36); // top, right, bottom, left
+
 		  PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath));
 		  /*PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("F:\\1.pdf"));*/
 		  
@@ -83,9 +85,10 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        writer.setPageEvent(event);
 		  document.open();     
 		  
+		  double paytmSum=Double.valueOf( lstPayments.get(0).get("paytmsum").toString());
+			double cardswipesum= Double.valueOf(lstPayments.get(0).get("cardswipesum").toString());
+			double creditsalessum= Double.valueOf(lstPayments.get(0).get("pendingSum").toString());
 		  
-		  document.add(new Paragraph("\n"));
-		  document.add(new Paragraph("\n"));
 		  
 	        PdfPCell cell;	        
 			PdfPTable table;
@@ -192,7 +195,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 
-			cell = new PdfPCell(new Phrase("Diesel",font));
+			cell = new PdfPCell(new Phrase("S1). Total Diesel Sales",font));
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));
 			cell.setColspan(3);	        
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -205,14 +208,15 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 
+			String sumAmountDieselString=new DecimalFormat("#.00").format(sumAmountDiesel);
 
-			cell = new PdfPCell(new Phrase(String.valueOf(sumAmountDiesel),font));	
+			cell = new PdfPCell(new Phrase(sumAmountDieselString,font));	
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));        
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 
 
-			cell = new PdfPCell(new Phrase("Petrol",font));
+			cell = new PdfPCell(new Phrase("S2). Total Petrol Sales",font));
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));
 			cell.setColspan(3);	        
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -226,8 +230,8 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
 
-
-			cell = new PdfPCell(new Phrase(String.valueOf(sumAmountPetrol),font));	
+			String sumAmountPetrolString=new DecimalFormat("#.00").format(sumAmountPetrol);
+			cell = new PdfPCell(new Phrase(String.valueOf(sumAmountPetrolString),font));	
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));        
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
@@ -304,17 +308,13 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 				
 			}
 
-			cell = new PdfPCell(new Phrase("",font));	        
-			cell.setColspan(3);
+			cell = new PdfPCell(new Phrase("S3). Total Lube Sales ",font));	        
+			cell.setColspan(4);
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
 	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);	        
 
-			cell = new PdfPCell(new Phrase("Total Amount",font));	        
-			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
-
-	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);	        
+			
 
 			cell = new PdfPCell(new Phrase(String.valueOf(totalLubeSales),font));	        
 			cell.setColspan(2);
@@ -325,81 +325,193 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 	        
 	        
-			document.add(table);	  
+			document.add(table);	
 
 			document.add(new Paragraph("\n"));
 			document.add(new Paragraph("\n"));
 			document.add(new Paragraph("\n"));
-
-
+			
+			
 			table = new PdfPTable(2);
 			table.setWidthPercentage(100f);
-			cell = new PdfPCell(new Phrase("Payment Details",font));
+			cell = new PdfPCell(new Phrase("Sales Summary (S)",font));
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
 			cell.setColspan(2);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
 
-			cell = new PdfPCell(new Phrase("Cash",font));	        	        
+			cell = new PdfPCell(new Phrase("S1.) Total Diesel Sales",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase(sumAmountDieselString,font));	        
+			
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			
+
+
+			cell = new PdfPCell(new Phrase("S2.) Total Petrol Sales",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase(sumAmountPetrolString,font));	        
+			
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);	
+
+
+			cell = new PdfPCell(new Phrase("S3.) Total Lube Sales",font));	        	        
+			
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	
-			Double cashPayments=Double.valueOf(lstPayments.get(0).get("cashsum").toString());
-			cashAgainstPumpTest=cashAgainstPumpTest==null? "0":cashAgainstPumpTest;
-			Double cashAgainstPumpTestDoouble=Double.valueOf(cashAgainstPumpTest);
-			Double finalCash=cashPayments-cashAgainstPumpTestDoouble;
-			cell = new PdfPCell(new Phrase( String.valueOf(finalCash),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("Paytm",font));	        	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	        
-			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("paytmsum").toString(),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase("Card Swipe",font));	        	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	        
-			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("cardswipesum").toString(),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);
-
-
-			cell = new PdfPCell(new Phrase("Credit Sales",font));
-		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	        
-			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("pendingSum").toString(),font));
-	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);
-
-			double paytmSum=Double.valueOf( lstPayments.get(0).get("paytmsum").toString());
-			double cardswipesum= Double.valueOf(lstPayments.get(0).get("cardswipesum").toString());
-			double creditsalessum= Double.valueOf(lstPayments.get(0).get("pendingSum").toString());
 			
-			double TotalAmount=finalCash+paytmSum+ cardswipesum+creditsalessum; 
+			cell = new PdfPCell(new Phrase(String.valueOf(totalLubeSales),font));	        			
 			
-
-			String TotalAmountString=new DecimalFormat("#.00").format(TotalAmount);
-
-			cell = new PdfPCell(new Phrase("Total",font));	 
-			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
-       	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	        
-			cell = new PdfPCell(new Phrase(String.valueOf(TotalAmountString),font));
-			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
-
-	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase("Total Sales (S)",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	        table.addCell(cell);	
+
+
+			
+			double totalSales=totalLubeSales+sumAmountDiesel+sumAmountPetrol;
+			String totalSalesString=new DecimalFormat("#.00").format(totalSales);
+
+			cell = new PdfPCell(new Phrase(totalSalesString,font));	        	        
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
 			
 			document.add(table);
 
 
+
 			document.add(new Paragraph("\n"));
 			document.add(new Paragraph("\n"));
 			document.add(new Paragraph("\n"));
 
+
+			List<LinkedHashMap<String, Object>> lstCardSwipes= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstCardSwipes");
+			List<LinkedHashMap<String, Object>> lstPaytmSlotwise= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstPaytmSlotwise");
+			
+
+			table = new PdfPTable(3);
+			table.setWidthPercentage(100f);
+			cell = new PdfPCell(new Phrase("Card Payment Details",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+			cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	
+
+
+			cell = new PdfPCell(new Phrase("Bank Name",font));	        	        
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("Slot",font));	        	        
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("Amount",font));	        	        
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);	
+
+
+			for(LinkedHashMap lhm: lstCardSwipes)
+			{
+				cell = new PdfPCell(new Phrase(lhm.get("bank_name").toString(),font));	        	        
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);	
+
+				cell = new PdfPCell(new Phrase(lhm.get("slot_id").toString(),font));	        	        
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(lhm.get("cardAmount").toString(),font));	        	        
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);	
+			}
+
+
+			cell = new PdfPCell(new Phrase("P1).Total Card Payments",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+			cell.setColspan(2);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("cardswipesum").toString(),font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			document.add(table);
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+
+			table = new PdfPTable(2);
+			table.setWidthPercentage(100f);
+			cell = new PdfPCell(new Phrase("Paytm Payment Details",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+			cell.setColspan(2);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			
+			cell = new PdfPCell(new Phrase("Slot Name",font));	        	        
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("Amount",font));	        	        
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);	
+
+
+			for(LinkedHashMap lhm: lstPaytmSlotwise)
+			{
+				
+
+				cell = new PdfPCell(new Phrase(lhm.get("slot_id").toString(),font));	        	        
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase(lhm.get("paytmAmount").toString(),font));	        	        
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);	
+			}
+			cell = new PdfPCell(new Phrase("P2). Total Paytm Amount",font));	        	        
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+				table.addCell(cell);
+
+				
+				cell = new PdfPCell(new Phrase(lstPayments.get(0).get("paytmsum").toString(),font));
+	    		cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	        	table.addCell(cell);
+
+
+
+			document.add(table);
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+
+
+			
+
+
+			
 
 
 			table = new PdfPTable(2);
@@ -442,7 +554,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 			}
 			
 
-			cell = new PdfPCell(new Phrase("Total",font));	 
+			cell = new PdfPCell(new Phrase("P3). Total Credit Sales",font));	 
 			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
        	        
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -458,6 +570,138 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        
 			document.add(table);
 
+
+
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+
+
+			table = new PdfPTable(2);
+			table.setWidthPercentage(100f);
+			cell = new PdfPCell(new Phrase("Payment Summary (P) ",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+			cell.setColspan(2);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+
+			cell = new PdfPCell(new Phrase("Cash",font));	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	
+			Double cashPayments=Double.valueOf(lstPayments.get(0).get("cashsum").toString());
+			cashAgainstPumpTest=cashAgainstPumpTest==null? "0":cashAgainstPumpTest;
+			Double cashAgainstPumpTestDoouble=Double.valueOf(cashAgainstPumpTest);
+			Double finalCash=cashPayments-cashAgainstPumpTestDoouble;
+			cell = new PdfPCell(new Phrase( String.valueOf(finalCash),font));
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase("P1.) Card Swipe",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("cardswipesum").toString(),font));
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase("P2). Total Paytm Amount",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("paytmsum").toString(),font));
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+
+			
+
+			
+
+			
+			
+
+			
+			
+
+
+			cell = new PdfPCell(new Phrase("P3). Total Credit Sales ",font));
+		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+			cell = new PdfPCell(new Phrase(lstPayments.get(0).get("pendingSum").toString(),font));
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			
+			
+			double totalPaymentsAmount=finalCash+paytmSum+ cardswipesum+creditsalessum; 
+			
+
+			String totalPaymentsAmountString=new DecimalFormat("#.00").format(totalPaymentsAmount);
+
+			cell = new PdfPCell(new Phrase("P). Total Payments",font));	 
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+       	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+			cell = new PdfPCell(new Phrase(String.valueOf(totalPaymentsAmountString),font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+			
+			document.add(table);
+
+
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+			document.add(new Paragraph("\n"));
+
+
+			
+
+
+			table = new PdfPTable(2);
+			table.setWidthPercentage(100f);
+			cell = new PdfPCell(new Phrase("Total Summary = Sales (S) - Payments (P)",font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+			cell.setColspan(2);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	        
+
+			cell = new PdfPCell(new Phrase(String.valueOf("Total Sales"),font));			
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(totalSalesString,font));	        	        
+			
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase(String.valueOf("Total Payments"),font));			
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(totalPaymentsAmountString,font));	        	        
+			
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			double differenceAmount=totalSales-totalPaymentsAmount;
+			String differenceString=new DecimalFormat("#.00").format(differenceAmount);
+
+
+			cell = new PdfPCell(new Phrase(String.valueOf("Difference"),font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(String.valueOf(differenceString),font));
+			cell.setBackgroundColor(new BaseColor(Color.lightGray));	        	        
+	    	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        table.addCell(cell);
+
+			document.add(table);
 
 
 			document.add(new Paragraph("\n"));
