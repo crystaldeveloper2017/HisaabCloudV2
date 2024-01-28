@@ -8332,6 +8332,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		String order_id=request.getParameter("order_id")==null?"":request.getParameter("order_id");
+		String collectionMode=request.getParameter("collection_mode")==null?"":request.getParameter("collection_mode");
 		outputMap.put("app_id", appId);
 
 		try {
@@ -8341,6 +8342,8 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
             outputMap.put("yesterdaysDate", lObjConfigDao.getYesterdaysDateFromDB(con));
             outputMap.put("tommorowsDate", lObjConfigDao.getTommorowsDateFromDB(con));
+			outputMap.put("collection_mode", collectionMode);
+			
             
 			
 			List<LinkedHashMap<String, Object>> lstOfShifts=lObjConfigDao.getShiftMaster(outputMap, con);

@@ -11,6 +11,8 @@
 
 <c:set var="lstOfShifts" value='${requestScope["outputObject"].get("lstOfShiftsActual")}' />
 <c:set var="suggestedShiftId" value='${requestScope["outputObject"].get("suggestedShiftId")}' />
+<c:set var="collection_mode" value='${requestScope["outputObject"].get("collection_mode")}' />
+
 
    
 
@@ -279,7 +281,7 @@ function deleteAttachment(id)
 	
 
 
-document.getElementById("divTitle").innerHTML="Collect Payment Supervisor";
+document.getElementById("divTitle").innerHTML="Collect ${collection_mode} Supervisor";
 
 document.title +=" Collect Payment Supervisor";
 
@@ -397,6 +399,12 @@ function getAttendantList()
 	
 }
 getAttendantList();
+
+
+
+drpmode.value='${collection_mode}';
+drpmode.disabled='${collection_mode}';
+
 </script>
 
 
