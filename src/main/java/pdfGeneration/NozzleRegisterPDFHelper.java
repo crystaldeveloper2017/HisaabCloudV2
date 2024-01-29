@@ -241,8 +241,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 
 
@@ -328,8 +327,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 			document.add(table);	
 
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 			
 			
 			table = new PdfPTable(2);
@@ -397,8 +395,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 
 			List<LinkedHashMap<String, Object>> lstCardSwipes= (List<LinkedHashMap<String, Object>>) nozzleRegisterDetails.get("lstCardSwipes");
@@ -456,8 +453,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 			document.add(table);
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 			table = new PdfPTable(2);
 			table.setWidthPercentage(100f);
@@ -504,8 +500,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 			document.add(table);
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 
 			
@@ -573,8 +568,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 
 			table = new PdfPTable(2);
@@ -653,8 +647,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 
 			
@@ -705,8 +698,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
-			document.add(new Paragraph("\n"));
+			
 
 
 
@@ -736,7 +728,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 					
 			
-				
+			double totalDifferenceFSM=0;	
 
 			for (Map.Entry<String, Object> entry : salesEmpWiseMap.entrySet()) 
 			{
@@ -756,6 +748,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 
 				Double difference= Double.parseDouble(paymentValue) - Double.parseDouble(entry.getValue().toString());
+				totalDifferenceFSM+=difference;
 				String formattedValue=new DecimalFormat("#.00").format(difference);
 				     
 				cell = new PdfPCell(new Phrase(String.valueOf(formattedValue),font));	        	        	
@@ -764,6 +757,20 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 
 				
 			}
+
+				cell = new PdfPCell(new Phrase("Total Difference FSM",font));	        	        					
+				cell.setColspan(3);
+				cell.setBackgroundColor(new BaseColor(Color.lightGray));
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        	table.addCell(cell);
+
+				String totalDifferenceFSMString=new DecimalFormat("#.00").format(totalDifferenceFSM);
+				cell = new PdfPCell(new Phrase(String.valueOf(totalDifferenceFSMString),font));	        	        					
+				cell.setBackgroundColor(new BaseColor(Color.lightGray));
+	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	        	table.addCell(cell);
+
+
 	        
 	        
 			document.add(table);
