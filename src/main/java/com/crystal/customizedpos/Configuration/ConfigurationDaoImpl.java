@@ -5781,7 +5781,7 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 	"where\n" + 
 	"payment_date=? and tpr.app_id =?\n" + 
 	"and payment_mode ='Card' and tpr.ref_id =tir.invoice_id\n" + 
-	"and rifd.invoice_id =tir.invoice_id and rifd.swipe_id =smm.swipe_machine_id and mb.bank_id =smm.account_id\n";
+	"and rifd.invoice_id =tir.invoice_id and rifd.swipe_id =smm.swipe_machine_id and mb.bank_id =smm.account_id and tir.activate_flag =1\n";
 
 	parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 	parameters.add(hm.get("app_id").toString());
