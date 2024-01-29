@@ -43,6 +43,14 @@
 
 <script >
 
+function resetCustomer()
+{	
+	txtsearchcustomer.disabled=false;
+	txtsearchcustomer.value="";
+	hdnSelectedCustomer.value=0;
+	
+}
+
 
 function saveInvoice()
 {	
