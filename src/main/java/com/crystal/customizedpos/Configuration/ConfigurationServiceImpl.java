@@ -10276,21 +10276,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-		String appShortCode = request.getParameter("appShortCode");
-		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		
-
-
 		try {
 
-			String[] colNames = { "categoryId", "categoryName", "itemId", "itemName", "price",  "image", "productDetails" };
-			outputMap.put("app_id", appId);
-			outputMap.put("app_short_code", appShortCode);
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getItemDetailsUsingAppShortCode(outputMap, con);
+			String appShortCode = request.getParameter("appShortCode");
 
-			outputMap.put("ListOfCategoriesAndItems", lst);
-			rs.setViewName("../RestaurantDetails.jsp");
+			outputMap.put("app_short_code", appShortCode);
+			outputMap.put("ListOfCategoriesAndItems", lObjConfigDao.getItemDetailsUsingAppShortCode(outputMap, con));
+			rs.setViewName("RestaurantDetails.jsp");
 			rs.setReturnObject(outputMap);
 			
 		} catch (Exception e) {
@@ -10298,7 +10290,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setHasError(true);
 		}
 
-		rs.setReturnObject(outputMap);
 		return rs;
 }
 

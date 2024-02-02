@@ -86,16 +86,6 @@ body, html {
 		  	return;
 		  }
 	  
-	/*   if(!usernameRegex.test(username.value))
-		  {
-		  document.getElementById("responseText").innerHTML="Please enter Valid username";
-		  document.getElementById("loader").style.display='none';
-		  document.getElementById("closebutton").style.display='block';
-      	$('#myModal').modal({backdrop: 'static', keyboard: false});;      	
-	  	username.focus();
-	  	return;
-		  } */
-	  
 	  
 	  if(password.value=="")
 	  {
@@ -112,18 +102,6 @@ body, html {
 	  	password.focus();
 	  	return;
 	  }
-	  
-/* 	  if(!passwordRegex.test(password.value))
-	  {
-		  
-			 document.getElementById("responseText").innerHTML="Please enter Valid password";
-			 document.getElementById("loader").style.display='none';
-			 document.getElementById("closebutton").style.display='block';
-	        	$('#myModal').modal({backdrop: 'static', keyboard: false});;  	
-	  	password.focus();
-	  	return;
-	  } */
-	  
 	  
 	  
 	  
@@ -215,7 +193,7 @@ body, html {
 	
 </script>
 	
-
+<c:set var="ListOfCategoriesAndItems" value='${requestScope["outputObject"].get("ListOfCategoriesAndItems")}' />
 
 <style>
 
@@ -420,27 +398,21 @@ body, html {
 <table class="table table-hover text-nowrap" >
 <thead>
 <tr >
-<th align="center" colspan="2">Bank Details</th>
-
+<th><b>Category Name</b></th>
+<th><b>Item Name</b></th>
+<th><b>Price</b></th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Beneficiary Name</td>
-<td>Crystal Developers</td>
-</tr>
 
-
-<tr>
-<td>Account No</td>
-<td>2302215248532847</td>
-</tr>
-
-
-<tr>
-<td>IFSC Code</td>
-<td>AUBL0002152</td>
-</tr>
+<c:forEach items="${ListOfCategoriesAndItems}" var="item">
+					<tr >
+						<td>${item}</td>
+						<td>${item.item_name}</td>
+						<td>${item.price}</td>						
+						
+					</tr>
+	</c:forEach>
 
 </tbody>
 </table>  

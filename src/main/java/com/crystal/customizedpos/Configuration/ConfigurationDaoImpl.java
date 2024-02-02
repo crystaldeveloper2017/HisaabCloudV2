@@ -7050,9 +7050,18 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 	}
 
     public List<LinkedHashMap<String, Object>> getItemDetailsUsingAppShortCode(HashMap<String, Object> outputMap,
-            Connection con) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getItemDetailsUsingAppShortCode'");
+            Connection con) throws ClassNotFoundException, SQLException {
+        
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(outputMap.get("app_short_code"));
+				
+				return getListOfLinkedHashHashMap(parameters, "select item.*,cat.*,app.*, \r\n" + 
+				" case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath \r\n" +  
+				" from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join  \r\n" + 
+				" tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image' \r\n" +    
+				" join mst_app app on app.app_id=item.app_id and app.app_short_code=? \r\n" +  
+				" where item.activate_flag=1 and cat.app_id=item.app_id ", con);
+			
     }
 
     public long saveItemRestaurant(HashMap<String, Object> hm, Connection con) throws SQLException {
