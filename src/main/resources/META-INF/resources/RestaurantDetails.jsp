@@ -407,7 +407,7 @@ body, html {
 
 <c:forEach items="${ListOfCategoriesAndItems}" var="item">
 					<tr >
-						<td>${item}</td>
+						<td>${item.category_name}</td>
 						<td>${item.item_name}</td>
 						<td>${item.price}</td>						
 						
