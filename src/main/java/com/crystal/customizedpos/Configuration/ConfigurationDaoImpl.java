@@ -5807,7 +5807,7 @@ public List<LinkedHashMap<String, Object>> getPaytmSlotWise (HashMap<String, Obj
 	String query="select\n" + 
 	"slot_id,sum(amount) paytmAmount\n" + 
 	"from\n" + 
-	"trn_supervisor_collection tsc where app_id =? and collection_date = ?\n" + 
+	"trn_supervisor_collection tsc where tsc.activate_flag=1 and app_id =? and collection_date = ?\n" + 
 	"and collection_mode = 'Paytm' ";
 
 	

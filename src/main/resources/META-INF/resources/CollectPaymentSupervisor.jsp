@@ -400,10 +400,14 @@ function getAttendantList()
 }
 getAttendantList();
 
-
-
 drpmode.value='${collection_mode}';
 drpmode.disabled='${collection_mode}';
+
+if('${collection_mode}'=='')
+{
+	drpmode.value='Cash';	
+}
+
 
 </script>
 
