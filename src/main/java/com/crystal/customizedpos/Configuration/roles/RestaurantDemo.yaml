@@ -1,0 +1,24 @@
+- roleId: 18
+  roleName: "RestaurantDemo"
+  actions:
+    - changePassword
+    - showChangePassword
+    - generateDailyInvoiceReport
+    - showCheckInScreen
+    - showHomePage
+    - showCheckOutScreen
+    - showUserRoleMapping
+    - showUserDetails
+    - showCategoryMasterNew
+    - showCategoryWiseReportParameter
+    - showItemMaster
+  elements:
+    - 700180
+    - 700197
+    - 700178
+    - 5
+    - 16
+    - 700176
+    - 4
+    - 18
+    - 14
