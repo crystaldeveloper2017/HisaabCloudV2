@@ -2006,6 +2006,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			String userid = (String) hm.get("user_id");
 			String appId = (String) hm.get("app_id");
+			String appType = (String) hm.get("app_type");
 			hm.put("app_id", appId);
 			hm.put("userId", userid);
 
@@ -2030,15 +2031,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("availableStoreIds", availableStoreIds);
 			long itemId = 0;
 			if (hm.get("hdnItemId").equals("")) {
-				
-				itemId = lObjConfigDao.saveItem(hm, con);
+
+				if(appType.equalsIgnoreCase("Restaurant"))
+					itemId = lObjConfigDao.saveItemRestaurant(hm,con);		
+				else	
+					itemId = lObjConfigDao.saveItem(hm, con);
 				hm.put("hdnItemId", itemId);
 				
 				 
 			} else {
 				
 				
-				 lObjConfigDao.insertIntoItemHistory(hm.get("hdnItemId").toString(),con);
+				lObjConfigDao.insertIntoItemHistory(hm.get("hdnItemId").toString(),con);
 				lObjConfigDao.updateItem(hm, con);
 				itemId = Long.parseLong(hm.get("hdnItemId").toString());
 				
@@ -10272,7 +10276,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-		String exportFlag = request.getParameter("restaurantId");
+		String appShortCode = request.getParameter("appShortCode");
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		
@@ -10280,11 +10284,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		try {
 
-			String[] colNames = { "categoryId", "categoryName", "itemId", "itemName", "price" };
+			String[] colNames = { "categoryId", "categoryName", "itemId", "itemName", "price",  "image", "productDetails" };
 			outputMap.put("app_id", appId);
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCategoryMasterWithItemsCount(outputMap, con);
+			outputMap.put("app_short_code", appShortCode);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getItemDetailsUsingAppShortCode(outputMap, con);
 
-			outputMap.put("ListOfCategories", lst);
+			outputMap.put("ListOfCategoriesAndItems", lst);
 			rs.setViewName("../RestaurantDetails.jsp");
 			rs.setReturnObject(outputMap);
 			

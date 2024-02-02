@@ -325,7 +325,6 @@ function deleteAttachment(id)
     </div>
   </div>
   
-  </c:if>
   
   <div class="col-sm-12">
   	<div class="form-group">
@@ -335,6 +334,9 @@ function deleteAttachment(id)
       </c:forEach>
     </div>
   </div>
+
+   </c:if>
+
   
   <c:if test="${itemDetails.qrCodeImageName ne null}">
     <div class="col-sm-6">
@@ -396,7 +398,8 @@ function deleteAttachment(id)
     </div>
   </div>
   
-  
+    <c:if test="${userdetails.app_type ne 'Restaurant'}">
+
     <div class="col-sm-12">
   	 <div class="form-group">
       <label for="email">Product Details</label>
@@ -405,6 +408,7 @@ function deleteAttachment(id)
 	      </textarea>
       </div>
       </div>
+	</c:if>
   
   <div class="col-sm-12">
   	 <div class="form-group" align="center">

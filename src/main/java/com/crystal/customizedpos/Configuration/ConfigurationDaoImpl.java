@@ -7049,6 +7049,30 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 		return getListOfString(parameters, "select distinct(vehicle_name) from rlt_invoice_battery_details where app_id=?", con);
 	}
 
+    public List<LinkedHashMap<String, Object>> getItemDetailsUsingAppShortCode(HashMap<String, Object> outputMap,
+            Connection con) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getItemDetailsUsingAppShortCode'");
+    }
+
+    public long saveItemRestaurant(HashMap<String, Object> hm, Connection con) throws SQLException {
+		
+		HashMap<String, Object> valuesMap=new HashMap<String, Object>();	       
+        valuesMap.put("item_id", "~default");
+        valuesMap.put("parent_category_id", hm.get("drpcategoryId"));
+		valuesMap.put("debit_in", "N");
+        valuesMap.put("item_name", hm.get("itemname"));
+        valuesMap.put("price", hm.get("itemsaleprice"));
+        valuesMap.put("activate_flag", "1");
+        valuesMap.put("updated_by", hm.get("userId"));
+        valuesMap.put("updated_date", "~sysdate()");
+        valuesMap.put("product_code", hm.get("product_code"));
+        valuesMap.put("app_id", hm.get("app_id"));        
+        
+        Query q=new Query("mst_items", "insert", valuesMap);			        
+        return  insertUpdateEnhanced(q,con);
+	}
+
 
             
 
