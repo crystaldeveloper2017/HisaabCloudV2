@@ -10264,11 +10264,39 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 							
 		
-rs.setReturnObject(outputMap);
+		rs.setReturnObject(outputMap);
 		return rs;
 	}
 	
-	
+	public CustomResultObject showRestaurantMenu(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String exportFlag = request.getParameter("restaurantId");
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		
+
+
+		try {
+
+			String[] colNames = { "categoryId", "categoryName", "itemId", "itemName", "price" };
+			outputMap.put("app_id", appId);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCategoryMasterWithItemsCount(outputMap, con);
+
+			outputMap.put("ListOfCategories", lst);
+			rs.setViewName("../RestaurantDetails.jsp");
+			rs.setReturnObject(outputMap);
+			
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		rs.setReturnObject(outputMap);
+		return rs;
+}
+
 
 
 	

@@ -29,7 +29,9 @@
 function addItem()
 {	
 	localStorage.setItem("catId",drpcategoryId.value);
-	localStorage.setItem("debitin",drpdebitin.value);
+	
+	if('${userdetails.app_type}' != 'Restaurant')
+		localStorage.setItem("debitin",drpdebitin.value);
 	
 	btnsave.disabled=true;
 	 if(drpcategoryId.value=="")
@@ -66,6 +68,8 @@ function addItem()
 	  	return;
 	  }
 	 
+	 if('${userdetails.app_type}' != 'Restaurant')
+	 {
 	 if(drpdebitin.value=="")
 	  {
 	  	
@@ -79,9 +83,10 @@ function addItem()
 	  	
 	  	 
  	 btnsave.disabled=false;
- 	drpdebitin.focus();
+ 	 drpdebitin.focus();
 	  	return;
 	  }
+	 }
 	 
 	 if(itemsaleprice.value=="")
 	  {
@@ -151,6 +156,7 @@ function deleteAttachment(id)
 
 <form id="frm" action="?a=addItem" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 <input type="hidden" name="app_id" value="${userdetails.app_id}">
+<input type="hidden" name="app_type" value="${userdetails.app_type}">
 <input type="hidden" name="user_id" value="${userdetails.user_id}">
 <input type="hidden" name="callerUrl" id="callerUrl" value="">
 
@@ -174,6 +180,9 @@ function deleteAttachment(id)
     </div>
   </div>
   
+
+ <c:if test="${userdetails.app_type ne 'Restaurant'}">
+
   <div class="col-sm-2">
   	<div class="form-group">
       <label for="email">Debit In *</label>
@@ -193,6 +202,8 @@ function deleteAttachment(id)
     </div>
   </div>
   
+ </c:if>
+
   <div class="col-sm-2">
   	<div class="form-group">
       <label for="email">Sale Price *</label>
@@ -200,6 +211,8 @@ function deleteAttachment(id)
     </div>
   </div>
   
+  <c:if test="${userdetails.app_type ne 'Restaurant'}">
+
   <div class="col-sm-2">
   	<div class="form-group">
       <label for="email">Wholesale Price</label>
@@ -257,7 +270,7 @@ function deleteAttachment(id)
 	      <input type="text" class="form-control" id="shrikhand" value="${itemDetails.shrikhand}"  onkeyup="digitsOnly(event)" placeholder="180" name="shrikhand">
 	    </div>
 	  </div>
-  
+  </c:if>
   
   <div class="col-sm-2">
   	<div class="form-group">
@@ -266,6 +279,8 @@ function deleteAttachment(id)
     </div>
   </div>
   
+
+  <c:if test="${userdetails.app_type ne 'Restaurant'}">
   <div class="col-sm-2">
   	<div class="form-group">
       <label for="email">SGST %</label>
@@ -310,7 +325,7 @@ function deleteAttachment(id)
     </div>
   </div>
   
-  
+  </c:if>
   
   <div class="col-sm-12">
   	<div class="form-group">
