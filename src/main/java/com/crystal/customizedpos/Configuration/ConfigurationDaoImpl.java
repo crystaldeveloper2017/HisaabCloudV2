@@ -1290,20 +1290,20 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		
 		
 		return getMap(parameters,
-				"select\r\n"
-				+ "	*\r\n"
-				+ "from\r\n"
-				+ "	nozzle_master nozmaster inner join \r\n"
-				+ "	mst_items fuelmst on nozmaster.item_id =fuelmst .item_id  inner join  \r\n"
-				+ "	dispenser_master dm on dm.dispenser_id =nozmaster .parent_dispenser_id \r\n"
-				+ "left outer join trn_nozzle_register tnr on\r\n"
-				+ "	tnr.nozzle_id = nozmaster.nozzle_id \r\n"
-				+ "				\r\n"
-				+ "where\r\n"
-				+ "	nozmaster.nozzle_id =?\r\n"
-				+ "order by\r\n"
-				+ "	tnr.trn_nozzle_id desc\r\n"
-				+ "limit 1",
+		"select\n" + 
+		"*\n" + 
+		"from\n" + 
+		"nozzle_master nozmaster inner join\n" + 
+		"mst_items fuelmst on nozmaster.item_id =fuelmst .item_id  inner join\n" + 
+		"dispenser_master dm on dm.dispenser_id =nozmaster .parent_dispenser_id\n" + 
+		"left outer join trn_nozzle_register tnr on\n" + 
+		"tnr.nozzle_id = nozmaster.nozzle_id\n" + 
+		"left outer join shift_master sm on sm.shift_id =tnr.shift_id\n" + 
+		"where\n" + 
+		"nozmaster.nozzle_id =? \n" + 
+		"order by\n" + 
+		"tnr.accounting_date desc,sm.shift_name desc\n" + 
+		"limit 1;\n",
 				con);
 	}
 	
