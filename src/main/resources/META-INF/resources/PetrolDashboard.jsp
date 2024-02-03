@@ -116,7 +116,69 @@
 
             
           </div>
-          ^
+
+            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showAddExpense'">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Add Expense</span>
+                
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+
+            <!-- /.info-box -->
+
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showStockStatus'">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Stock Status</span>
+                
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+
+            <!-- /.info-box -->
+
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPayment'">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Collect Payment</span>
+                
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+
+            <!-- /.info-box -->
+
+          </div>
+
+            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showSubmitCashtoVault'">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Submit Cash To Vault</span>
+                
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+
+            <!-- /.info-box -->
+
+          </div>
+
+
+          
            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Paytm'"> 
             <div class="info-box">
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>

@@ -84,7 +84,8 @@
 						  				<option value="Google Pay">Google Pay</option>
 						  				<option value="Phone Pay">Phone Pay</option>
 						  				<option value="Card">Card</option>						  				
-						  				<option value="Kasar">Kasar</option>					  									  				
+						  				<option value="Kasar">Kasar</option>
+										<option value="Cheque">Cheque</option>					  									  				
 				  					</select>
 	  	     
 	                

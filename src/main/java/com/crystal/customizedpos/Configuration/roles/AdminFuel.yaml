@@ -1,6 +1,7 @@
 - roleId: 13
   roleName: "AdminFuel"
   actions:
+    - showAddExpense
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin
@@ -124,7 +125,15 @@
     - showAddPumpTest
     - addPumpTest
     - exportNozzleRegister
+    - showCollectPayment
+    - savePayment
+    - getCashtovaultRegister
+  reports:
+    - 1
   elements:
+    - 24
+    - 700183
+    - 700138
     - 700160
     - 700182
     - 700181
