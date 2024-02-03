@@ -90,7 +90,7 @@
 			<div class="col-3">
 				<div class="form-group">
 					<label for="email">Previous Closing Reading</label> <input
-						type="text" class="form-control" id="txtclosingreading" readonly
+						type="text" class="form-control" id="txtclosingreading"
 						value="${nzDetails.closing_reading}" name="txtclosingreading">
 				</div>
 
@@ -100,7 +100,7 @@
 			<div class="col-3">
 				<div class="form-group">
 					<label for="email">Previous Totalizer Reading</label> <input
-						type="text" class="form-control" id="txttotalizerclosingreading"  readonly
+						type="text" class="form-control" id="txttotalizerclosingreading" 
 						value="${nzDetails.totalizer_closing_reading}" name="txttotalizerclosingreading">
 				</div>
 
@@ -216,11 +216,7 @@
 $( "#accountingDate" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
 
-if(document.getElementById('opening_reading').value!='')
-	{
-		document.getElementById('opening_reading').readOnly=true;
-	}
-	
+
 drpshift.value='${suggestedShiftId}';
 document.getElementById("divTitle").innerHTML="Nozzle Check In";
 

@@ -6900,7 +6900,7 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 			public String deleteCheckin(long nozzle_id, Connection conWithF) throws Exception {
 				ArrayList<Object> parameters = new ArrayList<>();
 				parameters.add(nozzle_id);
-				insertUpdateDuablDB("Delete from  trn_nozzle_register where nozzle_id=?",
+				insertUpdateDuablDB("Delete from  trn_nozzle_register where trn_nozzle_id=?",
 						parameters, conWithF);
 				return "Checkin Deleted Succesfully";
 			}

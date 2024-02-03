@@ -10151,7 +10151,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 	}
 	public CustomResultObject deleteCheckin(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
-		long nozzle_id = Long.valueOf(request.getParameter("nozzle_id"));
+		long nozzle_id = Long.valueOf(request.getParameter("trn_nozzle_id"));
 
 		try {
 			rs.setAjaxData(lObjConfigDao.deleteCheckin(nozzle_id, con));

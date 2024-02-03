@@ -98,7 +98,7 @@
 					  <td>${item.rate}</td>
 					  <td>${item.superVisorName}</td>
 					  
-					  <td><button class="btn btn-danger" onclick="deleteCheckin('${item.nozzle_id}')">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deleteCheckin('${item.trn_nozzle_id}')">Delete</button></td>
 						
 					</tr>
 				</c:forEach>
@@ -119,7 +119,7 @@
 <script>
 
 
-function deleteCheckin(nozzle_id)
+function deleteCheckin(trn_nozzle_id)
 {
 	
 	var answer = window.confirm("Are you sure you want to delete ?");
@@ -147,7 +147,7 @@ function deleteCheckin(nozzle_id)
 		  
 		}
 	  };
-	  xhttp.open("GET","?a=deleteCheckin&nozzle_id="+nozzle_id, true);    
+	  xhttp.open("GET","?a=deleteCheckin&trn_nozzle_id="+trn_nozzle_id, true);    
 	  xhttp.send();
 }
 
