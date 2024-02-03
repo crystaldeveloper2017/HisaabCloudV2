@@ -5311,12 +5311,12 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(nozzleId);
 			
-			return getMap(parameters, "select *,\r\n"
-					+ "case when (check_in_time is not null and check_out_time is null) then 'Occupied' else 'Empty' end status\r\n"
-					+ "from trn_nozzle_register tnr2\r\n"
-					+ "left outer join tbl_user_mst tum on tnr2.attendant_id =tum.user_id \r\n"
-					+ "where trn_nozzle_id =\r\n"
-					+ "(select trn_nozzle_id from trn_nozzle_register tnr  where nozzle_id =? order by check_in_time desc limit 1)", con);
+			return getMap(parameters, "select *,\n" + 
+			"case when (check_in_time is not null and check_out_time is null) then 'Occupied' else 'Empty' end status\n" + 
+			"from trn_nozzle_register tnr2\n" + 
+			"left outer join tbl_user_mst tum on tnr2.attendant_id =tum.user_id\n" + 
+			"where trn_nozzle_id =\n" + 
+			"(select trn_nozzle_id from trn_nozzle_register tnr  left outer join shift_master sm on sm.shift_id=tnr.shift_id where nozzle_id =? order by accounting_date desc,shift_name desc limit 1)\n", con);
 
 		}
 		
