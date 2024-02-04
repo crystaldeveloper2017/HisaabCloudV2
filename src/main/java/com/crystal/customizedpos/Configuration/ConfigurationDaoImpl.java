@@ -7083,6 +7083,17 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 	}
 
 
+public List<LinkedHashMap<String, Object>> getCashtovaultRegister(HashMap<String, Object> hm, Connection con) throws ParseException, ClassNotFoundException, SQLException 
+	{
+
+ArrayList<Object> parameters = new ArrayList<>();
+String query="select date_format(accounting_date, '%d/%m/%Y')accountingDate from trn_cash_to_vault where accounting_date between ? and ?";
+parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
+parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));		
+
+return getListOfLinkedHashHashMap(parameters, query, con);		
+			
+		}
             
 
 				

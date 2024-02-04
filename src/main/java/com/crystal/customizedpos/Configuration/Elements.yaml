@@ -476,3 +476,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCheckinRegister"
   orderNo: 1
+- elementId: 700183
+  elementName: "Cash To Vault Report "
+  parentElementId: 26
+  elementUrl: "?a=showReport&report_id=1"
+  orderNo: 3

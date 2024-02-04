@@ -1,6 +1,7 @@
 - roleId: 14
   roleName: "ManagerFuel"
   actions:
+    - showAddExpense
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin
@@ -109,7 +110,12 @@
     - showSupervisorCollection
     - showPaytmTransctions
     - showUserDetails
+    - showCollectPayment
+    - savePayment
+   
   elements:
+    - 24
+    - 700138
     - 700160
     - 700182
     - 700181
