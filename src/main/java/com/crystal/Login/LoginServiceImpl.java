@@ -134,6 +134,13 @@ public class LoginServiceImpl extends CommonFunctions {
 				rs.setViewName("../RestaurantDashboard.jsp");
 		
 			}
+
+			if(appType.equals("RestaurantDemo"))
+			{
+				outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
+				rs.setViewName("../RestaurantDashboard.jsp");
+		
+			}
 		}
 		catch(Exception e)
 		{
