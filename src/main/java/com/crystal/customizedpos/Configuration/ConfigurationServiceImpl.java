@@ -2006,6 +2006,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			String userid = (String) hm.get("user_id");
 			String appId = (String) hm.get("app_id");
+			String appType = (String) hm.get("app_type");
 			hm.put("app_id", appId);
 			hm.put("userId", userid);
 
@@ -2030,15 +2031,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("availableStoreIds", availableStoreIds);
 			long itemId = 0;
 			if (hm.get("hdnItemId").equals("")) {
-				
-				itemId = lObjConfigDao.saveItem(hm, con);
+
+				if(appType.equalsIgnoreCase("Restaurant"))
+					itemId = lObjConfigDao.saveItemRestaurant(hm,con);		
+				else	
+					itemId = lObjConfigDao.saveItem(hm, con);
 				hm.put("hdnItemId", itemId);
 				
 				 
 			} else {
 				
 				
-				 lObjConfigDao.insertIntoItemHistory(hm.get("hdnItemId").toString(),con);
+				lObjConfigDao.insertIntoItemHistory(hm.get("hdnItemId").toString(),con);
 				lObjConfigDao.updateItem(hm, con);
 				itemId = Long.parseLong(hm.get("hdnItemId").toString());
 				
@@ -10151,7 +10155,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 	}
 	public CustomResultObject deleteCheckin(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
-		long nozzle_id = Long.valueOf(request.getParameter("nozzle_id"));
+		long nozzle_id = Long.valueOf(request.getParameter("trn_nozzle_id"));
 
 		try {
 			rs.setAjaxData(lObjConfigDao.deleteCheckin(nozzle_id, con));
@@ -10264,11 +10268,31 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 							
 		
-rs.setReturnObject(outputMap);
+		rs.setReturnObject(outputMap);
 		return rs;
 	}
 	
-	
+	public CustomResultObject showRestaurantMenu(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		try {
+
+			String appShortCode = request.getParameter("appShortCode");
+
+			outputMap.put("app_short_code", appShortCode);
+			outputMap.put("ListOfCategoriesAndItems", lObjConfigDao.getItemDetailsUsingAppShortCode(outputMap, con));
+			rs.setViewName("RestaurantDetails.jsp");
+			rs.setReturnObject(outputMap);
+			
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+}
+
 
 
 	

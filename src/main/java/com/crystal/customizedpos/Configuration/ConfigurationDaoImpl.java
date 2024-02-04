@@ -1290,20 +1290,20 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		
 		
 		return getMap(parameters,
-				"select\r\n"
-				+ "	*\r\n"
-				+ "from\r\n"
-				+ "	nozzle_master nozmaster inner join \r\n"
-				+ "	mst_items fuelmst on nozmaster.item_id =fuelmst .item_id  inner join  \r\n"
-				+ "	dispenser_master dm on dm.dispenser_id =nozmaster .parent_dispenser_id \r\n"
-				+ "left outer join trn_nozzle_register tnr on\r\n"
-				+ "	tnr.nozzle_id = nozmaster.nozzle_id \r\n"
-				+ "				\r\n"
-				+ "where\r\n"
-				+ "	nozmaster.nozzle_id =?\r\n"
-				+ "order by\r\n"
-				+ "	tnr.trn_nozzle_id desc\r\n"
-				+ "limit 1",
+		"select\n" + 
+		"*\n" + 
+		"from\n" + 
+		"nozzle_master nozmaster inner join\n" + 
+		"mst_items fuelmst on nozmaster.item_id =fuelmst .item_id  inner join\n" + 
+		"dispenser_master dm on dm.dispenser_id =nozmaster .parent_dispenser_id\n" + 
+		"left outer join trn_nozzle_register tnr on\n" + 
+		"tnr.nozzle_id = nozmaster.nozzle_id\n" + 
+		"left outer join shift_master sm on sm.shift_id =tnr.shift_id\n" + 
+		"where\n" + 
+		"nozmaster.nozzle_id =? \n" + 
+		"order by\n" + 
+		"tnr.accounting_date desc,sm.shift_name desc\n" + 
+		"limit 1;\n",
 				con);
 	}
 	
@@ -5311,12 +5311,12 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(nozzleId);
 			
-			return getMap(parameters, "select *,\r\n"
-					+ "case when (check_in_time is not null and check_out_time is null) then 'Occupied' else 'Empty' end status\r\n"
-					+ "from trn_nozzle_register tnr2\r\n"
-					+ "left outer join tbl_user_mst tum on tnr2.attendant_id =tum.user_id \r\n"
-					+ "where trn_nozzle_id =\r\n"
-					+ "(select trn_nozzle_id from trn_nozzle_register tnr  where nozzle_id =? order by check_in_time desc limit 1)", con);
+			return getMap(parameters, "select *,\n" + 
+			"case when (check_in_time is not null and check_out_time is null) then 'Occupied' else 'Empty' end status\n" + 
+			"from trn_nozzle_register tnr2\n" + 
+			"left outer join tbl_user_mst tum on tnr2.attendant_id =tum.user_id\n" + 
+			"where trn_nozzle_id =\n" + 
+			"(select trn_nozzle_id from trn_nozzle_register tnr  left outer join shift_master sm on sm.shift_id=tnr.shift_id where nozzle_id =? order by accounting_date desc,shift_name desc limit 1)\n", con);
 
 		}
 		
@@ -5807,7 +5807,7 @@ public List<LinkedHashMap<String, Object>> getPaytmSlotWise (HashMap<String, Obj
 	String query="select\n" + 
 	"slot_id,sum(amount) paytmAmount\n" + 
 	"from\n" + 
-	"trn_supervisor_collection tsc where app_id =? and collection_date = ?\n" + 
+	"trn_supervisor_collection tsc where tsc.activate_flag=1 and app_id =? and collection_date = ?\n" + 
 	"and collection_mode = 'Paytm' ";
 
 	
@@ -6894,13 +6894,13 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 				return getListOfLinkedHashHashMap(parameters,
 						"select *,tum.name attendantName,tum2.name superVisorName from trn_nozzle_register tnr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
 						+ " where accounting_date between ? and ? and tnr.activate_flag=1 and tnr.app_id=? and tnr.shift_id=shft.shift_id and "
-						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id",
+						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id order by nozzle_name,shift_name",
 						con);
 			}
 			public String deleteCheckin(long nozzle_id, Connection conWithF) throws Exception {
 				ArrayList<Object> parameters = new ArrayList<>();
 				parameters.add(nozzle_id);
-				insertUpdateDuablDB("Delete from  trn_nozzle_register where nozzle_id=?",
+				insertUpdateDuablDB("Delete from  trn_nozzle_register where trn_nozzle_id=?",
 						parameters, conWithF);
 				return "Checkin Deleted Succesfully";
 			}
@@ -7049,12 +7049,44 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 		return getListOfString(parameters, "select distinct(vehicle_name) from rlt_invoice_battery_details where app_id=?", con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getCashtovaultRegister(HashMap<String, Object> hm, Connection con) throws ParseException, ClassNotFoundException, SQLException 
+    public List<LinkedHashMap<String, Object>> getItemDetailsUsingAppShortCode(HashMap<String, Object> outputMap,
+            Connection con) throws ClassNotFoundException, SQLException {
+        
+				ArrayList<Object> parameters = new ArrayList<>();
+				parameters.add(outputMap.get("app_short_code"));
+				
+				return getListOfLinkedHashHashMap(parameters, "select item.*,cat.*,app.*, \r\n" + 
+				" case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath \r\n" +  
+				" from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join  \r\n" + 
+				" tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image' \r\n" +    
+				" join mst_app app on app.app_id=item.app_id and app.app_short_code=? \r\n" +  
+				" where item.activate_flag=1 and cat.app_id=item.app_id ", con);
+			
+    }
+
+    public long saveItemRestaurant(HashMap<String, Object> hm, Connection con) throws SQLException {
+		
+		HashMap<String, Object> valuesMap=new HashMap<String, Object>();	       
+        valuesMap.put("item_id", "~default");
+        valuesMap.put("parent_category_id", hm.get("drpcategoryId"));
+		valuesMap.put("debit_in", "N");
+        valuesMap.put("item_name", hm.get("itemname"));
+        valuesMap.put("price", hm.get("itemsaleprice"));
+        valuesMap.put("activate_flag", "1");
+        valuesMap.put("updated_by", hm.get("userId"));
+        valuesMap.put("updated_date", "~sysdate()");
+        valuesMap.put("product_code", hm.get("product_code"));
+        valuesMap.put("app_id", hm.get("app_id"));        
+        
+        Query q=new Query("mst_items", "insert", valuesMap);			        
+        return  insertUpdateEnhanced(q,con);
+	}
+
+
+public List<LinkedHashMap<String, Object>> getCashtovaultRegister(HashMap<String, Object> hm, Connection con) throws ParseException, ClassNotFoundException, SQLException 
 	{
 
 ArrayList<Object> parameters = new ArrayList<>();
-
-
 String query="select date_format(accounting_date, '%d/%m/%Y')accountingDate from trn_cash_to_vault where accounting_date between ? and ?";
 parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));		
