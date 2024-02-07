@@ -3748,8 +3748,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 
-			rs.setAjaxData("<script>alert('Customer Updated Succesfully');window.location='" + hm.get("callerUrl")
-					+ "?a=showCustomerMaster'</script>");
+			rs.setAjaxData("<script>alert('Customer Updated Succesfully');window.location='?a=showCustomerMaster'</script>");
 
 		} catch (CustomerMobileAlreadyExist e) {
 			rs.setReturnObject(outputMap);
@@ -10282,7 +10281,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			outputMap.put("app_short_code", appShortCode);
 			outputMap.put("ListOfCategoriesAndItems", lObjConfigDao.getItemDetailsUsingAppShortCode(outputMap, con));
-			rs.setViewName("RestaurantDetails.jsp");
+			rs.setViewName("RestaurantMenuForGuests.jsp");
 			rs.setReturnObject(outputMap);
 			
 		} catch (Exception e) {
