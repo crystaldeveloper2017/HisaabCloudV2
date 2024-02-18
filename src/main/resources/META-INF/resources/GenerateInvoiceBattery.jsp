@@ -349,7 +349,13 @@ function saveInvoice()
       <label for="email">Payment Mode</label>
       <select class="form-control form-control-sm" name="drppaymentmode" id="drppaymentmode" >      	    
 			    <option value="Cash">Cash</option>
-			    <option value="Card">Card</option>				
+			    <option value="Card">Card</option>
+					
+					  				<option value="Paytm">Paytm</option>
+					  				<option value="Amazon">Amazon</option>
+					  				<option value="Google Pay">Google Pay</option>
+					  				<option value="Phone Pay">Phone Pay</option>
+					  							
 	   </select>
             
     </div>

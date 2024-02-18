@@ -3,6 +3,7 @@
 
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
 <c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
+<c:set var="app_type" value='${requestScope["outputObject"].get("app_type")}' />
 
 <br>
 
@@ -207,6 +208,7 @@ function getPendingAmountForThisCustomer(customerId)
 	  xhttp.send();
 }
 
+
 function savePayment()
 {
 	
@@ -216,10 +218,10 @@ function savePayment()
 			return;
 	}
 	
-	if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value)
+	if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value && '${app_type}'!='PetrolPump')
 	{
-			alert('Only Todays Entry is allowed');			
-			return;
+		alert('Only Todays Entry is allowed');			
+		return;
 	}
 		
 	btnsavepayment.disabled=true;

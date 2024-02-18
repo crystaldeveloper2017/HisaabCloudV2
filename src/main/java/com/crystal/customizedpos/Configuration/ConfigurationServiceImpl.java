@@ -1300,7 +1300,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
 			outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
-
+			String appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+			outputMap.put("app_type", appType);
 			rs.setViewName("../CollectPayment.jsp");
 			rs.setReturnObject(outputMap);
 
