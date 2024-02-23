@@ -238,6 +238,7 @@ function saveInvoice()
   				<option value="Franchise">Franchise</option>
   				<option value="WholeSeller">WholeSeller</option>
   				<option value="Distributor">Distributor</option>
+				<option value="Dealer">Dealer</option>
   				<option value="Business2Business">Business2Business</option>
   				
   				<c:if test="${userdetails.app_id eq '1'}">
