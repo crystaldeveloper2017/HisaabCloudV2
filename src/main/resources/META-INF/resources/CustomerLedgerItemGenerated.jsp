@@ -108,6 +108,7 @@
 						<th><b>Transaction Date</b></th>
 						<th><b>Transaction Type</b></th>
 						<th><b>Particulars</b></th>
+						<th><b>Rate</b></th>
 						<th><b>Qty</b></th>
 						<th><b>Ref Id</b></th>
 						<th><b>Type</b></th>
@@ -122,6 +123,7 @@
 							<td>${item.transaction_date}</td>
 							<td>${item.type}</td>
 							<td>${item.item_name}</td>
+							<td>${item.custom_rate}</td>
 							<td>${item.qty}</td>
 							<td><a href="?a=showGenerateInvoice&invoice_id=${item.RefId}">${item.invoice_no}</a></td>
 							<td>${item.creditDebit}</td>
