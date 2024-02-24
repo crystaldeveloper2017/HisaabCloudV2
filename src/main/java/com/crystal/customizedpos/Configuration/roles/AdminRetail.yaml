@@ -231,7 +231,10 @@
     - showClaimScreen
     - claimPayment
     - showUserDetails
+    - showCustomerLedgerWithItem
+    - exportCustomerLedgerWithItemAsPDF
   elements:
+    - 700184
     - 1
     - 8001
     - 3

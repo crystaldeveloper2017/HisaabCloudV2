@@ -191,7 +191,11 @@
     - showAddPaymentSupervisor
     - addPaymentSupervisor
     - showUserDetails
+    - showCustomerLedgerWithItem
+    - exportCustomerLedgerWithItemAsPDF
   elements:
+    - 700184
+    - 700183
     - 700160
     - 1
     - 8001

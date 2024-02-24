@@ -481,3 +481,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showReport&report_id=1"
   orderNo: 3
+- elementId: 700184
+  elementName: "General Ledger (Item) "
+  parentElementId: 26
+  elementUrl: "?a=showCustomerLedgerWithItem"
+  orderNo: 3

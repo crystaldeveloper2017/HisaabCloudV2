@@ -90,7 +90,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getItemDetailsById(outputMap, con)));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -106,7 +106,6 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 
 			LinkedHashMap<Long, Role> roleMasterMap = cf.getRoleMasterForThisAppType(app_type);
-			
 
 			if (action.equals("0")) {
 				for (String s : listOfRoles) {
@@ -122,21 +121,22 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setAjaxData("Roles Updated Succesfully");
 		return rs;
 	}
 
-	public CustomResultObject getPendingAmountForCustomer(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject getPendingAmountForCustomer(HttpServletRequest request, Connection con)
+			throws SQLException {
 
 		CustomResultObject rs = new CustomResultObject();
 
 		try {
 			rs.setAjaxData(mapper.writeValueAsString(getPendingAmountForCustomerService(request, con)));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -173,7 +173,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 	}
 
-	public HashMap<String, Object> getPendingAmountForCustomerService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> getPendingAmountForCustomerService(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long customerId = Integer.parseInt(request.getParameter("customerId"));
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -183,13 +184,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("pendingAmountDetails",
 					lObjConfigDao.getPendingAmountForThisCustomer(customerId, fromDate, toDate, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return outputMap;
 	}
 
-	public HashMap<String, Object> getRoutineDetailsForThisCustomer(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> getRoutineDetailsForThisCustomer(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long customerId = Integer.parseInt(request.getParameter("customerId"));
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -199,7 +201,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("routineDetails",
 					lObjConfigDao.getPendingAmountForThisCustomer(customerId, fromDate, toDate, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return outputMap;
@@ -243,7 +245,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("returnMessage", retMessage);
 			rs.setAjaxData(mapper.writeValueAsString(hm));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -294,15 +296,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(mapper.writeValueAsString(getItemDetailsByAjaxService(request, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
-	
 
 	public LinkedHashMap<String, String> getItemDetailsByAjaxService(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
@@ -317,7 +315,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap = lObjConfigDao.getItemdetailsByIdForStore(customerId, itemId, storeId, destinationStoreId, con);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return outputMap;
@@ -340,7 +338,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getCustomerList(outputMap, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -370,7 +368,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -425,7 +423,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -454,7 +452,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -513,14 +511,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject showCustomerDeliveryRoutine(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showCustomerDeliveryRoutine(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
@@ -545,7 +544,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -593,7 +592,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -612,45 +611,34 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
+
 	public CustomResultObject acceptPhonePayPayment(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		String orderId = (request.getParameter("orderId"));
-		
-		
+
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		
-		
 
 		try {
-			
-			
-			
-			HashMap<String,String> hm= lObjConfigDao.getAccountinDateAndShiftId(userId,con);
-			if(hm.isEmpty())
-			{
+
+			HashMap<String, String> hm = lObjConfigDao.getAccountinDateAndShiftId(userId, con);
+			if (hm.isEmpty()) {
 				rs.setAjaxData("You are not checked into any nozzle");
+			} else {
+				lObjConfigDao.updatePhonePayPayment(orderId, hm.get("niceDate"), hm.get("shift_id"), con);
+				rs.setAjaxData("Succesfully Added Payment");
 			}
-			else
-			{
-			lObjConfigDao.updatePhonePayPayment(orderId,hm.get("niceDate"),hm.get("shift_id"),con);
-			rs.setAjaxData("Succesfully Added Payment");
-			}
-			
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
 
 	public CustomResultObject deleteBooking(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
@@ -668,7 +656,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteBooking(outputMap, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -688,7 +676,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -734,7 +722,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../modelGuest.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -787,7 +775,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -836,7 +824,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -854,7 +842,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -874,7 +862,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -893,7 +881,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -935,7 +923,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -949,7 +937,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String username = request.getParameter("username");
 			String schemaname = request.getParameter("schemaname");
 			if (username != null && !username.equals("")) {
-				outputMap.put("auditList", lObjConfigDao.getAuditListByUserAndSchema(username,schemaname, con));
+				outputMap.put("auditList", lObjConfigDao.getAuditListByUserAndSchema(username, schemaname, con));
 			}
 			outputMap.put("memoryStats", cf.getMemoryStats());
 			outputMap.put("activeConnections", cf.getActiveConnections(con));
@@ -960,13 +948,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject showPrintLabelsScreenCustomer(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showPrintLabelsScreenCustomer(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		try {
@@ -979,7 +968,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1008,7 +997,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1033,7 +1022,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String[] colNames = { "stock_id", "store_name", "item_name", "qty_available" };
 
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getStockStatus(outputMap, con);
-			//LinkedHashMap<String, Object> totalDetails = gettotalDetailsStockEvaluation(lst);
+			// LinkedHashMap<String, Object> totalDetails =
+			// gettotalDetailsStockEvaluation(lst);
 
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId, "StockStatus");
@@ -1041,13 +1031,13 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				outputMap.put("ListStock", lst);
 				outputMap.put("ListOfCategories", lObjConfigDao.getCategories(outputMap, con));
 				outputMap.put("listOfStore", lObjConfigDao.getStoreMaster(outputMap, con));
-				//outputMap.put("totalDetails", totalDetails);
+				// outputMap.put("totalDetails", totalDetails);
 
 				rs.setViewName("../StockStatus.jsp");
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -1085,7 +1075,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -1104,7 +1094,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					+ request.getParameter("callerUrl") + "?a=showStockStatus';</script>");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1213,7 +1203,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1253,7 +1243,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1285,7 +1275,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1300,13 +1290,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
 			outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
-			String appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+			String appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+					.get("app_type");
 			outputMap.put("app_type", appType);
 			rs.setViewName("../CollectPayment.jsp");
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1318,35 +1309,28 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		try {
 
-			String appType="";
-		if(request.getSession().getAttribute("userdetails")!=null)
-		{
-			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
-		}
+			String appType = "";
+			if (request.getSession().getAttribute("userdetails") != null) {
+				appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+			}
 			String invoiceId = request.getParameter("invoice_id");
 			String invoiceNo = request.getParameter("invoice_no");
 			String tableId = request.getParameter("table_id");
 			String bookingId = request.getParameter("booking_id");
 			String MobilebookingId = request.getParameter("mobile_booking_id");
 			String txtinvoicedate = request.getParameter("txtinvoicedate");
-			
 
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
 			String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 					.get("store_id");
-			
-			String invoiceTypeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
-			.get("invoice_type");
 
-			
+			String invoiceTypeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+					.get("invoice_type");
 
 			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 			boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
-			
-			
-			
-			
+
 			outputMap.putAll(lObjConfigDao.getUserConfigurations(userId, con));
 
 			outputMap.put("store_id", storeId);
@@ -1354,7 +1338,6 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("table_id", tableId);
 			outputMap.put("invoice_no", invoiceNo);
 			outputMap.put("txtinvoicedate", txtinvoicedate);
-			
 
 			if (invoiceId != null) {
 				outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
@@ -1420,35 +1403,26 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			outputMap.put("lsitOfCategories", lObjConfigDao.getCategoriesWithAtLeastOneItem(outputMap, con));
 			outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
-			
-			
-			
-			
-			
-			
+
 			outputMap.put("lstOfSwipeMaster", lObjConfigDao.getSwipeMaster(outputMap, con));
 			outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
 			outputMap.put("categoriesWithItem", reqHm);
-			
-			
 
 			if (invoiceTypeId.equals("2")) // means services and we need unique model no and unique no for this app id
 			{
 				outputMap.put("listUniqueModelNo", lObjConfigDao.getUniqueModelNoForThisApp(con, appId));
 			}
-			
-			if(appType.equals("Battery"))
-			{
-				outputMap.put("vehicleMaster", lObjConfigDao.getListOfUniqueVehicleName(con,appId));
-			}
 
+			if (appType.equals("Battery")) {
+				outputMap.put("vehicleMaster", lObjConfigDao.getListOfUniqueVehicleName(con, appId));
+			}
 
 			rs.setViewName("../GenerateInvoice" + appType + ".jsp");
 
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1463,15 +1437,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("customer_id", request.getParameter("customerId"));
 			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getVehicleOfCustomer(outputMap, con)));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 
 	}
 
-
-	public CustomResultObject showGeneratePurchaseInvoice(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showGeneratePurchaseInvoice(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -1512,7 +1486,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1551,7 +1525,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1573,7 +1547,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddCategory.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1589,7 +1563,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ConfigureTables.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(conWithF));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(conWithF));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1640,7 +1614,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddOrder.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(conWithF));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(conWithF));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1662,7 +1636,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../Tables.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(conWithF));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(conWithF));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1692,7 +1666,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../PendingOrders.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(conWithF));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(conWithF));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1708,7 +1682,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.saveTableConfig(noOfTables, storeId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1721,18 +1695,17 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String txtstorename = request.getParameter("txtstorename");
 		String txtusername = request.getParameter("txtusername");
 		String appType = "PetrolPump"; // need to get from front end
-		
 
 		try {
 
-			long userId = lObjConfigDao.saveNewApp(appname, txtvalidtill, txtstorename, txtusername,appType, con);
-			lObjConfigDao.updateConfigurationForThisUser(1, "N", "N", "N", "N", "N", "N", "N", "N", "N",  "1",
+			long userId = lObjConfigDao.saveNewApp(appname, txtvalidtill, txtstorename, txtusername, appType, con);
+			lObjConfigDao.updateConfigurationForThisUser(1, "N", "N", "N", "N", "N", "N", "N", "N", "N", "1",
 					String.valueOf(userId), con);
 
 			rs.setAjaxData("App Created Succesfully");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1747,43 +1720,42 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		String app_type = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
 		outputMap.put("app_type", app_type);
-		
+
 		try {
-			
+
 			outputMap.put("userList", lObjConfigDao.getEmployeeMaster(outputMap, con));
 			outputMap.put("roleList", apptypes.get(app_type));
 			rs.setViewName("../UserRoleMapping.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject getRoleDetailsForthisUser(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject getRoleDetailsForthisUser(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long userId = Integer.parseInt(request.getParameter("userId"));
 		HashMap<String, Object> hm = null;
 		try {
-			
-			
-			LinkedHashMap<Long, Role> roleMaster=apptypes.get("Master");
-			
+
+			LinkedHashMap<Long, Role> roleMaster = apptypes.get("Master");
+
 			List<LinkedHashMap<String, Object>> lstUserRoleDetails = lObjConfigDao.getUserRoleDetails(userId, con);
 			List<LinkedHashMap<String, Object>> lstUserRoleDetailsNew = new ArrayList<>();
-			for(LinkedHashMap<String, Object> lm:lstUserRoleDetails)
-			{
-				Role realRole=roleMaster.get(Long.valueOf(lm.get("role_id").toString()));
+			for (LinkedHashMap<String, Object> lm : lstUserRoleDetails) {
+				Role realRole = roleMaster.get(Long.valueOf(lm.get("role_id").toString()));
 				lm.put("role_name", realRole.getRoleName());
 				lstUserRoleDetailsNew.add(lm);
-				
+
 			}
-			
+
 			hm = new HashMap<>();
 			hm.put("lstUserRoleDetails", lstUserRoleDetailsNew);
 			List<String> roles = new ArrayList<>();
-			
+
 			for (LinkedHashMap<String, Object> mappedRole : lstUserRoleDetails) {
 				roles.add(mappedRole.get("role_id").toString());
 			}
@@ -1791,7 +1763,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("lstElements", getElementsNewLogic(roles, CommonFunctions.elements, CommonFunctions.roles));
 			rs.setAjaxData(mapper.writeValueAsString(hm));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1810,7 +1782,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddGroup.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1834,7 +1806,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddCompositeItemDetails.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1876,7 +1848,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddExpense.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1898,7 +1870,6 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return ReqTotal;
 	}
 
-
 	public CustomResultObject showAddRoutine(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -1916,7 +1887,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddRoutine.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1936,7 +1907,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ReturnItems.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -1966,7 +1937,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ConfigureLowStock.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2033,20 +2004,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			long itemId = 0;
 			if (hm.get("hdnItemId").equals("")) {
 
-				if(appType.equalsIgnoreCase("Restaurant"))
-					itemId = lObjConfigDao.saveItemRestaurant(hm,con);		
-				else	
+				if (appType.equalsIgnoreCase("Restaurant"))
+					itemId = lObjConfigDao.saveItemRestaurant(hm, con);
+				else
 					itemId = lObjConfigDao.saveItem(hm, con);
 				hm.put("hdnItemId", itemId);
-				
-				 
+
 			} else {
-				
-				
-				lObjConfigDao.insertIntoItemHistory(hm.get("hdnItemId").toString(),con);
+
+				lObjConfigDao.insertIntoItemHistory(hm.get("hdnItemId").toString(), con);
 				lObjConfigDao.updateItem(hm, con);
 				itemId = Long.parseLong(hm.get("hdnItemId").toString());
-				
+
 			}
 
 			lObjConfigDao.addStoreItemMapping(hm, con);
@@ -2066,7 +2035,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='" + "?a=showItemMaster';</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2126,7 +2095,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showCategoryMasterNew'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2176,7 +2145,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showCategoryMasterNew'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2223,7 +2192,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					+ "?a=showAddExpense&expenseDate=" + hm.get("txtdate") + "'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2266,7 +2235,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showCustomerGroup'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2309,7 +2278,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					"<script>window.location='" + hm.get("callerUrl") + "?a=showCustomerDeliveryRoutine'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2378,7 +2347,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("Stock Updated Succesfully:-" + stockModificationId);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			throw e;
 		}
 		return rs;
@@ -2388,21 +2357,17 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		CustomResultObject rs = new CustomResultObject();
 		long itemId = Integer.parseInt(request.getParameter("itemId"));
 		try {
-			
-			 lObjConfigDao.insertIntoItemHistory(String.valueOf(itemId), con);
+
+			lObjConfigDao.insertIntoItemHistory(String.valueOf(itemId), con);
 
 			rs.setAjaxData(lObjConfigDao.deleteItem(itemId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
-	
 
 	public CustomResultObject markAsServed(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
@@ -2412,7 +2377,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.markAsServed(orderDetailIds, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2426,7 +2391,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.cancelOrderDetail(orderDetailId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2441,7 +2406,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			rs.setAjaxData(lObjConfigDao.deletePayment(paymentId, userId, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2455,7 +2420,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteGroup(groupId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2471,7 +2436,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteExpense(expenseId, userId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2522,7 +2487,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("Invoice Deleted Succesfully");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2541,7 +2506,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 			rs.setAjaxData(invoiceId);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2555,7 +2520,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteRoutine(routineId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -2566,8 +2531,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		rs.setAjaxData(saveInvoiceService(request, con).get("returnMessage").toString());
 		return rs;
 	}
-	
-	public CustomResultObject saveInvoiceServiceAjaxMobile(HttpServletRequest request, Connection con) throws Exception {
+
+	public CustomResultObject saveInvoiceServiceAjaxMobile(HttpServletRequest request, Connection con)
+			throws Exception {
 		CustomResultObject rs = new CustomResultObject();
 		rs.setAjaxData(mapper.writeValueAsString(saveInvoiceService(request, con)));
 		return rs;
@@ -2577,10 +2543,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		Enumeration<String> params = request.getParameterNames();
 		HashMap<String, Object> hm = new HashMap<>();
 		List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
-		String appType="";
-		if(request.getSession().getAttribute("userdetails")!=null)
-		{
-			appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		String appType = "";
+		if (request.getSession().getAttribute("userdetails") != null) {
+			appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
 		}
 		while (params.hasMoreElements()) {
 			String paramName = params.nextElement();
@@ -2603,11 +2568,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						itemDetailsMap.put("gst_amount", itemDetails[9]);
 						itemDetailsMap.put("weight", itemDetails[10]);
 						itemDetailsMap.put("size", itemDetails[11]);
-						String purchaseDetailsId=itemDetails[12].trim().equals("")?"0":itemDetails[12].trim();
+						String purchaseDetailsId = itemDetails[12].trim().equals("") ? "0" : itemDetails[12].trim();
 						itemDetailsMap.put("purchaseDetailsId", purchaseDetailsId);
 
-						if(appType.equals("Battery"))
-						{
+						if (appType.equals("Battery")) {
 							itemDetailsMap.put("battery_no", itemDetails[13]);
 							itemDetailsMap.put("vehicle_name", itemDetails[14]);
 							itemDetailsMap.put("vehicle_no", itemDetails[15]);
@@ -2632,21 +2596,16 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String tableId = request.getParameter("table_id");
 		String bookingId = request.getParameter("booking_id");
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
-		
+
 		String drpshiftid = request.getParameter("drpshiftid");
 		String nozzle_id = request.getParameter("nozzle_id");
-		String attendant_id = request.getParameter("attendant_id");	
-		String slot_id = request.getParameter("slot_id");	
-		String vehicle_id = request.getParameter("vehicle_id");	
-		
-			
-		String swipe_id = 
-				request.getParameter("swipe_id")==null 
-				||request.getParameter("swipe_id").equals("")?null:request.getParameter("swipe_id");
-		
-		
-		
-		
+		String attendant_id = request.getParameter("attendant_id");
+		String slot_id = request.getParameter("slot_id");
+		String vehicle_id = request.getParameter("vehicle_id");
+
+		String swipe_id = request.getParameter("swipe_id") == null
+				|| request.getParameter("swipe_id").equals("") ? null : request.getParameter("swipe_id");
+
 		hm.put("shift_id", drpshiftid);
 		hm.put("nozzle_id", nozzle_id);
 		hm.put("attendant_id", attendant_id);
@@ -2654,13 +2613,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("slot_id", slot_id);
 		hm.put("vehicle_id", vehicle_id);
 		hm.put("app_type", appType);
-		
-		
-		
-		
-			
-		
-		
+
 		request.setAttribute("invoiceId", hdnPreviousInvoiceId);
 		request.setAttribute("type", "S");
 		if (hdnPreviousInvoiceId != null && !hdnPreviousInvoiceId.equals("") && !hdnPreviousInvoiceId.equals("0")) {
@@ -2671,7 +2624,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		}
 
 		if (appId == null || appId.equals("")) {
-			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");			
+			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		}
 		hm.put("app_id", appId);
 		hm.put("table_id", tableId);
@@ -2686,21 +2639,17 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customer_id", customer_id);
 		try {
 
-			if (!appType.equals("PetrolPump") && !appType.equals("Battery") && !isValidateGrossWithIndividualAmount(hm)) {
+			if (!appType.equals("PetrolPump") && !appType.equals("Battery")
+					&& !isValidateGrossWithIndividualAmount(hm)) {
 				throw new Exception("invalid Gross with Individual Amount");
 			}
 
-			if ( !appType.equals("Battery") && !isValidateTotalWithGrossMinusDiscounts(hm)) {
+			if (!appType.equals("Battery") && !isValidateTotalWithGrossMinusDiscounts(hm)) {
 				throw new Exception("Invalid Total Amount Received Vs Calculated");
 			}
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
 			hm.put("invoice_id", returnMap.get("invoice_id"));
-
-
-			
-
-			
 
 			String appendor = "";
 			if (tableId != null && !tableId.equals("")) {
@@ -2715,7 +2664,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			hm.put("returnMessage", returnMap.get("invoice_no") + "~" + returnMap.get("invoice_id") + appendor);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			throw e;
 		}
 		return hm;
@@ -2747,9 +2696,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		double calculatedTotalAmount = GrossAmount - itemDiscount - invoiceDiscount + totalGst;
 
-		String formattedDouble=df.format(calculatedTotalAmount);
+		String formattedDouble = df.format(calculatedTotalAmount);
 
-		double formattedDoubleValue=new Double(formattedDouble);
+		double formattedDoubleValue = new Double(formattedDouble);
 
 		System.out.println(
 				"calculatedTotalAmount " + formattedDoubleValue + " vs " + totalAmount + "total Amount Received");
@@ -2864,7 +2813,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("Ordered Succesfull~"
 					+ generateKotPDFService(hm, DestinationPath, BufferedImagesFolder, con).get("returnData"));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return rs;
 	}
@@ -2907,7 +2856,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		catch (CustomerMobileAlreadyExist e) {
 			hm.put("returnMessage", "Customer Mobile Already Exist~" + customerId);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return hm;
 	}
@@ -3002,15 +2951,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						table.addCell(cell);
 					}
 
-						cell = new PdfPCell(new Phrase("--------------------------",
-								new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
-						cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
-						cell.setBorder(Rectangle.NO_BORDER);
-						table.addCell(cell);
-					}
-					tempList.clear();
+					cell = new PdfPCell(new Phrase("--------------------------",
+							new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+					cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
+					cell.setBorder(Rectangle.NO_BORDER);
+					table.addCell(cell);
 				}
-			
+				tempList.clear();
+			}
+
 			table.completeRow();
 			document.add(table);
 			document.close();
@@ -3018,7 +2967,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("reqPDF.pdf");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3111,15 +3060,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						table.addCell(cell);
 					}
 
-						cell = new PdfPCell(new Phrase("--------------------------",
-								new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
-						cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
-						cell.setBorder(Rectangle.NO_BORDER);
-						table.addCell(cell);
-					}
-					tempList.clear();
+					cell = new PdfPCell(new Phrase("--------------------------",
+							new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+					cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
+					cell.setBorder(Rectangle.NO_BORDER);
+					table.addCell(cell);
 				}
-			
+				tempList.clear();
+			}
+
 			table.completeRow();
 			document.add(table);
 			document.close();
@@ -3127,7 +3076,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(userId + "reqPDF.pdf");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3141,7 +3090,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteStock(stockid, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3212,7 +3161,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("Counting added Succesfully");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3230,26 +3179,27 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getItemsByCategoryId(outputMap, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public CustomResultObject getItemsForThisCategoryNameByAjax(HttpServletRequest request, Connection con) throws SQLException {
+
+	public CustomResultObject getItemsForThisCategoryNameByAjax(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
-		String categoryName=request.getParameter("category_name");
+		String categoryName = request.getParameter("category_name");
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		outputMap.put("category_name", categoryName);
-		
+
 		try {
 
 			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getItemsByCategorynName(outputMap, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3268,7 +3218,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3289,17 +3239,17 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ItemHistory.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
+
 	public CustomResultObject showItemMasterHistory(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		String itemId = request.getParameter("item_id");
 		HashMap<String, Object> outputMap = new HashMap<>();
-		
+
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
@@ -3308,13 +3258,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ItemMasterHistory.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public CustomResultObject showVehicleMaster(HttpServletRequest request, Connection con) throws ClassNotFoundException, SQLException {
+
+	public CustomResultObject showVehicleMaster(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
@@ -3325,13 +3276,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../VehicleMaster.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public CustomResultObject showGenerateLR(HttpServletRequest request, Connection con) throws ClassNotFoundException, SQLException {
+
+	public CustomResultObject showGenerateLR(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
@@ -3344,35 +3296,35 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../GenerateLRScreen.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	public CustomResultObject searchLR(HttpServletRequest request, Connection con) throws ClassNotFoundException, SQLException {
+
+	public CustomResultObject searchLR(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		outputMap.put("lrnumbersearch", request.getParameter("lrnumbersearch"));
-		
+
 		outputMap.put("lrData", lObjConfigDao.searchLR(con, outputMap));
-		
+
 		try {
 
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	public CustomResultObject showConfigureLR(HttpServletRequest request, Connection con) throws ClassNotFoundException, SQLException {
+
+	public CustomResultObject showConfigureLR(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
@@ -3383,20 +3335,20 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ConfigureLR.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
+
 	public CustomResultObject showAddVehicle(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("appId", appId);
 		outputMap.put("app_id", appId);
-			try {
-			
+		try {
+
 			outputMap.put("vehicle_id", request.getParameter("vehicleId"));
 			outputMap.put("vehicleDetails", lObjConfigDao.getVehicleDetails(outputMap, con));
 			outputMap.put("lstCustomerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
@@ -3405,12 +3357,12 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
+
 	public CustomResultObject addVehicle(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -3420,16 +3372,13 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("vehicleNumber", request.getParameter("vehicleNumber"));
 			outputMap.put("appId", request.getParameter("app_id"));
 			outputMap.put("userId", request.getParameter("user_id"));
-			
-			
-			
-			
-			long vehicle_id = request.getParameter("hdnVehicleId").equals("")?0L:Long.parseLong(request.getParameter("hdnVehicleId"));
+
+			long vehicle_id = request.getParameter("hdnVehicleId").equals("") ? 0L
+					: Long.parseLong(request.getParameter("hdnVehicleId"));
 			outputMap.put("vehicle_id", vehicle_id);
-			
-			
+
 			if (vehicle_id == 0) {
-				
+
 				lObjConfigDao.addVehicle(con, outputMap);
 			} else {
 				lObjConfigDao.updateVehicle(outputMap, con);
@@ -3439,22 +3388,23 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='?a=showVehicleMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
+
 	public CustomResultObject deleteVehicle(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
-		
+
 		long vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
 		try {
-			outputMap.put("vehicle_id", vehicleId);			rs.setAjaxData(lObjConfigDao.deleteVehicle(vehicleId, con));
+			outputMap.put("vehicle_id", vehicleId);
+			rs.setAjaxData(lObjConfigDao.deleteVehicle(vehicleId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 			rs.setReturnObject(outputMap);
 		}
@@ -3552,7 +3502,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3573,7 +3523,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3588,7 +3538,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteAttachment(attachmentId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3615,10 +3565,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String[] colNames = { "customerId", "customerName", "mobileNumber", "customerCity", "customerAddress",
 					"customerType" };
 
-			List<LinkedHashMap<String, Object>> lst =null;
-			
-					lst=lObjConfigDao.getCustomerMaster(outputMap, con);				
-				
+			List<LinkedHashMap<String, Object>> lst = null;
+
+			lst = lObjConfigDao.getCustomerMaster(outputMap, con);
 
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
@@ -3630,7 +3579,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -3668,7 +3617,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -3684,7 +3633,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteCustomer(customerId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3699,13 +3648,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteVendor(customerId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject addCustomer(HttpServletRequest request, Connection con) throws FileUploadException, SQLException {
+	public CustomResultObject addCustomer(HttpServletRequest request, Connection con)
+			throws FileUploadException, SQLException {
 
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -3749,20 +3699,22 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 
-			rs.setAjaxData("<script>alert('Customer Updated Succesfully');window.location='?a=showCustomerMaster'</script>");
+			rs.setAjaxData(
+					"<script>alert('Customer Updated Succesfully');window.location='?a=showCustomerMaster'</script>");
 
 		} catch (CustomerMobileAlreadyExist e) {
 			rs.setReturnObject(outputMap);
 			rs.setAjaxData("<script>alert('" + e.getMessage() + "');window.history.back();</script>");
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 
 	}
 
-	public CustomResultObject addVendor(HttpServletRequest request, Connection con) throws FileUploadException, SQLException {
+	public CustomResultObject addVendor(HttpServletRequest request, Connection con)
+			throws FileUploadException, SQLException {
 
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -3808,7 +3760,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 			rs.setAjaxData("<script>alert('" + e.getMessage() + "');window.history.back();</script>");
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3837,7 +3789,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddCustomer.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3864,7 +3816,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddVendor.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3895,7 +3847,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -3928,7 +3880,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -3948,7 +3900,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddStore.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3967,7 +3919,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../AddTermsAndCondition.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -3979,13 +3931,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../SwitchStore.jsp");
 			rs.setReturnObject(showSwitchStoreService(request, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public HashMap<String, Object> showSwitchStoreService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> showSwitchStoreService(HttpServletRequest request, Connection con)
+			throws SQLException {
 
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4002,13 +3955,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("listOfStores", lObjConfigDao.getStoreMaster(outputMap, con));
 			outputMap.put("userDetails", lObjConfigDao.getuserDetailsById(Long.valueOf(userId), con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 
 		}
 		return outputMap;
 	}
 
-	public CustomResultObject addStore(HttpServletRequest request, Connection con) throws FileUploadException, SQLException {
+	public CustomResultObject addStore(HttpServletRequest request, Connection con)
+			throws FileUploadException, SQLException {
 
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -4046,7 +4000,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showStoreMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -4092,7 +4046,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showTermsAndCondition'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -4108,7 +4062,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteStore(storeId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -4123,7 +4077,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteTermsAndCondition(termsId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -4144,7 +4098,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../DailyInvoiceReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -4163,7 +4117,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../CustomerInvoiceReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -4182,7 +4136,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../CustomerLedgerReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -4201,7 +4155,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../SalesReport2Parameters.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -4273,7 +4227,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -4350,7 +4304,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -4387,7 +4341,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../StockTransfer.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -4408,7 +4362,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../StockRegisterReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -4428,9 +4382,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String customerId = request.getParameter("customerId") == null ? "" : request.getParameter("customerId");
 		String attendant_id = request.getParameter("attendant_id") == null ? "" : request.getParameter("attendant_id");
 		String paymentMode = request.getParameter("paymentMode") == null ? "" : request.getParameter("paymentMode");
-		String battery_no = request.getParameter("battery_no") == null ? "" : request.getParameter("battery_no");		
-		
-
+		String battery_no = request.getParameter("battery_no") == null ? "" : request.getParameter("battery_no");
 
 		boolean deleteFlag = request.getParameter("deleteFlag") == null ? false
 				: new Boolean(request.getParameter("deleteFlag").toString());
@@ -4456,8 +4408,6 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("attendant_id", attendant_id);
 		hm.put("paymentMode", paymentMode);
 		hm.put("battery_no", battery_no);
-		
-		
 
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
@@ -4491,7 +4441,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -4544,28 +4494,30 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject showDailyPaymentRegisterParameter(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showDailyPaymentRegisterParameter(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		try {
 			rs.setViewName("../DailyPaymentRegisterParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generateDailyPaymentRegister(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateDailyPaymentRegister(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4633,14 +4585,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject showPendingCustomerCollectionReport(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showPendingCustomerCollectionReport(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		try {
@@ -4649,14 +4602,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../PendingCustomerCollectionParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generatePendingCustomerCollectionReport(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generatePendingCustomerCollectionReport(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4700,28 +4654,30 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject showCategoryWiseReportParameter(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showCategoryWiseReportParameter(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		try {
 			rs.setViewName("../CategoryWiseReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generateCategoryWiseReport(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateCategoryWiseReport(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4762,28 +4718,30 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject showEmployeeWiseReportParameter(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showEmployeeWiseReportParameter(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		try {
 			rs.setViewName("../EmployeeWiseReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generateEmployeeWiseReport(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateEmployeeWiseReport(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4824,7 +4782,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -4846,14 +4804,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ConsolidatedPaymentModeParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generateConsolidatedPaymentModeCollection(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateConsolidatedPaymentModeCollection(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4896,7 +4855,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -4918,14 +4877,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../PaymentTypeCollectionParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generatePaymentTypeCollection(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generatePaymentTypeCollection(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -4967,7 +4927,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -4979,7 +4939,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			rs.setAjaxData(switchStoreService(request, con).get("returnMessage").toString());
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -4990,7 +4950,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 			rs.setAjaxData(changeInvoiceFormatService(request, con).get("returnMessage").toString());
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -5013,17 +4973,17 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("store_id", String.valueOf(storeId));
 			request.getSession().setAttribute("userdetails", hm);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return outputMap;
 	}
 
-	public HashMap<String, Object> changeInvoiceFormatService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> changeInvoiceFormatService(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
 		long formatId = Integer.parseInt(request.getParameter("formatId"));
-		
 
 		String invoice_default_checked_print = request.getParameter("invoice_default_checked_print").equals("true")
 				? "Y"
@@ -5062,10 +5022,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("user_store_sales", user_store_sales);
 			hm.put("user_store_bookings", user_store_bookings);
 			hm.put("user_store_expenses", user_store_expenses);
-			
+
 			request.getSession().setAttribute("userdetails", hm);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return outputMap;
@@ -5097,7 +5057,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -5130,14 +5090,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject addEmployee(HttpServletRequest request, Connection con) throws FileUploadException, SQLException {
+	public CustomResultObject addEmployee(HttpServletRequest request, Connection con)
+			throws FileUploadException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		FileItemFactory itemFactory = new DiskFileItemFactory();
@@ -5171,7 +5132,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showEmployeeMaster'</script>");
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -5187,7 +5148,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setAjaxData(lObjConfigDao.deleteEmployee(employeeId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -5212,15 +5173,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-
-	
-
-		
 
 	public CustomResultObject showReturnRegisterReport(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
@@ -5234,14 +5191,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			rs.setViewName("../ReturnRegisterParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generateReturnRegisterReport(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateReturnRegisterReport(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -5274,7 +5232,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -5352,7 +5310,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -5368,41 +5326,36 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String shiftId = request.getParameter("shiftid") == null ? "0" : request.getParameter("shiftid");
-		
+
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		outputMap.put("shiftid", shiftId);
-		
-		
+
 		if (fromDate.equals("")) {
 			fromDate = lObjConfigDao.getDateFromDB(con);
 		}
-		
-		outputMap.put("txtfromdate", fromDate);
-		
 
-		
+		outputMap.put("txtfromdate", fromDate);
+
 		try {
 			String[] colNames = { "formattedInvoiceDate", "invoice_id", "item_name", "qty", "qty_to_return",
 					"BilledQty", "rate", "custom_rate", "DiscountAmount", "ItemAmount", "formattedUpdatedDate" };
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSales(outputMap, con);
-			List<LinkedHashMap<String, Object>> lstGroupByItemShift = lObjConfigDao.getNozzleSalesGroupByItemShift(outputMap, con);
-			
-			
+			List<LinkedHashMap<String, Object>> lstGroupByItemShift = lObjConfigDao
+					.getNozzleSalesGroupByItemShift(outputMap, con);
+
 			List<LinkedHashMap<String, Object>> lstPumpTest = lObjConfigDao.getPumpTests(outputMap, con);
-			
 
-			List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
-			TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPayments);
-
-
+			List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap,
+					con);
+			TreeMap<String, Object> paymentEmpWiseMap = getEmployeeWiseTotalPaymentAmount(lstPayments);
 
 			List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
-			
-			List<LinkedHashMap<String, Object>> salesEmpWiseList=new ArrayList<>(lst);
+
+			List<LinkedHashMap<String, Object>> salesEmpWiseList = new ArrayList<>(lst);
 			salesEmpWiseList.addAll(lstLubeSales);
-			TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
-			
+			TreeMap<String, Object> salesEmpWiseMap = getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
+
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"Nozzle Register");
@@ -5410,53 +5363,46 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 				outputMap.put("lstNozzleRegister", lst);
 				outputMap.put("lstPayments", lstPayments);
-				outputMap.put("totalLubeSales",getTotalLubeSales(lstLubeSales));
-				
+				outputMap.put("totalLubeSales", getTotalLubeSales(lstLubeSales));
+
 				outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 				outputMap.put("LubeSales", lstLubeSales);
 				outputMap.put("lstPumpTest", lstPumpTest);
-				
-				
+
 				outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
-						outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
-outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
-				
+				outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
+				outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 				rs.setViewName("../NozzleRegister.jsp");
 				rs.setReturnObject(outputMap);
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	private TreeMap <String, Object> getEmployeeWiseTotalPaymentAmount(List<LinkedHashMap<String, Object>> lstPayments) 
-	{
-		
-		TreeMap <String, Object> hm=new TreeMap <>();
-		for(LinkedHashMap<String, Object>temp: lstPayments)
-		{
-			Double totalAmount=0d;
-			totalAmount+=Double.parseDouble(temp.get("csh").toString());
-			totalAmount+=Double.parseDouble(temp.get("pytm").toString());
-			totalAmount+=Double.parseDouble(temp.get("cswp").toString());
-			totalAmount+=Double.parseDouble(temp.get("pnding").toString());
-			if(hm.get(temp.get("name").toString())==null)
-			{
-				hm.put(temp.get("name").toString(),totalAmount);
-			}
-			else
-			{
-				Double existingValue=Double.parseDouble(hm.get(temp.get("name").toString()).toString());
-				hm.put(temp.get("name").toString(),existingValue+totalAmount);				
+	private TreeMap<String, Object> getEmployeeWiseTotalPaymentAmount(List<LinkedHashMap<String, Object>> lstPayments) {
+
+		TreeMap<String, Object> hm = new TreeMap<>();
+		for (LinkedHashMap<String, Object> temp : lstPayments) {
+			Double totalAmount = 0d;
+			totalAmount += Double.parseDouble(temp.get("csh").toString());
+			totalAmount += Double.parseDouble(temp.get("pytm").toString());
+			totalAmount += Double.parseDouble(temp.get("cswp").toString());
+			totalAmount += Double.parseDouble(temp.get("pnding").toString());
+			if (hm.get(temp.get("name").toString()) == null) {
+				hm.put(temp.get("name").toString(), totalAmount);
+			} else {
+				Double existingValue = Double.parseDouble(hm.get(temp.get("name").toString()).toString());
+				hm.put(temp.get("name").toString(), existingValue + totalAmount);
 			}
 		}
 
-		for(Map.Entry<String,Object> entry : hm.entrySet()) {
+		for (Map.Entry<String, Object> entry : hm.entrySet()) {
 			String key = entry.getKey();
 			Double value = (Double) entry.getValue();
 
@@ -5465,28 +5411,23 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		return hm;
 	}
 
-	private TreeMap <String, Object> getEmployeeWiseTotalSalesAmount(List<LinkedHashMap<String, Object>> lst) 
-	{
-		
-		TreeMap <String, Object> hm=new TreeMap <>();
-		
-		for(LinkedHashMap<String, Object>temp: lst)
-		{
-			String totalAmount=temp.get("totalAmount")==null?"0":temp.get("totalAmount").toString();
-			Double Amount=Double.parseDouble(totalAmount);
-			if(hm.get(temp.get("attendantName"))==null)
-			{
-				hm.put(temp.get("attendantName").toString(),Amount);				
-			}
-			else
-			{
-				Double existingAmount=Double.parseDouble(hm.get(temp.get("attendantName").toString()).toString());
-				existingAmount=existingAmount+Amount;
-				hm.put(temp.get("attendantName").toString(),existingAmount);
+	private TreeMap<String, Object> getEmployeeWiseTotalSalesAmount(List<LinkedHashMap<String, Object>> lst) {
+
+		TreeMap<String, Object> hm = new TreeMap<>();
+
+		for (LinkedHashMap<String, Object> temp : lst) {
+			String totalAmount = temp.get("totalAmount") == null ? "0" : temp.get("totalAmount").toString();
+			Double Amount = Double.parseDouble(totalAmount);
+			if (hm.get(temp.get("attendantName")) == null) {
+				hm.put(temp.get("attendantName").toString(), Amount);
+			} else {
+				Double existingAmount = Double.parseDouble(hm.get(temp.get("attendantName").toString()).toString());
+				existingAmount = existingAmount + Amount;
+				hm.put(temp.get("attendantName").toString(), existingAmount);
 			}
 		}
 
-		for(Map.Entry<String,Object> entry : hm.entrySet()) {
+		for (Map.Entry<String, Object> entry : hm.entrySet()) {
 			String key = entry.getKey();
 			Double value = (Double) entry.getValue();
 
@@ -5494,10 +5435,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		}
 
 		return hm;
-		
 
 	}
-	DecimalFormat df = new DecimalFormat("#.00"); 
+
+	DecimalFormat df = new DecimalFormat("#.00");
 
 	public CustomResultObject exportSalesRegister(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
@@ -5532,13 +5473,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
-
 
 	public CustomResultObject exportNozzleRegister(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
@@ -5548,79 +5488,71 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
-		String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") +delimiter;
+		String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 		String fromDate = request.getParameter("txtfromdate").toString();
 		String shiftid = request.getParameter("shiftid").toString();
-		String fromDateWithoutSlashes=fromDate.replaceAll("\\/", "");
-		String appenders=fromDateWithoutSlashes+"-"+shiftid+".pdf";
-		
+		String fromDateWithoutSlashes = fromDate.replaceAll("\\/", "");
+		String appenders = fromDateWithoutSlashes + "-" + shiftid + ".pdf";
+
 		outputMap.put("app_id", appId);
 		outputMap.put("shiftid", shiftid);
-		
-		DestinationPath+=appenders;
+
+		DestinationPath += appenders;
 		outputMap.put("txtfromdate", fromDate);
 
-		
 		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSalesGroupByItemShift(outputMap, con);
 		List<LinkedHashMap<String, Object>> lstOld = lObjConfigDao.getNozzleSales(outputMap, con);
 		outputMap.put("lstNozzleSales", lst);
-			
-		
+
 		List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
-		outputMap.put("totalLubeSales",getTotalLubeSales(lstLubeSales));
+		outputMap.put("totalLubeSales", getTotalLubeSales(lstLubeSales));
 		outputMap.put("lstLubeSales", lstLubeSales);
 
-		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
-		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao
+				.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap,
+				con);
 		List<LinkedHashMap<String, Object>> lstCardSwipes = lObjConfigDao.getCardSwipes(outputMap, con);
 		List<LinkedHashMap<String, Object>> lstPaytmSlotwise = lObjConfigDao.getPaytmSlotWise(outputMap, con);
-		
-		
+
 		outputMap.put("lstCardSwipes", lstCardSwipes);
 		outputMap.put("lstPayments", lstPayments);
 		outputMap.put("lstPaytmSlotwise", lstPaytmSlotwise);
-		
-		
 
 		List<LinkedHashMap<String, Object>> lstCreditSales = lObjConfigDao.getCreditSalesForthisDate(outputMap, con);
 		outputMap.put("lstCreditSales", lstCreditSales);
-		
-		List<LinkedHashMap<String, Object>> salesEmpWiseList=new ArrayList<>(lstOld);
-		salesEmpWiseList.addAll(lstLubeSales);
-		TreeMap <String, Object> salesEmpWiseMap= getEmployeeWiseTotalSalesAmount(salesEmpWiseList);	
-		TreeMap<String, Object> paymentEmpWiseMap= getEmployeeWiseTotalPaymentAmount(lstPaymentsOld);
 
-		String cashAgainstPumpTest=lObjConfigDao.getPumpTestEquivalentCash(fromDate, shiftid,  con).get("CashAmount");
+		List<LinkedHashMap<String, Object>> salesEmpWiseList = new ArrayList<>(lstOld);
+		salesEmpWiseList.addAll(lstLubeSales);
+		TreeMap<String, Object> salesEmpWiseMap = getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
+		TreeMap<String, Object> paymentEmpWiseMap = getEmployeeWiseTotalPaymentAmount(lstPaymentsOld);
+
+		String cashAgainstPumpTest = lObjConfigDao.getPumpTestEquivalentCash(fromDate, shiftid, con).get("CashAmount");
 
 		outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 		outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
 		outputMap.put("cashAgainstPumpTest", cashAgainstPumpTest);
-		
 
-		//sales
-			// get petrol Sales
-			// get diesel Sales
-			// get lube sales
+		// sales
+		// get petrol Sales
+		// get diesel Sales
+		// get lube sales
 
 		// payment details
-			//get cash details
-			// get paytm details
-			// get card swipe details
-			// get credit parties details
-			// FSM Unadjusted
-
-		
-		
-		
+		// get cash details
+		// get paytm details
+		// get card swipe details
+		// get credit parties details
+		// FSM Unadjusted
 
 		try {
-			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");			
-			new NozzleRegisterPDFHelper().generateNozzleRegister(BufferedImagesFolder,DestinationPath, outputMap, con);
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+			new NozzleRegisterPDFHelper().generateNozzleRegister(BufferedImagesFolder, DestinationPath, outputMap, con);
 			outputMap.put(filename_constant, appenders);
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -5653,7 +5585,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("listReturnData", lst);
 			rs.setAjaxData(appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -5692,7 +5624,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put(filename_constant, appenders);
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -5729,7 +5661,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("listReturnData", lst);
 			rs.setAjaxData(appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -5749,14 +5681,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			rs.setAjaxData(appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public CustomResultObject generateInvoicePDFBattery(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateInvoicePDFBattery(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
 		String invoiceId = request.getParameter("invoiceId");
@@ -5769,14 +5702,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			rs.setAjaxData(appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public HashMap<String, Object> generateInvoicePDFBatteryService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> generateInvoicePDFBatteryService(HttpServletRequest request, Connection con)
+			throws SQLException {
 		HashMap<String, Object> outputMap = new HashMap<>();
 
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
@@ -5799,19 +5733,20 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			String invoiceFormatName = lObjConfigDao.getInvoiceFormatName(outputMap, con).get("format_name");
 
 			new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchBattery(DestinationPath, BufferedImagesFolderPath,
-						lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
+					lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
 
 			outputMap.put("returnData", appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			e.printStackTrace();
 
 		}
 
 		return outputMap;
 	}
-	
-	public CustomResultObject generateInvoicePDFServiceAjax(HttpServletRequest request, Connection con) throws SQLException {
+
+	public CustomResultObject generateInvoicePDFServiceAjax(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
 		String invoiceId = request.getParameter("invoiceId");
@@ -5820,20 +5755,17 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		try {
 
-		
-
 			rs.setAjaxData(mapper.writeValueAsString(generateInvoicePDFService(request, con)));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
-	
-	
 
-	public HashMap<String, Object> generateInvoicePDFService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> generateInvoicePDFService(HttpServletRequest request, Connection con)
+			throws SQLException {
 		HashMap<String, Object> outputMap = new HashMap<>();
 
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
@@ -5874,7 +5806,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			outputMap.put("returnData", appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			e.printStackTrace();
 
 		}
@@ -5964,7 +5896,69 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
+
+	public CustomResultObject exportCustomerLedgerWithItemAsPDF(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String fromDate = request.getParameter("fromDate").toString();
+		String toDate = request.getParameter("toDate").toString();
+		String toDateDisplay = request.getParameter("toDate").toString();
+		String customerId = request.getParameter("customerId").toString();
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCustomerLedgerItemReport(customerId, fromDate, toDate,
+				con);
+
+		LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+
+		Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(toDateDate);
+		cal.add(Calendar.DATE, -1);
+		toDateDate = cal.getTime();
+
+		toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+		String startOfApplication = "23/01/1992";
+		String pendingAmount = lObjConfigDao
+				.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con)
+				.get("PendingAmount");
+
+		Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+		totalDetails.put("openingAmount", openingAmount);
+		Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+				+ Double.parseDouble(totalDetails.get("creditSum").toString());
+		totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+		outputMap.put("totalDetails", totalDetails);
+
+		LinkedHashMap<String, String> customerDetails = lObjConfigDao.getCustomerDetails(Long.valueOf(customerId), con);
+
+		outputMap.put("fromDate", fromDate);
+		outputMap.put("toDate", toDateDisplay);
+		// outputMap.put("totalDetails",gettotalDetailsLedger(lst));
+		outputMap.put("customerDetails", customerDetails);
+		try {
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+			String appenders = "CustomerLedger" + userId + customerDetails.get("customer_name").replaceAll(" ", "")
+					+ "(" + getDateASYYYYMMDD(fromDate) + ")" + "(" + getDateASYYYYMMDD(toDateDisplay) + ")"
+					+ getDateTimeWithSeconds(con) + ".pdf";
+			DestinationPath += appenders;
+			outputMap.put("ListOfItemDetails", lst);
+			new InvoiceHistoryPDFHelper().generatePDFForCustomerLedgerWithItem(DestinationPath, outputMap, con);
+			outputMap.put("listReturnData", lst);
+			outputMap.put(filename_constant, appenders);
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -6026,7 +6020,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -6108,7 +6102,89 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		rs.setReturnObject(outputMap);
+		return rs;
+	}
+
+	public CustomResultObject showCustomerLedgerWithItem(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+		String customerId = request.getParameter("customerId") == null ? "" : request.getParameter("customerId");
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		// if parameters are blank then set to defaults
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		if (customerId.equals("")) {
+			rs.setViewName("../CustomerLedgerItemGenerated.jsp");
+			rs.setReturnObject(outputMap);
+			return rs;
+		}
+
+		try {
+
+			String[] colNames = { "transaction_date", "Type", "RefId", "creditDebit", "upd1", "debitAmount",
+					"creditAmount" };
+
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCustomerLedgerItemReport(customerId, fromDate,
+					toDate, con);
+
+			if (!exportFlag.isEmpty()) {
+				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
+						"CustomerInvoiceHistory");
+			} else {
+
+				LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(toDateDate);
+				cal.add(Calendar.DATE, -1);
+				toDateDate = cal.getTime();
+
+				toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+				String startOfApplication = "23/01/1992";
+				String pendingAmount = lObjConfigDao
+						.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con)
+						.get("PendingAmount");
+				Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+				totalDetails.put("openingAmount", openingAmount);
+				Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+						+ Double.parseDouble(totalDetails.get("creditSum").toString());
+
+				totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+				outputMap.put("totalDetails", totalDetails);
+
+				outputMap.put("ListLedger", lst);
+				outputMap.put("customerDetails", lObjConfigDao.getCustomerDetails(Long.valueOf(customerId), con));
+
+				rs.setViewName("../CustomerLedgerItemGenerated.jsp");
+				rs.setReturnObject(outputMap);
+			}
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -6254,13 +6330,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	
+
 	public CustomResultObject showItemWiseReports(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException
 
@@ -6318,7 +6394,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -6337,7 +6413,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../CustomerItemReportParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -6356,7 +6432,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../SalesItemSummaryParameter.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -6429,31 +6505,28 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	
-	
+
 	public CustomResultObject getDataForGenerateInvoiceScreenAjax(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		LinkedHashMap<String, String> returnMap = null;
 
 		try {
-			
-			rs.setAjaxData(mapper.writeValueAsString(getDataForGenerateInvoiceScreen(request,con)));
+
+			rs.setAjaxData(mapper.writeValueAsString(getDataForGenerateInvoiceScreen(request, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
 
 	public HashMap<String, Object> getDataForGenerateInvoiceScreen(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException
@@ -6514,75 +6587,64 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
 		return outputMap;
 	}
-	
-	
-	
+
 	public CustomResultObject getInvoiceDetailsServiceAjax(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		LinkedHashMap<String, String> returnMap = null;
 
 		try {
-			
-			rs.setAjaxData(mapper.writeValueAsString(getInvoiceDetailsService(request,con)));
+
+			rs.setAjaxData(mapper.writeValueAsString(getInvoiceDetailsService(request, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public CustomResultObject getInvoiceDetailsByNoAjax(HttpServletRequest request, Connection con) throws SQLException {
+
+	public CustomResultObject getInvoiceDetailsByNoAjax(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
-		
-
 		try {
-			
-			
+
 			HashMap<String, Object> outputMap = new HashMap<>();
 			String invoiceNo = request.getParameter("invoiceNo");
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-			
-			String invoiceId=lObjConfigDao.getInvoiceIdByInvoiceNo(invoiceNo, appId, con).get("invoice_id");
-			
+
+			String invoiceId = lObjConfigDao.getInvoiceIdByInvoiceNo(invoiceNo, appId, con).get("invoice_id");
+
 			outputMap.put("app_id", appId);
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
-			
+
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject getInvoiceDetailsByIdBypassed(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject getInvoiceDetailsByIdBypassed(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
-		
-
 		try {
-			
-			
+
 			HashMap<String, Object> outputMap = new HashMap<>();
 			String invoiceId = request.getParameter("invoice_id");
-			
-			
-			
-			
-			
+
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
-			
+
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
 
 	public HashMap<String, Object> getInvoiceDetailsBasedOnBooking(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
@@ -6597,7 +6659,8 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		return outputMap;
 	}
 
-	public LinkedHashMap<String, String> validateLoginForApp(HttpServletRequest request, Connection con) throws SQLException {
+	public LinkedHashMap<String, String> validateLoginForApp(HttpServletRequest request, Connection con)
+			throws SQLException {
 		LinkedHashMap<String, String> returnMap = null;
 		String number = (request.getParameter("number"));
 		String password = URLDecoder.decode(request.getParameter("password"));
@@ -6608,13 +6671,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				returnMap.put("validLogin", "true");
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 
 		return returnMap;
 	}
 
-	
 	public CustomResultObject validateLoginForAppAjax(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
@@ -6630,14 +6692,14 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(mapper.writeValueAsString(returnMap));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
 
-	public LinkedHashMap<String, String> validateLoginForAppCustomer(HttpServletRequest request, Connection con) throws SQLException {
+	public LinkedHashMap<String, String> validateLoginForAppCustomer(HttpServletRequest request, Connection con)
+			throws SQLException {
 		LinkedHashMap<String, String> returnMap = null;
 		String number = (request.getParameter("number"));
 		String password = URLDecoder.decode(request.getParameter("password"));
@@ -6648,31 +6710,30 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				returnMap.put("validLogin", "true");
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 
 		return returnMap;
 	}
 
-	
-	
 	public CustomResultObject getRecentInvoiceForThisUserAjax(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		LinkedHashMap<String, String> returnMap = null;
 
 		try {
-			
-			rs.setAjaxData(mapper.writeValueAsString(getRecentInvoiceForThisUser(request,con)));
+
+			rs.setAjaxData(mapper.writeValueAsString(getRecentInvoiceForThisUser(request, con)));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public LinkedHashMap<String, Object> getRecentInvoiceForThisUser(HttpServletRequest request, Connection con) throws SQLException {
+
+	public LinkedHashMap<String, Object> getRecentInvoiceForThisUser(HttpServletRequest request, Connection con)
+			throws SQLException {
 		LinkedHashMap<String, Object> returnMap = new LinkedHashMap<>();
 		String userId = (request.getParameter("userId"));
 		String appId = (request.getParameter("appId"));
@@ -6681,13 +6742,14 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		try {
 			returnMap.put("ListOfInvoices", lObjConfigDao.getRecentInvoiceForUser(returnMap, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 
 		return returnMap;
 	}
 
-	public LinkedHashMap<String, Object> getBookingsForThisUser(HttpServletRequest request, Connection con) throws SQLException {
+	public LinkedHashMap<String, Object> getBookingsForThisUser(HttpServletRequest request, Connection con)
+			throws SQLException {
 		LinkedHashMap<String, Object> returnMap = new LinkedHashMap<>();
 		String userId = (request.getParameter("userId"));
 		String appId = (request.getParameter("appId"));
@@ -6696,7 +6758,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		try {
 			returnMap.put("ListOfBookings", lObjConfigDao.getBookingsForThisUser(returnMap, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 
 		return returnMap;
@@ -6763,7 +6825,8 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		return rs;
 	}
 
-	public HashMap<String, Object> getDataForHomePageAsJson(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> getDataForHomePageAsJson(HttpServletRequest request, Connection con)
+			throws SQLException {
 		HashMap<String, Object> returnMap = null;
 		ConfigurationDaoImpl configDaoImpl = new ConfigurationDaoImpl();
 		long appId = Long.parseLong(request.getParameter("appId"));
@@ -6777,12 +6840,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			returnMap.put("categoryNameWithImage", configDaoImpl.CategoryNameWithImage(appId, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return returnMap;
 	}
 
-	public HashMap<String, Object> getItemsByCategoryIdApp(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> getItemsByCategoryIdApp(HttpServletRequest request, Connection con)
+			throws SQLException {
 		HashMap<String, Object> returnMap = null;
 		String category_id = (request.getParameter("category_id"));
 		long appId = Long.parseLong(request.getParameter("appId"));
@@ -6791,12 +6855,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			returnMap = new HashMap<>();
 			returnMap.put("productsList", lObjConfigDao.getProductsByCategoryId(appId, category_id, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return returnMap;
 	}
 
-	public HashMap<String, Object> getProductDetailsByIdForCart(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> getProductDetailsByIdForCart(HttpServletRequest request, Connection con)
+			throws SQLException {
 
 		HashMap<String, Object> returnMap = new HashMap<>();
 
@@ -6841,7 +6906,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			returnMap.put("totalDetails", TotalDetails);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return returnMap;
 	}
@@ -6854,7 +6919,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			returnMap = new HashMap<>();
 			returnMap.put("productsList", lObjConfigDao.getItemsBySearchString(appId, lStrSearchText, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return returnMap;
 	}
@@ -6867,11 +6932,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			returnMap = new HashMap<>();
 			returnMap.put("aboutUsDetails", lObjConfigDao.getAboutUsDetails(appId, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 		}
 		return returnMap;
 	}
-
 
 	public CustomResultObject showInvoiceConfig(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
@@ -6879,7 +6943,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../InvoiceConfig.jsp");
 			rs.setReturnObject(showInvoiceConfigService(request, con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -6895,13 +6959,14 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
 			Connection con;
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public HashMap<String, Object> showInvoiceConfigService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> showInvoiceConfigService(HttpServletRequest request, Connection con)
+			throws SQLException {
 
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -6920,7 +6985,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			// outputMap.put("userDetails",
 			// lObjConfigDao.getuserDetailsById(Long.valueOf(userId),con));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 
 		}
 		return outputMap;
@@ -6958,8 +7023,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		}
 
 	}
-
-
 
 	public CustomResultObject saveQuote(HttpServletRequest request, Connection con) throws Exception {
 		CustomResultObject rs = new CustomResultObject();
@@ -7002,7 +7065,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		String storeId = request.getParameter("store_id");
 		String appId = request.getParameter("appId");
-		String appType="";
+		String appType = "";
 
 		String hdnPreviousInvoiceId = request.getParameter("hdnPreviousInvoiceId");
 		request.setAttribute("invoiceId", hdnPreviousInvoiceId);
@@ -7012,7 +7075,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		if (appId == null || appId.equals("")) {
 			appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-			
+
 		}
 		hm.put("app_id", appId);
 		hm.put("stringTermsArray", stringTermsArray);
@@ -7040,7 +7103,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			hm.put("quote_id", returnMap.get("quote_id"));
 			hm.put("returnMessage", returnMap.get("quote_no") + "~" + returnMap.get("quote_id"));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			throw e;
 		}
 		return hm;
@@ -7096,7 +7159,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -7116,14 +7179,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			rs.setAjaxData(appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
 	}
 
-	public HashMap<String, Object> generateQuotePDFService(HttpServletRequest request, Connection con) throws SQLException {
+	public HashMap<String, Object> generateQuotePDFService(HttpServletRequest request, Connection con)
+			throws SQLException {
 		HashMap<String, Object> outputMap = new HashMap<>();
 
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
@@ -7149,7 +7213,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			new QuotePDFHelper().generateQuotePDF(DestinationPath, quoteDetails, terms);
 			outputMap.put("returnData", appenders);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 
 		}
 
@@ -7217,7 +7281,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			hm.put("invoice_id", returnMap.get("invoice_id"));
 			rs.setAjaxData(returnMap.get("invoice_no") + "~" + returnMap.get("invoice_id"));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			throw e;
 		}
 		return rs;
@@ -7335,7 +7399,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../Invoices.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
@@ -7351,7 +7415,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteQuote(quoteId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7418,14 +7482,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
 
-	public CustomResultObject addVisitor(HttpServletRequest request, Connection con) throws FileUploadException, SQLException {
+	public CustomResultObject addVisitor(HttpServletRequest request, Connection con)
+			throws FileUploadException, SQLException {
 
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -7463,7 +7528,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showVisitors'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7523,7 +7588,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -7547,7 +7612,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../AddVisitor.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7562,7 +7627,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteVisitor(visitorId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7611,7 +7676,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			rs.setAjaxData(returnMessage);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7736,7 +7801,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -7767,7 +7832,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -7798,7 +7863,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -7850,7 +7915,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showFuelMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7885,8 +7950,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = hm.get("app_id").toString();
 		String drpattendantid = hm.get("drpattendantid").toString();
 		String accountingDate = hm.get("accountingDate").toString();
-		
-		
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
@@ -7895,7 +7958,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		hm.put("nozzle_id", nozzleId);
 		hm.put("opening_reading", opening_reading);
 		hm.put("totalizer_opening_reading", totalizer_opening_reading);
-
 
 		try {
 
@@ -7906,7 +7968,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showCheckInScreen'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -7938,7 +8000,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String trn_nozzle_id = hm.get("trn_nozzle_id").toString();
 		String closing_reading = hm.get("closing_reading").toString();
 		String closing_totalizer_amount = hm.get("closing_totalizer_amount").toString();
-		
+
 		String appId = hm.get("app_id").toString();
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
@@ -7948,11 +8010,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		hm.put("trn_nozzle_id", trn_nozzle_id);
 		hm.put("closing_reading", closing_reading);
 		hm.put("totalizer_closing_reading", closing_totalizer_amount);
-		
 
 		try {
 
-			// check status before checkIn 
+			// check status before checkIn
 
 			lObjConfigDao.checkOutNozzle(con, hm);
 
@@ -7961,7 +8022,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showCheckInScreen'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8014,7 +8075,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showNozzleMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8029,7 +8090,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteFuel(fuelid, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8040,10 +8101,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		long categoryId = Integer.parseInt(request.getParameter("nozzleid"));
 
 		try {
-		lObjConfigDao.deleteNozzle(categoryId, con);
-		rs.setAjaxData("Nozzle Deleted Succesfully");
+			lObjConfigDao.deleteNozzle(categoryId, con);
+			rs.setAjaxData("Nozzle Deleted Succesfully");
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8064,7 +8125,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../AddFuel.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8083,18 +8144,21 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			if (nozzleId != 0) {
 				outputMap.put("NozzleDetails", lObjConfigDao.getNozzleDetails(String.valueOf(nozzleId), connections));
 			}
-			outputMap.put("listOfItems", lObjConfigDao.getItemMaster(outputMap, connections)); // this is where you should have written your code
+			outputMap.put("listOfItems", lObjConfigDao.getItemMaster(outputMap, connections)); // this is where you
+																								// should have written
+																								// your code
 			outputMap.put("listOfDispensers", lObjConfigDao.getDispenserMaster(outputMap, connections));
 			rs.setViewName("../AddNozzle.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject showCheckInScreen(HttpServletRequest request, Connection connections) throws SQLException {
+	public CustomResultObject showCheckInScreen(HttpServletRequest request, Connection connections)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -8145,7 +8209,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../NozzleSelection.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8163,35 +8227,35 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
-			
-			
-			outputMap.put("nozzleDetails", lObjConfigDao.getNozzleDetails(String.valueOf(nozzle_id),con));
-			
+
+			outputMap.put("nozzleDetails", lObjConfigDao.getNozzleDetails(String.valueOf(nozzle_id), con));
+
 			rs.setViewName("../NozzleCheckoutScreen.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject showNozzleSelectionForm(HttpServletRequest request, Connection connections) throws SQLException {
+	public CustomResultObject showNozzleSelectionForm(HttpServletRequest request, Connection connections)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-		String nozzle_id = request.getParameter("nozzle_id");	
+		String nozzle_id = request.getParameter("nozzle_id");
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
-			
+
 			outputMap.put("nozzle_id", nozzle_id);
-			
-			LinkedHashMap<String, String> nzDetails=lObjConfigDao.getNozzleDetails(nozzle_id, connections);
-			String itemId=nzDetails.get("item_id");
+
+			LinkedHashMap<String, String> nzDetails = lObjConfigDao.getNozzleDetails(nozzle_id, connections);
+			String itemId = nzDetails.get("item_id");
 			outputMap.put("item_id", itemId);
-			
+
 			outputMap.put("userList", lObjConfigDao.getEmployeeMaster(outputMap, connections));
 			outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, connections));
 			outputMap.put("dateTimeRightNow", lObjConfigDao.getDateTime(connections));
@@ -8199,11 +8263,11 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, connections));
 			outputMap.put("todaysDate", getDateFromDB(connections));
 			outputMap.put("nzDetails", nzDetails);
-			
+
 			rs.setViewName("../NozzleSelectionForm.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8233,7 +8297,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -8257,7 +8321,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../AddDispenser.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8310,7 +8374,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showDispenserMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8324,204 +8388,183 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteDispenser(dispenserId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	public CustomResultObject showCollectPaymentSupervisor(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showCollectPaymentSupervisor(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String order_id=request.getParameter("order_id")==null?"":request.getParameter("order_id");
-		String collectionMode=request.getParameter("collection_mode")==null?"":request.getParameter("collection_mode");
+		String order_id = request.getParameter("order_id") == null ? "" : request.getParameter("order_id");
+		String collectionMode = request.getParameter("collection_mode") == null ? ""
+				: request.getParameter("collection_mode");
 		outputMap.put("app_id", appId);
 
 		try {
-			
-			outputMap.put("userList", lObjConfigDao.getDistinctEmployeesCheckedInToNozzle(appId, con));
-			
-			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
-            outputMap.put("yesterdaysDate", lObjConfigDao.getYesterdaysDateFromDB(con));
-            outputMap.put("tommorowsDate", lObjConfigDao.getTommorowsDateFromDB(con));
-			outputMap.put("collection_mode", collectionMode);
-			
-            
-			
-			List<LinkedHashMap<String, Object>> lstOfShifts=lObjConfigDao.getShiftMaster(outputMap, con);
-			
-			List<LinkedHashMap<String, Object>> lstOfShiftsReOrdered=new ArrayList<>();
-			boolean shouldAdd=true;
-			
-			for(LinkedHashMap<String, Object> shft:lstOfShifts)			
-			{			    
-			    if(shft.get("shift_name").equals("3") && shouldAdd)
-			    {
-			        lstOfShiftsReOrdered.add(shft);
-			        shouldAdd=false;
-			    }
-			}
-			
-			 for(LinkedHashMap<String, Object> shft:lstOfShifts)         
-	            {               
-	                
-	                    lstOfShiftsReOrdered.add(shft);
-	                    
-	            }
-			 boolean isFirst=true;
-			 boolean isLast=true;
-			 List<LinkedHashMap<String, Object>> lstOfFinalShiftsReOrdered=new ArrayList<>();
-			 for(LinkedHashMap<String, Object> shft:lstOfShiftsReOrdered)         
-             {               
-                 
-                                          
-			         LinkedHashMap<String, Object> newShft=new LinkedHashMap<String, Object>();
-			         newShft.putAll(shft);
-                     if(shft.get("shift_name").equals("3") && isFirst)
-                     {
-                         
-                         newShft.put("theDate", outputMap.get("todaysDate"));
-                         newShft.put("from_time", "00:00");
-                         newShft.put("to_time", "06:00");
-                         newShft.put("isFirst", "0");
-                         isFirst=false;
-                         
-                     }else
-                     if(shft.get("shift_name").equals("3") && !isFirst)
-                     {
-                         newShft.put("theDate", outputMap.get("todaysDate"));
-                         newShft.put("from_time", "22:00");
-                         newShft.put("to_time", "00:00");    
-                         newShft.put("isFirst", "1");
-                         isFirst=false;
-                         System.out.println(newShft.get("shift_name")+""+newShft.get("theDate"));
-                         lstOfFinalShiftsReOrdered.add(newShft);
-                         
-                         
-                         newShft=new LinkedHashMap<String, Object>();
-                         newShft.putAll(shft);                         
-                         newShft.put("theDate", outputMap.get("tommorowsDate"));
-                         newShft.put("from_time", "00:00");
-                         newShft.put("to_time", "06:00");
-                         newShft.put("isFirst", "1");
-                         
-                         System.out.println(newShft.get("shift_name")+""+newShft.get("theDate"));
-                         lstOfFinalShiftsReOrdered.add(newShft);
-                         continue;
-                         
-                         
-                     }
-                     else
-                     {
-                         newShft.put("theDate", outputMap.get("todaysDate"));
-                         newShft.put("isFirst", "1");
-                         
-                     }
-                     System.out.println(newShft.get("shift_name")+""+newShft.get("theDate"));
-                     lstOfFinalShiftsReOrdered.add(newShft);
-                     
-                     
-             }
-	            
-			
-			 for(LinkedHashMap<String, Object> shft:lstOfFinalShiftsReOrdered)
-			 {
-			     System.out.println(shft.get("shift_name")+""+shft.get("theDate"));
-			 }
-			
-			
-			 outputMap.put("lstOfShifts", lstOfFinalShiftsReOrdered);
-			 outputMap.put("lstOfShiftsActual", lstOfShifts);
 
-			
-			String suggestedShift=lObjConfigDao.getSuggestedShiftId(outputMap, con);
-			if(suggestedShift==null || suggestedShift.equals(""))
-			{
-			    suggestedShift="4";
+			outputMap.put("userList", lObjConfigDao.getDistinctEmployeesCheckedInToNozzle(appId, con));
+
+			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
+			outputMap.put("yesterdaysDate", lObjConfigDao.getYesterdaysDateFromDB(con));
+			outputMap.put("tommorowsDate", lObjConfigDao.getTommorowsDateFromDB(con));
+			outputMap.put("collection_mode", collectionMode);
+
+			List<LinkedHashMap<String, Object>> lstOfShifts = lObjConfigDao.getShiftMaster(outputMap, con);
+
+			List<LinkedHashMap<String, Object>> lstOfShiftsReOrdered = new ArrayList<>();
+			boolean shouldAdd = true;
+
+			for (LinkedHashMap<String, Object> shft : lstOfShifts) {
+				if (shft.get("shift_name").equals("3") && shouldAdd) {
+					lstOfShiftsReOrdered.add(shft);
+					shouldAdd = false;
+				}
 			}
-			outputMap.put("suggestedShiftId",outputMap.get("todaysDate")+"~"+suggestedShift+"~"+lObjConfigDao.isTimeBetween00to06(con));
-			
+
+			for (LinkedHashMap<String, Object> shft : lstOfShifts) {
+
+				lstOfShiftsReOrdered.add(shft);
+
+			}
+			boolean isFirst = true;
+			boolean isLast = true;
+			List<LinkedHashMap<String, Object>> lstOfFinalShiftsReOrdered = new ArrayList<>();
+			for (LinkedHashMap<String, Object> shft : lstOfShiftsReOrdered) {
+
+				LinkedHashMap<String, Object> newShft = new LinkedHashMap<String, Object>();
+				newShft.putAll(shft);
+				if (shft.get("shift_name").equals("3") && isFirst) {
+
+					newShft.put("theDate", outputMap.get("todaysDate"));
+					newShft.put("from_time", "00:00");
+					newShft.put("to_time", "06:00");
+					newShft.put("isFirst", "0");
+					isFirst = false;
+
+				} else if (shft.get("shift_name").equals("3") && !isFirst) {
+					newShft.put("theDate", outputMap.get("todaysDate"));
+					newShft.put("from_time", "22:00");
+					newShft.put("to_time", "00:00");
+					newShft.put("isFirst", "1");
+					isFirst = false;
+					System.out.println(newShft.get("shift_name") + "" + newShft.get("theDate"));
+					lstOfFinalShiftsReOrdered.add(newShft);
+
+					newShft = new LinkedHashMap<String, Object>();
+					newShft.putAll(shft);
+					newShft.put("theDate", outputMap.get("tommorowsDate"));
+					newShft.put("from_time", "00:00");
+					newShft.put("to_time", "06:00");
+					newShft.put("isFirst", "1");
+
+					System.out.println(newShft.get("shift_name") + "" + newShft.get("theDate"));
+					lstOfFinalShiftsReOrdered.add(newShft);
+					continue;
+
+				} else {
+					newShft.put("theDate", outputMap.get("todaysDate"));
+					newShft.put("isFirst", "1");
+
+				}
+				System.out.println(newShft.get("shift_name") + "" + newShft.get("theDate"));
+				lstOfFinalShiftsReOrdered.add(newShft);
+
+			}
+
+			for (LinkedHashMap<String, Object> shft : lstOfFinalShiftsReOrdered) {
+				System.out.println(shft.get("shift_name") + "" + shft.get("theDate"));
+			}
+
+			outputMap.put("lstOfShifts", lstOfFinalShiftsReOrdered);
+			outputMap.put("lstOfShiftsActual", lstOfShifts);
+
+			String suggestedShift = lObjConfigDao.getSuggestedShiftId(outputMap, con);
+			if (suggestedShift == null || suggestedShift.equals("")) {
+				suggestedShift = "4";
+			}
+			outputMap.put("suggestedShiftId",
+					outputMap.get("todaysDate") + "~" + suggestedShift + "~" + lObjConfigDao.isTimeBetween00to06(con));
+
 			rs.setViewName("../CollectPaymentSupervisor.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
-	public CustomResultObject showSubmitCashtoVault(HttpServletRequest request, Connection con) throws ClassNotFoundException, SQLException, ParseException {
+
+	public CustomResultObject showSubmitCashtoVault(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
-		
+
 		outputMap.put("txtfromdate", lObjConfigDao.getDateFromDB(con));
 		outputMap.put("txttodate", lObjConfigDao.getDateFromDB(con));
-		
+
 		outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		outputMap.put("user_id", userId);
-		Double collectionSum= Double.valueOf(lObjConfigDao.getSumOfCollectionAmount(outputMap, con).get("mySum")==null?"0":lObjConfigDao.getSumOfCollectionAmount(outputMap, con).get("mySum"));
-		Double vaultSum = Double.valueOf(lObjConfigDao.getVaultData(outputMap, con).get("vaultSum")==null?"0":lObjConfigDao.getVaultData(outputMap, con).get("vaultSum"));
-		
+		Double collectionSum = Double
+				.valueOf(lObjConfigDao.getSumOfCollectionAmount(outputMap, con).get("mySum") == null ? "0"
+						: lObjConfigDao.getSumOfCollectionAmount(outputMap, con).get("mySum"));
+		Double vaultSum = Double.valueOf(lObjConfigDao.getVaultData(outputMap, con).get("vaultSum") == null ? "0"
+				: lObjConfigDao.getVaultData(outputMap, con).get("vaultSum"));
+
 		Double collectionData = collectionSum - vaultSum;
-		
+
 		outputMap.put("collectionData", collectionData);
 
-
 		try {
-			
+
 			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
-			
+
 			rs.setViewName("../SubmitCashtoVault.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
+
 	public CustomResultObject submitCashtoVault(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		
+
 		String notes = request.getParameter("notes");
 		String coins = request.getParameter("coins");
 		String collectionDate = request.getParameter("collectionDate");
 		String shiftId = request.getParameter("shiftId");
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		
+
 		outputMap.put("notes", notes);
 		outputMap.put("coins", coins);
 		outputMap.put("collectionDate", collectionDate);
 		outputMap.put("shiftId", shiftId);
 		outputMap.put("userId", userId);
 		outputMap.put("app_id", appId);
-		
-		
+
 		try {
 			lObjConfigDao.submitCashtoVault(con, outputMap);
 			rs.setAjaxData("Cash Submitted to Vault");
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
 
 	public CustomResultObject saveCollectPaymentSupervisor(HttpServletRequest request, Connection con)
 			throws FileUploadException, SQLException {
@@ -8548,21 +8591,19 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			}
 		}
 
-		
-
-		
 		try {
 
 			lObjConfigDao.saveCollectionSupervisor(con, hm);
-			String action=hm.get("paytm_order_id").equals("")?"showCollectPaymentSupervisor":"showUnclaimedPayments";
-			
+			String action = hm.get("paytm_order_id").equals("") ? "showCollectPaymentSupervisor"
+					: "showUnclaimedPayments";
+
 			rs.setReturnObject(outputMap);
 
 			rs.setAjaxData("<script>alert('Payment Saved Succefully'); window.location='" + hm.get("callerUrl")
-					+ "?a="+action+"'</script>");
+					+ "?a=" + action + "'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8594,20 +8635,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 
 	}
-
-
-
-	
-	
-	
-	
 
 	public CustomResultObject showClaimScreen(HttpServletRequest request, Connection connections) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
@@ -8624,7 +8658,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../ClaimPayment.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8636,7 +8670,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		try {
 
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-			String todaysDate=lObjConfigDao.getDateFromDB(con);
+			String todaysDate = lObjConfigDao.getDateFromDB(con);
 			outputMap.put("app_id", appId);
 
 			// code to get listof shifts
@@ -8645,14 +8679,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("userList", lObjConfigDao.getEmployeesCheckedInToNozzle(appId, con));
 			outputMap.put("activeNozzles", lst);
 			outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
-			outputMap.put("todaysDate",todaysDate );
+			outputMap.put("todaysDate", todaysDate);
 			outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
-			
+
 			outputMap.put("txtfromdate", todaysDate);
 			outputMap.put("txttodate", todaysDate);
 
-			
-			
 			List<LinkedHashMap<String, Object>> testData = lObjConfigDao.getTestData(outputMap, con);
 			outputMap.put("testData", testData);
 
@@ -8662,13 +8694,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
+
 	public CustomResultObject showAddPumpTest(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -8691,7 +8722,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8713,7 +8744,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../AddShift.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8776,7 +8807,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showShiftMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8790,7 +8821,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteShift(shiftId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -8800,63 +8831,44 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, String> hm = new HashMap<String, String>();
-		
-		
+
 		String shift_id = request.getParameter("shift_id");
 		String testDate = request.getParameter("testDate");
-		
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		hm.put("user_id", userId);
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
-		
 
 		hm.put("shift_id", shift_id);
-		hm.put("testDate", testDate);		
+		hm.put("testDate", testDate);
 		hm.put("test_type", "S");
 
-		String testInputData=request.getParameter("testInputData");		
-		String[] listTestdata=testInputData.split("\\|");
-		for(String s:listTestdata)
-		{
-			String[] testData=s.split("~");
-			hm.put("attendant_id", testData[0]);	
-			hm.put("testNozzle", testData[1]);	
-			hm.put("testQuantity", testData[2]);	
-			if(!testData[2].equals("0"))
-			{
+		String testInputData = request.getParameter("testInputData");
+		String[] listTestdata = testInputData.split("\\|");
+		for (String s : listTestdata) {
+			String[] testData = s.split("~");
+			hm.put("attendant_id", testData[0]);
+			hm.put("testNozzle", testData[1]);
+			hm.put("testQuantity", testData[2]);
+			if (!testData[2].equals("0")) {
 				lObjConfigDao.addTestFuel(con, hm);
-			}	
-			
+			}
+
 		}
 
-
-		
-		
-		
-		
-
-		
-
-		
-		
-		
-		
 		rs.setAjaxData("Data saved Succesfully");
 		return rs;
 
 	}
-	
-	
+
 	public CustomResultObject addConfigureLR(HttpServletRequest request, Connection con)
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, String> hm = new HashMap<String, String>();
 		String printer = request.getParameter("printer");
 		String copies = request.getParameter("copies");
-		
 
 		hm.put("printer", printer);
 		hm.put("copies", copies);
@@ -8864,14 +8876,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
 
-
 		lObjConfigDao.addConfigureLR(con, hm);
 
 		rs.setAjaxData("Data saved Succesfully");
 		return rs;
 
 	}
-	
+
 	public CustomResultObject addGenerateLR(HttpServletRequest request, Connection con)
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
@@ -8888,7 +8899,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String cement = request.getParameter("cement");
 		String bags = request.getParameter("bags");
 		String wadhwanto = request.getParameter("wadhwanto");
-		
 
 		hm.put("lrnumber", lrnumber);
 		hm.put("stockistname", stockistname);
@@ -8902,11 +8912,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		hm.put("truckno", truckno);
 		hm.put("weight", weight);
 		hm.put("cement", cement);
-		hm.put("bags",bags);
+		hm.put("bags", bags);
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
-
 
 		lObjConfigDao.addGenerateLR(con, hm);
 
@@ -8914,57 +8923,39 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		return rs;
 
 	}
-	
-	
+
 	public CustomResultObject addPumpTest(HttpServletRequest request, Connection con)
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, String> hm = new HashMap<String, String>();
-		
-		
+
 		String shift_id = request.getParameter("shift_id");
 		String testDate = request.getParameter("testDate");
-		
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		hm.put("user_id", userId);
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
-		
 
 		hm.put("shift_id", shift_id);
-		hm.put("testDate", testDate);		
+		hm.put("testDate", testDate);
 		hm.put("test_type", "A");
 
-		String testInputData=request.getParameter("testInputData");		
-		String[] listTestdata=testInputData.split("\\|");
-		for(String s:listTestdata)
-		{
-			String[] testData=s.split("~");
-			hm.put("attendant_id", testData[0]);	
-			hm.put("testNozzle", testData[1]);	
-			hm.put("testQuantity", testData[2]);	
-			hm.put("item_price", lObjConfigDao.getNozzleDetails(testData[1],con).get("price"));	
-			if(!testData[2].equals("0"))
-			{
+		String testInputData = request.getParameter("testInputData");
+		String[] listTestdata = testInputData.split("\\|");
+		for (String s : listTestdata) {
+			String[] testData = s.split("~");
+			hm.put("attendant_id", testData[0]);
+			hm.put("testNozzle", testData[1]);
+			hm.put("testQuantity", testData[2]);
+			hm.put("item_price", lObjConfigDao.getNozzleDetails(testData[1], con).get("price"));
+			if (!testData[2].equals("0")) {
 				lObjConfigDao.addTestFuel(con, hm);
-			}	
-			
+			}
+
 		}
 
-
-		
-		
-		
-		
-
-		
-
-		
-		
-		
-		
 		rs.setAjaxData("Data saved Succesfully");
 		return rs;
 
@@ -8981,10 +8972,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 		try {
 
-
 			String[] colNames = { "swipe_machine_id", "swipe_machine_name", "bank_details",
 
-					 "swipe_machine_short_name", "activate_flag", "updated_by",
+					"swipe_machine_short_name", "activate_flag", "updated_by",
 					"updated_date" };
 			outputMap.put("app_id", appId);
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getSwipeMaster(outputMap, con);
@@ -9001,7 +8991,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -9018,10 +9008,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
-			
+
 			if (swipeMachineId != 0) {
 				outputMap.put("SwipeDetails", lObjConfigDao.getSwipeDetails(outputMap, connections));
-				outputMap.put("BankDetails", lObjConfigDao.getBankDetail(outputMap ,connections));
+				outputMap.put("BankDetails", lObjConfigDao.getBankDetail(outputMap, connections));
 			}
 			outputMap.put("lisitOfSwipe", lObjConfigDao.getSwipeMaster(outputMap, connections));
 			outputMap.put("ListOfBanks", lObjConfigDao.getBankMaster(outputMap, connections));
@@ -9029,7 +9019,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setViewName("../AddSwipe.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -9081,7 +9071,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 				hdnSwipeMachineId = lObjConfigDao.addSwipe(con, hm);
 			} else {
 				lObjConfigDao.updateSwipe(hdnSwipeMachineId, swipe_machine_name, txtaccountid,
-						 swipe_machine_short_name, userId, con);
+						swipe_machine_short_name, userId, con);
 			}
 
 			rs.setReturnObject(outputMap);
@@ -9089,7 +9079,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showSwipeMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -9103,75 +9093,67 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteSwipe(swipeId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public CustomResultObject saveCollectPaymentSupervisorNew(HttpServletRequest request, Connection con) throws SQLException, ParseException {
+
+	public CustomResultObject saveCollectPaymentSupervisorNew(HttpServletRequest request, Connection con)
+			throws SQLException, ParseException {
 		CustomResultObject rs = new CustomResultObject();
-		
+
 		HashMap<String, Object> outputMap = new HashMap<>();
-		
-		String CollectionData=request.getParameter("collectionData");
-		String[] IndividualCollections=CollectionData.split("\\|");
-		
+
+		String CollectionData = request.getParameter("collectionData");
+		String[] IndividualCollections = CollectionData.split("\\|");
+
 		String collectionDate = request.getParameter("txtcollectiondate");
 		String shiftId = request.getParameter("shiftId");
-		String mode= request.getParameter("mode");
-		
+		String mode = request.getParameter("mode");
+
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-			String slot_id = request.getParameter("slot_id");	
-		
+		String slot_id = request.getParameter("slot_id");
+
 		outputMap.put("txtcollectiondate", collectionDate);
-		
-		
+
 		outputMap.put("shift_date", collectionDate);
-	
-		
-		
+
 		outputMap.put("mode", mode);
 		outputMap.put("drpshiftid", shiftId);
 		outputMap.put("user_id", userId);
 		outputMap.put("app_id", appId);
 		outputMap.put("slot_id", slot_id);
-		
-
 
 		try {
-			
-			for(String m:IndividualCollections)
-			{
 
-				String[] individualCollection =m.split("~");
+			for (String m : IndividualCollections) {
+
+				String[] individualCollection = m.split("~");
 				outputMap.put("drpemployee", individualCollection[0]);
-				
-				if(individualCollection[1].equals("0"))
-				{
+
+				if (individualCollection[1].equals("0")) {
 					continue;
 				}
-				
+
 				outputMap.put("amount", individualCollection[1]);
 				lObjConfigDao.saveCollectionSupervisor(con, outputMap);
 			}
 			rs.setAjaxData("Payment Collected Successfully");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
+
 	public CustomResultObject addExpenseNew(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
-		
+
 		HashMap<String, Object> outputMap = new HashMap<>();
-		
+
 		String expense_name = request.getParameter("expense_name");
 		String amount = request.getParameter("amount");
 		String date = request.getParameter("date");
@@ -9181,7 +9163,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
 
-		
 		outputMap.put("expense_name", expense_name);
 		outputMap.put("amount", amount);
 		outputMap.put("txtdate", date);
@@ -9190,31 +9171,27 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("user_id", userId);
 		outputMap.put("app_id", appId);
 		outputMap.put("store_id", storeId);
-		
-
 
 		try {
-			if(hdnExpenseId == "" || hdnExpenseId == null) {
-				
-			lObjConfigDao.addExpense(con, outputMap);
-			}else {
-			
-			lObjConfigDao.updateExpense(con,outputMap);
-			
+			if (hdnExpenseId == "" || hdnExpenseId == null) {
+
+				lObjConfigDao.addExpense(con, outputMap);
+			} else {
+
+				lObjConfigDao.updateExpense(con, outputMap);
+
 			}
 			rs.setAjaxData("Expense Added Successfully");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
-	
-	public CustomResultObject deleteSupervisorTransaction(HttpServletRequest request, Connection con) throws SQLException {
+
+	public CustomResultObject deleteSupervisorTransaction(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long collectionId = Long.valueOf(request.getParameter("collection_id"));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
@@ -9223,14 +9200,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteSupervisorTransaction(appId, collectionId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	
-	
+
 	public CustomResultObject deleteTestFuel(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long test_id = Long.valueOf(request.getParameter("test_id"));
@@ -9239,7 +9214,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteTestFuel(test_id, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -9279,7 +9254,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -9310,21 +9285,19 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
 		outputMap.put("type", type);
-		
 
 		List<LinkedHashMap<String, Object>> testData = lObjConfigDao.getTestData(outputMap, con);
 		outputMap.put("testData", testData);
 
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
-		
 
 		rs.setViewName("../TestFuelRegister.jsp");
 		rs.setReturnObject(outputMap);
 		return rs;
 
 	}
-	
+
 	public CustomResultObject showPaymentCollectionReportFuel(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException, ParseException {
 
@@ -9362,8 +9335,6 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 	}
 
-	
-	
 	public CustomResultObject showSupervisorCollection(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
@@ -9374,9 +9345,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
 		String attendantId = request.getParameter("attendant_id") == null ? "" : request.getParameter("attendant_id");
-		String collection_mode = request.getParameter("collection_mode") == null ? "" : request.getParameter("collection_mode");
-		
-		
+		String collection_mode = request.getParameter("collection_mode") == null ? ""
+				: request.getParameter("collection_mode");
+
 		if (fromDate.equals("")) {
 			fromDate = lObjConfigDao.getDateFromDB(con);
 		}
@@ -9387,7 +9358,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txttodate", toDate);
 		outputMap.put("attendantId", attendantId);
 		outputMap.put("collection_mode", collection_mode);
-		
+
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
@@ -9401,42 +9372,38 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 				outputMap.put("lstSupervisorCollection", lst);
 				outputMap.put("totalAmount", getTotalSupervisorCollection(lst));
-				
+
 				outputMap.put("lstUsers", lObjConfigDao.getEmployeeMaster(outputMap, con));
-				
 
 				rs.setViewName("../SupervisorCollectionReport.jsp");
 				rs.setReturnObject(outputMap);
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	private Double getTotalSupervisorCollection(List<LinkedHashMap<String, Object>> lst) 
-	{
-		Double m=0d;
-		for(LinkedHashMap<String, Object> lm:lst)
-		{
-			m+=Double.parseDouble(lm.get("amount").toString());
+
+	private Double getTotalSupervisorCollection(List<LinkedHashMap<String, Object>> lst) {
+		Double m = 0d;
+		for (LinkedHashMap<String, Object> lm : lst) {
+			m += Double.parseDouble(lm.get("amount").toString());
 		}
 		return m;
 
 	}
-	private Double getTotalPaytmTransactions(List<LinkedHashMap<String, Object>> lst) 
-	{
-		Double m=0d;
-		for(LinkedHashMap<String, Object> lm:lst)
-		{
-			m+=Double.parseDouble(lm.get("amount").toString());
+
+	private Double getTotalPaytmTransactions(List<LinkedHashMap<String, Object>> lst) {
+		Double m = 0d;
+		for (LinkedHashMap<String, Object> lm : lst) {
+			m += Double.parseDouble(lm.get("amount").toString());
 		}
 		return m;
 
 	}
-	
 
 	public CustomResultObject showPaytmTransctions(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException {
@@ -9451,9 +9418,9 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
 		outputMap.put("attendantId", attendantId);
-		
+
 		outputMap.put("app_id", appId);
-		
+
 		if (fromDate.equals("")) {
 			fromDate = lObjConfigDao.getDateFromDB(con);
 		}
@@ -9463,14 +9430,15 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
 		outputMap.put("attendantId", attendantId);
-		
+
 		List<LinkedHashMap<String, Object>> lstUsers = lObjConfigDao.getEmployeeMaster(outputMap, con);
 		outputMap.put("lstUsers", lstUsers);
 		try {
-			String[] colNames = { "order_id", "bhim_upi_id", "amount","mobile_no","date_time_from_payment","updated_date",
+			String[] colNames = { "order_id", "bhim_upi_id", "amount", "mobile_no", "date_time_from_payment",
+					"updated_date",
 					"updated_by_user_id" };
-			List<LinkedHashMap<String, Object>>  lst= lObjConfigDao.getPaytmTransaction(outputMap, con);
-			Double totalPaytmAmount=getTotalPaytmTransactions(lst);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPaytmTransaction(outputMap, con);
+			Double totalPaytmAmount = getTotalPaytmTransactions(lst);
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"Paytm Transction");
@@ -9478,15 +9446,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 				outputMap.put("lstPaytmTransction", lst);
 				outputMap.put("totalPaytmAmount", totalPaytmAmount);
-				
-				
 
 				rs.setViewName("../PaytmTransactionReport.jsp");
 				rs.setReturnObject(outputMap);
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
@@ -9497,51 +9463,44 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-				
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-	
-		
+
 		try {
-			
-			
-			System.gc();	
-			List<LinkedHashMap<String, Object>> lstUserRoleDetails = lObjConfigDao.getUserRoleDetails(Long.valueOf(userId), con);
-			HashMap<String,Object> hm = new HashMap<>();
+
+			System.gc();
+			List<LinkedHashMap<String, Object>> lstUserRoleDetails = lObjConfigDao
+					.getUserRoleDetails(Long.valueOf(userId), con);
+			HashMap<String, Object> hm = new HashMap<>();
 			hm.put("lstUserRoleDetails", lstUserRoleDetails);
-			
+
 			LinkedHashMap<Long, Role> roleMaster = apptypes.get("Master");
 			List<LinkedHashMap<String, Object>> lstUserRoleDetailsNew = new ArrayList<>();
-			for(LinkedHashMap<String, Object> lm:lstUserRoleDetails)
-			{
-				Role realRole=roleMaster.get(Long.valueOf(lm.get("role_id").toString()));
+			for (LinkedHashMap<String, Object> lm : lstUserRoleDetails) {
+				Role realRole = roleMaster.get(Long.valueOf(lm.get("role_id").toString()));
 				lm.put("role_name", realRole.getRoleName());
 				lstUserRoleDetailsNew.add(lm);
-				
+
 			}
-			
-			
-			
-			
+
 			List<String> roles = new ArrayList<>();
-			
+
 			for (LinkedHashMap<String, Object> mappedRole : lstUserRoleDetails) {
 				roles.add(mappedRole.get("role_id").toString());
 			}
-			
-			
-				outputMap.put("userDetails", lObjConfigDao.getuserDetailsById(Long.valueOf(userId), con));
-				outputMap.put("lstUserRoleDetails", lstUserRoleDetailsNew);
-				rs.setViewName("../UserDetails.jsp");
-				rs.setReturnObject(outputMap);
-			
+
+			outputMap.put("userDetails", lObjConfigDao.getuserDetailsById(Long.valueOf(userId), con));
+			outputMap.put("lstUserRoleDetails", lstUserRoleDetailsNew);
+			rs.setViewName("../UserDetails.jsp");
+			rs.setReturnObject(outputMap);
+
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	
+
 	public CustomResultObject showQrCodeMaster(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -9562,18 +9521,18 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 						"CategoryMaster");
 			} else {
 				outputMap.put("ListOfQrCode", lst);
-				
+
 				rs.setViewName("../QrCode.jsp");
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	
+
 	public CustomResultObject showAddQrCode(HttpServletRequest request, Connection connections) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -9587,12 +9546,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			if (qrId != 0) {
 				outputMap.put("QrCodeDetails", lObjConfigDao.getQrCodeDetails(outputMap, connections));
 			}
-			
+
 			outputMap.put("lstEmployees", lObjConfigDao.getEmployeeMaster(outputMap, connections));
 			rs.setViewName("../AddQrCode.jsp");
 			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(connections));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(connections));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -9636,7 +9595,7 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 
 			if (hdnQrId == 0) {
 				hdnQrId = lObjConfigDao.addQrCode(con, hm);
-				
+
 			} else {
 				lObjConfigDao.updateQRCode(hm, con);
 			}
@@ -9646,12 +9605,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showQrCodeMaster'</script>");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
+
 	public CustomResultObject deleteQrCode(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long qrId = Integer.parseInt(request.getParameter("qrId"));
@@ -9660,11 +9619,12 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteQrCode(qrId, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
+
 	public CustomResultObject showPhonePePayments(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -9673,15 +9633,11 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String chkaccepted= request.getParameter("chkaccepted") == null ? "" : request.getParameter("chkaccepted");
-		
-		
-		
-		
+		String chkaccepted = request.getParameter("chkaccepted") == null ? "" : request.getParameter("chkaccepted");
+
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
-	
-		
+
 		if (fromDate.equals("")) {
 			fromDate = lObjConfigDao.getDateFromDB(con);
 		}
@@ -9691,10 +9647,10 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
 		outputMap.put("chkaccepted", chkaccepted);
-		
+
 		try {
 
-			String[] colNames = { "order_Id", "bhim_upi_id", "amount", "datetime"};
+			String[] colNames = { "order_Id", "bhim_upi_id", "amount", "datetime" };
 			outputMap.put("user_id", userId);
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPhonePePayments(outputMap, con);
 
@@ -9703,296 +9659,233 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 						"CategoryMaster");
 			} else {
 				outputMap.put("ListOfPhonePePayments", lst);
-				
+
 				rs.setViewName("../PhonePePayments.jsp");
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	public CustomResultObject resetPassword(HttpServletRequest request,Connection con) throws SQLException
-	{
-		CustomResultObject rs=new CustomResultObject();
-		String employeeId= (request.getParameter("employeeId"));		
 
-		try
-		{			
+	public CustomResultObject resetPassword(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		String employeeId = (request.getParameter("employeeId"));
 
+		try {
 
+			rs.setAjaxData(lObjConfigDao.resetPassword(employeeId, con));
 
-			rs.setAjaxData(lObjConfigDao.resetPassword(employeeId,con));
-
-
-
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
 		}
-		catch (Exception e)
-		{
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
-				rs.setHasError(true);
-		}		
 		return rs;
 	}
-	
-	public CustomResultObject showBankMaster(HttpServletRequest request,Connection con)
-	{
-		CustomResultObject rs=new CustomResultObject();
-		HashMap<String, Object> outputMap=new HashMap<>();
-		
-		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
-		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+"/";	
-		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		String appId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		 
-		try
-		{		
-			String [] colNames= {"BankId","BankName"};
+
+	public CustomResultObject showBankMaster(HttpServletRequest request, Connection con) {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + "/";
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+		try {
+			String[] colNames = { "BankId", "BankName" };
 			outputMap.put("app_id", appId);
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getBankMaster(outputMap,con);
-			
-			if(!exportFlag.isEmpty())
-				{
-					outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"BankMaster");
-				}
-			else
-				{
-					outputMap.put("ListOfBanks", lst);	
-					rs.setViewName("../BankMaster.jsp");
-					rs.setReturnObject(outputMap);
-				}			
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getBankMaster(outputMap, con);
+
+			if (!exportFlag.isEmpty()) {
+				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId, "BankMaster");
+			} else {
+				outputMap.put("ListOfBanks", lst);
+				rs.setViewName("../BankMaster.jsp");
+				rs.setReturnObject(outputMap);
 			}
-		catch (Exception e)
-		{
-				writeErrorToDB(e);
-				rs.setHasError(true);
+		} catch (Exception e) {
+			writeErrorToDB(e);
+			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	public CustomResultObject showAddBank(HttpServletRequest request,Connection con)
-	{
-		CustomResultObject rs=new CustomResultObject();			
-		HashMap<String, Object> outputMap=new HashMap<>();
-		
-		long categoryId=request.getParameter("bankId")==null?0L:Long.parseLong(request.getParameter("bankId"));
+
+	public CustomResultObject showAddBank(HttpServletRequest request, Connection con) {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		long categoryId = request.getParameter("bankId") == null ? 0L : Long.parseLong(request.getParameter("bankId"));
 		outputMap.put("bank_id", categoryId);
-		String appId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
-		try
-		{	
-			if(categoryId!=0) {			outputMap.put("BankDetails", lObjConfigDao.getBankDetail(outputMap ,con));}
-			
-			rs.setViewName("../AddBank.jsp");	
-			rs.setReturnObject(outputMap);		
+		try {
+			if (categoryId != 0) {
+				outputMap.put("BankDetails", lObjConfigDao.getBankDetail(outputMap, con));
+			}
+
+			rs.setViewName("../AddBank.jsp");
+			rs.setReturnObject(outputMap);
+		} catch (Exception e) {
+			writeErrorToDB(e);
+			rs.setHasError(true);
 		}
-		catch (Exception e)
-		{
-				writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
 		return rs;
 	}
-	public CustomResultObject addBank(HttpServletRequest request,Connection con) throws Exception
-	{
-		CustomResultObject rs=new CustomResultObject();	
-		HashMap<String, Object> outputMap=new HashMap<>();	
-				
-		FileItemFactory itemFacroty=new DiskFileItemFactory();
-		ServletFileUpload upload=new ServletFileUpload(itemFacroty);		
-		//String webInfPath = cf.getPathForAttachments();
-		
-		HashMap<String,Object> hm=new HashMap<>();
-		String appId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+	public CustomResultObject addBank(HttpServletRequest request, Connection con) throws Exception {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		FileItemFactory itemFacroty = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFacroty);
+		// String webInfPath = cf.getPathForAttachments();
+
+		HashMap<String, Object> hm = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
 		hm.put("user_id", userId);
-		
-		
-		
-		List<FileItem> toUpload=new ArrayList<FileItem>();
-		if(ServletFileUpload.isMultipartContent(request))
-		{
-			List<FileItem> items=upload.parseRequest(request);
-			for(FileItem item:items)
-			{		
-				
-				if (item.isFormField()) 
-				{
+
+		List<FileItem> toUpload = new ArrayList<FileItem>();
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+
+				if (item.isFormField()) {
 					hm.put(item.getFieldName(), item.getString());
-			    }
-				else
-				{
+				} else {
 					toUpload.add(item);
 				}
-			}			
-		}		
-		
-		
-		long bankId=hm.get("hdnBankId").equals("")?0l:Long.parseLong(hm.get("hdnBankId").toString()); 
-		try
-		{			
-									
-			
-			
-			if(bankId==0)
-			{
-				bankId=lObjConfigDao.addBank(con, hm);
 			}
-			else
-			{
-				lObjConfigDao.updateBank(hm,con);
+		}
+
+		long bankId = hm.get("hdnBankId").equals("") ? 0l : Long.parseLong(hm.get("hdnBankId").toString());
+		try {
+
+			if (bankId == 0) {
+				bankId = lObjConfigDao.addBank(con, hm);
+			} else {
+				lObjConfigDao.updateBank(hm, con);
 			}
-			
-			
 
 			rs.setReturnObject(outputMap);
-			
-			
+
 			rs.setAjaxData("<script>window.location='?a=showBankMaster'</script>");
-			
-										
-		}
-		catch (Exception e)
-		{
+
+		} catch (Exception e) {
 			writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
+			rs.setHasError(true);
+		}
 		return rs;
 	}
-	public CustomResultObject deleteBank(HttpServletRequest request,Connection con)
-	{
-		CustomResultObject rs=new CustomResultObject();
-		long sbuid= Integer.parseInt(request.getParameter("bankid"));		
-		
-		try
-		{	
-			
-				rs.setAjaxData(lObjConfigDao.deletebank(sbuid,con));
-			
-			
-		}
-		catch (Exception e)
-		{
+
+	public CustomResultObject deleteBank(HttpServletRequest request, Connection con) {
+		CustomResultObject rs = new CustomResultObject();
+		long sbuid = Integer.parseInt(request.getParameter("bankid"));
+
+		try {
+
+			rs.setAjaxData(lObjConfigDao.deletebank(sbuid, con));
+
+		} catch (Exception e) {
 			writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
+			rs.setHasError(true);
+		}
 		return rs;
 	}
-	public CustomResultObject showAddBankReconcilation(HttpServletRequest request,Connection con)
-	{
-		CustomResultObject rs=new CustomResultObject();			
-		HashMap<String, Object> outputMap=new HashMap<>();
-		
-		long categoryId=request.getParameter("bankId")==null?0L:Long.parseLong(request.getParameter("bankId"));
+
+	public CustomResultObject showAddBankReconcilation(HttpServletRequest request, Connection con) {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		long categoryId = request.getParameter("bankId") == null ? 0L : Long.parseLong(request.getParameter("bankId"));
 		outputMap.put("bank_id", categoryId);
-		String appId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
-		try
-		{	
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getBankMaster(outputMap,con);
-			if(categoryId!=0) {			outputMap.put("BankDetails", lObjConfigDao.getBankReconcilationDetail(outputMap ,con));}
+		try {
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getBankMaster(outputMap, con);
+			if (categoryId != 0) {
+				outputMap.put("BankDetails", lObjConfigDao.getBankReconcilationDetail(outputMap, con));
+			}
 			outputMap.put("reconcilationDate", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			outputMap.put("ListOfBanks", lst);
-			rs.setViewName("../AddBankReconcilation.jsp");	
-			rs.setReturnObject(outputMap);		
+			rs.setViewName("../AddBankReconcilation.jsp");
+			rs.setReturnObject(outputMap);
+		} catch (Exception e) {
+			writeErrorToDB(e);
+			rs.setHasError(true);
 		}
-		catch (Exception e)
-		{
-				writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
 		return rs;
 	}
-	
-	public CustomResultObject addBankReconcilation(HttpServletRequest request,Connection con) throws Exception
-	{
-		CustomResultObject rs=new CustomResultObject();	
-		HashMap<String, Object> outputMap=new HashMap<>();	
-				
-		FileItemFactory itemFacroty=new DiskFileItemFactory();
-		ServletFileUpload upload=new ServletFileUpload(itemFacroty);		
-		//String webInfPath = cf.getPathForAttachments();
-		
-		HashMap<String,Object> hm=new HashMap<>();
-		String appId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+	public CustomResultObject addBankReconcilation(HttpServletRequest request, Connection con) throws Exception {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		FileItemFactory itemFacroty = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFacroty);
+		// String webInfPath = cf.getPathForAttachments();
+
+		HashMap<String, Object> hm = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
 		hm.put("user_id", userId);
-		
-		
-		
-		List<FileItem> toUpload=new ArrayList<FileItem>();
-		if(ServletFileUpload.isMultipartContent(request))
-		{
-			List<FileItem> items=upload.parseRequest(request);
-			for(FileItem item:items)
-			{		
-				
-				if (item.isFormField()) 
-				{
+
+		List<FileItem> toUpload = new ArrayList<FileItem>();
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+
+				if (item.isFormField()) {
 					hm.put(item.getFieldName(), item.getString());
-			    }
-				else
-				{
+				} else {
 					toUpload.add(item);
 				}
-			}			
-		}		
-		
-		
-		long bankId=hm.get("hdnReconcilationId").equals("")?0l:Long.parseLong(hm.get("hdnReconcilationId").toString()); 
-		try
-		{			
-									
-			
-			
-			if(bankId==0)
-			{
-				bankId=lObjConfigDao.addBankReconcilation(con, hm);
 			}
-			else
-			{
-				lObjConfigDao.updateBankReconcilation(hm,con);
+		}
+
+		long bankId = hm.get("hdnReconcilationId").equals("") ? 0l
+				: Long.parseLong(hm.get("hdnReconcilationId").toString());
+		try {
+
+			if (bankId == 0) {
+				bankId = lObjConfigDao.addBankReconcilation(con, hm);
+			} else {
+				lObjConfigDao.updateBankReconcilation(hm, con);
 			}
-			
-			
 
 			rs.setReturnObject(outputMap);
-			
-			
+
 			rs.setAjaxData("<script>window.location='?a=showReconcilationRegister'</script>");
-			
-										
+
+		} catch (Exception e) {
+			writeErrorToDB(e);
+			rs.setHasError(true);
 		}
-		catch (Exception e)
-		{
- 			writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
 		return rs;
 	}
-	public CustomResultObject deleteBankReconcilation(HttpServletRequest request,Connection con)
-	{
-		CustomResultObject rs=new CustomResultObject();
-		long sbuid= Integer.parseInt(request.getParameter("reconcilationid"));		
-		
-		try
-		{	
-			
-				rs.setAjaxData(lObjConfigDao.deletebankReconcilation(sbuid,con));
-			
-			
-		}
-		catch (Exception e)
-		{
+
+	public CustomResultObject deleteBankReconcilation(HttpServletRequest request, Connection con) {
+		CustomResultObject rs = new CustomResultObject();
+		long sbuid = Integer.parseInt(request.getParameter("reconcilationid"));
+
+		try {
+
+			rs.setAjaxData(lObjConfigDao.deletebankReconcilation(sbuid, con));
+
+		} catch (Exception e) {
 			writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
+			rs.setHasError(true);
+		}
 		return rs;
-}
+	}
+
 	public CustomResultObject showReconcilationRegister(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
@@ -10002,13 +9895,11 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
-		
+
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
-
-		
 		outputMap.put("app_id", appId);
-		
+
 		if (fromDate.equals("")) {
 			fromDate = lObjConfigDao.getDateFromDB(con);
 		}
@@ -10018,105 +9909,104 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
 
-		
 		try {
 			String[] colNames = { "bank_account_id", "reconcilation_date", "amount",
 					"updated_by" };
-			List<LinkedHashMap<String, Object>>  lst= lObjConfigDao.getReconcilationRegister(outputMap, con);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getReconcilationRegister(outputMap, con);
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"Paytm Transction");
 			} else {
 
 				outputMap.put("lstReconcilationRegister", lst);
-				
-				
 
 				rs.setViewName("../ReconcilationRegister.jsp");
 				rs.setReturnObject(outputMap);
 
 			}
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
+
 	public CustomResultObject deleteReconcilation(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long reconcilation_id = Long.valueOf(request.getParameter("reconcilation_id"));
 
 		try {
-			
+
 			lObjConfigDao.deleteReconcilation(reconcilation_id, con);
-			
-			
-			
-		
+
 			rs.setAjaxData("Delete Succesfully");
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
-	public CustomResultObject getAttendantsForDateAndShift(HttpServletRequest request, Connection con) throws SQLException {
-		CustomResultObject rs = new CustomResultObject();
-		
 
-		String collectionDate = (request.getParameter("collection_date"));
-		String shift_id = (request.getParameter("shift_id"));
-		String type = (request.getParameter("type"));
-		HashMap<String, Object> outputMap = new HashMap<>();
-		
-
-		try {
-			List<LinkedHashMap<String, Object>> listofAttendants= lObjConfigDao.getAttendantsForDateAndShift(collectionDate,shift_id, con);
-			outputMap.put("listofAttendants", listofAttendants);
-			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);			
-			outputMap.put("collectionData", collectionData);
-			
-			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,type,con);			
-			outputMap.put("testData", testData);
-			
-			rs.setAjaxData(mapper.writeValueAsString(outputMap));
-		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
-			rs.setHasError(true);
-		}
-		return rs;
-	}
-	
-	public CustomResultObject getAttendantsForDateAndShiftUnclubbed(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject getAttendantsForDateAndShift(HttpServletRequest request, Connection con)
+			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
 		String collectionDate = (request.getParameter("collection_date"));
 		String shift_id = (request.getParameter("shift_id"));
 		String type = (request.getParameter("type"));
 		HashMap<String, Object> outputMap = new HashMap<>();
+
 		try {
-			List<LinkedHashMap<String, Object>> listofAttendants= lObjConfigDao.getAttendantsForDateAndShiftUnclubbed(collectionDate,shift_id, con);
+			List<LinkedHashMap<String, Object>> listofAttendants = lObjConfigDao
+					.getAttendantsForDateAndShift(collectionDate, shift_id, con);
 			outputMap.put("listofAttendants", listofAttendants);
-			
-			
-			List<LinkedHashMap<String, String>> collectionData=lObjConfigDao.getCollectionDataDateAndShiftWise(collectionDate,shift_id,con);			
+			List<LinkedHashMap<String, String>> collectionData = lObjConfigDao
+					.getCollectionDataDateAndShiftWise(collectionDate, shift_id, con);
 			outputMap.put("collectionData", collectionData);
-			
-			List<LinkedHashMap<String, String>> testData=lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,shift_id,type,con);			
+
+			List<LinkedHashMap<String, String>> testData = lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,
+					shift_id, type, con);
 			outputMap.put("testData", testData);
-			
-			
+
 			rs.setAjaxData(mapper.writeValueAsString(outputMap));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
-	
+
+	public CustomResultObject getAttendantsForDateAndShiftUnclubbed(HttpServletRequest request, Connection con)
+			throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+
+		String collectionDate = (request.getParameter("collection_date"));
+		String shift_id = (request.getParameter("shift_id"));
+		String type = (request.getParameter("type"));
+		HashMap<String, Object> outputMap = new HashMap<>();
+		try {
+			List<LinkedHashMap<String, Object>> listofAttendants = lObjConfigDao
+					.getAttendantsForDateAndShiftUnclubbed(collectionDate, shift_id, con);
+			outputMap.put("listofAttendants", listofAttendants);
+
+			List<LinkedHashMap<String, String>> collectionData = lObjConfigDao
+					.getCollectionDataDateAndShiftWise(collectionDate, shift_id, con);
+			outputMap.put("collectionData", collectionData);
+
+			List<LinkedHashMap<String, String>> testData = lObjConfigDao.getTestDataDateAndShiftWise(collectionDate,
+					shift_id, type, con);
+			outputMap.put("testData", testData);
+
+			rs.setAjaxData(mapper.writeValueAsString(outputMap));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
 	public CustomResultObject showCheckinRegister(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException, ParseException {
 
@@ -10140,19 +10030,18 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
 		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCheckinRegister(outputMap, con);
-		
-		
+
 		outputMap.put("lstCheckinRegister", lst);
 
 		outputMap.put("txtfromdate", fromDate);
 		outputMap.put("txttodate", toDate);
-		
 
 		rs.setViewName("../CheckinRegister.jsp");
 		rs.setReturnObject(outputMap);
 		return rs;
 
 	}
+
 	public CustomResultObject deleteCheckin(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long nozzle_id = Long.valueOf(request.getParameter("trn_nozzle_id"));
@@ -10161,31 +10050,29 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			rs.setAjaxData(lObjConfigDao.deleteCheckin(nozzle_id, con));
 
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
+
 	public CustomResultObject getrecondata(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
-		
+
 		String recontype = (request.getParameter("recontype"));
 		String bank_id = (request.getParameter("bank_id"));
-		String reconcilationDate =(request.getParameter("recondate"));
+		String reconcilationDate = (request.getParameter("recondate"));
 		List<LinkedHashMap<String, Object>> reconData;
 
 		try {
-			if(recontype.equals("Paytm"))
-			{
-				reconData=lObjConfigDao.getRecondataForPaytm(reconcilationDate,con);
-			}
-			else
-			{
-				 reconData=lObjConfigDao.getRecondata(reconcilationDate,bank_id,con);
+			if (recontype.equals("Paytm")) {
+				reconData = lObjConfigDao.getRecondataForPaytm(reconcilationDate, con);
+			} else {
+				reconData = lObjConfigDao.getRecondata(reconcilationDate, bank_id, con);
 			}
 			rs.setAjaxData(mapper.writeValueAsString(reconData));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -10194,45 +10081,37 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 	public CustomResultObject saveSplitInvoice(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		String invoiceid = (request.getParameter("invoiceid"));
-		String amount1 =(request.getParameter("amount1"));
-		String amount2 =(request.getParameter("amount2"));
+		String amount1 = (request.getParameter("amount1"));
+		String amount2 = (request.getParameter("amount2"));
 		try {
 
+			// get the invoice data
 
-			
-			
-			//get the invoice data
-			
-			LinkedHashMap<String, Object> invoiceDetails=lObjConfigDao.getInvoiceDetails(invoiceid, con);
-			long invoiceIdtoDelete=Long.valueOf(invoiceDetails.get("invoice_id").toString());
-			//get the rlt fuel data
-			LinkedHashMap<String, Object> rltInvoiceDetails=lObjConfigDao.getRltInvoiceDetails(invoiceid, con);
+			LinkedHashMap<String, Object> invoiceDetails = lObjConfigDao.getInvoiceDetails(invoiceid, con);
+			long invoiceIdtoDelete = Long.valueOf(invoiceDetails.get("invoice_id").toString());
+			// get the rlt fuel data
+			LinkedHashMap<String, Object> rltInvoiceDetails = lObjConfigDao.getRltInvoiceDetails(invoiceid, con);
 
-			//save with amount 1
-				//save trn_invoice_register
-				invoiceDetails.put("amountModify", amount1);
-				long invoiceId1=lObjConfigDao.saveToTrnInvoiceRegister(invoiceDetails,con);
-				rltInvoiceDetails.put("invoice_id", String.valueOf(invoiceId1));
-				rltInvoiceDetails.put("slot_id", "0");
-				lObjConfigDao.saveToRltInvoiceDetails(rltInvoiceDetails,con);
+			// save with amount 1
+			// save trn_invoice_register
+			invoiceDetails.put("amountModify", amount1);
+			long invoiceId1 = lObjConfigDao.saveToTrnInvoiceRegister(invoiceDetails, con);
+			rltInvoiceDetails.put("invoice_id", String.valueOf(invoiceId1));
+			rltInvoiceDetails.put("slot_id", "0");
+			lObjConfigDao.saveToRltInvoiceDetails(rltInvoiceDetails, con);
 
+			invoiceDetails.put("amountModify", amount2);
+			long invoiceId2 = lObjConfigDao.saveToTrnInvoiceRegister(invoiceDetails, con);
+			rltInvoiceDetails.put("invoice_id", String.valueOf(invoiceId2));
+			rltInvoiceDetails.put("slot_id", "1");
+			lObjConfigDao.saveToRltInvoiceDetails(rltInvoiceDetails, con);
 
-
-				invoiceDetails.put("amountModify", amount2);
-				long invoiceId2=lObjConfigDao.saveToTrnInvoiceRegister(invoiceDetails,con);
-				rltInvoiceDetails.put("invoice_id", String.valueOf(invoiceId2));
-				rltInvoiceDetails.put("slot_id", "1");
-				lObjConfigDao.saveToRltInvoiceDetails(rltInvoiceDetails,con);
-
-			lObjConfigDao.deleteInvoice(invoiceIdtoDelete,"0",con);
+			lObjConfigDao.deleteInvoice(invoiceIdtoDelete, "0", con);
 
 			rs.setAjaxData("Done Successfully");
-			
 
-
-			
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
@@ -10243,35 +10122,28 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 		String invoice_id = (request.getParameter("invoiceid"));
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String transactionType = (request.getParameter("transactionType"));
-		
 
 		try {
-			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.settleThistransaction(invoice_id,userId,transactionType,con)));
+			rs.setAjaxData(mapper
+					.writeValueAsString(lObjConfigDao.settleThistransaction(invoice_id, userId, transactionType, con)));
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 		return rs;
 	}
 
-	
-
 	public CustomResultObject showBankDetails(HttpServletRequest request, Connection con) throws SQLException {
-						CustomResultObject rs = new CustomResultObject();
-				HashMap<String, Object> outputMap = new HashMap<>();
-		
-				
-		
-	
-		
-				rs.setViewName("BankDetails.jsp");
-				rs.setReturnObject(outputMap);
-							
-		
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		rs.setViewName("BankDetails.jsp");
+		rs.setReturnObject(outputMap);
+
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
-	
+
 	public CustomResultObject showRestaurantMenu(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -10284,16 +10156,13 @@ outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
 			outputMap.put("ListOfCategoriesAndItems", lObjConfigDao.getItemDetailsUsingAppShortCode(outputMap, con));
 			rs.setViewName("RestaurantMenuForGuests.jsp");
 			rs.setReturnObject(outputMap);
-			
+
 		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e)+ "-" + getDateTimeWithSeconds(con));
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
 
 		return rs;
-}
+	}
 
-
-
-	
 }

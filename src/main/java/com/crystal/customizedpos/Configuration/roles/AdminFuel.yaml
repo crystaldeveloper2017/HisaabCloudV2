@@ -129,9 +129,12 @@
     - savePayment
     - getCashtovaultRegister
     - showReport
+    - showCustomerLedgerWithItem
+    - exportCustomerLedgerWithItemAsPDF
   reports:
     - 1
   elements:
+    - 700184
     - 24
     - 700183
     - 700138

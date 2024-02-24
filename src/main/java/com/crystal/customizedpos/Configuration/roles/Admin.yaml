@@ -246,7 +246,9 @@
     - showReconciliationReport
     - showUserDetails
     - generateInvoicePDFBattery
+    - showCustomerLedgerWithItem
   elements:
+    - 700184
     - 700181
     - 700180
     - 700179
