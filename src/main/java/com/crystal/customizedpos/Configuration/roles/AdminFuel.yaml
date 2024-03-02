@@ -131,9 +131,11 @@
     - showReport
     - showCustomerLedgerWithItem
     - exportCustomerLedgerWithItemAsPDF
+    - showFSMLedger
   reports:
     - 1
   elements:
+    - 700185
     - 700184
     - 24
     - 700183

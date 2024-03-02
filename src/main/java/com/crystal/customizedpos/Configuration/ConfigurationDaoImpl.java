@@ -3022,6 +3022,120 @@ public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, 
 
 	}
 
+	public List<LinkedHashMap<String, Object>> getFSMLedger(String employeeId, String fromDate,
+			String toDate, String appId,Connection con) throws ParseException, ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query ="select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,dt,sum(paymentAmount)-sum(SalesAmount) diff\n" + 
+		"from (\n" + 
+		"select\n" + 
+		"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt\n" + 
+		"from\n" + 
+		"trn_nozzle_register tnr\n" + 
+		"inner join nozzle_master nm on nm.nozzle_id = tnr.nozzle_id\n" + 
+		"inner join tbl_user_mst tum on tum.user_id = tnr.attendant_id\n" + 
+		"inner join mst_items item on item.item_id = tnr.item_id\n" + 
+		"inner join tbl_user_mst tum2 on tum2.user_id = tnr.updated_by\n" + 
+		"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" + 
+		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
+		"where\n" + 
+		"tnr.app_id = ? \n" + 
+		"and accounting_date between ? and ? \n" + 
+		"and tum.user_id = ? \n" + 
+		"union all\n" + 
+		"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date  from\n" + 
+		"trn_invoice_register tir ,\n" + 
+		"trn_invoice_details tid ,\n" + 
+		"rlt_invoice_fuel_details rifd,\n" + 
+		"tbl_user_mst tum,\n" + 
+		"shift_master sm,\n" + 
+		"mst_items mi\n" + 
+		"where\n" + 
+		"tir.invoice_id =tid.invoice_id\n" + 
+		"and rifd.invoice_id =tid.invoice_id\n" + 
+		"and tum.user_id =rifd.attendant_id\n" + 
+		"and rifd.shift_id =sm.shift_id\n" + 
+		"and tid.item_id =mi.item_id and (mi.item_name!='Petrol') and (mi.item_name!='Diesel')\n" + 
+		"and tir.app_id =? and tir.activate_flag=1\n" + 
+		"and tum.user_id =? \n" + 
+		"and tir.invoice_date between ? and ? \n" + 
+		"union all\n" + 
+		"select\n" + 
+		"0 SalesAmount,\n" + 
+		"amount  paymentAmount,\n" + 
+		"collection_date dt\n" + 
+		"from\n" + 
+		"trn_supervisor_collection tsc ,\n" + 
+		"tbl_user_mst tum\n" + 
+		"where\n" + 
+		"tsc.attendant_id = tum.user_id\n" + 
+		"and tsc.collection_date between ? and ? \n" + 
+		"and tum.app_id=? and tsc.activate_flag=1\n" + 
+		"and tum.user_id =?\n" + 
+		"\n" + 
+		"union all\n" + 
+		"select\n" + 
+		"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt\n" + 
+		"from\n" + 
+		"trn_invoice_register tir\n" + 
+		"inner join rlt_invoice_fuel_details rifd\n" + 
+		"on rifd.invoice_id =tir.invoice_id\n" + 
+		"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" + 
+		"inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id\n" + 
+		"where invoice_date between ? and ? and tpr.payment_mode !='Cash'\n" + 
+		"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =? \n" + 
+		"\n" + 
+		"union all\n" + 
+		"select\n" + 
+		"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt\n" + 
+		"from\n" + 
+		"trn_invoice_register tir\n" + 
+		"inner join rlt_invoice_fuel_details rifd\n" + 
+		"on rifd.invoice_id =tir.invoice_id\n" + 
+		"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" + 
+		"where invoice_date between ? and ? and tir.payment_type='Pending'\n" + 
+		"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?) as T group by dt;\n" + 
+		"\n";
+
+		parameters.add((appId));
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+		parameters.add(employeeId);
+
+
+		parameters.add((appId));
+		parameters.add(employeeId);
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+
+
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+		parameters.add((appId));
+		parameters.add(employeeId);
+
+
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+		parameters.add((appId));
+		parameters.add(employeeId);
+
+
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+		parameters.add((appId));
+		parameters.add(employeeId);
+
+
+
+
+
+
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
+
+	
+
 	public List<LinkedHashMap<String, Object>> getCustomerLedgerItemReport(String customerId, String fromDate,
 			String toDate, Connection con) throws ParseException, ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();

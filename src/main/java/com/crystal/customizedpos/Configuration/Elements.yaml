@@ -486,3 +486,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCustomerLedgerWithItem"
   orderNo: 3
+- elementId: 700185
+  elementName: "FSM Ledger"
+  parentElementId: 26
+  elementUrl: "?a=showFSMLedger"
+  orderNo: 3

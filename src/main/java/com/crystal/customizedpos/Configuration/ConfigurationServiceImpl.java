@@ -6027,6 +6027,86 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject showFSMLedger(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+		String employeeId = request.getParameter("employeeId") == null ? "" : request.getParameter("employeeId");
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		// if parameters are blank then set to defaults
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("employeeMaster", lObjConfigDao.getEmployeeMaster(outputMap, con));
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		if (employeeId.equals("")) {
+			rs.setViewName("../FSMLedger.jsp");
+			rs.setReturnObject(outputMap);
+			return rs;
+		}
+
+		try {
+
+			String[] colNames = { "transaction_date", "Type", "RefId", "creditDebit", "upd1", "debitAmount",
+					"creditAmount" };
+
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getFSMLedger(employeeId, fromDate,
+					toDate,appId, con);
+
+			if (!exportFlag.isEmpty()) {
+				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
+						"CustomerInvoiceHistory");
+			} else {
+
+				LinkedHashMap<String, Object> totalDetails = gettotalDetailsFSMLedger(lst);
+				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(toDateDate);
+				cal.add(Calendar.DATE, -1);
+				toDateDate = cal.getTime();
+
+				toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+				String startOfApplication = "23/01/1992";
+				//String pendingAmount = lObjConfigDao.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con).get("PendingAmount");
+				//Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+				//totalDetails.put("openingAmount", openingAmount);
+				//Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())+ Double.parseDouble(totalDetails.get("creditSum").toString());
+
+				//totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+				outputMap.put("totalDetails", totalDetails);
+
+				outputMap.put("ListLedger", lst);
+				outputMap.put("employeeDetails", lObjConfigDao.getEmployeeDetails(Long.valueOf(employeeId), con));
+
+				rs.setViewName("../FSMLedger.jsp");
+				rs.setReturnObject(outputMap);
+			}
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		rs.setReturnObject(outputMap);
+		return rs;
+	}
+	
+
 	public CustomResultObject showCustomerLedger(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException {
 
@@ -6189,6 +6269,22 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		}
 		rs.setReturnObject(outputMap);
 		return rs;
+	}
+
+
+	public LinkedHashMap<String, Object> gettotalDetailsFSMLedger(List<LinkedHashMap<String, Object>> lst) {
+		LinkedHashMap<String, Object> reqHM = new LinkedHashMap<>();
+		double debitSum = 0;
+		double creditSum = 0;
+		for (LinkedHashMap<String, Object> tempHm : lst) {
+			debitSum += Double.valueOf(tempHm.get("salesAmt").toString());
+			creditSum += Double.valueOf(tempHm.get("paymentAmt").toString());
+		}
+
+		reqHM.put("salesAmtSum", String.format("%.2f", debitSum));
+		reqHM.put("paymentAmtSum", String.format("%.2f", creditSum));
+		reqHM.put("differenceSum", String.format("%.2f", creditSum - debitSum));
+		return reqHM;
 	}
 
 	public LinkedHashMap<String, Object> gettotalDetailsLedger(List<LinkedHashMap<String, Object>> lst) {
