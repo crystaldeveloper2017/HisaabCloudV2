@@ -231,6 +231,7 @@
     - showClaimScreen
     - claimPayment
     - showUserDetails
+    - showCustomerLedgerWithItem
   elements:
     - 700184
     - 1
@@ -310,3 +311,4 @@
     - 700173
     - 700195
     - 700197
+    

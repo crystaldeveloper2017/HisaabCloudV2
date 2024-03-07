@@ -180,6 +180,7 @@
     - showSalesReport3
     - deleteRoutine
     - showUserDetails
+    - showCustomerLedgerWithItem
   elements:
     - 1
     - 2
@@ -206,3 +207,4 @@
     - 700195
     - 700197
     - 700137
+    - 700184
