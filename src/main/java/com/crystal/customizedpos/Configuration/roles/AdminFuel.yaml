@@ -131,10 +131,15 @@
     - showReport
     - showCustomerLedgerWithItem
     - exportCustomerLedgerWithItemAsPDF
+    - showEmployeePayment
+    - saveEmployeePayment
+    - getEmployeePaymentRegister
   reports:
     - 1
+    - 2
   elements:
     - 700184
+    - 700186
     - 24
     - 700183
     - 700138
@@ -190,3 +195,4 @@
     - 19
     - 25
     - 700201
+    - 700185

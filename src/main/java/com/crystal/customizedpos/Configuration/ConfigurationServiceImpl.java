@@ -10165,4 +10165,69 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject showEmployeePayment(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+		try {
+			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
+			outputMap.put("userList", lObjConfigDao.getEmployeeMaster(outputMap, con));
+			String appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+					.get("app_type");
+			outputMap.put("app_type", appType);
+			rs.setViewName("../EmployeePayment.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	public CustomResultObject saveEmployeePayment(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		long employeeId = Integer.parseInt(request.getParameter("employeeId"));
+		String date = (request.getParameter("txtdate"));
+		Double toPayAmount = Double.parseDouble(request.getParameter("payAmount"));
+		String paymentMode = request.getParameter("paymentMode");
+		String remarks = request.getParameter("remarks");
+
+		String appId = request.getParameter("app_id");
+		String userId = request.getParameter("user_id");
+		HashMap<String, Object> hm = new HashMap<>();
+
+		hm.put("app_id", appId);
+
+		hm.put("user_id", userId);
+
+		hm.put("employee_id", employeeId);
+
+		hm.put("payment_mode", paymentMode);
+		hm.put("total_amount", toPayAmount);
+		hm.put("payment_type", "Paid");
+		hm.put("payment_for", "Collection");
+		hm.put("remarks", remarks);
+
+		if (paymentMode.equals("")) {
+			hm.put("payment_type", "Debit");
+			hm.put("total_amount", toPayAmount * -1);
+			hm.put("payment_for", "Debit Entry");
+			hm.put("remarks", remarks);
+		}
+
+		try {
+			hm.put("invoice_date", date);
+			String retMessage = lObjConfigDao.addPaymentFromEmployee(hm, con);
+			hm.put("returnMessage", retMessage);
+			rs.setAjaxData(mapper.writeValueAsString(hm));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
 }

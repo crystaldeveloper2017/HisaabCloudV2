@@ -486,3 +486,13 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCustomerLedgerWithItem"
   orderNo: 3
+- elementId: 700185
+  elementName: "Employee Payment"
+  parentElementId: 700165
+  elementUrl: "?a=showEmployeePayment"
+  orderNo: 1
+- elementId: 700186
+  elementName: "Employee Payment Report "
+  parentElementId: 26
+  elementUrl: "?a=showReport&report_id=2"
+  orderNo: 3

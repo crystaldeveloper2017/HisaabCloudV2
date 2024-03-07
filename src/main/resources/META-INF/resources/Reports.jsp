@@ -10,7 +10,7 @@
 
            
 
-<c:set var="reportDetails" value='${requestScope["outputObject"].get("reportDetails")}' />
+<c:set var="reportDetails" value='${requestScope["outputObject"].get("s")}' />
 <c:set var="message" value='${requestScope["outputObject"].get("reportData")}' />
 <c:set var="defaultParameterValues" value='${requestScope["outputObject"].get("defaultParameterValues")}' />
 
@@ -167,7 +167,7 @@
 
 					
 
-						<c:choose>
+						<%-- <c:choose>
 							<c:when test="${fn:contains(columnsq1.get('column_value'), '~edit')}">
 								<c:set var="editValue" value="${fn:split(columnsq1.get('column_value'), '~')}" />
 								<td><a href="?a=${editValue[1]}">Edit</a></td>
@@ -179,7 +179,7 @@
 							<c:otherwise>
 								<td>${item.get('fds_id')} </td>
 							</c:otherwise>
-						</c:choose>
+						</c:choose> --%>
 
 
 						
