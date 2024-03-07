@@ -181,6 +181,7 @@
     - deleteRoutine
     - showUserDetails
     - showCustomerLedgerWithItem
+    - exportCustomerLedgerWithItemAsPDF
   elements:
     - 1
     - 2
