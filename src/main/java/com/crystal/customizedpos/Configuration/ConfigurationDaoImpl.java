@@ -7260,7 +7260,7 @@ public LinkedHashMap<String, String> searchLR(Connection con, HashMap<String, Ob
 	}
 
 
-public List<LinkedHashMap<String, Object>> getCashtovaultRegister(HashMap<String, Object> hm, Connection con) throws ParseException, ClassNotFoundException, SQLException 
+	public List<LinkedHashMap<String, Object>> getCashtovaultRegister(HashMap<String, Object> hm, Connection con) throws ParseException, ClassNotFoundException, SQLException 
 	{
 
 ArrayList<Object> parameters = new ArrayList<>();
@@ -7273,8 +7273,40 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		}
             
 
+	public String addPaymentFromEmployee(HashMap<String, Object> hm, Connection conWithF) throws Exception {
+			if (hm.get("payment_type").equals("Pending")) {
+				return "Payment Not added";
+			}
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("employee_id"));
+			parameters.add(getDateASYYYYMMDD(hm.get("invoice_date").toString()));
+			parameters.add(hm.get("payment_mode"));
+			if (hm.get("payment_type").equals("Paid") || hm.get("payment_type").equals("Debit")) {
+				parameters.add(hm.get("total_amount"));
+			} else if (hm.get("payment_type").equals("Partial")) {
+				parameters.add(hm.get("paid_amount"));
+			}
+			parameters.add(hm.get("payment_for"));
+			parameters.add(hm.get("remarks"));
+			parameters.add(hm.get("app_id"));
+			parameters.add(hm.get("user_id"));
+			insertUpdateDuablDB("insert into trn_employee_payment_register values (default,?,?,?,?,?,?,?,?,sysdate(),1)", parameters,
+					conWithF);
+			return "Employee Payment Added";
+	
+		}
+			
+		public List<LinkedHashMap<String, Object>> getEmployeePaymentRegister(HashMap<String, Object> hm, Connection con) throws ParseException, ClassNotFoundException, SQLException 
+		{
+	
+	ArrayList<Object> parameters = new ArrayList<>();
+	String query="select payment_mode,amount,payment_for,remarks from trn_employee_payment_register	 where payment_date between ? and ?";
+	parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
+	parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));		
+	
+	return getListOfLinkedHashHashMap(parameters, query, con);		
 				
-		
+			}	
 			
 
 
