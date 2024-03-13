@@ -10326,4 +10326,22 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 	}
 
 
+	public CustomResultObject deleteEmployeePayment(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		long employee_payment_id = Integer.parseInt(request.getParameter("employee_payment_id"));
+
+		
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+		try {
+			rs.setAjaxData(lObjConfigDao.deleteEmployeePayment(employee_payment_id,userId, con));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+	
+
+
 }

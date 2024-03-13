@@ -135,6 +135,7 @@
     - showEmployeePayment
     - saveEmployeePayment
     - getEmployeePaymentRegister
+    - deleteEmployeePayment
   reports:
     - 1
     - 2

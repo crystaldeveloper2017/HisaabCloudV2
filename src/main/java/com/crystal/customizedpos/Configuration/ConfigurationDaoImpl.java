@@ -1167,6 +1167,18 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				parameters, conWithF);
 		return "Deleted Succesfully";
 	}
+
+	public String deleteEmployeePayment(long paymentId,String userId,Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(userId);		
+		parameters.add(paymentId);
+		insertUpdateDuablDB(
+				"update trn_employee_payment_register set activate_flag=0,updated_date=sysdate(),updated_by=? where employee_payment_id=?",
+				parameters, conWithF);
+		return "Deleted Succesfully";
+	}
+
+	
 	
 
 	public String deleteStock(long stockId, Connection conWithF) throws Exception {
@@ -7300,7 +7312,7 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		{
 	
 	ArrayList<Object> parameters = new ArrayList<>();
-	String query="select payment_mode,amount,payment_for,remarks from trn_employee_payment_register	 where payment_date between ? and ?";
+	String query="select * from trn_employee_payment_register	 where payment_date between ? and ? and activate_flag=1";
 	parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 	parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));		
 	
