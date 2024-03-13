@@ -47,6 +47,11 @@
 
 function saveInvoice()
 {
+	if(totalAmount.innerHTML=="0" || totalAmount.innerHTML=="0.00")
+	{
+		alert("Cannot Save 0 Amount Bills");
+		return;
+	}
 	
 	if((txtpaymenttype.value=="Pending" || txtpaymenttype.value =="Partial") && hdnSelectedCustomer.value =="") 
 		{
