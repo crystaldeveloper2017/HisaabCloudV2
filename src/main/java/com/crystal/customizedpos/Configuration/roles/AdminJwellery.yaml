@@ -233,6 +233,10 @@
     - showUserDetails
     - showCustomerLedgerWithItem
     - exportCustomerLedgerWithItemAsPDF
+    - getDeletedInvoiceRegister
+    - showReport
+  reports:
+    - 3
   elements:
     - 700184
     - 1
@@ -312,4 +316,5 @@
     - 700173
     - 700195
     - 700197
+    - 700187
     

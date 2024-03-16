@@ -75,8 +75,6 @@
 	  					</select>
                   	</div>
 				</div>
-
-
 		<div class="col-sm-2" align="center">
 			<div class="input-group input-group-sm" style="width: 200px;">
 				<input type="text" class="form-control form-control-sm"
@@ -99,6 +97,16 @@
 
 
 		</div>
+
+
+	<div class="col-sm-1">
+  	<div class="form-group">
+  	<div class="input-group input-group-sm">
+                  <input type="text" class="form-control form-control-sm" id="txtinvoiceno" onkeyup='ReloadFilters()'
+                   placeholder="Search Invoice No" name="txtinvoiceno">                           
+    </div>
+    </div>
+  </div>
 
 		<div class="col-sm-1" align="center">
 					
@@ -131,7 +139,7 @@
               
               
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 580px;">                
+              <div class="card-body table-responsive p-0" style="height: 800px;">                
                 <table id="example1" class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
@@ -196,13 +204,13 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 50,
+      "pageLength": 100,
       "order": [[ 2, "desc" ]]
     });
   });
   
-  document.getElementById("divTitle").innerHTML="Daily Invoice Report";
-  document.title +=" Daily Invoice Report ";
+  document.getElementById("divTitle").innerHTML="Sales Invoice Report";
+  document.title +=" Sales Invoice Report ";
   
   
   
@@ -214,7 +222,8 @@ function ReloadFilters()
 {
 	  window.location="?a=generateDailyInvoiceReport&type=${type}&drpstoreId="
 			  +drpstoreId.value+"&txtfromdate="+txtfromdate.value+"&txttodate="
-			  +txttodate.value+"&deleteFlag="+chkdeletedinvoice.checked+"&customerId="+hdnSelectedCustomer.value;
+			  +txttodate.value+"&deleteFlag="+chkdeletedinvoice.checked+"&customerId="+hdnSelectedCustomer.value+"&invoice_no="+txtinvoiceno.value;
+
 	  //
 	  
 }
@@ -256,6 +265,11 @@ if('${param.customerId}'!='')
 		txtsearchcustomer.disabled=true;
 	}
 
+if('${param.invoice_no}'!='')
+	{
+		txtinvoiceno.value='${param.invoice_no}';//
+		
+	}
 
 
 function editInvoice(invoiceId)

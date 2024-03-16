@@ -178,13 +178,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		CustomResultObject rs = new CustomResultObject();
 		long customerId = Integer.parseInt(request.getParameter("customerId"));
 		HashMap<String, Object> outputMap = new HashMap<>();
+		HashMap<String, Object> returnMap = new HashMap<>();
+		
 		try {
 			String fromDate = "";
 			String toDate = "";
-			outputMap.put("pendingAmountDetails",
-					lObjConfigDao.getPendingAmountForThisCustomer(customerId, fromDate, toDate, con));
+			returnMap.put("pendingAmountDetails", lObjConfigDao.getPendingAmountForThisCustomer(customerId, fromDate, toDate, con));
+			returnMap.put("LastMonthSalesDetails", lObjConfigDao.getLastMonthSalesForThisCustomer(customerId,  con));
+			outputMap.put("reqData",returnMap);
+			
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			e.printStackTrace();
 			rs.setHasError(true);
 		}
 		return outputMap;
@@ -4383,6 +4388,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String attendant_id = request.getParameter("attendant_id") == null ? "" : request.getParameter("attendant_id");
 		String paymentMode = request.getParameter("paymentMode") == null ? "" : request.getParameter("paymentMode");
 		String battery_no = request.getParameter("battery_no") == null ? "" : request.getParameter("battery_no");
+		String invoice_no = request.getParameter("invoice_no") == null ? "" : request.getParameter("invoice_no");
 
 		boolean deleteFlag = request.getParameter("deleteFlag") == null ? false
 				: new Boolean(request.getParameter("deleteFlag").toString());
@@ -4408,6 +4414,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("attendant_id", attendant_id);
 		hm.put("paymentMode", paymentMode);
 		hm.put("battery_no", battery_no);
+		hm.put("invoice_no", invoice_no);
+		
 
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
@@ -10342,6 +10350,6 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 	
-
+	
 
 }

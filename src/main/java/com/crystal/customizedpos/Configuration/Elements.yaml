@@ -499,3 +499,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showReport&report_id=2"
   orderNo: 3
+- elementId: 700187
+  elementName: "Deleted Invoice Report"
+  parentElementId: 26
+  elementUrl: "?a=showReport&report_id=3"
+  orderNo: 3

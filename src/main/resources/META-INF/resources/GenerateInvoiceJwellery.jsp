@@ -410,6 +410,19 @@ function updateItem()
   	</div>
   </div>
 
+
+   <div class="col-sm-1">
+  	<div class="form-group" align="center"> 	
+  		<label><a href="#" onclick="showLedger()">Last Month Sales</a> </label>  		
+  	</div>
+  </div>
+   <div class="col-sm-1">
+  	<div class="form-group"> 	
+  		<input type="text" id="txtcustomerlastmonthsale" name="txtcustomerlastmonthsale" class="form-control form-control-sm" value="0" readonly/>  		
+  	</div>
+  </div>
+
+
   <div class="col-sm-2">
   	<div class="form-group">	
   		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
@@ -764,6 +777,7 @@ function checkforMatchCustomer()
 			document.getElementById("txtsearchcustomer").disabled=true;			
 			document.getElementById("hdnSelectedCustomerType").value=document.getElementById("txtsearchcustomer").value.split("~")[2];
 			fetchPendingAmountForThisCustomer(customerId);	
+			
 		}
 	else
 		{
@@ -784,11 +798,25 @@ function fetchPendingAmountForThisCustomer(customerId)
 	  {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) 
 	    { 		      
-	    	var details=JSON.parse(xhttp.responseText);	    	
+	    	var responseData=JSON.parse(xhttp.responseText);
+			var details=responseData.reqData;
+			
 	    	if(details.pendingAmountDetails.PendingAmount!=undefined)
 	    		{
 	    			txtcustomerpendingamount.value=details.pendingAmountDetails.PendingAmount;
 	    			pendingamount=details.pendingAmountDetails.PendingAmount;
+	    		}
+	    	else
+	    		{
+	    			pendingamount=0;
+					//alert("no pending amount for this customer");
+	    			//window.location.reload();
+	    		}
+			
+			if(details.LastMonthSalesDetails.lstSalesAmount!=undefined)
+	    		{
+	    			txtcustomerlastmonthsale.value=details.LastMonthSalesDetails.lstSalesAmount;
+	    			//pendingamount=details.pendingAmountDetails.PendingAmount;
 	    		}
 	    	else
 	    		{
@@ -801,6 +829,8 @@ function fetchPendingAmountForThisCustomer(customerId)
 	  xhttp.open("GET","?a=getPendingAmountForCustomer&customerId="+customerId, true);    
 	  xhttp.send();
 }
+
+
 
 
 
@@ -1698,7 +1728,8 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     
     
     c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-    c.printText("Payable Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
+    c.printText("Payable Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_BIG); // Payment Type
+
     
   
     
