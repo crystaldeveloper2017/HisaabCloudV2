@@ -6725,15 +6725,20 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			throws ParseException, ClassNotFoundException, SQLException {
 
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select *,inv.activate_flag isactive,count(1) invCount,invoice_no,date_format(inv.invoice_date,'%d/%m/%Y') as FormattedInvoiceDate,date_format(inv.updated_date,'%d/%m/%Y %H:%i:%s') as updatedDate,inv.activate_flag isActive from trn_invoice_register inv"
+		String query = "select *,invoice_no,date_format(inv.invoice_date,'%d/%m/%Y') as FormattedInvoiceDate,date_format(inv.updated_date,'%d/%m/%Y %H:%i:%s') as updatedDate,inv.activate_flag isActive from trn_invoice_register inv"
 				+ " left outer join mst_customer cust on inv.customer_id=cust.customer_id and inv.app_id=cust.app_id  "
 				+ "left outer join tbl_user_mst usertbl on inv.updated_by = usertbl.user_id "
 				+ " left outer join trn_payment_register paymnt on inv.invoice_id =paymnt.ref_id and paymnt.activate_flag=1 and paymnt.payment_for='invoice' and paymnt.app_id = inv.app_id "
 				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id left outer join trn_invoice_details tid on tid.invoice_id=inv.invoice_id left outer join rlt_invoice_battery_details ribd on ribd.details_id=tid.details_id "
-				+ "where date(invoice_date) between ? and ?  and inv.app_id=184  "
-				+ "and usertbl.app_id=inv.app_id and store1.app_id=inv.app_id group by invoice_no having invCount=1 and isactive=0";
+				+ "where  "
+				+ " usertbl.app_id=inv.app_id and store1.app_id=inv.app_id and inv.invoice_id in  ("
+				+ "	select max(invoice_id)"
+				+ "	from trn_invoice_register tir where invoice_date between ? and ? "
+				+ "	and app_id =49"
+				+ "	group by invoice_no ) and inv.activate_flag=0";
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));
+
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
