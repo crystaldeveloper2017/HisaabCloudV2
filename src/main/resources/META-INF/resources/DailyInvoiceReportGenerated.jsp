@@ -102,7 +102,7 @@
 	<div class="col-sm-1">
   	<div class="form-group">
   	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="txtinvoiceno" onkeyup='ReloadFilters()'
+                  <input type="text" class="form-control form-control-sm" id="txtinvoiceno" onchange='ReloadFilters()'
                    placeholder="Search Invoice No" name="txtinvoiceno">                           
     </div>
     </div>
