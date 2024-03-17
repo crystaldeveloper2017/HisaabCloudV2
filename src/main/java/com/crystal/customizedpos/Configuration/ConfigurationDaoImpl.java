@@ -6734,10 +6734,11 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ " usertbl.app_id=inv.app_id and store1.app_id=inv.app_id and inv.invoice_id in  ("
 				+ "	select max(invoice_id)"
 				+ "	from trn_invoice_register tir where invoice_date between ? and ? "
-				+ "	and app_id =49"
+				+ "	and app_id =?"
 				+ "	group by invoice_no ) and inv.activate_flag=0";
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));
+		parameters.add( hm.get("app_id"));
 
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
