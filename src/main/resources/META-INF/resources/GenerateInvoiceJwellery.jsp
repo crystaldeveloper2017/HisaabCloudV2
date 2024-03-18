@@ -413,7 +413,7 @@ function updateItem()
 
    <div class="col-sm-1">
   	<div class="form-group" align="center"> 	
-  		<label><a href="#" onclick="showLedger()">Last Month Sales</a> </label>  		
+  		<label><a href="#" onclick="showLedger()">Sales</a> </label>  		
   	</div>
   </div>
    <div class="col-sm-1">
@@ -423,13 +423,13 @@ function updateItem()
   </div>
 
 
-  <div class="col-sm-2">
+  <div class="col-sm-1">
   	<div class="form-group">	
   		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
   	</div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-1">
   	
     
     <div class="input-group">

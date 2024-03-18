@@ -3501,9 +3501,8 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 	public String deleteInvoice(long invoiceId, String userId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
-		parameters.add(userId);
 		parameters.add(invoiceId);
-		insertUpdate("UPDATE trn_invoice_register SET activate_flag=0,updated_by=? WHERE invoice_id=?", parameters,
+		insertUpdate("UPDATE trn_invoice_register SET activate_flag=0 WHERE invoice_id=?", parameters,
 				conWithF);
 		parameters.clear();
 
