@@ -2950,7 +2950,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "	concat('Invoice (', remarks, ' )') as type,\r\n"
 				+ "	date_format(tir.updated_date, '%d/%m/%Y %H:%i:%s') upd1,\r\n"
 				+ "	'Debit' as creditDebit,\r\n"
-				+ "	qty*custom_rate as debitAmount,\r\n"
+				+ "	 round(qty*custom_rate,2) as debitAmount,\r\n"
 				+ "	0 creditAmount,mi.item_name ,tid.qty,tid.custom_rate \r\n"
 				+ "from\r\n"
 				+ "	trn_invoice_register tir inner join trn_invoice_details tid on tid.invoice_id=tir.invoice_id inner join mst_items mi on mi.item_id =tid.item_id \r\n"
@@ -6760,5 +6760,23 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 		return getMap(parameters, query, con);
 	}
+
+
+
+	public List<LinkedHashMap<String, Object>> getEmployeePaymentRegister(HashMap<String, Object> hm, Connection con)
+			throws ParseException, ClassNotFoundException, SQLException {
+
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query = "select * from trn_employee_payment_register tepr where payment_date between ? and ? and app_id=? and activate_flag=1";
+		parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
+		parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));
+		parameters.add( hm.get("app_id"));
+
+
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
+
+	
 
 }

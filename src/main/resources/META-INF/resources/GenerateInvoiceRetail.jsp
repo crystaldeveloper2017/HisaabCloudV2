@@ -824,7 +824,9 @@ function fetchPendingAmountForThisCustomer(customerId)
 	  {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) 
 	    { 		      
-	    	var details=JSON.parse(xhttp.responseText);	    	
+	    	var responseData=JSON.parse(xhttp.responseText);	 
+			var details=responseData.reqData;
+   	
 	    	if(details.pendingAmountDetails.PendingAmount!=undefined)
 	    		{
 	    			txtcustomerpendingamount.value=details.pendingAmountDetails.PendingAmount;

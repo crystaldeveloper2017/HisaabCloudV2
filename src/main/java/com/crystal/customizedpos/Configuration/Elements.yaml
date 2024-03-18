@@ -490,9 +490,6 @@ elements:
   elementName: "FSM Ledger"
   parentElementId: 26
   elementUrl: "?a=showFSMLedger"
-  elementName: "Employee Payment"
-  parentElementId: 700165
-  elementUrl: "?a=showEmployeePayment"
   orderNo: 1
 - elementId: 700186
   elementName: "Employee Payment Report"
@@ -503,4 +500,9 @@ elements:
   elementName: "Deleted Invoice Report"
   parentElementId: 26
   elementUrl: "?a=showReport&report_id=3"
+  orderNo: 3
+- elementId: 700188
+  elementName: "Employee Payment"
+  parentElementId: 700165
+  elementUrl: "?a=showEmployeePayment"
   orderNo: 3
