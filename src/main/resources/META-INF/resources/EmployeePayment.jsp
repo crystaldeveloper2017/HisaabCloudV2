@@ -53,13 +53,8 @@
   <div class="col-sm-3">
   	<div class="form-group">
   	
-  	<c:if test="${param.type eq 'debit'}">
-  		<label for="email">Debit Amount</label>
-  	</c:if>
   	
-  	<c:if test="${param.type ne 'debit'}">
-  		<label for="email">Credit Amount</label>
-  	</c:if>
+  		<label for="email">Amount</label>
   	     
       <input type="text" class="form-control form-control-sm" id="txtpayamount" >          
     </div>
@@ -76,7 +71,6 @@
   
   
   
-  <c:if test="${param.type ne 'debit'}">  		
 	  <div class="col-sm-3">
 	  	<div class="form-group"> 
 	  	<label for="email">Payment Mode</label>
@@ -95,16 +89,24 @@
 	                
 	    </div>
 	  </div>  
-  </c:if>
   
+  <div class="col-sm-3">
+		<div class="form-group"> 
+		<label for="email">Payment Type</label>     
+					 <select class='form-control form-control-sm' id="drppaymenttype">
+						  				<option value="Credit">Credit</option>		  				
+						  				<option value="Debit">Debit</option>
+					</select>
+		</div>
+  	</div>
   
     <div class="col-sm-3">
-  	<div class="form-group"> 
-  	<label for="email">Remarks</label>     
-                   <input type="txtremarks" class="form-control form-control-sm" id="txtremarks" >          
-                
-    </div>
-  </div>
+		<div class="form-group"> 
+		<label for="email">Remarks</label>     
+					<input type="txtremarks" class="form-control form-control-sm" id="txtremarks" >          
+					
+		</div>
+  	</div>
   
   <div class="col-sm-12">
   	 <div class="form-group" align="center">
@@ -268,6 +270,7 @@ function saveEmployeePayment()
 		  xhttp.open("GET","?a=saveEmployeePayment&app_id=${userdetails.app_id}&user_id=${userdetails.user_id}&employeeId="+hdnSelectedEmployee.value+"&payAmount="+txtpayamount.value+
 				  "&paymentMode="+drppaymentmode.value+
 				  "&txtdate="+txtdate.value+
+				  "&paymenttype="+drppaymenttype.value+
 				  
 				  "&remarks="+txtremarks.value, true);    
 		  xhttp.send();

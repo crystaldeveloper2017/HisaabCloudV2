@@ -107,7 +107,8 @@
 						<th><b>Transaction Date</b></th>
 						<th><b>Sales Amount</b></th>
 						<th><b>Payment Amount</b></th>
-						<th><b>Difference</b></th>				
+						<th><b>Difference</b></th>
+						<th><b>Remarks</b></th>				
 					</tr>
 				</thead>
 				<tbody>
@@ -116,7 +117,8 @@
 							<td>${item.dt}</td>
 							<td>${item.salesAmt}</td>
 							<td>${item.paymentAmt}</td>
-							<td>${item.diff}</td>						
+							<td>${item.diff}</td>	
+							<td>${item.remarks}</td>						
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -157,7 +159,7 @@
       "autoWidth": false,
       "responsive": true,
       "pageLength": 50,
-      "order": [[ 4, 'desc' ]],
+      //"order": [[ 4, 'desc' ]],
       "zeroRecords": " "
 
     });

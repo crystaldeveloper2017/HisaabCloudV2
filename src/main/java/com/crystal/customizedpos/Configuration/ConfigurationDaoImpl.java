@@ -2835,11 +2835,11 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	public List<LinkedHashMap<String, Object>> getFSMLedger(String employeeId, String fromDate,
 			String toDate, String appId, Connection con) throws ParseException, ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,dt,sum(paymentAmount)-sum(SalesAmount) diff\n"
+		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,dt,sum(paymentAmount)-sum(SalesAmount) diff,remarks\n"
 				+
 				"from (\n" +
 				"select\n" +
-				"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt\n"
+				"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt,'Nozzle' remarks\n"
 				+
 				"from\n" +
 				"trn_nozzle_register tnr\n" +
@@ -2855,7 +2855,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				"and accounting_date between ? and ? \n" +
 				"and tum.user_id = ? \n" +
 				"union all\n" +
-				"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date  from\n" +
+				"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date,'Nozzle' remarks from\n" +
 				"trn_invoice_register tir ,\n" +
 				"trn_invoice_details tid ,\n" +
 				"rlt_invoice_fuel_details rifd,\n" +
@@ -2875,7 +2875,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				"select\n" +
 				"0 SalesAmount,\n" +
 				"amount  paymentAmount,\n" +
-				"collection_date dt\n" +
+				"collection_date dt,'Nozzle' remarks\n" +
 				"from\n" +
 				"trn_supervisor_collection tsc ,\n" +
 				"tbl_user_mst tum\n" +
@@ -2887,7 +2887,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				"\n" +
 				"union all\n" +
 				"select\n" +
-				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt\n" +
+				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle'\n" +
 				"from\n" +
 				"trn_invoice_register tir\n" +
 				"inner join rlt_invoice_fuel_details rifd\n" +
@@ -2899,16 +2899,26 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				"\n" +
 				"union all\n" +
 				"select\n" +
-				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt\n" +
+				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle' remarks\n" +
 				"from\n" +
 				"trn_invoice_register tir\n" +
 				"inner join rlt_invoice_fuel_details rifd\n" +
 				"on rifd.invoice_id =tir.invoice_id\n" +
 				"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" +
 				"where invoice_date between ? and ? and tir.payment_type='Pending'\n" +
-				"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?) as T group by dt;\n" +
+				"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =? "+
+				"union all "+
+				"select " +
+				"case when payment_type ='Debit' then amount else 0 end as salesAmount ,"+
+				"case when payment_type ='Credit' then amount else 0 end as paymentAmount ,"+
+				"payment_date,remarks "+
+				"from trn_employee_payment_register tepr where "+
+				"payment_date between ? and ? "+  
+				"and tepr.app_id=? and tepr.employee_id=? and tepr.activate_flag=1 ) as T group by dt,remarks;\n" +
 				"\n";
 
+				
+
 		parameters.add((appId));
 		parameters.add(getDateASYYYYMMDD(fromDate));
 		parameters.add(getDateASYYYYMMDD(toDate));
@@ -2928,6 +2938,12 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(getDateASYYYYMMDD(toDate));
 		parameters.add((appId));
 		parameters.add(employeeId);
+
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+		parameters.add((appId));
+		parameters.add(employeeId);
+
 
 		parameters.add(getDateASYYYYMMDD(fromDate));
 		parameters.add(getDateASYYYYMMDD(toDate));
@@ -6696,27 +6712,26 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 	}
 
-	public String addPaymentFromEmployee(HashMap<String, Object> hm, Connection conWithF) throws Exception {
-		if (hm.get("payment_type").equals("Pending")) {
-			return "Payment Not added";
-		}
-		ArrayList<Object> parameters = new ArrayList<>();
-		parameters.add(hm.get("employee_id"));
-		parameters.add(getDateASYYYYMMDD(hm.get("invoice_date").toString()));
-		parameters.add(hm.get("payment_mode"));
-		if (hm.get("payment_type").equals("Paid") || hm.get("payment_type").equals("Debit")) {
-			parameters.add(hm.get("total_amount"));
-		} else if (hm.get("payment_type").equals("Partial")) {
-			parameters.add(hm.get("paid_amount"));
-		}
-		parameters.add(hm.get("payment_for"));
-		parameters.add(hm.get("remarks"));
-		parameters.add(hm.get("app_id"));
-		parameters.add(hm.get("user_id"));
-		insertUpdateDuablDB("insert into trn_employee_payment_register values (default,?,?,?,?,?,?,?,?,sysdate(),1)",
-				parameters,
-				conWithF);
-		return "Employee Payment Added";
+	public long addPaymentFromEmployee(HashMap<String, Object> hm, Connection conWithF) throws Exception {
+
+
+		
+		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
+		valuesMap.put("employee_payment_id", "~default");
+		valuesMap.put("employee_id", hm.get("employee_id"));
+		valuesMap.put("payment_date", getDateASYYYYMMDD(hm.get("invoice_date").toString()));
+		valuesMap.put("payment_mode", hm.get("payment_mode"));
+		valuesMap.put("amount", hm.get("total_amount"));
+		valuesMap.put("payment_type", hm.get("payment_type"));
+		valuesMap.put("remarks", hm.get("remarks"));
+		valuesMap.put("app_id", hm.get("app_id"));
+		valuesMap.put("updated_by", hm.get("user_id"));
+		valuesMap.put("updated_date","~sysdate()");
+		valuesMap.put("activate_flag", "~1");
+		Query q = new Query("trn_employee_payment_register", "insert", valuesMap);
+		return insertUpdateEnhanced(q, conWithF);
+		
+		
 
 	}
 

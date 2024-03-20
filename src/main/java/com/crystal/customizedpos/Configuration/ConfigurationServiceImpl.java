@@ -10296,6 +10296,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String date = (request.getParameter("txtdate"));
 		Double toPayAmount = Double.parseDouble(request.getParameter("payAmount"));
 		String paymentMode = request.getParameter("paymentMode");
+		String paymenttype = request.getParameter("paymenttype");
+		
 		String remarks = request.getParameter("remarks");
 
 		String appId = request.getParameter("app_id");
@@ -10310,21 +10312,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		hm.put("payment_mode", paymentMode);
 		hm.put("total_amount", toPayAmount);
-		hm.put("payment_type", "Paid");
-		hm.put("payment_for", "Collection");
+		hm.put("payment_type", paymenttype);
 		hm.put("remarks", remarks);
 
-		if (paymentMode.equals("")) {
-			hm.put("payment_type", "Debit");
-			hm.put("total_amount", toPayAmount * -1);
-			hm.put("payment_for", "Debit Entry");
-			hm.put("remarks", remarks);
-		}
-
+		
 		try {
 			hm.put("invoice_date", date);
-			String retMessage = lObjConfigDao.addPaymentFromEmployee(hm, con);
-			hm.put("returnMessage", retMessage);
+			long retMessage = lObjConfigDao.addPaymentFromEmployee(hm, con);
+			hm.put("returnMessage", "Employee Payment Saved Successfully");
 			rs.setAjaxData(mapper.writeValueAsString(hm));
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
