@@ -5805,8 +5805,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice2Inch(DestinationPath, BufferedImagesFolderPath,
 						lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
 			} else if (invoiceFormatName.equals("3InchWithWeightSize")) {
-				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchWithWeightSize(DestinationPath,
-						BufferedImagesFolderPath, lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
+				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchWithWeightSize(DestinationPath, BufferedImagesFolderPath,
+				lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
 			} else if (invoiceFormatName.equals("3InchWithModelNo")) {
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchWithModelNo(DestinationPath,
 						BufferedImagesFolderPath, lObjConfigDao.getInvoiceDetails(invoiceId, con), con);

@@ -982,14 +982,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		
 		
 	}
-	
-	
-	
-	public void generatePDFForInvoice3InchWithWeightSize(String DestinationPath,String BufferedImagesFolderPath,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException
-	{
 
-
-		
+	public void generatePDFForInvoice3InchWithWeightSize(String DestinationPath,String BufferedImagesFolderPath,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException {
 		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfItems");
 		
 		
@@ -998,14 +992,13 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		
 		Font font14 = new Font(base, 14, Font.NORMAL);
 		
-		Font font = new Font(base, 12, Font.NORMAL);
-		Font font10 = new Font(base, 10, Font.NORMAL);
-		Font font14bold = new Font(base, 14, Font.BOLD);
+		Font font = new Font(base, 12, Font.NORMAL); 
+		Font font10 = new Font(base, 10, Font.NORMAL); 
 
 		
 		int fixedSize=320;
 		Rectangle pagesize = new Rectangle(250, fixedSize+ListOfItemDetails.size()*17);
-		Document document = new Document(pagesize,6,6,0,2);
+		Document document = new Document(pagesize,2,16,0,2);
 
 		  
 		  PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath));
@@ -1017,332 +1010,347 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  
 		  
 		  PdfPTable table = new PdfPTable(1);
+
 		  table.setWidthPercentage(100);
-	        PdfPCell cell;        
-	        cell = new PdfPCell(new Phrase("Invoice Estimate : "+invoiceHistoryDetails.get("invoice_no").toString(),font14));	        
-	        cell.setBorder(Rectangle.NO_BORDER);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	       
-	        
-	        
-	        cell = new PdfPCell(new Phrase("",font));	        
-	        cell.setBorder(Rectangle.NO_BORDER);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	
-	        
-	        cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("store_name").toString(),font14bold));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);	        
-	        table.addCell(cell);
-	        
-	        
-	        cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("address_line_1")+",",font10));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);	        
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("address_line_2")+",",font10));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);
-	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("city")+"-"+invoiceHistoryDetails.get("pincode"),font10));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase("Phone:-"+invoiceHistoryDetails.get("mobile_no").toString(),font10));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
-	        
-	        
-	        
-	        cell = new PdfPCell(new Phrase("***********************************",font));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
+		  PdfPCell cell;
+		  cell = new PdfPCell(new Phrase("Invoice Estimate: "+invoiceHistoryDetails.get("invoice_no").toString(),font14));
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("store_name").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+
+		  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(1);	        
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+
+  
 		  document.add(table);
-		  
-		  
-		  
-		  
-
-		  
-		  table = new PdfPTable(2);
-		  table.setWidthPercentage(100);    
-		  table.setWidths(new int[]{6,4});
-		  
-		  if(invoiceHistoryDetails.get("customer_name")!=null)
-		  {
-			  cell = new PdfPCell(new Phrase("Name: "+invoiceHistoryDetails.get("customer_name").toString().toUpperCase(),font));
-		        cell.setBorder(Rectangle.NO_BORDER);
-		        cell.setPadding(0);
-		        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-		        
-		        table.addCell(cell);
-		        
-		        
-		  }
-		  
-			/*
-			 * if(invoiceHistoryDetails.get("mobile_number")!=null) { cell = new
-			 * PdfPCell(new
-			 * Phrase("Mobile No : "+invoiceHistoryDetails.get("mobile_number").toString(),
-			 * font)); cell.setBorder(Rectangle.NO_BORDER); cell.setPadding(0);
-			 * cell.setHorizontalAlignment(Element.ALIGN_LEFT); table.addCell(cell);
-			 * 
-			 * 
-			 * }
-			 */
-		 
-	                
-	      
-		  	String dateTime=invoiceHistoryDetails.get("theUpdatedDate").toString();
-		  	String dateTimeArray[]=dateTime.split(" ");
-	        
-	        cell = new PdfPCell(new Phrase("Dt."+dateTimeArray[0],font));
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);
-	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase("Payment Type : "+invoiceHistoryDetails.get("payment_type").toString(),font));
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-	        table.addCell(cell);
-	        
-	        
-	        cell = new PdfPCell(new Phrase("Time."+dateTimeArray[1],font));
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-	        table.addCell(cell);
-	        
-	      
-	        
-
-	        
-	        
-	       
-	        document.add(table);
-		  
-		  
-		  
-		  table = new PdfPTable(6);
+  
+		  table = new PdfPTable(3);
 		  table.setWidthPercentage(100);
-		  
-	      table.setWidths(new int[]{3,10,13,6,9,9});
+		  table.setWidths(new int[]{1, 1, 2});
+  
+		  cell = new PdfPCell(new Phrase(""));
+		  cell.setBorder(Rectangle.NO_BORDER);
+  
+		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("address_line_1").toString()+invoiceHistoryDetails.get("address_line_2").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 8)));
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setColspan(3);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("address_line_3").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 8)));
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setColspan(3);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+  
 
-		  table.setSpacingBefore(10);
-	      
-		  cell = new PdfPCell(new Phrase("Sr",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
+  
+		  cell = new PdfPCell(new Phrase("Phone "+invoiceHistoryDetails.get("mobile_no"), new Font(Font.FontFamily.TIMES_ROMAN, 8)));
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setColspan(3);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase("Store Timings "+invoiceHistoryDetails.get("store_timing"), new Font(Font.FontFamily.TIMES_ROMAN, 8)));
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setColspan(3);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+
+		  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setPadding(0);
+		  cell.setColspan(3);	        
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);
+		  
+  
+		  document.add(table);
+
+		
+		  table = new PdfPTable(3);
+		  table.setWidthPercentage(100);
+		  table.setWidths(new int[]{1, 4, 8});
+
+		  cell = new PdfPCell(new Phrase(" Name : "+invoiceHistoryDetails.get("customer_name").toString(),font10));
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setColspan(3);
+			cell.setPadding(0);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		    table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" Date & Time : "+invoiceHistoryDetails.get("theUpdatedDate").toString(),font10));
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setPadding(0);
+			cell.setColspan(3);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" Paymnet Type : "+invoiceHistoryDetails.get("payment_type").toString(),font10));
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setPadding(0);
+			cell.setColspan(3);
+			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setPadding(0);
+			cell.setColspan(3);	        
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);
+			
+
+				
+				document.add(table);
+
+  
+		  table = new PdfPTable(5);
+		  table.setWidthPercentage(100);
+		  table.setWidths(new int[]{2, 10, 2, 4, 3});
+		  table.setSpacingBefore(10);  
+		  cell = new PdfPCell(new Phrase("Sr", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase("Item Name",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        cell.setPadding(0);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase("Description ",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        cell.setPadding(0);
-	        table.addCell(cell);
-	        
-	        
-	        cell = new PdfPCell(new Phrase("Qty",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-	  
-	        
-	        cell = new PdfPCell(new Phrase("Wt.",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase("Amount",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD) ));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-	        
-	      
-	        
-	        
-	        
-	        int srno=1;
-	        Double totalQty=0d;
-	        Double totalWeight=0d;
-	        for(HashMap<String,Object> prod:ListOfItemDetails)
-	        {
-	        	
-	        	cell = new PdfPCell(new Phrase(String.valueOf(srno++),font ));
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase("Item Name", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase("Qty", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase("WT.", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  table.addCell(cell);
+  
+		  cell = new PdfPCell(new Phrase("Amount", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  table.addCell(cell);
+		
+		  int srnumber=1;
+		  double totalWeight=0;
+		  int totalqty=0;
+		  for(HashMap<String,Object> prod:ListOfItemDetails)
+		  {
+			  
+			  cell = new PdfPCell(new Phrase(String.valueOf(srnumber++),font ));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				  table.addCell(cell);
+				  
+				  
+				  
+
+				  cell = new PdfPCell(new Phrase(prod.get("category_name").toString()+" "+prod.get("item_name").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				  cell.setPaddingLeft(3);
+				  table.addCell(cell);
+
+				  int qty=Double.valueOf(prod.get("qty").toString()).intValue();
+				totalqty+=qty;
+				 cell = new PdfPCell(new Phrase(String.valueOf(qty), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+
+				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				  cell.setPaddingLeft(3);
+				  table.addCell(cell);
+				  
+
+				  totalWeight+=Double.valueOf(prod.get("weight").toString());
+
+				  cell = new PdfPCell(new Phrase(prod.get("weight").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        table.addCell(cell);
-			        
-			        
-			        String size=prod.get("size").toString().equals("")?"":" ("+prod.get("size").toString()+") ";
-			        
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("category_name").toString(),font ));
-			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        cell.setPaddingLeft(3);
-			        table.addCell(cell);
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("item_name").toString()+ size	,font ));
-			        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        cell.setPaddingLeft(3);
-			        table.addCell(cell);
-			        
-			        totalQty+=Double.parseDouble(prod.get("qty").toString());
-			        Double reqQty=Double.parseDouble(prod.get("qty").toString());			        String reqQtyString=String.format("%.0f", reqQty);			        
-			        cell = new PdfPCell(new Phrase(reqQtyString,font ));
-			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        table.addCell(cell);
-			        
-			        
-			        totalWeight+=Double.parseDouble(prod.get("weight").toString());
-			        
-			        cell = new PdfPCell(new Phrase(prod.get("weight").toString(),font ));
-			        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        table.addCell(cell);
-			        
-			        			        
-			        
-			        Double itemAmount=Double.parseDouble(prod.get("custom_rate").toString()) * Double.parseDouble(prod.get("qty").toString());			        
-			        String itemAmountFormatted=String.format("%.0f", itemAmount);
-			        cell = new PdfPCell(new Phrase(itemAmountFormatted.toString(),font ));	
-			        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        table.addCell(cell);
-			        
-			        
-	        }
-	        
-	        double itemdiscount=Double.parseDouble(invoiceHistoryDetails.get("item_discount").toString());
-	        double invoicediscount=Double.parseDouble(invoiceHistoryDetails.get("invoice_discount").toString());
-	        
-	        if(itemdiscount>0)
-	        {
-		        cell = new PdfPCell(new Phrase("Item Discount : "+String.valueOf(invoiceHistoryDetails.get("item_discount")),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL) ));	
-		        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        cell.setColspan(5);
-		        table.addCell(cell);
-	        }
-	        
-	        if(invoicediscount>0)
-	        {
-		        cell = new PdfPCell(new Phrase("Invoice Discount : "+String.valueOf(invoiceHistoryDetails.get("invoice_discount")),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL) ));	
-		        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        cell.setColspan(5);
-		        table.addCell(cell);
-	        }
-	        
-	        if(invoiceHistoryDetails.get("total_gst")!=null && !invoiceHistoryDetails.get("total_gst").equals("0.00"))
-	        {
-		        cell = new PdfPCell(new Phrase("Gst : "+String.valueOf(invoiceHistoryDetails.get("total_gst")),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL) ));	
-		        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        cell.setColspan(6);
-		        table.addCell(cell);
-	        }
-		        
-		        
-		        
-	        	String totalQtyFormatted=String.format("%.0f", totalQty);
-	        	String totalWeightFormatted=String.format("%.3f", totalWeight);
-	        	
-		        cell = new PdfPCell(new Phrase("Total Quantity:  "+totalQtyFormatted+"\nTotal Weight :"+totalWeightFormatted,font ));
-		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        cell.setColspan(3);
-		        table.addCell(cell);
-		        
-		        
-		        
-		        
-		        
-		        
-		        			        
-		        
-		        String totalAmount=String.format("%.0f", Double.parseDouble(invoiceHistoryDetails.get("total_amount").toString()));
-		        
-		        cell = new PdfPCell(new Phrase("Total Amount : "+String.valueOf(totalAmount+"/-"),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD) ));	
-		        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		        cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
-		        cell.setColspan(3);
-		        table.addCell(cell);
-		        
-		        
-		        
+				  cell.setPaddingLeft(3);
+				  table.addCell(cell);
 
-		        if(invoiceHistoryDetails.get("payment_type").equals("Partial"))
-		        {
-		        cell = new PdfPCell(new Phrase(String.valueOf("Partially Paid Amount : "+String.valueOf(invoiceHistoryDetails.get("paid_amount"))),font ));
+
+				  String custom_rate=invoiceHistoryDetails.get("custom_rate").toString();
+				  String qtystring=invoiceHistoryDetails.get("qty").toString();
+				  Double amount=Double.valueOf(custom_rate)*Double.valueOf(qtystring);
+				  
+				  cell = new PdfPCell(new Phrase(String.valueOf(amount), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				  cell.setPaddingLeft(3);
+				  table.addCell(cell);
+
+
+
+				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(5);	        
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+		
+		
+				document.add(table);
+		  }
+
+				table = new PdfPTable(2);
+				table.setWidthPercentage(100);
+				table.setWidths(new int[]{4, 8});
+
+	
+
+		
+
+				
+				cell = new PdfPCell(new Phrase("  Total WT : "+totalWeight,font10));
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setColspan(2);
+				  cell.setPadding(0);
 				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);				  
-				  cell.setColspan(5);
-			        table.addCell(cell);
-		        }
-			      
-				        
-				        cell = new PdfPCell(new Phrase(String.valueOf("Remarks : "+String.valueOf(invoiceHistoryDetails.get("remarks"))),font ));
-						  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-						  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);				  
-						  cell.setColspan(5);
-					        table.addCell(cell);
-					        
-					        
-	        
-		  document.add(table);
+				  table.addCell(cell);
+	  
+				  cell = new PdfPCell(new Phrase(" QTY :  "+String.valueOf(totalqty), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(2);
+				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				  table.addCell(cell);
+
+				  
+
+				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(2);	        
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+		
+
+				  document.add(table);
+
+				  table = new PdfPTable(1);
+				table.setWidthPercentage(100);
+				table.setWidths(new int[]{4});
+	  
+					 cell = new PdfPCell(new Phrase(" Previous Due Amount :Undefined ", new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setColspan(1);
+				  cell.setPadding(0);
+				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				  table.addCell(cell);
+
+				  
+				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(1);	        
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+
+				  document.add(table);
+
+				  table = new PdfPTable(1);
+				  table.setWidthPercentage(100);
+				  table.setWidths(new int[]{4});
+
+				  cell = new PdfPCell(new Phrase("Payable Amount : 80.00 ", new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(1);	
+				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				  table.addCell(cell);
+
+				   
+				  cell = new PdfPCell(new Phrase("**************************************",font));	        
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);	        
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+
+				  document.add(table);
+
+				  table = new PdfPTable(1);
+				  table.setWidthPercentage(100);
+				  table.setWidths(new int[]{4});
+
+				  cell = new PdfPCell(new Phrase("*Thank You, Visit Again*", new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(1);	
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+
+				  document.add(table);
+  
+				 document.close();
+		
 		  
-		  document.add(new Paragraph("\n"));
 		  
-		  table = new PdfPTable(1);
-		  table.setWidthPercentage(100);
+		  
+		
+	}
+
+	
+
+	
+	// public void generatePDFForInvoice3InchWithWeightSize(String DestinationPath,String BufferedImagesFolderPath,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException
+	// {
+
+
+		
+	// 	List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfItems");
+		
+		
+		
+	// 	BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
+		
+	// 	Font font14 = new Font(base, 14, Font.NORMAL);
+		
+	// 	Font font = new Font(base, 12, Font.NORMAL);
+	// 	Font font10 = new Font(base, 10, Font.NORMAL);
+	// 	Font font14bold = new Font(base, 14, Font.BOLD);
+
+		
+	// 	int fixedSize=320;
+	// 	Rectangle pagesize = new Rectangle(250, fixedSize+ListOfItemDetails.size()*17);
+	// 	Document document = new Document(pagesize,6,6,0,2);
+
+		  
+	// 	  PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath));
+	// 	  /*PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("F:\\1.pdf"));*/
+		  
+	// 	  InvoiceHistoryPDFHelper event = new InvoiceHistoryPDFHelper();
+	//         writer.setPageEvent(event);
+	// 	  document.open();     
+		  
+		  
+	// 	  PdfPTable table = new PdfPTable(1);
+	// 	  table.setWidthPercentage(100);
+	//         PdfPCell cell;        
 	        
-	        cell = new PdfPCell(new Phrase("***********************************",font));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        cell.setPadding(0);	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
-	        cell = new PdfPCell(new Phrase("*Thank you, Visit Again*",font));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        	        
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-	        
-	        
-	 
-	        
-		  document.add(table);
-		 
-	        
+	//         cell = new PdfPCell(new Phrase(("Invoice Estimate"),font10));	        
+	//         cell.setBorder(Rectangle.NO_BORDER);
+	//         cell.setPadding(0);
+	//         cell.setHorizontalAlignment(Element.ALIGN_CENTER);	        
+	//         table.addCell(cell);
+	// 	  document.add(table);
+		  
+		    
 	        
 		  
-		  document.close();
+	// 	  document.close();
 		  
 		  
 		  
@@ -1352,7 +1360,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		
 		
 	
-	}
+	// }
 	
 	public void generatePDFForInvoice3InchWithModelNo(String DestinationPath,String BufferedImagesFolderPath,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException
 	{
@@ -1483,7 +1491,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        document.add(table);
 		  
 		  
-		  
+			document.add(new Paragraph("\n"));
+
 		  table = new PdfPTable(5);
 		  table.setWidthPercentage(100);
 		  
