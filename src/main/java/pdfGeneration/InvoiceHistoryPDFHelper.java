@@ -1194,16 +1194,18 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 
 
-				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+				  
+		
+		
+				
+		  }
+		  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
 				  cell.setBorder(Rectangle.NO_BORDER);
 				  cell.setPadding(0);
 				  cell.setColspan(5);	        
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  table.addCell(cell);
-		
-		
-				document.add(table);
-		  }
+		  document.add(table);
 
 				table = new PdfPTable(2);
 				table.setWidthPercentage(100);
@@ -1244,12 +1246,12 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				table.setWidthPercentage(100);
 				table.setWidths(new int[]{4});
 	  
-					 cell = new PdfPCell(new Phrase(" Previous Due Amount :Undefined ", new Font(Font.FontFamily.TIMES_ROMAN, 10)));
-				  cell.setBorder(Rectangle.NO_BORDER);
-				  cell.setColspan(1);
-				  cell.setPadding(0);
-				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-				  table.addCell(cell);
+				// 	 cell = new PdfPCell(new Phrase(" Previous Due Amount :Undefined ", new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				//   cell.setBorder(Rectangle.NO_BORDER);
+				//   cell.setColspan(1);
+				//   cell.setPadding(0);
+				//   cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				//   table.addCell(cell);
 
 				  
 				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
