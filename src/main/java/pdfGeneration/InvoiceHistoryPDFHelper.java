@@ -1169,7 +1169,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  
 				  
 				  
-				  String size=prod.get("size").toString()==""?"":" Size : ("+prod.get("size")+")";
+				  String size=prod.get("size").toString().equals("")?"":" Size : ("+prod.get("size")+")";
 				  cell = new PdfPCell(new Phrase(prod.get("category_name").toString()+"\n("+prod.get("item_name").toString()+")"+size, new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				  cell.setBorder(Rectangle.NO_BORDER);
@@ -1289,7 +1289,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  table.setWidthPercentage(100);
 				  table.setWidths(new int[]{4});
 
-				  cell = new PdfPCell(new Phrase("  Payable Amount : "+invoiceHistoryDetails.get("total_amount").toString(),font10));
+				  cell = new PdfPCell(new Phrase("  Payable Amount : "+invoiceHistoryDetails.get("total_amount").toString(),font14));
 				  cell.setBorder(Rectangle.NO_BORDER);
 				  cell.setColspan(1);
 				  cell.setPadding(0);
