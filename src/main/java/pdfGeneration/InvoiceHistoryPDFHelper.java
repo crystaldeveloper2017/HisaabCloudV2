@@ -1120,29 +1120,40 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  table.setSpacingBefore(10);  
 		  cell = new PdfPCell(new Phrase("Sr", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setBorder(Rectangle.NO_BORDER);
+
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		  table.addCell(cell);
   
 		  cell = new PdfPCell(new Phrase("Item Name", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setBorder(Rectangle.NO_BORDER);
+
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  table.addCell(cell);
   
 		  cell = new PdfPCell(new Phrase("Qty", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setBorder(Rectangle.NO_BORDER);
+
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  table.addCell(cell);
   
 		  cell = new PdfPCell(new Phrase("WT.", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setBorder(Rectangle.NO_BORDER);
+
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  table.addCell(cell);
   
 		  cell = new PdfPCell(new Phrase("Amount", new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setBorder(Rectangle.NO_BORDER);
+
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  table.addCell(cell);
-		
+
+		  
 		  int srnumber=1;
 		  double totalWeight=0;
 		  int totalqty=0;
@@ -1151,14 +1162,18 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			  
 			  cell = new PdfPCell(new Phrase(String.valueOf(srnumber++),font ));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setBorder(Rectangle.NO_BORDER);
+
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
 				  
 				  
 				  
-
-				  cell = new PdfPCell(new Phrase(prod.get("category_name").toString()+" "+prod.get("item_name").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  String size=prod.get("size").toString()==""?"":" Size : ("+prod.get("size")+")";
+				  cell = new PdfPCell(new Phrase(prod.get("category_name").toString()+"\n("+prod.get("item_name").toString()+")"+size, new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				  cell.setBorder(Rectangle.NO_BORDER);
+
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  cell.setPaddingLeft(3);
 				  table.addCell(cell);
@@ -1168,6 +1183,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				 cell = new PdfPCell(new Phrase(String.valueOf(qty), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 
 				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				  cell.setBorder(Rectangle.NO_BORDER);
+
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  cell.setPaddingLeft(3);
 				  table.addCell(cell);
@@ -1177,6 +1194,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 				  cell = new PdfPCell(new Phrase(prod.get("weight").toString(), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  cell.setBorder(Rectangle.NO_BORDER);
+
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  cell.setPaddingLeft(3);
 				  table.addCell(cell);
@@ -1188,6 +1207,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  
 				  cell = new PdfPCell(new Phrase(String.valueOf(amount), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  cell.setBorder(Rectangle.NO_BORDER);
+
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  cell.setPaddingLeft(3);
 				  table.addCell(cell);
@@ -1215,15 +1236,16 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 		
 
-				
-				cell = new PdfPCell(new Phrase("  Total WT : "+totalWeight,font10));
+				 
+
+				cell = new PdfPCell(new Phrase("  Total WT : "+String.format("%.3f", totalWeight),font10));
 				  cell.setBorder(Rectangle.NO_BORDER);
 				  cell.setColspan(2);
 				  cell.setPadding(0);
 				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				  table.addCell(cell);
 	  
-				  cell = new PdfPCell(new Phrase(" QTY :  "+String.valueOf(totalqty), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell = new PdfPCell(new Phrase(" Total QTY :  "+String.valueOf(totalqty), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setBorder(Rectangle.NO_BORDER);
 				  cell.setPadding(0);
 				  cell.setColspan(2);
@@ -1267,13 +1289,14 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  table.setWidthPercentage(100);
 				  table.setWidths(new int[]{4});
 
-				  cell = new PdfPCell(new Phrase("Payable Amount : 80.00 ", new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD)));
+				  cell = new PdfPCell(new Phrase("  Payable Amount : "+invoiceHistoryDetails.get("total_amount").toString(),font10));
 				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setColspan(1);
 				  cell.setPadding(0);
-				  cell.setColspan(1);	
 				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				  table.addCell(cell);
 
+				
 				   
 				  cell = new PdfPCell(new Phrase("**************************************",font));	        
 				  cell.setBorder(Rectangle.NO_BORDER);
