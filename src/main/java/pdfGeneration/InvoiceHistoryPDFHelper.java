@@ -2606,6 +2606,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		LinkedHashMap<String, String> customerDetails= (LinkedHashMap<String, String>) invoiceHistoryDetails.get("customerDetails");
 		LinkedHashMap<String, String> totalDetails= (LinkedHashMap<String, String>) invoiceHistoryDetails.get("totalDetails");
 		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("ListOfItemDetails");
+		LinkedHashMap<String, Object> storeDetails= (LinkedHashMap<String, Object>) invoiceHistoryDetails.get("storeDetails");
+		
 		
 		
 		
@@ -2617,15 +2619,66 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        writer.setPageEvent(event);
 		  document.open();     
 		  
+
 		  
 		  PdfPTable table = new PdfPTable(1);
+		  table.setWidthPercentage(100);
 	        PdfPCell cell;        
-	        cell = new PdfPCell(new Phrase("Customer Ledger ItemWise",new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD)));	        
-	        cell.setBorder(Rectangle.NO_BORDER);
-	        
+	        cell = new PdfPCell(new Phrase(storeDetails.get("store_name").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD)));	        
+	        cell.setBorder(Rectangle.BOX);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			
+			cell = new PdfPCell(new Phrase(storeDetails.get("address_line_1").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+	        cell.setBorder(Rectangle.BOTTOM);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);	        
-		  document.add(table);
+		 
+		  
+			cell = new PdfPCell(new Phrase(storeDetails.get("address_line_2").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);	
+
+		  cell = new PdfPCell(new Phrase(storeDetails.get("address_line_3").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);	
+
+		  cell = new PdfPCell(new Phrase("Phone No : "+storeDetails.get("mobile_no").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+		  cell.setBorder(Rectangle.BOTTOM);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);	
+
+		  
+		  
+		  cell = new PdfPCell(new Phrase("Party Statement Of Accounts For The Period From : 01-Feb-2024 To 29-Feb-2024 ",new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+		  cell.setBorder(Rectangle.BOTTOM);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  table.addCell(cell);	
+
+		  cell = new PdfPCell(new Phrase("To, M/S SHREE CONSTRUCTION CO. ",new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD)));	        
+		  cell.setBorder(Rectangle.BOTTOM);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		  table.addCell(cell);	
+
+		  cell = new PdfPCell(new Phrase("To, M/S SHREE CONSTRUCTION CO. ",new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD)));	        
+	        cell.setBorder(Rectangle.NO_BORDER);
+	        cell.setPadding(0);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);	        
+	        table.addCell(cell);
+		  
+		document.add(table);
+
+
 		  
 		  
 		  document.add(new Paragraph("\n"));

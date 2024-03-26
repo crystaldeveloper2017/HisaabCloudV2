@@ -5938,6 +5938,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String pendingAmount = lObjConfigDao
 				.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con)
 				.get("PendingAmount");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
+		
 
 		Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
 		totalDetails.put("openingAmount", openingAmount);
@@ -5945,6 +5947,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				+ Double.parseDouble(totalDetails.get("creditSum").toString());
 		totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
 		outputMap.put("totalDetails", totalDetails);
+		outputMap.put("storeDetails", lObjConfigDao.getStoreDetails(Long.valueOf(storeId), con));
 
 		LinkedHashMap<String, String> customerDetails = lObjConfigDao.getCustomerDetails(Long.valueOf(customerId), con);
 
