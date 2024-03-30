@@ -5963,7 +5963,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					+ getDateTimeWithSeconds(con) + ".pdf";
 			DestinationPath += appenders;
 			outputMap.put("ListOfItemDetails", lst);
-			new InvoiceHistoryPDFHelper().generatePDFForCustomerLedgerWithItem(DestinationPath, outputMap, con);
+			String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+			new InvoiceHistoryPDFHelper().generatePDFForCustomerLedgerWithItem(DestinationPath,BufferedImagesFolder, outputMap, con);
 			outputMap.put("listReturnData", lst);
 			outputMap.put(filename_constant, appenders);
 			rs.setReturnObject(outputMap);
