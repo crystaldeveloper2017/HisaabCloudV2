@@ -15,6 +15,8 @@
 <c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
 <c:set var="employeeDetails" value='${requestScope["outputObject"].get("employeeDetails")}' />
 <c:set var="totalDetails" value='${requestScope["outputObject"].get("totalDetails")}' />
+<c:set var="openingBalanceForLedger" value='${requestScope["outputObject"].get("openingBalanceForLedger")}' />
+
 
 
 
@@ -105,6 +107,7 @@
 				<thead>
 					<tr>
 						<th><b>Transaction Date</b></th>
+						<th><b>Shift Name</b></th>
 						<th><b>Sales Amount</b></th>
 						<th><b>Payment Amount</b></th>
 						<th><b>Difference</b></th>
@@ -115,6 +118,7 @@
 					<c:forEach items="${ListLedger}" var="item">
 						<tr >
 							<td>${item.dt}</td>
+							<td>${item.shift_name}</td>
 							<td>${item.salesAmt}</td>
 							<td>${item.paymentAmt}</td>
 							<td>${item.diff}</td>	
@@ -132,6 +136,7 @@
 				<thead>
 					<tr>                  
 						
+						<th colspan="1"><b>Opening Amount: ${openingBalanceForLedger}</b></th>                    
 						<th colspan="1"><b>Sales Total: ${totalDetails.salesAmtSum}</b></th>                    
 						<th colspan="1"><b>Payments Total: ${totalDetails.paymentAmtSum}</b></th>
 						<th colspan="1"><b>Difference Amount: ${totalDetails.differenceSum}</b></th>
