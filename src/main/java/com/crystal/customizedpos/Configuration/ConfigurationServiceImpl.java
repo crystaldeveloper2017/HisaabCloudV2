@@ -6081,6 +6081,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getFSMLedger(employeeId, fromDate,
 					toDate,appId, con);
 
+					
+			
+			String openingBalanceForLedger = lObjConfigDao.getOpeningBalanceForLedger(employeeId, "23/01/1992",getDateFromDBMinusOneDay(getDateASYYYYMMDD(fromDate),con),appId, con);
+
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"CustomerInvoiceHistory");
@@ -6103,7 +6107,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 				//totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
 				outputMap.put("totalDetails", totalDetails);
-
+				outputMap.put("openingBalanceForLedger", openingBalanceForLedger);
+				
 				outputMap.put("ListLedger", lst);
 				outputMap.put("employeeDetails", lObjConfigDao.getEmployeeDetails(Long.valueOf(employeeId), con));
 
