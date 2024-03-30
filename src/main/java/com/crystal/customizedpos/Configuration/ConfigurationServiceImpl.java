@@ -5942,7 +5942,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		
 
 		Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
-		totalDetails.put("openingAmount", openingAmount);
+		totalDetails.put("openingAmount", String.valueOf(openingAmount));
 		Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
 				+ Double.parseDouble(totalDetails.get("creditSum").toString());
 		totalDetails.put("totalAmount", String.format("%.2f", totalAmount));

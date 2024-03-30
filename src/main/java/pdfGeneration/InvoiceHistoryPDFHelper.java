@@ -2771,7 +2771,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 
 
-			cell = new PdfPCell(new Phrase("Opening Balance As on "+invoiceHistoryDetails.get("toDate"),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
+			cell = new PdfPCell(new Phrase("Opening Balance As on "+invoiceHistoryDetails.get("fromDate"),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
 			cell.setColspan(7);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -2780,9 +2780,12 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 			  String debitAmountString="";
 			  String creditAmountString="";
-		  double openingbalancedouble=Double.parseDouble( totalDetails.get("openingAmount"));
+			  Double s=Double.parseDouble(totalDetails.get("openingAmount"));
+
+			  double openingbalancedouble=s;
+
 			  if(openingbalancedouble<=0)
-			  {debitAmountString=String.valueOf(openingbalancedouble);}
+			  {debitAmountString=String.valueOf(openingbalancedouble*-1);}
 			  else
 			  {creditAmountString=String.valueOf(openingbalancedouble);}
 
@@ -2863,44 +2866,9 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			  
 	        }
 	        
-			cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			table.addCell(cell);
-	
-	  cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-	  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		table.addCell(cell);
-
-
-		cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		table.addCell(cell);
-
-		cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		table.addCell(cell);
-					cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			table.addCell(cell);
-	
-	
-
+			
 		        
-		        cell = new PdfPCell(new Phrase("Opening Balance",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        table.addCell(cell);
-		        
-		        cell = new PdfPCell(new Phrase(String.valueOf(totalDetails.get("openingAmount")),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        table.addCell(cell);
- 
+		       
 				
 	  
 				cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
@@ -2985,6 +2953,11 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        table.addCell(cell);
 
+					cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
+			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			        table.addCell(cell);
+
 					
 
 
@@ -3007,34 +2980,14 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			        table.addCell(cell);
 
 
-					cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					table.addCell(cell);
 	        
 	        
-			        cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			        table.addCell(cell);
-			        
-			      
-			      
-			        
-			        
-			        
-			       
-	        
-			        
-				        
-				        
-				       
-				  
+			 
 				        
 				        cell = new PdfPCell(new Phrase("Closing Balance As On :-"+invoiceHistoryDetails.get("toDate"),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
 				        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				        cell.setColspan(4);
+				        cell.setColspan(7);
 				        table.addCell(cell);
 				        
 				        String totalAmount=String.valueOf(totalDetails.get("totalAmount"));
@@ -3048,7 +3001,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				        }
 				        else
 				        {
-				        	debitTotal=String.valueOf(d);
+				        	debitTotal=String.valueOf(d*-1);
 				        }
 				        
 				        
