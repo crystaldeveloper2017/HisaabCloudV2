@@ -136,10 +136,14 @@
     - saveEmployeePayment
     - getEmployeePaymentRegister
     - deleteEmployeePayment
+    - showStoreMaster
+    - showAddStore
   reports:
     - 1
     - 2
   elements:
+    - 6
+    - 23
     - 700188
     - 700185
     - 700184
