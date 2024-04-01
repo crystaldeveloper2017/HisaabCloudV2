@@ -30,7 +30,7 @@
 		</div>
 		
 		<div class="col-sm-1" align="center">
-		<&nbsp>
+	
 			<label for="txttodate">To Date</label>
 		</div>
 		
@@ -48,7 +48,7 @@
 		
 		<div class="col-sm-2" align="center">
 			<div class="card-tools">
-				<div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
+				<div class="input-group input-group-sm" align="center" style="width: 580px;display:inherit">
 					<div class="icon-bar" style="font-size:22px;color:firebrick">
 						<a title="Download Excel" onclick="downloadExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a> 
  						<a title="Download PDF" onclick="exportSalesRegister2()"><i class="fa fa-file-pdf-o"></i></a>
@@ -121,7 +121,7 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 50,
+      "pageLength": 100,
       "order": [[ 2, 'desc' ]]
 
     });

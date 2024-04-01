@@ -4622,32 +4622,36 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
+
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
-
-		if (!fromDate.equals("")) {
-			request.getSession().setAttribute("fromDate", fromDate);
-			request.getSession().setAttribute("toDate", toDate);
-		} else {
-			fromDate = request.getSession().getAttribute("fromDate").toString();
-			toDate = request.getSession().getAttribute("toDate").toString();
-		}
-
-		HashMap<String, Object> hm = new HashMap<>();
-		hm.put("fromDate", fromDate);
-		hm.put("toDate", toDate);
 
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
+		if (fromDate.equals("")) {
+
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("fromDate", fromDate);
+		hm.put("toDate", toDate);
+
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		hm.put("app_id", appId);
+		
 
 		try {
 			String[] colNames = { "No", "customer_name", "customer_reference", "PendingAmount", "mobile_number",
 					"alternate_mobile_no", "city" };
 			int i = 0;
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPendingCustomerCollection(hm, con);
+			
+	
 			for (LinkedHashMap<String, Object> tempObj : lst) {
 				tempObj.put("No", ++i);
 			}
@@ -4655,11 +4659,17 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"PendingCustomerCollection");
+
 			} else {
 				outputMap.put("ListOfPendingCollection", lst);
+outputMap.put("txtfromdate",fromDate);
+outputMap.put("txttodate",toDate);
+
+
 				rs.setViewName("../PendingCustomerCollection.jsp");
 				rs.setReturnObject(outputMap);
 			}
+
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
