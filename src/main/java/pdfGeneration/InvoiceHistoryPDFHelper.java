@@ -2709,7 +2709,11 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  table.addCell(cell);	
 
 		  
-		  cell = new PdfPCell(new Phrase("Mobile No : "+customerDetails.get("mobile_number").toString()+" , "+customerDetails.get("alternate_mobile_no").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+		  String mobilenoString=customerDetails.get("mobile_number")==null?"":"Mobile No : "+customerDetails.get("mobile_number").toString();
+		  String alternateMobilenoString=customerDetails.get("alternate_mobile_no")==null?"":" , "+customerDetails.get("alternate_mobile_no").toString();
+		  
+
+		  cell = new PdfPCell(new Phrase(mobilenoString+alternateMobilenoString,new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
 		  cell.setBorder(Rectangle.BOTTOM);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
