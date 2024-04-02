@@ -2696,17 +2696,13 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);
 	        
 
-		  cell = new PdfPCell(new Phrase("To, M/S SHREE CONSTRUCTION CO. ",new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.BOLD)));	        
+		    cell = new PdfPCell(new Phrase(customerDetails.get("customer_name").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
 		  cell.setBorder(Rectangle.BOTTOM);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		  table.addCell(cell);	
-
-		  cell = new PdfPCell(new Phrase(customerDetails.get("address").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
-		  cell.setBorder(Rectangle.NO_BORDER);
-		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-		  table.addCell(cell);	
+	
+		 
 
 		  
 		  String mobilenoString=customerDetails.get("mobile_number")==null?"":"Mobile No : "+customerDetails.get("mobile_number").toString();
