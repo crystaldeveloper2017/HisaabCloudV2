@@ -1203,8 +1203,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  table.addCell(cell);
 
 
-				  String custom_rate=invoiceHistoryDetails.get("custom_rate").toString();
-				  String qtystring=invoiceHistoryDetails.get("qty").toString();
+				  String custom_rate=prod.get("custom_rate").toString();
+				  String qtystring=prod.get("qty").toString();
 				  Double amount=Double.valueOf(custom_rate)*Double.valueOf(qtystring);
 				  
 				  cell = new PdfPCell(new Phrase(String.valueOf(amount), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
@@ -2660,27 +2660,37 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
 			
+			String addressline1=storeDetails.get("address_line_1")==null?"":storeDetails.get("address_line_1").toString();
+
 			
-			cell = new PdfPCell(new Phrase(storeDetails.get("address_line_1").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+			
+			cell = new PdfPCell(new Phrase(addressline1,new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
 	        cell.setBorder(Rectangle.BOTTOM);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);	        
-		 
+	        table.addCell(cell);
+
+			String addressline2=storeDetails.get("address_line_2")==null?"":storeDetails.get("address_line_3").toString();
+
+			
 		  
-			cell = new PdfPCell(new Phrase(storeDetails.get("address_line_2").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+			cell = new PdfPCell(new Phrase(addressline2,new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
 		  cell.setBorder(Rectangle.NO_BORDER);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		  table.addCell(cell);	
+		  table.addCell(cell);
+
 		  String addressline3=storeDetails.get("address_line_3")==null?"":storeDetails.get("address_line_3").toString();
+
 		  cell = new PdfPCell(new Phrase(addressline3,new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
 		  cell.setBorder(Rectangle.NO_BORDER);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		  table.addCell(cell);	
+
 		String mobileno=storeDetails.get("mobile_no")==null?"":storeDetails.get("mobile_no").toString();
 		String reqmobileno="Phone No : "+mobileno;
+
 		  cell = new PdfPCell(new Phrase(reqmobileno,new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
 		  cell.setBorder(Rectangle.BOTTOM);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -2697,12 +2707,18 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        
 
 		    cell = new PdfPCell(new Phrase(customerDetails.get("customer_name").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
-		  cell.setBorder(Rectangle.BOTTOM);
+		  cell.setBorder(Rectangle.NO_BORDER);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		  table.addCell(cell);	
-	
-		 
+		  
+		  String address=customerDetails.get("address")==null?"":""+customerDetails.get("address").toString();
+
+		   cell = new PdfPCell(new Phrase(address,new Font(Font.FontFamily.TIMES_ROMAN, 11, Font.NORMAL)));	        
+		  cell.setBorder(Rectangle.NO_BORDER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		  table.addCell(cell);	
 
 		  
 		  String mobilenoString=customerDetails.get("mobile_number")==null?"":"Mobile No : "+customerDetails.get("mobile_number").toString();
