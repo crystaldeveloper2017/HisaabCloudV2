@@ -10354,6 +10354,68 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 	
+	public CustomResultObject exportFsmLedgerAsPDF(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String fromDate = request.getParameter("fromDate").toString();
+		String toDate = request.getParameter("toDate").toString();
+		String employeeId = request.getParameter("employeeId").toString();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		
+
+				List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getFSMLedger(employeeId, fromDate,
+				toDate,appId, con);
+
+		//LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+
+
+		
+		String startOfApplication = "23/01/1992";
+		String pendingAmount = lObjConfigDao
+				.getPendingAmountForThisCustomer(Long.valueOf(employeeId), startOfApplication, toDate, con)
+				.get("PendingAmount");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
+		
+
+		///Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+		//totalDetails.put("openingAmount", String.valueOf(openingAmount));
+	//	Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+	//			+ Double.parseDouble(totalDetails.get("creditSum").toString());
+	//	totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+	//	outputMap.put("totalDetails", totalDetails);
+	
+		outputMap.put("ShiftDetails", lObjConfigDao.getShiftDetails(outputMap, con));
+
+		LinkedHashMap<String, String> employeeDetails = lObjConfigDao.getEmployeeDetails(Long.valueOf(employeeId), con);
+
+		outputMap.put("fromDate", fromDate);
+		// outputMap.put("totalDetails",gettotalDetailsLedger(lst));
+		outputMap.put("employeeDetails", employeeDetails);
+		try {
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+			String appenders = "FsmLedger" + userId + employeeDetails.get("name").replaceAll(" ", "")
+					+ "(" + getDateASYYYYMMDD(fromDate) + ")" + ".pdf";
+			DestinationPath += appenders;
+			outputMap.put("ListOfItemDetails", lst);
+			String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+			new InvoiceHistoryPDFHelper().generatePDFForFsmLedger(DestinationPath,BufferedImagesFolder, outputMap, con);
+			outputMap.put("listReturnData", lst);
+			outputMap.put(filename_constant, appenders);
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
 	
 
 }

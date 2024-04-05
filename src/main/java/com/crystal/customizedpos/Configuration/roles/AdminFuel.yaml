@@ -138,6 +138,7 @@
     - deleteEmployeePayment
     - showStoreMaster
     - showAddStore
+    - exportFsmLedgerAsPDF
   reports:
     - 1
     - 2

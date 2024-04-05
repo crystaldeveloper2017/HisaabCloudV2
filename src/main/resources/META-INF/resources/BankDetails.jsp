@@ -425,6 +425,14 @@ body, html {
 </tr>
 </thead>
 <tbody>
+
+<tr>
+<td>Bank Name</td>
+<td>AU Small Finance Bank</td>
+</tr>
+
+
+
 <tr>
 <td>Beneficiary Name</td>
 <td>Crystal Developers</td>

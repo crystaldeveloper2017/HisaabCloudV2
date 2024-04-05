@@ -184,9 +184,9 @@
 
   
   function exportPDFForLedger()
-  {
-	  
-	  window.open("?a=exportEmployeeLedgerAsPDF&fromDate="+txtfromdate.value+"&toDate="+txttodate.value+"&employeeId="+hdnSelectedEmployee.value);
+{
+	
+	  window.open("?a=exportFsmLedgerAsPDF&fromDate="+txtfromdate.value+"&toDate="+txttodate.value+"&employeeId="+hdnSelectedEmployee.value);
 		return;
 
   }
