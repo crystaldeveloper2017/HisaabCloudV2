@@ -2963,7 +2963,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" + 
 		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
 		"where\n" + 
-		"tnr.app_id = ?\n" + 
+		"tnr.app_id = ? and tnr.activate_flag=1 \n" + 
 		"and accounting_date between ? and ?\n" + 
 		"and tum.user_id = ?\n" + 
 		"union all\n" + 

@@ -4002,7 +4002,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setReturnObject(outputMap);
 
-			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showStoreMaster'</script>");
+			rs.setAjaxData("<script>window.location='?a=showStoreMaster'</script>");
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
