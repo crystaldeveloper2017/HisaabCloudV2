@@ -2849,7 +2849,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
 		"where\n" + 
 		"tnr.app_id = ?\n" + 
-		"and accounting_date between ? and ?\n" + 
+		"and accounting_date between ? and ? and tnr.activate_flag=1\n" + 
 		"and tum.user_id = ?\n" + 
 		"union all\n" + 
 		"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date,'Nozzle' remarks,shift_name from\n" + 
