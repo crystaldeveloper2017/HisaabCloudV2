@@ -998,8 +998,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
 				  
-				  
-				  cell = new PdfPCell(new Phrase(prod.get("custom_rate").toString() ,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+				  double itemAmount=Double.valueOf(prod.get("custom_rate").toString()) * Double.valueOf(prod.get("qty").toString());
+				  cell = new PdfPCell(new Phrase(String.valueOf(itemAmount) ,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);			        
@@ -1039,31 +1039,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  if(!invoiceHistoryDetails.get("invoice_discount").toString().equals("0.00") && !invoiceHistoryDetails.get("invoice_discount").toString().equals("0.00"))
 		  {
 			   
-				cell = new PdfPCell(new Phrase("Discount",new Font (Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));     
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setColspan(5);
-				table.addCell(cell);
-				
-			  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("invoice_discount").toString()+"%",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));			        	
-			  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			  cell.setColspan(1);
-			  table.addCell(cell);
-			  
-			  
-			  
-			  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("invoice_discount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));			        	
-			  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			  cell.setColspan(1);
-			  table.addCell(cell);
-		  }
-
-
-		  if(!invoiceHistoryDetails.get("item_discount").toString().equals("0.00") && !invoiceHistoryDetails.get("item_discount").toString().equals("0.00"))
-		  {
-			   
-				cell = new PdfPCell(new Phrase("Item Discount",new Font (Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));     
+				cell = new PdfPCell(new Phrase("Discount",new Font (Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));     
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setColspan(5);
 				table.addCell(cell);
@@ -1076,7 +1052,31 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			  
 			  
 			  
-			  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("item_discount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));			        	
+			  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("invoice_discount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			  cell.setColspan(1);
+			  table.addCell(cell);
+		  }
+
+
+		  if(!invoiceHistoryDetails.get("item_discount").toString().equals("0.00") && !invoiceHistoryDetails.get("item_discount").toString().equals("0.00"))
+		  {
+			   
+				cell = new PdfPCell(new Phrase("Item Discount",new Font (Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));     
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setColspan(5);
+				table.addCell(cell);
+				
+			  cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			  cell.setColspan(1);
+			  table.addCell(cell);
+			  
+			  
+			  
+			  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("item_discount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 			  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			  cell.setColspan(1);
@@ -1112,6 +1112,15 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setColspan(7);
 		  table.addCell(cell);
+
+		  if(!invoiceHistoryDetails.get("remarks").toString().equals(""))
+		  {
+			cell = new PdfPCell(new Phrase("Remarks: "+invoiceHistoryDetails.get("remarks").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(7);
+			table.addCell(cell);
+		  }
 		  
 		  document.add(table);
 		  

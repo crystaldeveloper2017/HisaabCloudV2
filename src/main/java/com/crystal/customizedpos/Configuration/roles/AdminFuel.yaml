@@ -139,6 +139,7 @@
     - showStoreMaster
     - showAddStore
     - exportFsmLedgerAsPDF
+    - getRoleDetailsForthisUser
   reports:
     - 1
     - 2
