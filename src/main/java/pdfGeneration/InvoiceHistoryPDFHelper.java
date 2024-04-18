@@ -2942,7 +2942,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
 
-			String addressline2=storeDetails.get("address_line_2")==null?"":storeDetails.get("address_line_3").toString();
+			String addressline2=storeDetails.get("address_line_2")==null?"":storeDetails.get("address_line_2").toString();
 
 			
 		  

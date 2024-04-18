@@ -5682,7 +5682,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("notes"));
 		parameters.add(hm.get("coins"));
 
-		String insertQuery = "insert into trn_cash_to_vault values (default,?,?,?,?,sysdate(),1,?,?,?)";
+		String insertQuery = "insert into trn_cash_to_vault values (default,?,?,?,?,sysdate(),1,?,?,?,0)";
 
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 
@@ -6811,7 +6811,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			throws ParseException, ClassNotFoundException, SQLException {
 
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select date_format(accounting_date, '%d/%m/%Y')accountingDate from trn_cash_to_vault where accounting_date between ? and ?";
+		String query = "select *,date_format(accounting_date, '%d/%m/%Y')accountingDate from trn_cash_to_vault where accounting_date between ? and ? and is_verified=0";
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));
 
@@ -6897,7 +6897,15 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
-
+	public String receivedCashtovault(long submissionId, String userId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(userId);
+		parameters.add(submissionId);
+		insertUpdateDuablDB(
+				"UPDATE trn_cash_to_vault SET is_verified=1,updated_by=?,updated_date=sysdate() WHERE submission_id=?",
+				parameters, conWithF);
+		return "Vault Received Succesfully";
+	}
 	
 
 }

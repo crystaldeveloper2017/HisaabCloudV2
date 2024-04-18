@@ -476,11 +476,6 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCheckinRegister"
   orderNo: 1
-- elementId: 700183
-  elementName: "Cash To Vault Report "
-  parentElementId: 26
-  elementUrl: "?a=showReport&report_id=1"
-  orderNo: 3
 - elementId: 700184
   elementName: "General Ledger (Item) "
   parentElementId: 26
@@ -506,3 +501,8 @@ elements:
   parentElementId: 700165
   elementUrl: "?a=showEmployeePayment"
   orderNo: 3
+- elementId: 700189
+  elementName: "Cash To Vault Report"
+  parentElementId: 26
+  elementUrl: "?a=showCashToVaultRegister"
+  orderNo: 1

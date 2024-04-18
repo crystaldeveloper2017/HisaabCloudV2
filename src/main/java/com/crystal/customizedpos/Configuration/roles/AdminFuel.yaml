@@ -140,6 +140,8 @@
     - showAddStore
     - exportFsmLedgerAsPDF
     - getRoleDetailsForthisUser
+    - showCashToVaultRegister
+    - receivedCashtovault
   reports:
     - 1
     - 2
@@ -205,3 +207,4 @@
     - 19
     - 25
     - 700201
+    - 700189
