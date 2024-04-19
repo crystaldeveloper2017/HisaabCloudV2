@@ -112,7 +112,8 @@
     - showUserDetails
     - showCollectPayment
     - savePayment
-   
+    - showAddPumpTest
+    - addPumpTest
   elements:
     - 24
     - 700138
@@ -147,7 +148,6 @@
     - 700174
     - 700175
     - 700176
-    - 700119
     - 700137
     - 700129
     - 700130
@@ -163,3 +163,4 @@
     - 700184
     - 700195
     - 700197
+    - 700201

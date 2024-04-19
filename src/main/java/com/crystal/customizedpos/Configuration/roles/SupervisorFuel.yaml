@@ -28,6 +28,8 @@
     - showPaytmTransctions
     - generateDailyPaymentRegister
     - showUserDetails
+    - getAttendantsForDateAndShift
+    - getAttendantsForDateAndShiftUnclubbed
   elements:
     - 700178
     - 700181
