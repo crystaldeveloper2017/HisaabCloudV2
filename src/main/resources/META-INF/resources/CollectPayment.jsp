@@ -288,8 +288,8 @@ if('${param.type}'=="debit")
 	}
 else
 	{
-		document.getElementById("divTitle").innerHTML="Collect Payment";
-		document.title +=" Collect Payment ";
+		document.getElementById("divTitle").innerHTML="Collect Payment From Customer";
+		document.title +=" Collect Payment From Customer";
 	}
 	
 	

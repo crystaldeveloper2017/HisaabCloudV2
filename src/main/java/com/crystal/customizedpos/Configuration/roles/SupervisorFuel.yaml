@@ -30,6 +30,7 @@
     - showUserDetails
     - getAttendantsForDateAndShift
     - getAttendantsForDateAndShiftUnclubbed
+    - exportNozzleRegister
   elements:
     - 700178
     - 700181

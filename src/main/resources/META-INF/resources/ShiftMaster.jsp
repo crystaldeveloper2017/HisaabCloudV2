@@ -118,7 +118,7 @@ function addShift()
                      <th><b>Shift Id</b></th>
                      <th><b>Shift Name</b></th>
                      <th><b>From  Time</b></th>
-                     <th><b>To Name</b></th>
+                     <th><b>To Time</b></th>
                      
                      
                      <th></th><th></th>

@@ -123,9 +123,6 @@ function resetPassword(employeeId)
 
 
 
-
-
-
            <div class="card-header">    
                 
                 
@@ -135,6 +132,8 @@ function resetPassword(employeeId)
                   </div>
                 </div>
                 
+
+
                 <div class="card-tools">
                   <div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
                     <div class="icon-bar" style="font-size:22px;color:firebrick">
@@ -146,30 +145,37 @@ function resetPassword(employeeId)
                 </div>
                 
                 
-                
-                
-                
 
                 
               </div>
               
               
-              
-              
-              
-              
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 580px;">                
+              <div class="card-body table-responsive p-0" style="height: 800px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
-                     <th><b>Employee Id</b></th> <th><b>User Name</b></th><th><b>Employee Name</b></th><th><b>Mobile Number</b></th><th><b>Email</b></th><th><b>Store</b></th><th></th><th></th>
+                     <th><b>Employee Id</b> </th>
+					
+					  <th><b>User Name</b></th>
+					  <th><b>Employee Name</b></th>
+					  <th><b>Mobile Number</b></th>
+					  <th><b>Email</b></th>
+					  <th><b>Store</b></th>
+					  <th></th><th></th><th></th>
                     </tr>
                   </thead>
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-						<td>${item.user_id}</td><td>${item.username}</td><td>${item.name}</td><td>${item.mobile}</td><td>${item.email}</td><td>${item.store_name}</td><td><a href="?a=showAddEmployee&employeeId=${item.user_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteEmployee('${item.user_id}')">Delete</button></td>
+						<td>${item.user_id}</td>
+						<td>${item.username}</td>
+						<td>${item.name}</td>
+						<td>${item.mobile}</td>
+						<td>${item.email}</td>
+						<td>${item.store_name}</td>
+						
+						<td><a href="?a=showAddEmployee&employeeId=${item.user_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteEmployee('${item.user_id}')">Delete</button></td>
 						<td><button class="btn btn-primary" onclick="resetPassword('${item.user_id}')">Reset Password</button></td>
 					</tr>
 				</c:forEach>
@@ -187,9 +193,11 @@ function resetPassword(employeeId)
 
 
 
+
+
 <script >
   $(function () {
-    
+
     $('#example1').DataTable({
       "paging": true,      
       "lengthChange": false,
@@ -198,11 +206,13 @@ function resetPassword(employeeId)
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 50
+      "pageLength": 100
+	  
     });
   });
   
-  document.getElementById("divTitle").innerHTML="Employee Master";
+  
+ document.getElementById("divTitle").innerHTML="Employee Master";
   document.title +=" Employee Master ";
   
 </script>

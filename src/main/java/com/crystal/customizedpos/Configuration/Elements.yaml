@@ -210,7 +210,7 @@ elements:
   elementUrl: "?a=showStoreMaster"
   orderNo: 1
 - elementId: 24
-  elementName: "Collect Payment"
+  elementName: "Collect Payment From Customer"
   parentElementId: 3
   elementUrl: "?a=showCollectPayment"
   orderNo: 1

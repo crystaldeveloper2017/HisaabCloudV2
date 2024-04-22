@@ -318,13 +318,7 @@ function deleteAttachment(id)
   
   
   
-  <div class="col-sm-2">
-  	<div class="form-group">
-      <label for="email">Composite Items</label>
-      <input type="button" type="button" class="btn btn-primary" onclick='window.location="?a=showCompositeMapping&itemId=${itemDetails.item_id}"' value="Configure">
-    </div>
-  </div>
-  
+
   
   <div class="col-sm-12">
   	<div class="form-group">

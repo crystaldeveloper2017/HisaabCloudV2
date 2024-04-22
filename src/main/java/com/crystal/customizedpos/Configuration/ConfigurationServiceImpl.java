@@ -5081,11 +5081,12 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		outputMap.put("app_id", appId);
+	
 
 		try {
 
-			String[] colNames = { "EmployeeId", "EmployeeName", "EmployeeRole", "MobileNumber" };
+			String[] colNames = { "user_id", "username", "name", "mobile","email","store_name" };
+			outputMap.put("app_id", appId);
 
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getEmployeeMaster(outputMap, con);
 
