@@ -114,6 +114,7 @@
     - savePayment
     - showAddPumpTest
     - addPumpTest
+    - exportNozzleRegister
   elements:
     - 24
     - 700138

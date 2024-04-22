@@ -110,7 +110,7 @@ function saveSubmitCash()
   <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Notes</label>
-      <input type="text" class="form-control" onkeyup=calculateTotal() id="notes" value="${collectionData}"  placeholder="eg. 500" name="notes" >
+      <input type="text" class="form-control" onkeyup=calculateTotal() id="notes" value="${collectionData}"  placeholder="eg. 500" name="notes" onfocus="this.select()" >
       <input type="hidden" name="hdnSupervisorId" value="${SupervisorDetails.supervisor_id}" id="hdnSupervisorId">
     </div>
   </div>
@@ -118,7 +118,7 @@ function saveSubmitCash()
   <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Coins</label>
-      <input type="tel" class="form-control" onkeyup=calculateTotal()  onkeypress='digitsOnly(event)' id="coins" value="0"  placeholder="eg. 500" name="coins">
+      <input type="tel" class="form-control" onkeyup=calculateTotal()  onkeypress='digitsOnly(event)' id="coins" value="0"  placeholder="eg. 500" name="coins" onfocus="this.select()">
     </div>
   </div>  
   
