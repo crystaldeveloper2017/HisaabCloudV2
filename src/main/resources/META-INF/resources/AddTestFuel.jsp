@@ -120,7 +120,7 @@ function addTestFuel()
   	<div class="form-group">
       
     <label for="email">Shift Name</label>  
-      <select class="form-control form-control-sm" name="drpshiftid" id="drpshiftid" onchange="getAttendantList()">
+      <select class="form-control form-control-sm" name="drpshiftid" id="drpshiftid" onchange="getAttendantList()" >
       <option value="-1">----------Select----------</option>
       <c:forEach items="${lstOfShifts}" var="shift">
 			    <option value="${shift.shift_id}">${shift.shift_name}~${shift.from_time}~${shift.to_time}~0</option>    
@@ -231,7 +231,7 @@ function getAttendantList()
   	  	<div class="form-group">
         <label for="email">attendantNameGoesHere (Nozzle No : nozzleNoGoesHere)</label>
         
-        <input type="text" value="0" name="nameAmounts" class="form-control" id="idGoesHere">
+        <input type="text" value="0" name="nameAmounts" onfocus="this.select()" class="form-control" id="idGoesHere">
         
              
   	   </select>
