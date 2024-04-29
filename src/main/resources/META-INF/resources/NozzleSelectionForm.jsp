@@ -75,8 +75,8 @@
 		<input type="hidden" name="user_id" value="${userdetails.user_id}">
 		<input type="hidden" name="callerUrl" id="callerUrl" value="">
 
-		<div class="row">
-			<div class="col-3">
+	
+			<div class="col-12">
 				<div class="form-group">
 					<label for="email">Nozzle Name</label> <input type="text"
 						class="form-control" readonly
@@ -87,7 +87,7 @@
 				</div>
 			</div>
 
-			<div class="col-3">
+			<div class="col-12">
 				<div class="form-group">
 					<label for="email">Previous Closing Reading</label> <input
 						type="text" class="form-control" id="txtclosingreading"
@@ -97,7 +97,7 @@
 
 			</div>
 			
-			<div class="col-3">
+			<div class="col-12">
 				<div class="form-group">
 					<label for="email">Previous Totalizer Reading</label> <input
 						type="text" class="form-control" id="txttotalizerclosingreading" 
@@ -108,7 +108,7 @@
 			</div>
 			
 			
-			<div class="col-3">
+			<div class="col-12">
 				<div class="form-group">
 					<label for="email">Opening Reading</label> <input type="text"
 						class="form-control" id="opening_reading"
@@ -121,7 +121,7 @@
 			
 			
 
-<div class="col-3">
+<div class="col-12">
 				<div class="form-group">
 					<label for="email">Totalizer Opening Amount</label> <input type="text"
 						class="form-control" id="totalizer_opening_reading" 
@@ -134,7 +134,7 @@
 
 			
 
-			<div class="col-3">
+			<div class="col-12">
 				<div class="form-group">
 					<label for="accountingDate">Date</label> <input type="text"
 						readonly class="form-control" id="accountingDate" placeholder=""
@@ -147,7 +147,7 @@
 
 			
 
-			<div class="col-3">
+			<div class="col-12">
 				<div class="form-group">
 					<label for="email">Fuel Price</label> <input type="text"
 						class="form-control" id="itemPrice" readonly value="${itemPrice}"
@@ -161,7 +161,7 @@
 			
 
 
-<div class="col-3">
+<div class="col-12">
 				<div class="form-group">
 					<label for="email">Choose Shift</label> <select
 						class="form-control" name="drpshift" id="drpshift">
@@ -178,7 +178,7 @@
 			</div>
 
 
-			<div class="col-3">
+			<div class="col-12">
 				<div class="form-group">
 					<label for="email">Attendant Name</label> <select
 						class="form-control" name="drpattendantid" id="drpattendantid">
@@ -204,7 +204,7 @@
 		
 				
 		
-</div>
+
 </form>
 
 
