@@ -36,7 +36,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">1. Nozzle Check In </span>
+                <span class="info-box-text">1. Nozzle Check In / Check out</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -49,7 +49,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">2. Add Test Fuel</span>
+                <span class="info-box-text">2 .Collect Drops from Attendant</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -95,7 +95,7 @@
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">4. Collect Drops from Attendant</span>
+                <span class="info-box-text">4. Nozzle Register </span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -108,7 +108,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">5. Submit Cash To Vault</span>
+                <span class="info-box-text">5. Add Test Fuel</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -125,7 +125,7 @@
               <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">6. Lube Sales </span>
+                <span class="info-box-text">6. Add Expense</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -139,7 +139,7 @@
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">7. Collect Paytm From Attendant </span>
+                <span class="info-box-text">7. Stock Status</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -156,7 +156,7 @@
               <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">8. Card Payment Receipt</span>
+                <span class="info-box-text">8. Collect Payment</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -169,7 +169,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">9. Nozzle Check Out </span>
+                <span class="info-box-text">9. Submit Cash To Vault</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -182,7 +182,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">10. Nozzle Register </span>
+                <span class="info-box-text">10. Collect Paytm From Attendant </span>
                 
               </div>
               <!-- /.info-box-content -->
