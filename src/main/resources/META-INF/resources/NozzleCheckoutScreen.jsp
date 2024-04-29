@@ -82,7 +82,7 @@ function deleteAttachment(id)
 <input type="hidden" name="user_id" value="${userdetails.user_id}">
 <input type="hidden" name="callerUrl" id="callerUrl" value="">
 
-<div class="row">
+
   <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Nozzle Name</label>
@@ -92,7 +92,7 @@ function deleteAttachment(id)
     </div>
     </div>
     
-    <div class="col-sm-6">
+    <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Opening Reading</label>
       <input type="text" class="form-control" id="txtopeningreading" readonly value="${nozzleDetails.opening_reading}"   name="fuelName">      
@@ -101,7 +101,7 @@ function deleteAttachment(id)
     
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Totalizer Opening Amount</label>
       <input type="text" class="form-control" id="txttotalizeropeningamount" readonly value="${nozzleDetails.totalizer_opening_reading}"   name="fuelName">      
@@ -115,16 +115,16 @@ function deleteAttachment(id)
 
   
   
-  <div class="col-sm-3">
+  <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Input Closing Reading</label>
-      <input type="text" onkeyup="calculateExpectedTotalizer()" class="form-control" id="closing_reading" autocomplete="false"  name="closing_reading">      
+      <input type="tel" onkeyup="calculateExpectedTotalizer()" class="form-control" id="closing_reading" autocomplete="false"  name="closing_reading">      
     </div>
     
     
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Price</label>
       <input type="text" class="form-control" id="txtprice" readonly autocomplete="false"  name="txtprice" value="${nozzleDetails.price }">      
@@ -133,7 +133,7 @@ function deleteAttachment(id)
     
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Sale</label>
       <input type="text" class="form-control" id="txtsale" readonly autocomplete="false"  name="txtsale" readonly>      
@@ -142,7 +142,7 @@ function deleteAttachment(id)
     
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Expected Totalizer Amount</label>
       <input type="text" class="form-control" readonly autocomplete="false"  name="txtexpectedtotalizeramount" id="txtexpectedtotalizeramount" value="0">      
@@ -151,10 +151,10 @@ function deleteAttachment(id)
     
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Closing Totalizer Amount</label>
-      <input type="text" class="form-control" id="closing_totalizer_amount" autocomplete="false"  name="closing_totalizer_amount">      
+      <input type="tel" class="form-control" id="closing_totalizer_amount" autocomplete="false"  name="closing_totalizer_amount">      
     </div>
     
     
@@ -172,7 +172,7 @@ function deleteAttachment(id)
 
 		
 		
-</div>
+
 </form>
 
 <script >

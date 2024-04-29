@@ -320,7 +320,7 @@ function getAttendantList()
   	  	<div class="form-group">
         <label for="email">attendantNameGoesHere</label>
         
-        <input type="text" onkeyup="calculateTotal()" value="0" name="nameAmounts" onfocus="this.select()" class="form-control" id="idGoesHere">
+        <input type="tel" onkeyup="calculateTotal()" value="0" name="nameAmounts" onfocus="this.select()" class="form-control" id="idGoesHere">
         
              
   	   </select>

@@ -15,16 +15,16 @@
 	   </c:forEach>	 	   	   	
 </datalist>
 
-<div class="row">
 
-<div class="col-sm-2">
+
+<div class="col-sm-12">
   	<div class="form-group">
   	<label for="email">Date</label>	
   		<input type="text" id="txtdate" name="txtdate" class="form-control  form-control-sm" value="${todaysDate}" placeholder="Date" readonly/>
   	</div>
   </div>
 
-<div class="col-sm-6">
+<div class="col-sm-12">
   	<div class="form-group"> 
   	<label for="email">Customer Name</label> 
   	  	<div class="input-group input-group-sm">
@@ -40,14 +40,14 @@
 	
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-12">
   	<div class="form-group"> 
   	<label for="email">Current Balance</label>     
       <input type="text" class="form-control form-control-sm" id="txtpendingamount" readonly=true >          
     </div>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-12">
   	<div class="form-group">
   	
   	<c:if test="${param.type eq 'debit'}">
@@ -58,7 +58,7 @@
   		<label for="email">Credit Amount</label>
   	</c:if>
   	     
-      <input type="text" class="form-control form-control-sm" id="txtpayamount" >          
+      <input type="tel" class="form-control form-control-sm" id="txtpayamount" >          
     </div>
   </div>
   
@@ -74,7 +74,7 @@
   
   
   <c:if test="${param.type ne 'debit'}">  		
-	  <div class="col-sm-3">
+	  <div class="col-sm-12">
 	  	<div class="form-group"> 
 	  	<label for="email">Payment Mode</label>
 	  	
@@ -95,25 +95,20 @@
   </c:if>
   
   
-    <div class="col-sm-3">
+    <div class="col-sm-12">
   	<div class="form-group"> 
   	<label for="email">Remarks</label>     
                    <input type="txtremarks" class="form-control form-control-sm" id="txtremarks" >          
                 
     </div>
   </div>
-  
-  <div class="col-sm-12">
-  	 <div class="form-group" align="center">
+
   	 	
   	 		  
 	   	<button class="btn btn-success" type="button" id="btnsavepayment" onclick='savePayment()'>Save</button>   
 	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
-   </div>
-   </div>
- 
-  
-  </div>
+
+
 
 
 <script >

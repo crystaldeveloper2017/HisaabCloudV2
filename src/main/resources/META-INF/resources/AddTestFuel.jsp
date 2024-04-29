@@ -231,7 +231,7 @@ function getAttendantList()
   	  	<div class="form-group">
         <label for="email">attendantNameGoesHere (Nozzle No : nozzleNoGoesHere)</label>
         
-        <input type="text" value="0" name="nameAmounts" onfocus="this.select()" class="form-control" id="idGoesHere">
+        <input type="tel" value="0" name="nameAmounts" onfocus="this.select()" class="form-control" id="idGoesHere">
         
              
   	   </select>

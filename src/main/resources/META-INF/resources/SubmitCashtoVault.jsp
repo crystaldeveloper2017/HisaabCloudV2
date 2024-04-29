@@ -110,7 +110,7 @@ function saveSubmitCash()
   <div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Notes</label>
-      <input type="text" class="form-control" onkeyup=calculateTotal() id="notes" value="${collectionData}"  placeholder="eg. 500" name="notes" onfocus="this.select()" >
+      <input type="tel" class="form-control" onkeyup=calculateTotal() id="notes" value="${collectionData}"  placeholder="eg. 500" name="notes" onfocus="this.select()" onkeypress='digitsOnly(event)' >
       <input type="hidden" name="hdnSupervisorId" value="${SupervisorDetails.supervisor_id}" id="hdnSupervisorId">
     </div>
   </div>
