@@ -1,7 +1,6 @@
 - roleId: 13
   roleName: "AdminFuel"
   actions:
-    - showAddExpense
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin
@@ -142,6 +141,7 @@
     - getRoleDetailsForthisUser
     - showCashToVaultRegister
     - receivedCashtovault
+    - addExpenseNew
   reports:
     - 1
     - 2

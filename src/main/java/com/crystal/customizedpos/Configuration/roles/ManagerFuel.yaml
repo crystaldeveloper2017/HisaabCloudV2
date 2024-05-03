@@ -1,7 +1,7 @@
 - roleId: 14
   roleName: "ManagerFuel"
   actions:
-    - showAddExpense
+    - addExpenseNew
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin

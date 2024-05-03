@@ -44,7 +44,7 @@
             <!-- /.info-box -->
           </div>
           
-            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showAddTestFuel'">
+            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Cash'">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
@@ -90,7 +90,7 @@
             <!-- /.info-box -->
           </div>
           
-         <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Cash'">
+         <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showNozzleRegister'">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>
 
@@ -103,7 +103,7 @@
             <!-- /.info-box -->
           </div>
 
-          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showSubmitCashtoVault'">
+          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showAddTestFuel'">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
@@ -120,7 +120,7 @@
 
 
           
-          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showGenerateInvoice'">
+          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showAddExpense'">
             <div class="info-box">
               <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 
@@ -134,7 +134,7 @@
           </div>
 
 
-<div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Paytm'"> 
+<div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showStockStatus'"> 
             <div class="info-box">
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>
 
@@ -151,7 +151,7 @@
 
           <!-- fix for small devices only -->
 
-           <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showGenerateInvoice'">
+           <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPayment'">
             <div class="info-box">
               <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 
@@ -164,7 +164,7 @@
             <!-- /.info-box -->
           </div>
 
-            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCheckInScreen'">
+            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showSubmitCashtoVault'">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
@@ -177,7 +177,7 @@
             <!-- /.info-box -->
           </div>
           
-           <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showNozzleRegister'">
+           <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Paytm'">
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 

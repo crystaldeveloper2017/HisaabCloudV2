@@ -31,6 +31,8 @@
     - getAttendantsForDateAndShift
     - getAttendantsForDateAndShiftUnclubbed
     - exportNozzleRegister
+    - addExpenseNew
+    - showAddExpense
   elements:
     - 700178
     - 700181
