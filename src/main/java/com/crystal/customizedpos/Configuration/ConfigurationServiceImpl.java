@@ -6085,13 +6085,16 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					
 			
 			String openingBalanceForLedger = lObjConfigDao.getOpeningBalanceForLedger(employeeId, "23/01/1992",getDateFromDBMinusOneDay(getDateASYYYYMMDD(fromDate),con),appId, con);
-
+			openingBalanceForLedger=openingBalanceForLedger==null?"0":openingBalanceForLedger;
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"CustomerInvoiceHistory");
 			} else {
 
 				LinkedHashMap<String, Object> totalDetails = gettotalDetailsFSMLedger(lst);
+
+				double differenceSum=Double.valueOf(openingBalanceForLedger) - Double.valueOf(totalDetails.get("salesAmtSum").toString()) + Double.valueOf(totalDetails.get("paymentAmtSum").toString());
+				totalDetails.put("differenceSum", differenceSum);
 				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 
 				Calendar cal = Calendar.getInstance();
@@ -6301,7 +6304,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		reqHM.put("salesAmtSum", String.format("%.2f", debitSum));
 		reqHM.put("paymentAmtSum", String.format("%.2f", creditSum));
-		reqHM.put("differenceSum", String.format("%.2f", creditSum - debitSum));
+		//reqHM.put("differenceSum", String.format("%.2f", creditSum - debitSum));
 		return reqHM;
 	}
 
