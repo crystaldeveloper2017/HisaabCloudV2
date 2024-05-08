@@ -247,6 +247,7 @@
     - showUserDetails
     - generateInvoicePDFBattery
     - showCustomerLedgerWithItem
+    - exportCustomerLedgerWithItemAsPDF
   elements:
     - 700184
     - 700181

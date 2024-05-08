@@ -120,7 +120,6 @@
     - showStockRegister
     - generateStockRegister
     - showInvoices
-    - generateDailyInvoiceReport
     - showAddPumpTest
     - addPumpTest
     - exportNozzleRegister
@@ -142,6 +141,7 @@
     - showCashToVaultRegister
     - receivedCashtovault
     - addExpenseNew
+    - showDailyInvoiceReportParameter
   reports:
     - 1
     - 2
