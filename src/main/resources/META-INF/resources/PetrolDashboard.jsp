@@ -29,173 +29,117 @@
 
 <div class="row">
 
+    <div class="col-12 col-sm-6">
 
+     <div class="info-box mb-3 " onclick="window.location='?a=showCheckInScreen'">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+				                  <div class="info-box-content">
+								   <span class="info-box-text">1.Nozzle Check In / Check out</span>
+								    </div>
 
-  <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCheckInScreen'">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">1. Nozzle Check In / Check out</span>
-                
               </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          
-            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Cash'">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">2 .Collect Drops from Attendant</span>
-                
               </div>
-              <!-- /.info-box-content -->
 
+    <div class="col-12 col-sm-6">
 
+ <div class="info-box mb-3 " onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Cash'">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+				                  <div class="info-box-content">
+								   <span class="info-box-text">2 .Collect Drops from Attendant</span>
+								    </div>
 
-
-
-            </div>
-
-            
-
-            
-            <!-- /.info-box -->
-
-
-            
-
-            
-
-            
-          </div>
-
+              </div>
+           </div>
           
-          
+    <div class="col-12 col-sm-6">
 
-
-          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showGenerateInvoice'">
-            <div class="info-box">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
-
-              <div class="info-box-content">
+          <div class="info-box mb-3" onclick="window.location='?a=showGenerateInvoice'">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+                	<div class="info-box-content">
                 <span class="info-box-text">3. Generate Sales Invoice</span>
-                
-              </div>
-              <!-- /.info-box-content -->
+
+                       </div>
             </div>
-            <!-- /.info-box -->
-          </div>
-          
-         <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showNozzleRegister'">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">4. Nozzle Register </span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-
-          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showAddTestFuel'">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">5. Add Test Fuel</span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-
-            <!-- /.info-box -->
-
-          </div>
+             </div>
 
 
-          
-          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showAddExpense'">
-            <div class="info-box">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">6. Add Expense</span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-
-
-<div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showStockStatus'"> 
-            <div class="info-box">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-inr"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">7. Stock Status</span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-        
-          <!-- /.col -->
-
-          <!-- fix for small devices only -->
-
-           <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPayment'">
-            <div class="info-box">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-pencil-square-o"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">8. Collect Payment</span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-
-            <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showSubmitCashtoVault'">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">9. Submit Cash To Vault</span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          
-           <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Paytm'">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">10. Collect Paytm From Attendant </span>
-                
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          
-          
             
 
+
+              <div class="col-12 col-sm-6">
+
+          <div class="info-box mb-3" onclick="window.location='?a=showAddTestFuel'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">4. Add Test Fuel</span>
+                
+              </div>
+            </div>
+
+          </div>
+
+
+        
+         
+               <div class="col-12 col-sm-6">
+
+           <div class="info-box mb-3" onclick="window.location='?a=showCollectPayment'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+              
+              <div class="info-box-content">
+                <span class="info-box-text">5. Collect Payment</span>
+                
+              </div>
+            </div>
+          </div>
+
+
+
+                <div class="col-12 col-sm-6">
+            <div class="info-box mb-3" onclick="window.location='?a=showSubmitCashtoVault'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">6. Submit Cash To Vault</span>
+                
+              </div>
+            </div>
+          </div>
+
+
+               <div class="col-12 col-sm-6">
+           <div class="info-box mb-3" onclick="window.location='?a=showCollectPaymentSupervisor&collection_mode=Paytm'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">7. Collect Paytm From Attendant </span>
+                
+              </div>
+            </div>
+          </div>
           
-          
-           
+             
+ 
+              <div class="col-12 col-sm-6">
+
+         <div class="info-box mb-3 " onclick="window.location='?a=showNozzleRegister'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">8. Nozzle Register </span>
+                
+              </div>
+            </div>
+          </div>
+
+
+        
+
+
+
+
+    
           <div class="clearfix hidden-md-up"></div>
 
           <!-- /.col -->
@@ -218,8 +162,7 @@
 	
 	
 		<div class="col-lg-3 col-6" onclick="window.location='?a=showNozzleMaster'">
-            <!-- small box -->
-            <div class="small-box bg-info">
+            <div class="small-box bg-success">
               <div class="inner">
               
               
@@ -238,7 +181,7 @@
           <!-- ./col -->
           <div class="col-lg-3 col-6" onclick="window.location='?a=showDispenserMaster'">
             <!-- small box -->
-            <div class="small-box bg-success">
+            <div class="small-box bg-warning">
               <div class="inner">
                 <h3>${dispenserCount}</h3>
 
@@ -253,7 +196,7 @@
           <!-- ./col -->
           <div class="col-lg-3 col-6" onclick="window.location='?a=showCustomerMaster'">
             <!-- small box -->
-            <div class="small-box bg-warning">
+            <div class="small-box bg-danger">
               <div class="inner">
                 <h3>${customerCount}</h3>
 
@@ -268,7 +211,7 @@
           
           <div class="col-lg-3 col-6" onclick="window.location='?a=showDailyInvoiceReportParameter'">
             <!-- small box -->
-            <div class="small-box bg-danger">
+            <div class="small-box bg-info">
               <div class="inner">
                 <h3>${invoiceCount}</h3>
                 <p>Total Sales Invoices</p>
@@ -283,7 +226,7 @@
           
           <div class="col-lg-3 col-6" onclick="window.location='?a=showVehicleMaster'">
             <!-- small box -->
-            <div class="small-box bg-info">
+            <div class="small-box bg-success">
               <div class="inner">
                 <h3>${vehicleCount}</h3>
                 <p>Total Vehicles</p>
