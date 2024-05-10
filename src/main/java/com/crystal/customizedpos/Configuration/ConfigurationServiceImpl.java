@@ -5536,7 +5536,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		TreeMap<String, Object> salesEmpWiseMap = getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
 		TreeMap<String, Object> paymentEmpWiseMap = getEmployeeWiseTotalPaymentAmount(lstPaymentsOld);
 
-		String cashAgainstPumpTest = lObjConfigDao.getPumpTestEquivalentCash(fromDate, shiftid, con).get("CashAmount");
+		String cashAgainstPumpTest = lObjConfigDao.getPumpTestEquivalentCash(fromDate, shiftid,appId, con).get("CashAmount");
 
 		outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
 		outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);

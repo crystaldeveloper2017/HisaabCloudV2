@@ -6170,18 +6170,19 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				con);
 	}
 
-	public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date, String shiftId,
+	public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date, String shiftId,String appId,
 			Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(getDateASYYYYMMDD(collection_date));
+		parameters.add((appId));
 
 		String query = "select \r\n"
 				+ "\r\n"
 				+ "sum( tsc.item_price * test_quantity) as CashAmount from trn_test_fuel_register tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2,nozzle_master nm  \r\n"
 				+ "where test_date=? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.user_id and nm.nozzle_id=tsc.nozzle_id \r\n"
 				+ "and \r\n"
-				+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' ";
+				+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' and tsc.app_id=? ";
 
 		if (!shiftId.equals("-1")) {
 			query += " and tsc.shift_id=?";
