@@ -6906,6 +6906,32 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				parameters, conWithF);
 		return "Vault Received Succesfully";
 	}
-	
+	public List<LinkedHashMap<String, Object>> getItemMasterFuel(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query = "select item.*,cat.*,stock.*,"
+				+ " case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath "
+				+ "from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join "
+				+ " tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image' "
+				+ " left outer join stock_status stock on stock.item_id=item.item_id and stock.store_id=? "
+				+ " where item.activate_flag=1 and item.app_id=? and cat.app_id=item.app_id and cat.category_name='fuel'";
+
+		parameters.add(hm.get("store_id"));
+		parameters.add(hm.get("app_id"));
+
+		if (hm.get("searchInput") != null && !hm.get("searchInput").equals("")) {
+			parameters.add("%" + hm.get("searchInput") + "%");
+			parameters.add("%" + hm.get("searchInput") + "%");
+			query += " and (product_code like ? or item_name like ?)";
+		}
+
+		if (hm.get("categoryId") != null && !hm.get("categoryId").equals("-1") && !hm.get("categoryId").equals("")) {
+			parameters.add(hm.get("categoryId"));
+			query += " and parent_category_id=? ";
+		}
+		query += " group by item.item_id";
+		query += " order by item_name";
+		return getListOfLinkedHashHashMap(parameters, query, con);
+	}
 
 }

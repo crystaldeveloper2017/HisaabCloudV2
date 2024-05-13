@@ -4,13 +4,16 @@
            
 
 
+<c:set var="listOfItems" value='${requestScope["outputObject"].get("listOfItems")}' />
+
 <c:set var="lstCustomerMaster" value='${requestScope["outputObject"].get("lstCustomerMaster")}' />
 <c:set var="vehicleDetails" value='${requestScope["outputObject"].get("vehicleDetails")}' />
 
 
 
 
-   
+
+
 
 
 
@@ -102,7 +105,8 @@ function addVehicle()
 	   </c:forEach></select>     
     </div>
 
-    <div class="col-sm-12">
+
+	<div class="col-sm-12">
   	<div class="form-group">
       <label for="email">Vehicle Name *</label>
       <input type="text" class="form-control" id="vehicleName" value="${vehicleDetails.vehicle_name}"  placeholder="Vehicle Name" name="vehicleName">
@@ -117,7 +121,22 @@ function addVehicle()
     </div>
   </div>
   
-    <div class="col-sm-12">
+  
+  <div class="col-sm-12">
+  	<div class="form-group">
+      <label for="email">Preferred Fuel Type *</label>
+      
+      <select class="form-control" name="drpfueltype" id="drpfueltype">
+      <c:forEach items="${listOfItems}" var="item">
+			    <option value="${item.item_id}">${item.item_name}</option>			    
+	   </c:forEach></select>
+            
+    </div>
+  </div>
+  
+  
+  
+  <div class="col-sm-12">
   	 <div class="form-group" align="center">
   	 
 	   	<button class="btn btn-success" type="button" id="btnsave" onclick='addVehicle()'>Save</button>	
@@ -126,17 +145,29 @@ function addVehicle()
    </div>
    </div>
   
-  
-  
-  <script >	
-  
-  
-  if('${vehicleDetails.vehicle_id}'!='')
+</div>
+</form>
+
+<script >
+	
+	if('${vehicleDetails.vehicle_id}'!='')
 	  {
 	  	customerName.value='${vehicleDetails.customer_id}';
 	  }
+	
+	 
+  <c:if test="${vehicleDetails.vehicle_id eq null}">
+		document.getElementById("divTitle").innerHTML="Add Vehicle";
+		document.title +=" Add Vehicle ";
+	</c:if>
+	<c:if test="${vehicleDetails.vehicle_id ne null}">
+		document.getElementById("divTitle").innerHTML="Update Vehicle";
+		document.title +=" Update Vehicle ";
   
-  
-    
-  
-  </script>
+		
+	
+	</c:if>
+</script>
+
+
+

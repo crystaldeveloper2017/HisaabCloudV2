@@ -3357,6 +3357,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("vehicle_id", request.getParameter("vehicleId"));
 			outputMap.put("vehicleDetails", lObjConfigDao.getVehicleDetails(outputMap, con));
 			outputMap.put("lstCustomerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
+			outputMap.put("listOfItems", lObjConfigDao.getItemMasterFuel(outputMap, con)); // this is where you
+
 
 			rs.setViewName("../AddVehicle.jsp");
 			rs.setReturnObject(outputMap);
