@@ -2574,7 +2574,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						itemDetailsMap.put("weight", itemDetails[10]);
 						itemDetailsMap.put("size", itemDetails[11]);
 						String purchaseDetailsId = itemDetails[12].trim().equals("") ? "0" : itemDetails[12].trim();
+						String itemAmount = itemDetails[13].trim().equals("") ? "0" : itemDetails[13].trim();
+
 						itemDetailsMap.put("purchaseDetailsId", purchaseDetailsId);
+						itemDetailsMap.put("itemAmount", itemAmount);
 
 						if (appType.equals("Battery")) {
 							itemDetailsMap.put("battery_no", itemDetails[13]);

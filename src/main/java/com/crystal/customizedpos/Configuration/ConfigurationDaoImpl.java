@@ -841,17 +841,16 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			parameters.add(item.get("sgst_amount"));
 			parameters.add(item.get("cgst_percentage"));
 			parameters.add(item.get("cgst_amount"));
+			parameters.add(item.get("itemAmount"));
+			
 
 			long detailsId = insertUpdateDuablDB("insert into trn_invoice_details"
 					+ "(details_id, invoice_id, item_id, qty, rate, custom_rate, updated_by,"
-					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount) "
-					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?)", parameters,
+					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount) "
+					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?)", parameters,
 					conWithF);
 
-			parameters.add(item.get("sgst_percentage"));
-			parameters.add(item.get("sgst_amount"));
-			parameters.add(item.get("cgst_percentage"));
-			parameters.add(item.get("cgst_amount"));
+		
 
 			parameters.clear();
 
@@ -3069,11 +3068,11 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "	invoice_no,\r\n"
 				+ "	tir.invoice_id as RefId,\r\n"
 				+ "	date_format(tir.invoice_date, '%d/%m/%Y') as transaction_date,\r\n"
-				+ "	qty*custom_rate as Amount,\r\n"
+				+ "	item_amount as Amount,\r\n"
 				+ "	concat('Invoice (', remarks, ' )') as type,\r\n"
 				+ "	date_format(tir.updated_date, '%d/%m/%Y %H:%i:%s') upd1,\r\n"
 				+ "	'Debit' as creditDebit,\r\n"
-				+ "	 round(qty*custom_rate,2) as debitAmount,\r\n"
+				+ "	 round(item_amount,2) as debitAmount,\r\n"
 				+ "	0 creditAmount,mi.item_name ,tid.qty,tid.custom_rate \r\n"
 				+ "from\r\n"
 				+ "	trn_invoice_register tir inner join trn_invoice_details tid on tid.invoice_id=tir.invoice_id inner join mst_items mi on mi.item_id =tid.item_id \r\n"
