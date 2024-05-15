@@ -3360,6 +3360,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("vehicle_id", request.getParameter("vehicleId"));
 			outputMap.put("vehicleDetails", lObjConfigDao.getVehicleDetails(outputMap, con));
 			outputMap.put("lstCustomerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
+			outputMap.put("listOfItems", lObjConfigDao.getItemMasterFuel(outputMap, con)); // this is where you
+
 
 			rs.setViewName("../AddVehicle.jsp");
 			rs.setReturnObject(outputMap);
@@ -3380,6 +3382,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("vehicleNumber", request.getParameter("vehicleNumber"));
 			outputMap.put("appId", request.getParameter("app_id"));
 			outputMap.put("userId", request.getParameter("user_id"));
+			outputMap.put("drpfueltype", request.getParameter("drpfueltype"));
+
 
 			long vehicle_id = request.getParameter("hdnVehicleId").equals("") ? 0L
 					: Long.parseLong(request.getParameter("hdnVehicleId"));
@@ -5915,6 +5919,73 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject exportCustomerLedgerWithItemVehicleAsPDF(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String fromDate = request.getParameter("fromDate").toString();
+		String toDate = request.getParameter("toDate").toString();
+		String toDateDisplay = request.getParameter("toDate").toString();
+		String customerId = request.getParameter("customerId").toString();
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCustomerLedgerItemReport(customerId, fromDate, toDate,
+				con);
+
+		LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+
+		Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(toDateDate);
+		cal.add(Calendar.DATE, -1);
+		toDateDate = cal.getTime();
+
+		toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+		String startOfApplication = "23/01/1992";
+		String pendingAmount = lObjConfigDao
+				.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con)
+				.get("PendingAmount");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
+		
+
+		Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+		totalDetails.put("openingAmount", String.valueOf(openingAmount));
+		Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+				+ Double.parseDouble(totalDetails.get("creditSum").toString());
+		totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+		outputMap.put("totalDetails", totalDetails);
+		outputMap.put("storeDetails", lObjConfigDao.getStoreDetails(Long.valueOf(storeId), con));
+
+		LinkedHashMap<String, String> customerDetails = lObjConfigDao.getCustomerDetails(Long.valueOf(customerId), con);
+
+		outputMap.put("fromDate", fromDate);
+		outputMap.put("toDate", toDateDisplay);
+		// outputMap.put("totalDetails",gettotalDetailsLedger(lst));
+		outputMap.put("customerDetails", customerDetails);
+		try {
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+			String appenders = "CustomerLedger" + userId + customerDetails.get("customer_name").replaceAll(" ", "")
+					+ "(" + getDateASYYYYMMDD(fromDate) + ")" + "(" + getDateASYYYYMMDD(toDateDisplay) + ")"
+					+ getDateTimeWithSeconds(con) + ".pdf";
+			DestinationPath += appenders;
+			outputMap.put("ListOfItemDetails", lst);
+			String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+			new InvoiceHistoryPDFHelper().generatePDFForCustomerLedgerWithItemVehicle(DestinationPath,BufferedImagesFolder, outputMap, con);
+			outputMap.put("listReturnData", lst);
+			outputMap.put(filename_constant, appenders);
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
+	
+
 	public CustomResultObject exportCustomerLedgerWithItemAsPDF(HttpServletRequest request, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		CustomResultObject rs = new CustomResultObject();
@@ -6212,6 +6283,89 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
+
+	public CustomResultObject showCustomerLedgerWithItemVehicle(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+		String customerId = request.getParameter("customerId") == null ? "" : request.getParameter("customerId");
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		// if parameters are blank then set to defaults
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		if (customerId.equals("")) {
+			rs.setViewName("../CustomerLedgerItemVehicleGenerated.jsp");
+			rs.setReturnObject(outputMap);
+			return rs;
+		}
+
+		try {
+
+			String[] colNames = { "transaction_date", "Type", "RefId", "creditDebit", "upd1", "debitAmount",
+					"creditAmount" };
+
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCustomerLedgerItemReport(customerId, fromDate,
+					toDate, con);
+
+			if (!exportFlag.isEmpty()) {
+				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
+						"CustomerInvoiceHistory");
+			} else {
+
+				LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(toDateDate);
+				cal.add(Calendar.DATE, -1);
+				toDateDate = cal.getTime();
+
+				toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+				String startOfApplication = "23/01/1992";
+				String pendingAmount = lObjConfigDao
+						.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con)
+						.get("PendingAmount");
+				Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+				totalDetails.put("openingAmount", openingAmount);
+				Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+						+ Double.parseDouble(totalDetails.get("creditSum").toString());
+
+				totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+				outputMap.put("totalDetails", totalDetails);
+
+				outputMap.put("ListLedger", lst);
+				outputMap.put("customerDetails", lObjConfigDao.getCustomerDetails(Long.valueOf(customerId), con));
+
+				rs.setViewName("../CustomerLedgerItemVehicleGenerated.jsp");
+				rs.setReturnObject(outputMap);
+			}
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		rs.setReturnObject(outputMap);
+		return rs;
+	}
+	
 
 	public CustomResultObject showCustomerLedgerWithItem(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException {
@@ -10478,4 +10632,137 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject showGenerateQrForVehicle(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		try {
+
+			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+			outputMap.put("app_id", appId);
+			outputMap.put("listOfVehicle", lObjConfigDao.getVehicleListForQr(outputMap, con));
+			rs.setViewName("../GenerateQrForVehicle.jsp");
+
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	public CustomResultObject generateQrForVehicle(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+
+		Enumeration<String> params = request.getParameterNames();
+		HashMap<String, Object> hm = new HashMap<>();
+		List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
+		while (params.hasMoreElements()) {
+			String paramName = params.nextElement();
+
+			if (paramName.equals("vehicleDetails")) {
+				String[] itemsList = request.getParameter(paramName).split("\\|");
+				for (String item : itemsList) {
+					String[] vehicleDetails = item.split("~");
+					HashMap<String, Object> vehicleDetailsMap = new HashMap<>();
+					vehicleDetailsMap.put("vehicle_id", vehicleDetails[0]);
+					vehicleDetailsMap.put("vehicle_name", vehicleDetails[1]);
+					vehicleDetailsMap.put("vehicle_number", vehicleDetails[2]);
+					vehicleDetailsMap.put("customer_name", vehicleDetails[3]);
+
+					vehicleDetailsMap.put("noOfLabels", vehicleDetails[3]);
+					vehicleDetailsMap.put("isPrintPrice", vehicleDetails[5]);
+					itemListRequired.add(vehicleDetailsMap);
+					// ID, QTY, RATE,CustomRate
+				}
+				hm.put("vehicleDetails", itemListRequired);
+				continue;
+			}
+			hm.put(paramName, request.getParameter(paramName));
+
+		}
+
+		List<HashMap<String, Object>> newListRequired = new ArrayList<>();
+		// based on no of labels adding more to list
+		for (HashMap<String, Object> tempObj : itemListRequired) {
+			int noOfLabels = Integer.parseInt(tempObj.get("noOfLabels").toString());
+			for (int x = 0; x < noOfLabels; x++) {
+				newListRequired.add(tempObj);
+			}
+		}
+		while (true) {
+			if (newListRequired.size() % 5 == 0) {
+				break;
+			}
+			HashMap<String, Object> tempObj = new HashMap<>();
+			tempObj.put("product_code", 00000);
+			tempObj.put("item_name", "Adjustment");
+			newListRequired.add(tempObj);
+		}
+
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + File.separator;
+		hm.put("user_id", userId);
+		hm.put("store_id", storeId);
+		try {
+
+			for (HashMap<String, Object> item : newListRequired) {
+				generateQRForThisString(item.get("product_code").toString(), DestinationPath, 118, 120,
+						hm.get("type").toString());
+			}
+
+			Document document = new Document(PageSize.A4, 0, 0, 0, 0);
+			document.setMargins(0, 0, 0, 0);
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath + "reqPDF.pdf"));
+			writer.setCompressionLevel(9);
+			writer.setFullCompression();
+			ConfigurationServiceImpl event = new ConfigurationServiceImpl();
+			writer.setPageEvent(event);
+			document.open();
+			PdfPTable table = new PdfPTable(5);
+			table.setWidthPercentage(100);
+			int i = 0;
+			List<String> tempList = new ArrayList<>();
+
+			for (HashMap<String, Object> item : newListRequired) {
+				PdfPCell cell;
+				com.itextpdf.text.Image image = com.itextpdf.text.Image
+						.getInstance(DestinationPath + item.get("product_code") + hm.get("type").toString() + ".jpg");
+				cell = new PdfPCell(image);
+				cell.setPadding(5);
+				cell.setBorder(Rectangle.NO_BORDER);
+				table.addCell(cell);
+				tempList.add(item.get("item_name").toString());
+				i++;
+				if (i % 5 == 0) {
+					for (String s : tempList) {
+						cell = new PdfPCell(new Phrase(s, new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+						cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
+						cell.setBorder(Rectangle.RECTANGLE);
+						table.addCell(cell);
+					}
+
+					cell = new PdfPCell(new Phrase("--------------------------",
+							new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
+					cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
+					cell.setBorder(Rectangle.NO_BORDER);
+					table.addCell(cell);
+				}
+				tempList.clear();
+			}
+
+			table.completeRow();
+			document.add(table);
+			document.close();
+
+			rs.setAjaxData("reqPDF.pdf");
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
 }

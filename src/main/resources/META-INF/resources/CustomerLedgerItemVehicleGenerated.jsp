@@ -108,6 +108,7 @@
 						<th><b>Transaction Date</b></th>
 						<th><b>Transaction Type</b></th>
 						<th><b>Particulars</b></th>
+						<th><b>Vehicle No</b></th>
 						<th><b>Qty</b></th>
 						<th><b>Rate</b></th>
 						
@@ -124,6 +125,7 @@
 							<td>${item.transaction_date}</td>
 							<td>${item.type}</td>
 							<td>${item.item_name}</td>
+							<td>${item.vehicle_number}</td>
 							<td>${item.qty}</td>
 							<td>${item.custom_rate}</td>
 							
@@ -207,7 +209,7 @@
   function exportPDFForLedger()
   {
 	  
-	  window.open("?a=exportCustomerLedgerWithItemAsPDF&fromDate="+txtfromdate.value+"&toDate="+txttodate.value+"&customerId="+hdnSelectedCustomer.value);
+	  window.open("?a=exportCustomerLedgerWithItemVehicleAsPDF&fromDate="+txtfromdate.value+"&toDate="+txttodate.value+"&customerId="+hdnSelectedCustomer.value);
 		return;
 
   }

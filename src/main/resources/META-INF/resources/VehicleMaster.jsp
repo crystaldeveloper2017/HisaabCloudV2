@@ -91,20 +91,24 @@ function deleteItem(vehicleId)
                      <th><b>Vehicle Number</b></th>
                      <th><b>Updated By</b></th>
                      <th><b>Updated_date</b></th>
+                     <th><b>Preferred Fuel Type</b></th>
+
 
                      <th></th><th></th>
                     </tr>
                      
                   </thead>
                   <tbody>
-				<c:forEach items="${vehicleData}" var="item">
+				<c:forEach items="${vehicleData}" var="vehicle">
 					<tr >
 					
-						<td>${item.customer_name}</td>
-						<td>${item.vehicle_name}</td>
-						<td>${item.vehicle_number}</td>
-						<td>${item.updated_by}</td>					
-						<td>${item.updated_date}</td>
+						<td>${vehicle.customer_name}</td>
+						<td>${vehicle.vehicle_name}</td>
+						<td>${vehicle.vehicle_number}</td>
+						<td>${vehicle.updated_by}</td>					
+						<td>${vehicle.updated_date}</td>
+            <td>${vehicle.preferred_fuel_type}</td>
+
 						<td><a href="?a=showAddVehicle&vehicleId=${item.vehicle_id}">Edit</a></td>
 						<td><button class="btn btn-danger" onclick="deleteItem('${item.vehicle_id}')">Delete</button></td>
 					</tr>

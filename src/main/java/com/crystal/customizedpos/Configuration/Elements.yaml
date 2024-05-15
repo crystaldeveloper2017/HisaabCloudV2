@@ -434,7 +434,7 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showNozzleRegister"
   orderNo: 1
-- elementId: 700184
+- elementId: 700199
   elementName: " Suspense Register"
   parentElementId: 26
   elementUrl: "?a=showSuspensePayments"
@@ -455,7 +455,7 @@ elements:
   parentElementId: 700132
   elementUrl: "?a=showQrCodeMaster"
   orderNo: 1
-- elementId: 700179
+- elementId: 700198
   elementName: "Enter Bank Reconcilation"
   parentElementId: 700132
   elementUrl: "?a=showAddBankReconcilation"
@@ -466,7 +466,7 @@ elements:
   elementUrl: "?a=showBankMaster"
   orderNo: 4
   childElements: null
-- elementId: 700181
+- elementId: 700196
   elementName: " Reconcilation Register"
   parentElementId: 26
   elementUrl: "?a=showReconcilationRegister"
@@ -506,3 +506,13 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCashToVaultRegister"
   orderNo: 1
+- elementId: 700210
+  elementName: "Generate Qr For Vehicle"
+  parentElementId: 4
+  elementUrl: "?a=showGenerateQrForVehicle"
+  orderNo: 4
+- elementId: 700211
+  elementName: "General Ledger (Vehicle) "
+  parentElementId: 26
+  elementUrl: "?a=showCustomerLedgerWithItemVehicle"
+  orderNo: 3

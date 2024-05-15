@@ -165,7 +165,7 @@
       "autoWidth": false,
       "responsive": true,
       "pageLength": 50,
-      "order": [[ 4, 'desc' ]],
+      "order": [[ 0, 'desc' ]],
       "zeroRecords": " "
 
     });

@@ -1380,9 +1380,11 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("vehicleNumber"));
 		parameters.add(hm.get("appId"));
 		parameters.add(hm.get("userId"));
+		parameters.add(hm.get("drpfueltype"));
+
 
 		String insertQuery = "INSERT INTO mst_vehicle\r\n"
-				+ "VALUES(default, ?, ?, ?, ?, 1, ?, sysdate());";
+				+ "VALUES(default, ?, ?, ?, ?, 1, ?, sysdate(),?);";
 
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
@@ -3076,8 +3078,8 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "	0 creditAmount,mi.item_name ,tid.qty,tid.custom_rate \r\n"
 				+ "from\r\n"
 				+ "	trn_invoice_register tir inner join trn_invoice_details tid on tid.invoice_id=tir.invoice_id inner join mst_items mi on mi.item_id =tid.item_id \r\n"
-				+ "where\r\n"
-				+ "	customer_id = ?\r\n"
+				+ "left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=tir.invoice_id left outer join mst_vehicle mv on mv.vehicle_id=rifd.vehicle_id where\r\n"
+				+ "	tir.customer_id = ?\r\n"
 				+ "	and tir.activate_flag = 1\r\n"
 				+ "	and date(invoice_date) between ? and ?\r\n"
 				+ "union all\r\n"
@@ -3100,7 +3102,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "	case\r\n"
 				+ "		when payment_for != 'Debit Entry' then amount\r\n"
 				+ "		else 0\r\n"
-				+ "	end as creditAmount,'','',''\r\n"
+				+ "	end as creditAmount,'','','',''\r\n"
 				+ "from\r\n"
 				+ "	trn_payment_register tpr left outer join trn_invoice_register tir2 on tir2.invoice_id =tpr.ref_id\r\n"
 				+ "where\r\n"
@@ -6906,6 +6908,45 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				parameters, conWithF);
 		return "Vault Received Succesfully";
 	}
-	
+	public List<LinkedHashMap<String, Object>> getItemMasterFuel(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query = "select item.*,cat.*,stock.*,"
+				+ " case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath "
+				+ "from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join "
+				+ " tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image' "
+				+ " left outer join stock_status stock on stock.item_id=item.item_id and stock.store_id=? "
+				+ " where item.activate_flag=1 and item.app_id=? and cat.app_id=item.app_id and cat.category_name='fuel'";
+
+		parameters.add(hm.get("store_id"));
+		parameters.add(hm.get("app_id"));
+
+		if (hm.get("searchInput") != null && !hm.get("searchInput").equals("")) {
+			parameters.add("%" + hm.get("searchInput") + "%");
+			parameters.add("%" + hm.get("searchInput") + "%");
+			query += " and (product_code like ? or item_name like ?)";
+		}
+
+		if (hm.get("categoryId") != null && !hm.get("categoryId").equals("-1") && !hm.get("categoryId").equals("")) {
+			parameters.add(hm.get("categoryId"));
+			query += " and parent_category_id=? ";
+		}
+		query += " group by item.item_id";
+		query += " order by item_name";
+		return getListOfLinkedHashHashMap(parameters, query, con);
+	}
+
+	public List<LinkedHashMap<String, Object>> getVehicleListForQr(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+
+		String query = "select * from mst_vehicle mv , mst_customer mc where mv.customer_id =mc.customer_id and mv.activate_flag =1 and mc.app_id=?";
+
+		
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
+
 
 }
