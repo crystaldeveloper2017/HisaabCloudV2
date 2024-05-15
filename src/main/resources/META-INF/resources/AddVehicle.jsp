@@ -128,7 +128,7 @@ function addVehicle()
       
       <select class="form-control" name="drpfueltype" id="drpfueltype">
       <c:forEach items="${listOfItems}" var="item">
-			    <option value="${item.item_id}">${item.item_name}</option>			    
+			    <option value="${item.item_name}">${item.item_name}</option>			    
 	   </c:forEach></select>
             
     </div>

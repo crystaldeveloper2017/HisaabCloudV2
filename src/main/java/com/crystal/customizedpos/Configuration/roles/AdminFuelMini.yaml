@@ -1,7 +1,6 @@
-- roleId: 13
-  roleName: "AdminFuel"
+- roleId: 19
+  roleName: "AdminFuelMini"
   actions:
-    - showCustomerLedgerWithItemVehicle
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin
@@ -143,73 +142,52 @@
     - receivedCashtovault
     - addExpenseNew
     - showDailyInvoiceReportParameter
-    - exportCustomerLedgerWithItemVehicleAsPDF
+    - showGenerateQrForVehicle
+    - generateQrForVehicle
   reports:
     - 1
     - 2
   elements:
-    - 700211
-    - 6
     - 23
     - 700188
-    - 700185
-    - 700184
-    - 700186
     - 24
     - 700183
     - 700138
     - 700160
-    - 700182
-    - 700181
-    - 700180
-    - 700179
     - 700178
     - 700132
-    - 700177
     - 700181
-    - 700165
     - 700190
     - 700168
-    - 700180
     - 700171
     - 21
     - 7
-    - 700170
-    - 700132
-    - 700172
-    - 700173
-    - 700167
-    - 700179
-    - 700132
     - 20
     - 1
     - 29
     - 8001
     - 26
-    - 700174
     - 700175
     - 700176
     - 700119
-    - 700137
-    - 700129
     - 700130
     - 28
     - 700123
     - 700176
-    - 700150
     - 700143
     - 27
     - 3
-    - 700191
     - 700192
     - 700184
     - 700195
     - 700197
-    - 700151
-    - 2
     - 19
     - 25
     - 700201
-    - 700189
     - 5
     - 16
+    - 700179
+    - 4
+    - 700210
+
+

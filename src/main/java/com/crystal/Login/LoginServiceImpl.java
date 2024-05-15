@@ -120,6 +120,14 @@ public class LoginServiceImpl extends CommonFunctions {
 							rs.setViewName("../PetrolDashboard.jsp");
 						
 							}
+
+							else
+					if(appType.equals("PetrolPumpMini"))
+							{
+						
+							rs.setViewName("../PetrolMiniDashboard.jsp");
+						
+							}
 			
 					else
 						if(appType.equals("Transport"))

@@ -955,7 +955,22 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+if('${param.payment_type}'=='Pending')
+{
 
+	txtpaymenttype.value='Pending';
+	txtpaymenttype.disabled='true';
+	paymentTypeChanged('Pending');
+}
+
+if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
+
+{
+		txtpaymenttype.value='Paid';
+		drppaymentmode.value='Card';
+		drppaymentmode.disabled='true';
+	txtpaymenttype.disabled='true';
+}
 
 
 </script>
