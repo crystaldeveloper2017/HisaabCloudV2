@@ -841,17 +841,16 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			parameters.add(item.get("sgst_amount"));
 			parameters.add(item.get("cgst_percentage"));
 			parameters.add(item.get("cgst_amount"));
+			parameters.add(item.get("itemAmount"));
+			
 
 			long detailsId = insertUpdateDuablDB("insert into trn_invoice_details"
 					+ "(details_id, invoice_id, item_id, qty, rate, custom_rate, updated_by,"
-					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount) "
-					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?)", parameters,
+					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount) "
+					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?)", parameters,
 					conWithF);
 
-			parameters.add(item.get("sgst_percentage"));
-			parameters.add(item.get("sgst_amount"));
-			parameters.add(item.get("cgst_percentage"));
-			parameters.add(item.get("cgst_amount"));
+		
 
 			parameters.clear();
 
@@ -3071,12 +3070,12 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "	invoice_no,\r\n"
 				+ "	tir.invoice_id as RefId,\r\n"
 				+ "	date_format(tir.invoice_date, '%d/%m/%Y') as transaction_date,\r\n"
-				+ "	qty*custom_rate as Amount,\r\n"
+				+ "	item_amount as Amount,\r\n"
 				+ "	concat('Invoice (', remarks, ' )') as type,\r\n"
 				+ "	date_format(tir.updated_date, '%d/%m/%Y %H:%i:%s') upd1,\r\n"
 				+ "	'Debit' as creditDebit,\r\n"
-				+ "	 round(qty*custom_rate,2) as debitAmount,\r\n"
-				+ "	0 creditAmount,mi.item_name ,tid.qty,tid.custom_rate,vehicle_number \r\n"
+				+ "	 round(item_amount,2) as debitAmount,\r\n"
+				+ "	0 creditAmount,mi.item_name ,tid.qty,tid.custom_rate \r\n"
 				+ "from\r\n"
 				+ "	trn_invoice_register tir inner join trn_invoice_details tid on tid.invoice_id=tir.invoice_id inner join mst_items mi on mi.item_id =tid.item_id \r\n"
 				+ "left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=tir.invoice_id left outer join mst_vehicle mv on mv.vehicle_id=rifd.vehicle_id where\r\n"
@@ -6172,18 +6171,19 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				con);
 	}
 
-	public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date, String shiftId,
+	public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date, String shiftId,String appId,
 			Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(getDateASYYYYMMDD(collection_date));
+		parameters.add((appId));
 
 		String query = "select \r\n"
 				+ "\r\n"
 				+ "sum( tsc.item_price * test_quantity) as CashAmount from trn_test_fuel_register tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2,nozzle_master nm  \r\n"
 				+ "where test_date=? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.user_id and nm.nozzle_id=tsc.nozzle_id \r\n"
 				+ "and \r\n"
-				+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' ";
+				+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' and tsc.app_id=? ";
 
 		if (!shiftId.equals("-1")) {
 			query += " and tsc.shift_id=?";

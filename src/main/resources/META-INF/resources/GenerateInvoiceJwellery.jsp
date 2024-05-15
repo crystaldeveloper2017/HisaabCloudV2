@@ -90,6 +90,7 @@ function saveInvoice()
 	    "~"+rows[x].childNodes[3].childNodes[0].childNodes[4].value+ // weight
 	    "~"+rows[x].childNodes[3].childNodes[0].childNodes[6].value+ // size
 	    "~0"+
+		"~"+rows[x].childNodes[4].childNodes[0].value+ // itemAmount
 	    "|";
 	    
 	    

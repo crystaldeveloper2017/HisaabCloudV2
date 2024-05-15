@@ -86,8 +86,10 @@ function saveInvoice()
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
 		"~0~0~0~0~0~0~0"+ // Item Name
 		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
+		"~"+rows[x].childNodes[2].childNodes[0].value+ // ItemAmount
 	    "|";       
 	}
+	
 	
  	var nozzDetails=drpnozzle.options[drpnozzle.selectedIndex].text.split("~");
 	
@@ -606,6 +608,9 @@ if('${param.order_id}'!='')
 		    	var cell2 = row.insertCell(1);
 		    	var cell3 = row.insertCell(2);
 		    	//var cell4 = row.insertCell(3);
+
+
+				var itemName=itemDetails[0];
 		    	
 		    	
 		    	
@@ -614,14 +619,14 @@ if('${param.order_id}'!='')
 		    	
 		    	
 		    	
-		    	cell1.innerHTML = "<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'><a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemDetails[0] + " "+ "(" + itemDetails[10]+ " ) </a>";
+		    	cell1.innerHTML = "<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'><a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'>"+ itemName + " "+ "(" + itemDetails[10]+ " ) </a>";
 		    	
 		    	cell2.style.width = '10%';
 		    	
 		    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button id="btnminus'+itemId+'" class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="tel" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div><input type="hidden" value='+itemDetails[1]+' id="txtrate'+itemId+'">';
 		    	cell2.style.width = '60%';
 		    	
-		    	cell3.innerHTML = '<input type="tel" onfocus="this.select()" style="width:100%" class="form-control" onkeyup="calculateQtyFromAmountAndAddToTable('+itemId+',this.value)" form-control-sm" value="'+itemDetails[1]+'" id="txtamount'+itemId+'">';
+		    	cell3.innerHTML = '<input type="tel" onfocus="this.select()" style="width:100%" class="form-control" onkeyup="calculateQtyFromAmountAndAddToTable('+itemId+',this.value,\''+itemName+'\')" form-control-sm" value="'+itemDetails[1]+'" id="txtamount'+itemId+'">';
 		    	cell3.style.width = '30%';
 		    	
 
@@ -778,11 +783,11 @@ if('${param.order_id}'!='')
 			
 		}
 	}
-	function calculateQtyFromAmountAndAddToTable(itemId,amount)
+	function calculateQtyFromAmountAndAddToTable(itemId,amount,itemName)
 	{
 
 		// hardcoded this will need to fix later
-		if (itemId!=587284 && itemId!=587285)
+		if(!itemName.includes('Petrol') && !itemName.includes('Diesel') && !itemName.includes('CNG'))		
 		{
 			calculateTotal();
 			return;

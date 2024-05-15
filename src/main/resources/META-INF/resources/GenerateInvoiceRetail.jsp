@@ -85,7 +85,9 @@ function saveInvoice()
 	    "~"+"0"+ // hard coded weight
 	    "~"+"0"+ // hard coded size
 	    "~"+productDetailsId+
+		"~"+rows[x].childNodes[6].childNodes[0].value+ // Item Amount
 	    "|";
+		
 	    
 	    var availableQty=Number(rows[x].childNodes[1].childNodes[0].innerHTML.split("(")[1].split(")")[0]);
 	    var invoiceQty=Number(rows[x].childNodes[2].childNodes[0].childNodes[1].value);
