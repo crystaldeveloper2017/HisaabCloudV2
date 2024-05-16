@@ -1,6 +1,10 @@
 - roleId: 14
   roleName: "ManagerFuel"
   actions:
+    - exportCustomerLedgerWithItemVehicleAsPDF
+    - showCustomerLedgerWithItemVehicle
+    - exportFsmLedgerAsPDF
+    - showFSMLedger
     - addExpenseNew
     - getVehicleIdForCustomer
     - reloadSession
@@ -116,6 +120,8 @@
     - addPumpTest
     - exportNozzleRegister
   elements:
+    - 700211
+    - 700185
     - 24
     - 700138
     - 700160

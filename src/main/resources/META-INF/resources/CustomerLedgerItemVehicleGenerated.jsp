@@ -132,7 +132,7 @@
 							<td><a href="?a=showGenerateInvoice&invoice_id=${item.RefId}">${item.invoice_no}</a></td>
 							<td>${item.creditDebit}</td>
 							<td>${item.upd1}</td>
-							<td>${item.debitAmount}</td>
+							<td>${item.itemAmount}</td>
 							<td>${item.creditAmount}</td> 
 						</tr>
 					</c:forEach>
@@ -238,7 +238,7 @@
   
   function ReloadFilters()
   {	  
-  	  window.location="?a=showCustomerLedgerWithItem&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&customerId="+hdnSelectedCustomer.value;  	  
+  	  window.location="?a=showCustomerLedgerWithItemVehicle&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&customerId="+hdnSelectedCustomer.value;  	  
   }
   
   function checkforMatchCustomer()

@@ -130,7 +130,6 @@
     - showReport
     - showCustomerLedgerWithItem
     - exportCustomerLedgerWithItemAsPDF
-    - showFSMLedger
     - showEmployeePayment
     - saveEmployeePayment
     - getEmployeePaymentRegister
@@ -138,6 +137,7 @@
     - showStoreMaster
     - showAddStore
     - exportFsmLedgerAsPDF
+    - showFSMLedger
     - getRoleDetailsForthisUser
     - showCashToVaultRegister
     - receivedCashtovault
