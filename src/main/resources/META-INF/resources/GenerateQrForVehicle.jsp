@@ -45,8 +45,8 @@ function checkforMatchVehicle()
 		{
 			//searchForCustomer(searchString);
 		}
-	
-	getAmountForThisProperty();
+				getItemDetailsAndAddToTable(vehicleId,searchString);
+
 }
 
 
@@ -62,18 +62,17 @@ function getItemDetailsAndAddToTable(itemId,itemName)
 	    	var cell2 = row.insertCell(2);
 	    	var cell3 = row.insertCell(3);
 	    	var cell4 = row.insertCell(4);
-	    	var cell5 = row.insertCell(5);
 	    	
 	    	var arritemName=itemName.split('~');
 	    	
 	    	
 	    	cell0.innerHTML = itemId;
 	    	cell1.innerHTML = arritemName[1];
-	    	cell2.innerHTML = arritemName[0];
-	    	cell3.innerHTML = " <input type='text' class='form-control input-sm' id='txtqty' onkeyup='calculateAmount(this);checkIfEnterisPressed(event)' onkeypress='digitsOnlyWithDot(event)' value='1'>";   	
-	    	cell4.innerHTML = '<input class="form-control" type="checkbox" style="height:20px">';	    	
+	    	cell2.innerHTML = arritemName[2];
+			cell3.innerHTML = arritemName[0];
+
 	    	
-	    	cell5.innerHTML = '<button type="button" class="btn btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
+	    	cell4.innerHTML = '<button type="button" class="btn btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
 	    	
 	    	
 	    
@@ -130,7 +129,7 @@ function generateQrForVehicle()
 
  <datalist id="listOfVehicle">
 <c:forEach items="${listOfVehicle}" var="vehicle">
-	<option id="${vehicle.vehicle_id}">${vehicle.customer_name}  ~ ${vehicle.vehicle_name} ~ ${vehicle.preferred_fuel_type} </option>	
+	<option id="${vehicle.vehicle_id}">${vehicle.customer_name}  ~ ${vehicle.vehicle_name} ~ ${vehicle.vehicle_number} ~ ${vehicle.preferred_fuel_type} </option>	
 
 			    
 	   </c:forEach></select>	   	   	
@@ -172,9 +171,8 @@ function generateQrForVehicle()
 
 	  			<th style="z-index:0">Customer Name</th>
 
-	  			<th style="z-index:0">No Of Labels</th>
-	  			<th style="z-index:0">Print Price</th>	  				  			
-	  			<th></th>
+<th> </th>
+	  		
 	                    </tr>
 	                  </thead>
 	                </table>

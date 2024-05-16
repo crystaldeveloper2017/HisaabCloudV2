@@ -975,7 +975,6 @@ if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
 		drppaymentmode.value='Card';
 		drppaymentmode.disabled='true';
 	txtpaymenttype.disabled='true';
-	 checkIfMachinetoBeDisplayed();
 }
 
 

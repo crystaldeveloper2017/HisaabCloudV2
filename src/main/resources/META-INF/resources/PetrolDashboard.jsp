@@ -77,11 +77,24 @@
 
               <div class="col-12 col-sm-6">
 
+           <div class="info-box mb-3" onclick="window.location='?a=showGenerateInvoice'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+              
+              <div class="info-box-content">
+                <span class="info-box-text">5. Lube Sales</span>
+                
+              </div>
+            </div>
+          </div>
+
+
+              <div class="col-12 col-sm-6">
+
           <div class="info-box mb-3" onclick="window.location='?a=showAddTestFuel'">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">5. Add Test Fuel</span>
+                <span class="info-box-text">6. Add Test Fuel</span>
                 
               </div>
             </div>
@@ -97,7 +110,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
               
               <div class="info-box-content">
-                <span class="info-box-text">6. Collect Payment</span>
+                <span class="info-box-text">7. Collect Payment</span>
                 
               </div>
             </div>
@@ -110,7 +123,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">7. Submit Cash To Vault</span>
+                <span class="info-box-text">8. Submit Cash To Vault</span>
                 
               </div>
             </div>
@@ -122,7 +135,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">8. Collect Paytm From Attendant </span>
+                <span class="info-box-text">9. Collect Paytm From Attendant </span>
                 
               </div>
             </div>
@@ -136,7 +149,7 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">9. Nozzle Register </span>
+                <span class="info-box-text">10. Nozzle Register </span>
                 
               </div>
             </div>
