@@ -119,6 +119,7 @@
     - showAddPumpTest
     - addPumpTest
     - exportNozzleRegister
+    - savePurchaseInvoice
   elements:
     - 700211
     - 700185
@@ -171,3 +172,6 @@
     - 700195
     - 700197
     - 700201
+    - 7
+    - 25
+    - 700151

@@ -1,17 +1,33 @@
-<style>
-	.date_field {position: relative; z-index:1000;}
-	.ui-datepicker{position: relative; z-index:1000!important;}
+  
+		<style>
+.vertiAlignMiddle
+{
+	vertical-align:middle!important;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+    background:brown;
+}
+
+		
 </style>
-<style>
-	.aligncenterclass
-	{
-		text-align:center;
-	}
-</style>
+  
+  
+  
+  
+  
+  
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
            
            
            
+
 
 
 <c:set var="SupervisorDetails" value='${requestScope["outputObject"].get("SupervisorDetails")}' />
@@ -32,16 +48,12 @@
 
 
 
-   
-
-
-
-
-
 </head>
 
 
 <script >
+
+
 
 function resetCustomer()
 {	
@@ -191,21 +203,23 @@ function saveInvoice()
 
 
 
+
+
+
+
 </script>
 
 
 
 <br>
 
-<div class="container" style="padding:5px;background-color:white;max-width:100%">
-<form id="frm"  method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+<div class="container" style="padding:20px;background-color:white">
 <input type="hidden" name="app_id" value="${userdetails.app_id}">
 <input type="hidden" name="user_id" value="${userdetails.user_id}">
 <input type="hidden" name="callerUrl" id="callerUrl" value="">
 
-<div class="row">
 
-			<datalist id="customerList">
+<datalist id="customerList">
 				<c:forEach items="${customerMaster}" var="customer">
 					<option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}</option>
 				</c:forEach>
@@ -223,16 +237,17 @@ function saveInvoice()
 			    <input type="hidden" id="hdn${item.item_id}" value="${item.item_name}~${item.price}~${item.wholesale_price}~${item.franchise_rate}~${item.loyalcustomerrate3}~${item.loyalcustomerrate2}~${item.loyalcustomerrate1}~${item.distributor_rate}~${item.b2b_rate}~${item.shrikhand}~${item.qty_available}~${item.sgst}~${item.cgst}">			    
 	   </c:forEach>	   	   	
 </datalist>
-			
-			
-			<div class="col-6">
+
+
+  
+  <div class="col-12">
   	<div class="form-group">	
   	<label for="email">Invoice Date</label>
   		<input type="text" id="txtinvoicedate" onchange="getAttendantList()" name="txtinvoicedate" class="form-control form-control-sm" value="" placeholder="Invoice Date" readonly/>
   	</div>
   </div>
-
-			<div class="col-6">
+  
+    <div class="col-12">
   	<div class="form-group">
       
     <label for="email">Shift Name</label>  
@@ -257,7 +272,7 @@ function saveInvoice()
     </div>
   </div>
   
-   <div class="col-6">
+   <div class="col-12">
   	<div class="form-group">
       
       <label for="email">Nozzle</label>
@@ -270,7 +285,7 @@ function saveInvoice()
   
   
    
-   <div class="col-6">
+   <div class="col-12">
   	<div class="form-group">
       
       <label for="email">Payment Type</label>
@@ -282,7 +297,7 @@ function saveInvoice()
     </div>
   </div>
 
-  <div class="col-6">
+  <div class="col-12">
 	<div class="form-group">
 	
 	
@@ -311,7 +326,7 @@ function saveInvoice()
 </div>
 
   
-    <div class="col-6" name="customerVehicleElements">
+    <div class="col-12" name="customerVehicleElements">
   	<div class="form-group">
       
       <label for="txtsearchcustomervehicle">Customer Vehicle</label>
@@ -322,7 +337,7 @@ function saveInvoice()
   </div>
   
   
-  <div class="col-6" name="paymentModeElements">
+  <div class="col-12" name="paymentModeElements">
   	<div class="form-group">
       
       <label for="email">Payment Mode</label>
@@ -335,10 +350,10 @@ function saveInvoice()
     </div>
   </div>
   
-    <div class="col-6" id="divmachinename" name="divmachinename" style="display:none">
+    <div class="col-12" id="divmachinename" name="divmachinename" style="display:none">
   	<div class="form-group">
       <label for="email">Machine Name</label>
-      
+    
       <select class="form-control form-control-sm" name="drpmachinename" id="drpmachinename">
       <c:forEach items="${lstOfSwipeMaster}" var="swipe">
 			    <option value="${swipe.swipe_machine_id}">${swipe.swipe_machine_bank} - ${swipe.swipe_machine_short_name} - ${swipe.swipe_machine_name}</option>    
@@ -352,19 +367,20 @@ function saveInvoice()
 
   
   <div class="col-sm-12" id="divsearchforitems">
-  	
+  	<hr/> 
     
     <div class="input-group">
     <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
     
-    
+      	
     
     
   </div>
   </div>
   
   
-    <div class="col-sm-12">  
+    <div class="col-sm-12"> 
+		<hr/>  
 	  <div class="card-body table-responsive p-0" style="height: 370px;">                
 	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
@@ -384,9 +400,10 @@ function saveInvoice()
   
   
  
-  <div class="col-sm-6" align="center">
+  <div class="col-sm-12" align="right">
   	<div class="form-group">
-      
+
+      	<hr/>  
             <span  >Total Qty : </span>
             <span style='font-weight:800' id="lbltotalqty"></span>
       
@@ -394,7 +411,7 @@ function saveInvoice()
     </div>
   </div>
   
-  <div class="col-sm-6" align="center">
+  <div class="col-sm-12" align="right">
   	<div class="form-group">
   	
   	
@@ -411,17 +428,14 @@ function saveInvoice()
             
     </div>
   </div>
-  
-  
-  
-   
-  
+
+
   <br>
 		<div class="col-sm-12" align="center">
   	
     
     
-<button class="btn btn-success" id="btnsave" type="button" onclick='saveInvoice()'>Save</button>
+		<button class="btn btn-success" id="btnsave" type="button" onclick='saveInvoice()'>Save</button>
 		<button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>    
   
   </div>
@@ -436,13 +450,15 @@ function saveInvoice()
 </div>
 </form>
 
+
 <script >
+
 	
 
-document.getElementById("divTitle").innerHTML="Generate Invoice Fuel";
-document.title +=" Generate Invoice Fuel ";
+			document.getElementById("divTitle").innerHTML="Generate Invoice Fuel";
+			document.title +=" Generate Invoice Fuel ";
 
-if('${param.order_id}'!='')
+		if('${param.order_id}'!='')
 	{
 		drppaymentmode.value="Paytm";
 		drppaymentmode.disabled=true;
@@ -977,6 +993,10 @@ if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
 	txtpaymenttype.disabled='true';
 	 checkIfMachinetoBeDisplayed();
 }
+
+
+
+
 
 
 </script>

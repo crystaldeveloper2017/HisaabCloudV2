@@ -102,3 +102,13 @@ function disableAllComponents() {
 	disableSelects();
 
 }
+
+document.addEventListener('keydown', function(event) {
+    // Check if Ctrl, Shift, and H keys are pressed simultaneously
+    if (event.ctrlKey && event.shiftKey && event.key === 'H') {
+        // Ctrl + Shift + H is pressed
+       // alert('Ctrl + Shift + H is pressed');
+		window.location='?a=showHomePage';
+        // Add your code here to perform actions when Ctrl + Shift + H is pressed
+    }
+});
