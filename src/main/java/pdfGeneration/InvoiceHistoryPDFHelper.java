@@ -5001,8 +5001,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);
 	  
 
-			
-
+		
 	        
 	        
 			int srno=1;
@@ -5048,7 +5047,9 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        table.addCell(cell);
-			  
+
+						
+					
 	        }
 	        
 			

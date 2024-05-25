@@ -90,7 +90,6 @@
     - showCheckinRegister
     - showReconciliationReport
     - showSalesReport2
-    - showCustomerLedger
     - showExpenseEntry
     - showPendingCustomerCollectionReport
     - showCheckInScreen
@@ -160,7 +159,6 @@
     - 700129
     - 700130
     - 28
-    - 700123
     - 700176
     - 700150
     - 700143
@@ -168,7 +166,6 @@
     - 3
     - 700191
     - 700192
-    - 700184
     - 700195
     - 700197
     - 700201
