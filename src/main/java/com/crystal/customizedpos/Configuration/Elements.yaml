@@ -227,7 +227,7 @@ elements:
 - elementId: 28
   elementName: "Customer Collection"
   parentElementId: 1
-  elementUrl: "?a=showPendingCustomerCollectionReport"
+  elementUrl: "?a=generatePendingCustomerCollectionReport"
   orderNo: 3
 - elementId: 29
   elementName: "Admin"
