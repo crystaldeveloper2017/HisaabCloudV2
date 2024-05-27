@@ -639,10 +639,10 @@ function saveInvoice()
 		    	
 		    	cell2.style.width = '10%';
 		    	
-		    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button id="btnminus'+itemId+'" class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="tel" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div><input type="hidden" value='+itemDetails[1]+' id="txtrate'+itemId+'">';
+		    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button id="btnminus'+itemId+'" class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0,this)"><i class="fa fa-minus"></i></button></span><input type="tel" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1,this)"><i class="fa fa-plus"></i></button></span></div><input type="hidden" value='+itemDetails[1]+' id="txtrate'+itemId+'">';
 		    	cell2.style.width = '60%';
 		    	
-		    	cell3.innerHTML = '<input type="tel" onfocus="this.select()" style="width:100%" class="form-control" onkeyup="calculateQtyFromAmountAndAddToTable('+itemId+',this.value,\''+itemName+'\')" form-control-sm" value="'+itemDetails[1]+'" id="txtamount'+itemId+'">';
+		    	cell3.innerHTML = '<input type="tel" onfocus="this.select()" style="width:100%" class="form-control" onkeyup="calculateQtyFromAmountAndAddToTable(this,this.value,\''+itemName+'\')" form-control-sm" value="'+itemDetails[1]+'" id="txtamount'+itemId+'">';
 		    	cell3.style.width = '30%';
 		    	
 
@@ -650,21 +650,23 @@ function saveInvoice()
 		    	//cell4.innerHTML = '<button type="button" class="btn btn-sm btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">0</button>';
 		    	
 		    	
-		    	calculateAmount(itemId);
-		    	document.getElementById("txtqty"+itemId).select();
-		    	document.getElementById("txtqty"+itemId).focus();
+		    	calculateAmount(row);
+		    //	document.getElementById("txtqty"+itemId).select();
+		    //	document.getElementById("txtqty"+itemId).focus();
 		    	
 				
 	}
 
 
-	function calculateAmount(itemId)
-	{
-		
-		var rate=document.getElementById('txtrate'+itemId).value;
-		var qty=document.getElementById('txtqty'+itemId).value;
+	function calculateAmount(rowElement)
+	{		
+
+		alert(rowElement);
+		var customrate=rowElement.childNodes[1].childNodes[1].value;
+		var rate=rowElement.childNodes[1].childNodes[1].value;
+		var qty=rowElement.childNodes[1].childNodes[0].childNodes[1].value;
 		var amount=(Number(rate) *Number(qty) ).toFixed(2);
-		document.getElementById("txtamount"+itemId).value=amount;			
+		rowElement.childNodes[2].childNodes[0].value=amount;
 		calculateTotal();
 	}
 	
@@ -716,11 +718,12 @@ function saveInvoice()
 		calculateTotal(); 
 	}
 
-	function addremoveQuantity(itemId,addRemoveFlag) // 0 removes and 1 adds
+	function addremoveQuantity(itemId,addRemoveFlag,elementButton) // 0 removes and 1 adds
 	{
 		
-		var	qtyElement=document.getElementById('txtqty'+itemId);
+		var qtyElement=elementButton.parentNode.parentNode.parentNode.childNodes[0].childNodes[1];	
 		var quantity=Number(qtyElement.value);
+	
 		
 		if(quantity==1 && addRemoveFlag==0)
 			{
@@ -739,7 +742,8 @@ function saveInvoice()
 		
 		qtyElement.value=quantity;
 		formatQty(document.getElementById("txtqty"+itemId));
-		calculateAmount(itemId);
+		calculateAmount(elementButton.parentNode.parentNode.parentNode.parentNode);
+		
 	}
 	
 	function formatQty(qtyTextBox)
@@ -799,8 +803,9 @@ function saveInvoice()
 			
 		}
 	}
-	function calculateQtyFromAmountAndAddToTable(itemId,amount,itemName)
+	function calculateQtyFromAmountAndAddToTable(txtelement,amount,itemName)
 	{
+		//alert(txtelement);
 
 		// hardcoded this will need to fix later
 		if(!itemName.includes('Petrol') && !itemName.includes('Diesel') && !itemName.includes('CNG'))		
@@ -810,11 +815,14 @@ function saveInvoice()
 		}
 
 
-		var existingRate=document.getElementById("txtrate"+itemId).value;
+		
+
+		var existingRate=txtelement.parentNode.parentNode.childNodes[1].childNodes[1].value;
+		
 		var calculatedQty=Number(amount)/Number(existingRate);
 		
 		
-		document.getElementById("txtqty"+itemId).value=calculatedQty.toFixed(3);
+		txtelement.parentNode.parentNode.childNodes[1].childNodes[0].childNodes[1].value=calculatedQty.toFixed(3);
 		
 		
 		calculateTotal();
@@ -956,7 +964,7 @@ if("${param.invoice_id}"!="")
     	
     	cell1.innerHTML = '<a href="#">${item.item_name} ( )</a>';
     	
-    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
+    	cell2.innerHTML = `<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0,this)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(row);checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1,this)"><i class="fa fa-plus"></i></button></span></div>`;
     	
     	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
     	cell3.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';

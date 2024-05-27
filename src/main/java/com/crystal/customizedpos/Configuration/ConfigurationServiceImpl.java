@@ -5942,7 +5942,7 @@ outputMap.put("txttodate",toDate);
 		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCustomerLedgerItemReport(customerId, fromDate, toDate,
 				con);
 
-		LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+		LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedgerVehicle(lst);
 
 		Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 
@@ -6481,6 +6481,23 @@ outputMap.put("txttodate",toDate);
 		double creditSum = 0;
 		for (LinkedHashMap<String, Object> tempHm : lst) {
 			debitSum += Double.valueOf(tempHm.get("debitAmount").toString());
+			creditSum += Double.valueOf(tempHm.get("creditAmount").toString());
+		}
+
+		reqHM.put("debitSum", String.format("%.2f", debitSum));
+		reqHM.put("creditSum", String.format("%.2f", creditSum));
+		reqHM.put("totalAmount", String.format("%.2f", creditSum - debitSum));
+		return reqHM;
+	}
+
+
+
+	public LinkedHashMap<String, Object> gettotalDetailsLedgerVehicle(List<LinkedHashMap<String, Object>> lst) {
+		LinkedHashMap<String, Object> reqHM = new LinkedHashMap<>();
+		double debitSum = 0;
+		double creditSum = 0;
+		for (LinkedHashMap<String, Object> tempHm : lst) {
+			debitSum += Double.valueOf(tempHm.get("itemAmount").toString());
 			creditSum += Double.valueOf(tempHm.get("creditAmount").toString());
 		}
 
