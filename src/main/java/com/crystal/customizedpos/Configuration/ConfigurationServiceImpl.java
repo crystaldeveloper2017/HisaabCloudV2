@@ -6181,6 +6181,9 @@ outputMap.put("txttodate",toDate);
 				totalDetails.put("differenceSum", differenceSum);
 				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 
+				double closingAmount=Double.valueOf(openingBalanceForLedger) - differenceSum;
+				totalDetails.put("closingAmount", closingAmount);
+
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(toDateDate);
 				cal.add(Calendar.DATE, -1);
@@ -6196,6 +6199,8 @@ outputMap.put("txttodate",toDate);
 				//totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
 				outputMap.put("totalDetails", totalDetails);
 				outputMap.put("openingBalanceForLedger", openingBalanceForLedger);
+
+
 				
 				outputMap.put("ListLedger", lst);
 				outputMap.put("employeeDetails", lObjConfigDao.getEmployeeDetails(Long.valueOf(employeeId), con));

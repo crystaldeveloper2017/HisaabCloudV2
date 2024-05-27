@@ -140,7 +140,7 @@
 						<th colspan="1"><b>Sales Total: ${totalDetails.salesAmtSum}</b></th>                    
 						<th colspan="1"><b>Payments Total: ${totalDetails.paymentAmtSum}</b></th>
 						<th colspan="1"><b>Difference Amount: ${totalDetails.differenceSum}</b></th>
-						<th colspan="1"><b>Pending Amount: ${totalDetails.totalAmount}</b></th>
+						<th colspan="1"><b>Closing Amount: ${totalDetails.closingAmount}</b></th>
 
 					</tr>
 				<thead>
@@ -156,6 +156,8 @@
 
 
 <script >
+
+
   $(function () {
     
     $('#example1').DataTable({
