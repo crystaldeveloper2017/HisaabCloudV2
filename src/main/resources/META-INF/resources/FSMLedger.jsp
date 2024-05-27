@@ -112,17 +112,19 @@
 						<th><b>Payment Amount</b></th>
 						<th><b>Difference</b></th>
 						<th><b>Remarks</b></th>				
+
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${ListLedger}" var="item">
 						<tr >
-							<td>${item.dt}</td>
+							<td>${item.formattedDt}</td>
 							<td>${item.shift_name}</td>
 							<td>${item.salesAmt}</td>
 							<td>${item.paymentAmt}</td>
 							<td>${item.diff}</td>	
 							<td>${item.remarks}</td>						
+
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -175,7 +177,7 @@
   });
   
   document.getElementById("divTitle").innerHTML="FSM Ledger Report";
-  document.title +=" Employee Ledger Report ";
+  document.title +=" FSM Ledger Report ";
   
 
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
