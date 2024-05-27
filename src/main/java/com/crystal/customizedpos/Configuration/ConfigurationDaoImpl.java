@@ -2951,7 +2951,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	public List<LinkedHashMap<String, Object>> getFSMLedger(String employeeId, String fromDate,
 			String toDate, String appId, Connection con) throws ParseException, ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,dt,sum(paymentAmount)-sum(SalesAmount) diff,remarks,shift_name\n" + 
+		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,date_format(dt, '%d/%m/%Y') as formattedDt,sum(paymentAmount)-sum(SalesAmount) diff,remarks,shift_name\n" + 
 		"from (\n" + 
 		"select\n" + 
 		"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt,'Nozzle' remarks,shift_name\n" + 

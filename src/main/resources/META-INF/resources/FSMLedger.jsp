@@ -112,17 +112,19 @@
 						<th><b>Payment Amount</b></th>
 						<th><b>Difference</b></th>
 						<th><b>Remarks</b></th>				
+
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${ListLedger}" var="item">
 						<tr >
-							<td>${item.dt}</td>
+							<td>${item.formattedDt}</td>
 							<td>${item.shift_name}</td>
 							<td>${item.salesAmt}</td>
 							<td>${item.paymentAmt}</td>
 							<td>${item.diff}</td>	
 							<td>${item.remarks}</td>						
+
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -140,7 +142,7 @@
 						<th colspan="1"><b>Sales Total: ${totalDetails.salesAmtSum}</b></th>                    
 						<th colspan="1"><b>Payments Total: ${totalDetails.paymentAmtSum}</b></th>
 						<th colspan="1"><b>Difference Amount: ${totalDetails.differenceSum}</b></th>
-						<th colspan="1"><b>Pending Amount: ${totalDetails.totalAmount}</b></th>
+						<th colspan="1"><b>Closing Amount: ${totalDetails.closingAmount}</b></th>
 
 					</tr>
 				<thead>
@@ -156,6 +158,8 @@
 
 
 <script >
+
+
   $(function () {
     
     $('#example1').DataTable({
@@ -173,7 +177,7 @@
   });
   
   document.getElementById("divTitle").innerHTML="FSM Ledger Report";
-  document.title +=" Employee Ledger Report ";
+  document.title +=" FSM Ledger Report ";
   
 
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });

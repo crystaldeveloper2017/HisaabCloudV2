@@ -6181,6 +6181,9 @@ outputMap.put("txttodate",toDate);
 				totalDetails.put("differenceSum", differenceSum);
 				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 
+				double closingAmount=Double.valueOf(openingBalanceForLedger) - differenceSum;
+				totalDetails.put("closingAmount", closingAmount);
+
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(toDateDate);
 				cal.add(Calendar.DATE, -1);
@@ -6196,6 +6199,8 @@ outputMap.put("txttodate",toDate);
 				//totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
 				outputMap.put("totalDetails", totalDetails);
 				outputMap.put("openingBalanceForLedger", openingBalanceForLedger);
+
+
 				
 				outputMap.put("ListLedger", lst);
 				outputMap.put("employeeDetails", lObjConfigDao.getEmployeeDetails(Long.valueOf(employeeId), con));
@@ -10550,6 +10555,8 @@ outputMap.put("txttodate",toDate);
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 		String fromDate = request.getParameter("fromDate").toString();
 		String toDate = request.getParameter("toDate").toString();
+		String toDateDisplay = request.getParameter("toDate").toString();
+
 		String employeeId = request.getParameter("employeeId").toString();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
@@ -10561,6 +10568,15 @@ outputMap.put("txttodate",toDate);
 
 		//LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
 
+		Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(toDateDate);
+		cal.add(Calendar.DATE, -1);
+		toDateDate = cal.getTime();
+
+		toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+
 
 		
 		String startOfApplication = "23/01/1992";
@@ -10570,25 +10586,31 @@ outputMap.put("txttodate",toDate);
 		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
 		
 
-		///Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
-		//totalDetails.put("openingAmount", String.valueOf(openingAmount));
-	//	Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
-	//			+ Double.parseDouble(totalDetails.get("creditSum").toString());
-	//	totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
-	//	outputMap.put("totalDetails", totalDetails);
+	// 	Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+	// 	totalDetails.put("openingAmount", String.valueOf(openingAmount));
+	// 	Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+	// 			+ Double.parseDouble(totalDetails.get("creditSum").toString());
+	// totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+	// 	outputMap.put("totalDetails", totalDetails);
+
+	outputMap.put("storeDetails", lObjConfigDao.getStoreDetails(Long.valueOf(storeId), con));
+
 	
 		outputMap.put("ShiftDetails", lObjConfigDao.getShiftDetails(outputMap, con));
 
 		LinkedHashMap<String, String> employeeDetails = lObjConfigDao.getEmployeeDetails(Long.valueOf(employeeId), con);
 
 		outputMap.put("fromDate", fromDate);
+		outputMap.put("toDate", toDateDisplay);
+
 		// outputMap.put("totalDetails",gettotalDetailsLedger(lst));
 		outputMap.put("employeeDetails", employeeDetails);
 		try {
 			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
 			String appenders = "FsmLedger" + userId + employeeDetails.get("name").replaceAll(" ", "")
-					+ "(" + getDateASYYYYMMDD(fromDate) + ")" + ".pdf";
+					+ "(" + getDateASYYYYMMDD(fromDate) + ")" +  "(" + getDateASYYYYMMDD(toDateDisplay) + ")"
+					+ getDateTimeWithSeconds(con)+ ".pdf";
 			DestinationPath += appenders;
 			outputMap.put("ListOfItemDetails", lst);
 			String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
