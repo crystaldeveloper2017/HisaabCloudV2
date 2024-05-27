@@ -6188,7 +6188,7 @@ outputMap.put("txttodate",toDate);
 
 				toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
 				String startOfApplication = "23/01/1992";
-				//String pendingAmount = lObjConfigDao.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con).get("PendingAmount");
+				String pendingAmount = lObjConfigDao.getPendingAmountForThisCustomer(Long.valueOf(employeeId), startOfApplication, toDate, con).get("PendingAmount");
 				//Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
 				//totalDetails.put("openingAmount", openingAmount);
 				//Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())+ Double.parseDouble(totalDetails.get("creditSum").toString());
