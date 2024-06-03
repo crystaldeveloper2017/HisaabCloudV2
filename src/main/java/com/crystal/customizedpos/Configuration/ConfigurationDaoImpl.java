@@ -5938,7 +5938,17 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("vehicle_id"));
 
 		return getMap(parameters,
-				"select * from mst_vehicle where vehicle_id=? ",
+				"select * from mst_vehicle mv,mst_customer mc where mv.vehicle_id=? and mc.customer_id=mv.customer_id ",
+				con);
+	}
+
+	public LinkedHashMap<String, String> getVehicleDetailsById(String vehicleId, Connection con)
+			throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(vehicleId);
+
+		return getMap(parameters,
+		"select * from mst_vehicle mv,mst_customer mc where mv.vehicle_id=? and mc.customer_id=mv.customer_id ",
 				con);
 	}
 

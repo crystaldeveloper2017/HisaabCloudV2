@@ -45,6 +45,8 @@ hr {
 
 
 <c:set var="invoiceDetails" value='${requestScope["outputObject"].get("invoiceDetails")}' />
+<c:set var="vehicleDetails" value='${requestScope["outputObject"].get("vehicleDetails")}' />
+
 
 
 
@@ -130,7 +132,8 @@ function saveInvoice()
 	"&attendant_id="+nozzDetails[4]+
 	"&paytm_order_id=${param.order_id}"+
 	"&itemDetails="+itemString; 
-	console.log(reqString);
+	alert("Value of Req String is "+reqString);
+	return;
 	
 	
 	
@@ -661,7 +664,7 @@ function saveInvoice()
 	function calculateAmount(rowElement)
 	{		
 
-		alert(rowElement);
+		
 		var customrate=rowElement.childNodes[1].childNodes[1].value;
 		var rate=rowElement.childNodes[1].childNodes[1].value;
 		var qty=rowElement.childNodes[1].childNodes[0].childNodes[1].value;
@@ -813,7 +816,6 @@ function saveInvoice()
 			calculateTotal();
 			return;
 		}
-
 
 		
 
@@ -993,7 +995,6 @@ if('${param.payment_type}'=='Pending')
 }
 
 if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
-
 {
 		txtpaymenttype.value='Paid';
 		drppaymentmode.value='Card';
@@ -1003,11 +1004,15 @@ if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
 }
 
 
+if('${vehicleDetails.vehicle_id}'!='')
+{
+txtsearchcustomer.value="${vehicleDetails.customer_name}~${vehicleDetails.mobile_number}~${vehicleDetails.customer_type}";
+txtsearchcustomer.disabled=true;
+hdnSelectedCustomer.value="${vehicleDetails.customer_id}";
 
-
-
-
+var reqString="<option value=${vehicleDetails.vehicle_id}>${vehicleDetails.vehicle_name}~${vehicleDetails.vehicle_number}</option>";
+drpvehicledetails.innerHTML=reqString;
+//drpvehicledetails.value="${vehicleDetails.vehicle_name}~${vehicleDetails.vehicle_number}";
+drpvehicledetails.disabled=true;
+}
 </script>
-
-
-

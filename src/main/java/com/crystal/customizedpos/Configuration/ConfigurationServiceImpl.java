@@ -60,6 +60,7 @@ import com.crystal.Login.LoginDaoImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
@@ -959,7 +960,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
-	public CustomResultObject showPrintLabelsScreenCustomer(HttpServletRequest request, Connection con)
+	public CustomResultObject showPrintLabelsScreenVehicle(HttpServletRequest request, Connection con)
 			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -967,8 +968,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 			outputMap.put("app_id", appId);
-			outputMap.put("ListOfCustomers", lObjConfigDao.getCustomerMaster(outputMap, con));
-			rs.setViewName("../PrintLabelsCustomer.jsp");
+			outputMap.put("ListOfVehicles", lObjConfigDao.getVehicleMaster(outputMap, con));
+			rs.setViewName("../PrintLabelsVehicle.jsp");
 
 			rs.setReturnObject(outputMap);
 
@@ -1324,6 +1325,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String bookingId = request.getParameter("booking_id");
 			String MobilebookingId = request.getParameter("mobile_booking_id");
 			String txtinvoicedate = request.getParameter("txtinvoicedate");
+			String vehicleId = request.getParameter("vehicleId");
+			
 
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
@@ -1343,6 +1346,12 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("table_id", tableId);
 			outputMap.put("invoice_no", invoiceNo);
 			outputMap.put("txtinvoicedate", txtinvoicedate);
+
+
+			
+			if (vehicleId != null) {
+				outputMap.put("vehicleDetails", lObjConfigDao.getVehicleDetailsById(vehicleId, con));
+			}
 
 			if (invoiceId != null) {
 				outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
@@ -2981,7 +2990,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
-	public CustomResultObject printLabelsCustomer(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject printLabelsVehicle(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 
 		Enumeration<String> params = request.getParameterNames();
@@ -2990,18 +2999,19 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		while (params.hasMoreElements()) {
 			String paramName = params.nextElement();
 
-			if (paramName.equals("customerDetails")) {
+			if (paramName.equals("vehicleDetails")) {
 				String[] itemsList = request.getParameter(paramName).split("\\|");
 				for (String item : itemsList) {
 					String[] itemDetails = item.split("~");
 					HashMap<String, Object> itemDetailsMap = new HashMap<>();
-					itemDetailsMap.put("customer_id", itemDetails[0]);
-					itemDetailsMap.put("customer_name", itemDetails[1]);
-					itemDetailsMap.put("mobile_number", itemDetails[2]);
+					itemDetailsMap.put("vehicle_id", itemDetails[0]);
+					itemDetailsMap.put("vehicle_name", itemDetails[1]);
+					itemDetailsMap.put("vehicle_number", itemDetails[2]);
+					itemDetailsMap.put("noOfLabels", "1");
 					itemListRequired.add(itemDetailsMap);
-					// ID, Name, Number
+					// ID, QTY, RATE,CustomRate
 				}
-				hm.put("customerDetails", itemListRequired);
+				hm.put("itemDetails", itemListRequired);
 				continue;
 			}
 			hm.put(paramName, request.getParameter(paramName));
@@ -3011,30 +3021,32 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		List<HashMap<String, Object>> newListRequired = new ArrayList<>();
 		// based on no of labels adding more to list
 		for (HashMap<String, Object> tempObj : itemListRequired) {
-
-			newListRequired.add(tempObj);
-
+			int noOfLabels = Integer.parseInt(tempObj.get("noOfLabels").toString());
+			for (int x = 0; x < noOfLabels; x++) {
+				newListRequired.add(tempObj);
+			}
 		}
 		while (true) {
-			if (newListRequired.size() % 5 == 0) {
+			if (newListRequired.size() % 3 == 0) {
 				break;
 			}
 			HashMap<String, Object> tempObj = new HashMap<>();
-			tempObj.put("customer_id", 00000);
-			tempObj.put("customer_name", "Adjustment");
+			tempObj.put("vehicle_id", 00000);
+			tempObj.put("vehicle_name", "Adjustment");
+			tempObj.put("vehicle_number", "Adjustment");
 			newListRequired.add(tempObj);
 		}
 
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + File.separator;
-		DestinationPath += userId;
 		hm.put("user_id", userId);
 		hm.put("store_id", storeId);
 		try {
 
 			for (HashMap<String, Object> item : newListRequired) {
-				generateQRForThisString(item.get("customer_id").toString(), DestinationPath, 118, 120, "QR");
+				generateQRForThisString(item.get("vehicle_id").toString(), DestinationPath, 150, 150,
+						"QR");
 			}
 
 			Document document = new Document(PageSize.A4, 0, 0, 0, 0);
@@ -3045,7 +3057,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			ConfigurationServiceImpl event = new ConfigurationServiceImpl();
 			writer.setPageEvent(event);
 			document.open();
-			PdfPTable table = new PdfPTable(5);
+			PdfPTable table = new PdfPTable(3);
 			table.setWidthPercentage(100);
 			int i = 0;
 			List<String> tempList = new ArrayList<>();
@@ -3053,35 +3065,54 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			for (HashMap<String, Object> item : newListRequired) {
 				PdfPCell cell;
 				com.itextpdf.text.Image image = com.itextpdf.text.Image
-						.getInstance(DestinationPath + item.get("customer_id") + ".jpg");
+						.getInstance(DestinationPath + item.get("vehicle_id") + "QR" + ".jpg");
 				cell = new PdfPCell(image);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setPadding(5);
-				cell.setBorder(Rectangle.NO_BORDER);
+				//cell.setBorder(Rectangle.NO_BORDER);
 				table.addCell(cell);
-				tempList.add(item.get("customer_name").toString());
-				i++;
-				if (i % 5 == 0) {
-					for (String s : tempList) {
-						cell = new PdfPCell(new Phrase(s, new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
-						cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
-						cell.setBorder(Rectangle.RECTANGLE);
-						table.addCell(cell);
-					}
 
-					cell = new PdfPCell(new Phrase("--------------------------",
-							new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));
-					cell.setHorizontalAlignment(com.itextpdf.text.Image.ALIGN_CENTER);
-					cell.setBorder(Rectangle.NO_BORDER);
-					table.addCell(cell);
+
+				i++;
+			if(i%3==0)
+			{
+
+				for(int m=i-3;m<i;m++)
+				{
+				HashMap<String, String> vehicleDetails=lObjConfigDao.getVehicleDetailsById((newListRequired.get(m).get("vehicle_id").toString()), con);
+				if(newListRequired.get(m).get("vehicle_id").toString().equals("0"))
+				{
+					vehicleDetails.put("vehicle_id","NA");
+					vehicleDetails.put("vehicle_name","NA");
+					vehicleDetails.put("vehicle_number","NA");
+					vehicleDetails.put("customer_name","NA");
+					
 				}
-				tempList.clear();
+				String shoaebcustomername=vehicleDetails.get("customer_name").toString();
+				String shoaebcustomervehiclename="("+vehicleDetails.get("vehicle_name")+")";
+				String shoaebcustomervehiclenumber=vehicleDetails.get("vehicle_number").toString();
+				
+
+				cell = new PdfPCell(new Phrase(shoaebcustomername+"\n"+shoaebcustomervehiclename+"\n"+shoaebcustomervehiclenumber,new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));	        
+				//cell.setBorder(Rectangle.NO_BORDER);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+				}
+
+				// cell = new PdfPCell(new Phrase("-------------------------------------------------------------------------------------------------------------------------------------------",new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL)));	        
+				// //cell.setBorder(Rectangle.NO_BORDER);
+				// cell.setColspan(3);
+				// cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				// table.addCell(cell);
+			}
+				
 			}
 
-			table.completeRow();
 			document.add(table);
 			document.close();
 
-			rs.setAjaxData(userId + "reqPDF.pdf");
+			rs.setAjaxData("reqPDF.pdf");
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
@@ -3833,6 +3864,34 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		}
 		return rs;
 	}
+
+	public CustomResultObject showScanVehicleQR(HttpServletRequest request,Connection connections)
+	{
+		CustomResultObject rs=new CustomResultObject();			
+		HashMap<String, Object> outputMap=new HashMap<>();
+		
+		
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
+		try
+		{	
+			
+			LinkedHashMap<String, String> empDetails=lObjConfigDao.getEmployeeDetails(Long.valueOf(userId), connections);			
+			
+			
+			
+			rs.setViewName("../ScanVehicle.jsp");	
+			rs.setReturnObject(outputMap);		
+		}
+		catch (Exception e)
+		{
+				writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+	
+	
 
 	public CustomResultObject showStoreMaster(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();

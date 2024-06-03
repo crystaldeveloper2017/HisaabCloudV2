@@ -156,6 +156,19 @@
           </div>
 
 
+            <div class="col-12 col-sm-6">
+
+         <div class="info-box mb-3 " onclick="window.location='?a=showScanVehicleQR'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">11. Scan Vehicle QR </span>
+                
+              </div>
+            </div>
+          </div>
+
+
         
 
 

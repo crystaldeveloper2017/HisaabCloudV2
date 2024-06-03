@@ -275,9 +275,9 @@ elements:
   elementUrl: "?a=showCustomerDeliveryRoutine"
   orderNo: 1
 - elementId: 700128
-  elementName: "Print Labels Customer"
+  elementName: "Print Labels Vehicle"
   parentElementId: 1
-  elementUrl: "?a=showPrintLabelsScreenCustomer"
+  elementUrl: "?a=showPrintLabelsScreenVehicle"
   orderNo: 4
 - elementId: 700129
   elementName: "Expense"

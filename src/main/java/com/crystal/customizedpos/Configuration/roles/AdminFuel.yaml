@@ -142,10 +142,14 @@
     - addExpenseNew
     - showDailyInvoiceReportParameter
     - exportCustomerLedgerWithItemVehicleAsPDF
+    - showPrintLabelsScreenVehicle
+    - printLabelsVehicle
+    - showScanVehicleQR
   reports:
     - 1
     - 2
   elements:
+    - 700128
     - 700211
     - 6
     - 23

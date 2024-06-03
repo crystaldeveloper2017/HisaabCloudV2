@@ -4,7 +4,7 @@
            
 
 
-<c:set var="ListOfCustomers" value='${requestScope["outputObject"].get("ListOfCustomers")}' />
+<c:set var="ListOfVehicles" value='${requestScope["outputObject"].get("ListOfVehicles")}' />
    
 
 
@@ -21,10 +21,10 @@ function removethisitem(btn1)
 	btn1.parentElement.parentElement.remove();	 
 }
 
-function checkforMatchCustomer()
+function checkforMatchVehicle()
 {
-	var searchString= document.getElementById("txtcustomername").value;	
-	var options1=document.getElementById("customerlist").options;
+	var searchString= document.getElementById("txtvehiclename").value;	
+	var options1=document.getElementById("vehiclelist").options;
 	
 	
 	var itemId=0;
@@ -47,15 +47,15 @@ function checkforMatchCustomer()
 					{							
 						if(itemId==rows[x].childNodes[0].innerHTML)
 							{
-								alert('Customer already exist in selection');
-								document.getElementById("txtcustomername").value="";
+								alert('Vehicle already exist in selection');
+								document.getElementById("txtvehiclename").value="";
 								return;
 							}
 					}
 				
 				// code to check if item already exist inselection				
 			getItemDetailsAndAddToTable(itemId,searchString);
-				document.getElementById("txtcustomername").value="";
+				document.getElementById("txtvehiclename").value="";
 		}
 	
 }
@@ -72,6 +72,7 @@ function getItemDetailsAndAddToTable(itemId,itemName)
 	    	var cell1 = row.insertCell(1);
 	    	var cell2 = row.insertCell(2);	    	
 	    	var cell3 = row.insertCell(3);
+			var cell4 = row.insertCell(4);
 	    	
 	    	var arritemName=itemName.split('~');
 	    	
@@ -84,9 +85,12 @@ function getItemDetailsAndAddToTable(itemId,itemName)
 	    	
 	    	cell2.innerHTML = arritemName[1];    	   	
 	    	cell2.style.textAlign="center";
-	    	
-	    	cell3.innerHTML = '<button  type="button" class="btn btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
+
+			cell3.innerHTML = arritemName[2];    	   	
 	    	cell3.style.textAlign="center";
+	    	
+	    	cell4.innerHTML = '<button  type="button" class="btn btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
+	    	cell4.style.textAlign="center";
 	    	
 	    
 		
@@ -108,11 +112,12 @@ function printLabels()
 	var proceedFlag=true;
 	for (var x= 1; x < rows.length; x++) 
 	{   
-	    // ID, Customer Name,Mobile Number
+	    // ID, Vehicle Name,Mobile Number
 	    itemString+=
 	    	rows[x].childNodes[0].innerHTML+
 	    "~"+rows[x].childNodes[1].innerHTML+
 	    "~"+rows[x].childNodes[2].innerHTML+	    
+		"~"+rows[x].childNodes[3].innerHTML+
 	    "|";
 	}
 	
@@ -125,9 +130,9 @@ function printLabels()
 	      
 	    }
 	  };
-	  xhttp.open("POST", "?a=printLabelsCustomer", true);
+	  xhttp.open("POST", "?a=printLabelsVehicle", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("customerDetails="+itemString);
+	  xhttp.send("vehicleDetails="+itemString);
 	
 	
 	
@@ -149,13 +154,13 @@ function printLabels()
 
 <div class="col-sm-12">
   	<div class="form-group">      
-  		<input type="text" class="form-control"    placeholder="Search for Customers" list=customerlist id="txtcustomername" name="txtcustomername" oninput="checkforMatchCustomer()">          
+  		<input type="text" class="form-control"    placeholder="Search for Vehicles" list=vehiclelist id="txtvehiclename" name="txtvehiclename" oninput="checkforMatchVehicle()">          
     </div>
   </div>
   
-  <datalist id="customerlist">
-<c:forEach items="${ListOfCustomers}" var="customers">
-			    <option id="${customers.customerId}">${customers.customerName}~${customers.mobileNumber}</option>			    
+  <datalist id="vehiclelist">
+<c:forEach items="${ListOfVehicles}" var="vehicles">
+			    <option id="${vehicles.vehicle_id}">${vehicles.vehicle_name}~${vehicles.vehicle_number}~${vehicles.customer_name}</option>			    
 	   </c:forEach></select>	   	   	
 </datalist>
 
@@ -165,9 +170,10 @@ function printLabels()
 	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center">
-	                     <th style="z-index:0">Customer Id</th>
-	                     <th style="z-index:0">Customer Name</th>
-	  			<th style="z-index:0">Mobile No</th>	  				  				  			
+	                     <th style="z-index:0">Vehicle Id</th>
+	                     <th style="z-index:0">Vehicle Name</th>
+	  			<th style="z-index:0">Vehicle Number</th>	  				  				  			
+				<th style="z-index:0">Customer Name</th>	  				  				  			
 	  			<th></th>
 	                    </tr>
 	                  </thead>
@@ -194,8 +200,8 @@ function printLabels()
 	
 	
 
-		document.getElementById("divTitle").innerHTML="Print Labels Customer";
-		document.title +=" Print Labels Customer ";
+		document.getElementById("divTitle").innerHTML="Print Labels Vehicle";
+		document.title +=" Print Labels Vehicle ";
 
 </script>
 
