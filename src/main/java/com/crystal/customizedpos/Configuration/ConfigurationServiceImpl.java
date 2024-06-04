@@ -6561,7 +6561,10 @@ outputMap.put("txttodate",toDate);
 		double debitSum = 0;
 		double creditSum = 0;
 		for (LinkedHashMap<String, Object> tempHm : lst) {
-			debitSum += Double.valueOf(tempHm.get("itemAmount").toString());
+			System.out.println(tempHm);
+			
+			double itemAmt=tempHm.get("itemAmount").equals("")?0: Double.valueOf(tempHm.get("itemAmount").toString());
+			debitSum += itemAmt;
 			creditSum += Double.valueOf(tempHm.get("creditAmount").toString());
 		}
 
@@ -10626,7 +10629,8 @@ outputMap.put("txttodate",toDate);
 				toDate,appId, con);
 
 		//LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
-
+		String openingBalanceForLedger = lObjConfigDao.getOpeningBalanceForLedger(employeeId, "23/01/1992",getDateFromDBMinusOneDay(getDateASYYYYMMDD(fromDate),con),appId, con);
+			openingBalanceForLedger=openingBalanceForLedger==null?"0":openingBalanceForLedger;
 		Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 
 		Calendar cal = Calendar.getInstance();
@@ -10635,6 +10639,19 @@ outputMap.put("txttodate",toDate);
 		toDateDate = cal.getTime();
 
 		toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+
+		
+		LinkedHashMap<String, Object> totalDetails = gettotalDetailsFSMLedger(lst);
+
+				double differenceSum=Double.valueOf(openingBalanceForLedger) - Double.valueOf(totalDetails.get("salesAmtSum").toString()) + Double.valueOf(totalDetails.get("paymentAmtSum").toString());
+				totalDetails.put("differenceSum", differenceSum);
+				
+				outputMap.put("totalDetails", totalDetails);
+				totalDetails.put("openingBalanceForLedger", openingBalanceForLedger);
+
+				double closingAmount=Double.valueOf(openingBalanceForLedger) - differenceSum;
+				totalDetails.put("closingAmount", closingAmount);
+
 
 
 		
@@ -10672,6 +10689,9 @@ outputMap.put("txttodate",toDate);
 					+ getDateTimeWithSeconds(con)+ ".pdf";
 			DestinationPath += appenders;
 			outputMap.put("ListOfItemDetails", lst);
+			outputMap.put("openingBalanceForLedger", openingBalanceForLedger);
+			
+			
 			String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 			new InvoiceHistoryPDFHelper().generatePDFForFsmLedger(DestinationPath,BufferedImagesFolder, outputMap, con);
 			outputMap.put("listReturnData", lst);

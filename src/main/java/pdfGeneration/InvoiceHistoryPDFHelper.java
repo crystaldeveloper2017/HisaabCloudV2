@@ -5080,7 +5080,27 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			
 
 			 
+		  String debitAmountString="";
+		  String creditAmountString="";
+		  Double s=Double.parseDouble(totalDetails.get("openingBalanceForLedger"));
+
+		  double openingbalancedouble=s;
+
+		  if(openingbalancedouble<=0)
+		  {debitAmountString=String.valueOf(openingbalancedouble*-1);}
+		  else
+		  {creditAmountString=String.valueOf(openingbalancedouble);}
+
 		
+		  cell = new PdfPCell(new Phrase(debitAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  table.addCell(cell);
+		  
+		  cell = new PdfPCell(new Phrase(creditAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
+		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  table.addCell(cell);
 	        
 	        
 			int srno=1;
