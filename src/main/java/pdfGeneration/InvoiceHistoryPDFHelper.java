@@ -5073,7 +5073,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 	  
 			cell = new PdfPCell(new Phrase("Opening Balance As on "+invoiceHistoryDetails.get("fromDate"),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
-			cell.setColspan(8);
+			cell.setColspan(4);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		  table.addCell(cell);
