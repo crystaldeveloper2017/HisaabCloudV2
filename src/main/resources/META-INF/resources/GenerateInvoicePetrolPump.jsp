@@ -132,8 +132,7 @@ function saveInvoice()
 	"&attendant_id="+nozzDetails[4]+
 	"&paytm_order_id=${param.order_id}"+
 	"&itemDetails="+itemString; 
-	alert("Value of Req String is "+reqString);
-	return;
+	
 	
 	
 	
