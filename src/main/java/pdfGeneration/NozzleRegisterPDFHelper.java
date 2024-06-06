@@ -299,7 +299,7 @@ public class NozzleRegisterPDFHelper  extends PdfPageEventHelper
 	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase(sale.get("total_amount").toString(),font));	        
+				cell = new PdfPCell(new Phrase(sale.get("totalAmount").toString(),font));	        
 	        	
 	        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	table.addCell(cell);	        
