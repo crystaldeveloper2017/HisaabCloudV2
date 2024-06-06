@@ -5088,7 +5088,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 		  if(openingbalancedouble<=0)
 		  {
-			debitAmountString=String.valueOf(openingbalancedouble*-1);
+			debitAmountString=String.valueOf(openingbalancedouble);
 			cell = new PdfPCell(new Phrase(debitAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

@@ -6236,11 +6236,11 @@ outputMap.put("txttodate",toDate);
 
 				LinkedHashMap<String, Object> totalDetails = gettotalDetailsFSMLedger(lst);
 
-				double differenceSum=Double.valueOf(openingBalanceForLedger) - Double.valueOf(totalDetails.get("salesAmtSum").toString()) + Double.valueOf(totalDetails.get("paymentAmtSum").toString());
+				double differenceSum=   Double.valueOf(totalDetails.get("paymentAmtSum").toString())- Double.valueOf(totalDetails.get("salesAmtSum").toString());
 				totalDetails.put("differenceSum", differenceSum);
 				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
 
-				double closingAmount=Double.valueOf(openingBalanceForLedger) - differenceSum;
+				double closingAmount=Double.valueOf(openingBalanceForLedger) + differenceSum;
 				totalDetails.put("closingAmount", closingAmount);
 
 				Calendar cal = Calendar.getInstance();
@@ -10643,13 +10643,13 @@ outputMap.put("txttodate",toDate);
 		
 		LinkedHashMap<String, Object> totalDetails = gettotalDetailsFSMLedger(lst);
 
-				double differenceSum=Double.valueOf(openingBalanceForLedger) - Double.valueOf(totalDetails.get("salesAmtSum").toString()) + Double.valueOf(totalDetails.get("paymentAmtSum").toString());
+				double differenceSum= Double.valueOf(totalDetails.get("paymentAmtSum").toString()) - Double.valueOf(totalDetails.get("salesAmtSum").toString());
 				totalDetails.put("differenceSum", differenceSum);
 				
 				outputMap.put("totalDetails", totalDetails);
 				totalDetails.put("openingBalanceForLedger", openingBalanceForLedger);
 
-				double closingAmount=Double.valueOf(openingBalanceForLedger) - differenceSum;
+				double closingAmount=Double.valueOf(openingBalanceForLedger) + differenceSum;
 				totalDetails.put("closingAmount", closingAmount);
 
 
