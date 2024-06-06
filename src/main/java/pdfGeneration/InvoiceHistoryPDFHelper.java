@@ -4920,7 +4920,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		LinkedHashMap<String, String> employeedetails= (LinkedHashMap<String, String>) invoiceHistoryDetails.get("employeeDetails");
 		//LinkedHashMap<String, String> totalDetails= (LinkedHashMap<String, String>) invoiceHistoryDetails.get("totalDetails");
 		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("ListOfItemDetails");
-		LinkedHashMap<String, String> totalDetails= (LinkedHashMap<String, String>) invoiceHistoryDetails.get("totalDetails");
+		LinkedHashMap<String, Object> totalDetails= (LinkedHashMap<String, Object>) invoiceHistoryDetails.get("totalDetails");
 
 		LinkedHashMap<String, Object> shiftDetails= (LinkedHashMap<String, Object>) invoiceHistoryDetails.get("shiftDetails");
 		LinkedHashMap<String, Object> storeDetails= (LinkedHashMap<String, Object>) invoiceHistoryDetails.get("storeDetails");
@@ -5082,25 +5082,32 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			 
 		  String debitAmountString="";
 		  String creditAmountString="";
-		  Double s=Double.parseDouble(totalDetails.get("openingBalanceForLedger"));
+		  Double s=Double.parseDouble(totalDetails.get("openingBalanceForLedger").toString());
 
 		  double openingbalancedouble=s;
 
 		  if(openingbalancedouble<=0)
-		  {debitAmountString=String.valueOf(openingbalancedouble*-1);}
+		  {
+			debitAmountString=String.valueOf(openingbalancedouble*-1);
+			cell = new PdfPCell(new Phrase(debitAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(2);
+			table.addCell(cell);
+		}
 		  else
-		  {creditAmountString=String.valueOf(openingbalancedouble);}
+		  {creditAmountString=String.valueOf(openingbalancedouble);
+			cell = new PdfPCell(new Phrase(creditAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(2);
+			table.addCell(cell);
+		}
 
 		
-		  cell = new PdfPCell(new Phrase(debitAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
-		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  table.addCell(cell);
+		 
 		  
-		  cell = new PdfPCell(new Phrase(creditAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));	
-		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  table.addCell(cell);
+		
 	        
 	        
 			int srno=1;
@@ -5150,8 +5157,11 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 					
 	        }
 	        
-			  
-			cell = new PdfPCell(new Phrase("Closing Balance As On :-"+invoiceHistoryDetails.get("toDate"),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
+
+			
+			Double clsAmtdb=Double.valueOf(totalDetails.get("closingAmount").toString());
+			String clsamtastring=String.valueOf(clsAmtdb);
+			cell = new PdfPCell(new Phrase("Closing Balance As On :-"+invoiceHistoryDetails.get("toDate") + " is "+clsamtastring,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setColspan(8);

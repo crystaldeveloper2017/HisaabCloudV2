@@ -21,7 +21,7 @@ buildNumber.properties
 
 # Config.yaml Contains Credentials and Application Configurations
 
-logging.log
+.log
 ROOT.war
 
 src/main/resources/META-INF/resources/frameworkjsps/
