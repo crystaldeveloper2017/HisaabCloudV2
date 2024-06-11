@@ -3480,7 +3480,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  table = new PdfPTable(10);
 		  table.setWidthPercentage(100);
 		  
-	      table.setWidths(new int[]{3,5,11,3,4,5,5,5,5,5});
+	      table.setWidths(new int[]{3,5,11,3,4,7,4,4,5,5});
 
 		  cell = new PdfPCell(new Phrase("Sr No",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
