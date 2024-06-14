@@ -516,3 +516,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCustomerLedgerWithItemVehicle"
   orderNo: 3
+- elementId: 700212
+  elementName: "Raw Material Master"
+  parentElementId: 700132
+  elementUrl: "?a=showRawMaterialsMaster"
+  orderNo: 1

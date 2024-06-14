@@ -10893,4 +10893,158 @@ outputMap.put("txttodate",toDate);
 		}
 		return rs;
 	}
+
+	public CustomResultObject showRawMaterialsMaster(HttpServletRequest request,Connection con)
+	{
+		CustomResultObject rs=new CustomResultObject();
+		HashMap<String, Object> outputMap=new HashMap<>();
+		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
+		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		try
+		{
+			String [] colNames= {"raw_material_id","raw_material_name"}; // change according to dao return
+			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getRawMaterialMaster(con);
+			outputMap.put("ListOfRawmaterials", lst);
+
+
+			
+			if(!exportFlag.isEmpty())
+			{
+				outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"RawMaterialMaster");
+			}
+		else
+			{
+				
+				rs.setViewName("../RawMaterialMaster.jsp");
+				
+			}	
+			
+			
+
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}		
+		rs.setReturnObject(outputMap);
+
+		return rs;
+	}
+
+	public CustomResultObject showAddRawMaterial(HttpServletRequest request,Connection connections)
+	{
+		CustomResultObject rs=new CustomResultObject();			
+		HashMap<String, Object> outputMap=new HashMap<>();
+		
+		long rawmaterialId=request.getParameter("rawmaterialId")==null?0L:Long.parseLong(request.getParameter("rawmaterialId"));
+		outputMap.put("raw_material_id", rawmaterialId);
+		
+		try
+		{	
+			if(rawmaterialId!=0) {			outputMap.put("rawmaterialDetails", lObjConfigDao.getRawMaterialDetails(outputMap ,connections));} 
+			rs.setViewName("../AddRawMaterial.jsp");	
+			rs.setReturnObject(outputMap);		
+		}
+		catch (Exception e)
+		{
+				writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+
+	public CustomResultObject addRawMaterial(HttpServletRequest request,Connection con) throws Exception
+	{
+		CustomResultObject rs=new CustomResultObject();	
+		HashMap<String, Object> outputMap=new HashMap<>();	
+				
+		FileItemFactory itemFacroty=new DiskFileItemFactory();
+		ServletFileUpload upload=new ServletFileUpload(itemFacroty);		
+		//String webInfPath = cf.getPathForAttachments();
+		
+		HashMap<String,Object> hm=new HashMap<>();
+		
+		
+		
+		
+		List<FileItem> toUpload=new ArrayList<>();
+		if(ServletFileUpload.isMultipartContent(request))
+		{
+			List<FileItem> items=upload.parseRequest(request);
+			for(FileItem item:items)
+			{		
+				
+				if (item.isFormField()) 
+				{
+					hm.put(item.getFieldName(), item.getString());
+			    }
+				else
+				{
+					toUpload.add(item);
+				}
+			}			
+		}		
+		String rawmaterialName= hm.get("txtrawmaterialname").toString();
+		
+		
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		hm.put("txtrawmaterialname", rawmaterialName);
+		hm.put("user_id", userId);
+		
+		
+		long rawmaterialId=hm.get("hdnRawmaterialId").equals("")?0l:Long.parseLong(hm.get("hdnRawmaterialId").toString()); 
+		try
+		{			
+									
+			
+			
+			if(rawmaterialId==0)
+			{
+				rawmaterialId=lObjConfigDao.addRawMaterial(con, hm);
+			}
+			else
+			{
+				lObjConfigDao.updateRawMaterial(rawmaterialId, con, rawmaterialName,userId);
+			}
+			
+			
+		
+			rs.setReturnObject(outputMap);
+			
+			
+			rs.setAjaxData("<script>window.location='"+hm.get("callerUrl")+"?a=showRawMaterialsMaster'</script>");
+			
+										
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+	
+	public CustomResultObject deleteRawMaterial(HttpServletRequest request,Connection con)
+	{
+		CustomResultObject rs=new CustomResultObject();
+		long rawmaterialId= Integer.parseInt(request.getParameter("rawmaterialId"));		
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		try
+		{	
+			
+			rs.setAjaxData(lObjConfigDao.deleteRawMaterial(rawmaterialId,userId,con));
+			
+			
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+	
 }
+	

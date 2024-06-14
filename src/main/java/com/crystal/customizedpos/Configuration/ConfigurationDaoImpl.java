@@ -6957,6 +6957,61 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
+	public List<LinkedHashMap<String, Object>> getRawMaterialMaster(Connection con)
+	throws SQLException, ClassNotFoundException {
+ArrayList<Object> parameters = new ArrayList<>();
+return getListOfLinkedHashHashMap(parameters,
+		"select * from raw_material_master where activate_flag=1  ",
+		con);
+}
 
+
+public LinkedHashMap<String, String> getRawMaterialDetails(HashMap<String, Object> hm, Connection con) throws SQLException {
+	ArrayList<Object> parameters = new ArrayList<>();
+	parameters.add(hm.get("raw_material_id"));
+	
+	
+	return getMap(parameters,
+			"select * from raw_material_master where raw_material_id=?",
+			con);
+}
+public long addRawMaterial(Connection con, HashMap<String, Object> hm) throws Exception {
+	ArrayList<Object> parameters = new ArrayList<>();
+	
+	
+	String query="insert into raw_material_master values (default,?,1,?,sysdate())";
+	parameters.add(hm.get("txtrawmaterialname"));
+	parameters.add(hm.get("user_id"));
+	
+	
+	return insertUpdateDuablDB(query, parameters,
+			con);
+}
+
+		public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName,String updatedBy) throws Exception {
+
+	ArrayList<Object> parameters = new ArrayList<>();
+	
+	
+	parameters.add(rawmaterialName);
+	parameters.add(updatedBy);
+
+	parameters.add(rawmaterialId);
+	
+
+	insertUpdateDuablDB("UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
+			parameters, con);
+	return "Raw Material updated Succesfully";
+
+}
+public String deleteRawMaterial(long rawmaterialId,String userId, Connection conWithF) throws Exception {
+	ArrayList<Object> parameters = new ArrayList<>();
+	
+	parameters.add(userId);
+	parameters.add(rawmaterialId);
+	insertUpdateDuablDB("UPDATE raw_material_master  SET activate_flag=0,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
+			parameters, conWithF);
+	return "Raw Material updated Succesfully";
+}
 
 }
