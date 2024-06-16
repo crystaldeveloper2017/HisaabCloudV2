@@ -1295,26 +1295,16 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("customerGroup"));
 		parameters.add(hm.get("alternate_mobile_no"));
 		parameters.add(hm.get("customer_reference"));
+		parameters.add(hm.get("txtgstno"));
+		
 
-		if (hm.get("birthday").equals("")) {
-			parameters.add(null);
-		} else {
-			parameters.add(getDateASYYYYMMDD(hm.get("birthday").toString()));
-		}
-
-		if (hm.get("anniversary").equals("")) {
-			parameters.add(null);
-		} else {
-			parameters.add(getDateASYYYYMMDD(hm.get("anniversary").toString()));
-		}
-
-		parameters.add(hm.get("drpgender"));
+		
 
 		parameters.add(Long.valueOf(customerId));
 		insertUpdateDuablDB(
 				"UPDATE mst_customer  SET"
 						+ " customer_name=?, mobile_number = ?, city=?, address= ?, customer_type=?,updated_date=SYSDATE(),"
-						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,dob=?,anniversary=?,gender=?	 WHERE customer_id=?",
+						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?	 WHERE customer_id=?",
 				parameters, conWithF);
 		return "Customer Updated Succesfully";
 
@@ -1329,26 +1319,10 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("customerType"));
 		parameters.add(hm.get("customerGroup"));
 		parameters.add(hm.get("alternate_mobile_no"));
-
 		parameters.add(hm.get("app_id"));
 		parameters.add(hm.get("customer_reference"));
-
-		if (hm.get("birthday") == null || hm.get("birthday").equals("")) {
-			parameters.add(null);
-		} else {
-			parameters.add(getDateASYYYYMMDD(hm.get("birthday").toString()));
-		}
-
-		if (hm.get("birthday") == null || hm.get("birthday").equals("")) {
-			parameters.add(null);
-		} else {
-			parameters.add(getDateASYYYYMMDD(hm.get("birthday").toString()));
-		}
-
-		parameters.add(hm.get("drpgender"));
-
-		String insertQuery = "insert into mst_customer values (default,?,?,?,?,?,1,sysdate(),null,null,?,?,?,?,?,?,?)";
-
+		parameters.add(hm.get("txtgstno"));
+		String insertQuery = "insert into mst_customer values (default,?,?,?,?,?,1,sysdate(),null,null,?,?,?,?,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
 
@@ -1446,7 +1420,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(Long.valueOf(customerId));
 		return getMap(parameters,
-				"select *,date_format(dob,'%d/%m/%Y') as Formattedbirthday,date_format(anniversary,'%d/%m/%Y') as formattedAnniversary from mst_customer where customer_id=?",
+				"select * from mst_customer where customer_id=?",
 				con);
 	}
 

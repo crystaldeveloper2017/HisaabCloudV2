@@ -85,12 +85,6 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-6">
-  	<div class="form-group">
-      <label for="MobileNumber">Birthday</label>
-      <input type="text" class="form-control" name="birthday" id="birthday" value="${customerDetails.Formattedbirthday}" name="birthday" placeholder="Birthday" readonly>
-    </div>
-  </div>
   
   <div class="col-sm-6">
   	<div class="form-group">
@@ -100,14 +94,14 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-3">
   	<div class="form-group">
       <label for="MobileNumber">Mobile Number *</label>
       <input type="text" class="form-control" id="mobileNumber" value="${customerDetails.mobile_number}" name="mobileNumber" placeholder="Mobile Number" onkeypress="digitsOnly(event)" maxlength="10" required>
     </div>
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-3">
   	<div class="form-group">
       <label for="MobileNumber">Alternate Mobile No</label>
       <input type="text" class="form-control" id="alternate_mobile_no" value="${customerDetails.alternate_mobile_no}" name="alternate_mobile_no" placeholder="Alternate Mobile No" onkeypress="digitsOnly(event)" maxlength="10" required>
@@ -123,25 +117,6 @@ function addCustomer()
     </div>
   </div>
   
-  
-    <div class="col-sm-6">
-  	<div class="form-group">
-      <label for="City">Anniversary</label>
-      <input type="text" class="form-control" id="anniversary" readonly value="${customerDetails.formattedAnniversary}" name="anniversary" placeholder="Anniversary">
-    </div>
-  </div>
-  
-    <div class="col-sm-6">
-  	<div class="form-group">
-      <label for="City">Gender</label>
-      <select class="form-control" id="drpgender" name="drpgender">
-      	<option value="M">Male</option>
-      	<option value="F">Female</option>
-      </select>
-      
-    </div>
-  </div>
-  
   <div class="col-sm-12">
   	<div class="form-group">
       <label for="Address">Address</label>
@@ -149,7 +124,7 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-6" id="placeholderforcustomertype">
   	<div class="form-group">
       <label for="CustomerType">Customer Type *</label>
   				<select id="customerType" name="customerType" class="form-control" >
@@ -170,7 +145,7 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-6" id="placeholderforcustomergroup">
   	<div class="form-group">
       <label for="CustomerType">Customer Group </label>      
   				<select id="customerGroup" name="customerGroup" class="form-control" >
@@ -180,6 +155,14 @@ function addCustomer()
   					
   				</select>
      
+    </div>
+  </div>
+
+
+  <div class="col-sm-6">
+  	<div class="form-group">
+      <label for="GST No">GST No</label>      
+	  <input type="text" class="form-control" id="txtgstno" value="${customerDetails.gst_no}" name="txtgstno" placeholder="GST No.">     
     </div>
   </div>
   
@@ -228,7 +211,13 @@ function addCustomer()
 	
 	var arr=window.location.toString().split("/");
 	callerUrl.value=(arr[0]+"//"+arr[1]+arr[2]+"/"+arr[3]+"/");
+
+	if("${userdetails.app_type}"=="SnacksProduction")
+	{
+		placeholderforcustomertype.style="display:none";
+		placeholderforcustomergroup.style="display:none";
+	}
 	
-	$( "#birthday" ).datepicker({ dateFormat: 'dd/mm/yy' });
-	$( "#anniversary" ).datepicker({ dateFormat: 'dd/mm/yy' });
+
 </script>
+

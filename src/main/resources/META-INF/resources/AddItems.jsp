@@ -181,9 +181,9 @@ function deleteAttachment(id)
   </div>
   
 
- <c:if test="${userdetails.app_type ne 'Restaurant'}">
+ 
 
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderdebitin">
   	<div class="form-group">
       <label for="email">Debit In *</label>
       <select id="drpdebitin" name="drpdebitin" class="form-control">
@@ -202,18 +202,18 @@ function deleteAttachment(id)
     </div>
   </div>
   
- </c:if>
+ 
 
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholdersaleprice">
   	<div class="form-group">
       <label for="email">Sale Price *</label>
       <input type="text" class="form-control" id="itemsaleprice" value="${itemDetails.price}"  onkeyup="digitsOnly(event)" placeholder="180" name="itemsaleprice">
     </div>
   </div>
   
-  <c:if test="${userdetails.app_type ne 'Restaurant'}">
+  
 
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderwholesaleprice">
   	<div class="form-group">
       <label for="email">Wholesale Price</label>
       <input type="text" class="form-control" id="wholesaleprice" value="${itemDetails.wholesale_price}" onkeyup="digitsOnly(event)"  placeholder="180" name="wholesaleprice">
@@ -221,42 +221,42 @@ function deleteAttachment(id)
   </div>
   
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderfranchiseprice">
   	<div class="form-group">
       <label for="email">Franchise Price</label>
       <input type="text" class="form-control" id="franchise_price" value="${itemDetails.franchise_rate}"  onkeyup="digitsOnly(event)" placeholder="180" name="franchise_price">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderloyalcustomer1">
   	<div class="form-group">
       <label for="email">Loyal Customer 1 Price</label>
       <input type="text" class="form-control" id="loyalcustomer1price" value="${itemDetails.loyalcustomerrate1}" onkeyup="digitsOnly(event)"  placeholder="180" name="loyalcustomer1price">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderloyalcustomer2">
   	<div class="form-group">
       <label for="email">Loyal Customer 2 Price</label>
       <input type="text" class="form-control" id="loyalcustomer2price" value="${itemDetails.loyalcustomerrate2}" onkeyup="digitsOnly(event)"  placeholder="180" name="loyalcustomer2price">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderloyalcustomer3">
   	<div class="form-group">
       <label for="email">Loyal Customer 3 Price</label>
       <input type="text" class="form-control" id="loyalcustomer3price" value="${itemDetails.loyalcustomerrate3}" onkeyup="digitsOnly(event)"  placeholder="180" name="loyalcustomer3price">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderdistributorprice">
   	<div class="form-group">
       <label for="email">Distributor Price</label>
       <input type="text" class="form-control" id="distributor_rate" value="${itemDetails.distributor_rate}" onkeyup="digitsOnly(event)"  placeholder="180" name="distributor_rate">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderb2b">
   	<div class="form-group">
       <label for="email">B2B Price</label>
       <input type="text" class="form-control" id="b2b_rate" value="${itemDetails.b2b_rate}" onkeyup="digitsOnly(event)"  placeholder="180" name="b2b_rate">
@@ -270,9 +270,9 @@ function deleteAttachment(id)
 	      <input type="text" class="form-control" id="shrikhand" value="${itemDetails.shrikhand}"  onkeyup="digitsOnly(event)" placeholder="180" name="shrikhand">
 	    </div>
 	  </div>
-  </c:if>
   
-  <div class="col-sm-2">
+  
+  <div class="col-sm-2" id="placeholderproductcode">
   	<div class="form-group">
       <label for="email">Product Code</label>
       <input type="text" class="form-control" id="product_code" value="${itemDetails.product_code}"  placeholder="${tentativeProductCode}" name="product_code">
@@ -280,36 +280,36 @@ function deleteAttachment(id)
   </div>
   
 
-  <c:if test="${userdetails.app_type ne 'Restaurant'}">
-  <div class="col-sm-2">
+  
+  <div class="col-sm-2" id="placeholdersgst">
   	<div class="form-group">
       <label for="email">SGST %</label>
       <input type="text" class="form-control" id="sgst" value="${itemDetails.sgst}" onkeyup="digitsOnlyWithDot(event)"  name="sgst">
     </div>
   </div>
   
-   <div class="col-sm-2">
+   <div class="col-sm-2" id="placeholdercgst">
   	<div class="form-group">
       <label for="email">CGST %</label>
       <input type="text" class="form-control" id="cgst" value="${itemDetails.cgst}" onkeyup="digitsOnlyWithDot(event)"  name="cgst">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderhsncode">
   	<div class="form-group">
       <label for="email">HSN Code</label>
       <input type="text" class="form-control" id="hsn_code" value="${itemDetails.hsn_code}"   name="hsn_code">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholdercatalogno">
   	<div class="form-group">
       <label for="email">Catalog No</label>
       <input type="text" class="form-control" id="catalog_no" value="${itemDetails.catalog_no}"   name="catalog_no">
     </div>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-2" id="placeholderorderno">
   	<div class="form-group">
       <label for="email">Order No</label>
       <input type="text" class="form-control" id="order_no" value="${itemDetails.order_no}"   name="order_no">
@@ -320,7 +320,7 @@ function deleteAttachment(id)
   
 
   
-  <div class="col-sm-12">
+  <div class="col-sm-12" id="placeholderavailableatstores">
   	<div class="form-group">
       <label for="email">Available At Stores</label>
       <c:forEach items="${storeList}" var="store">     
@@ -329,7 +329,7 @@ function deleteAttachment(id)
     </div>
   </div>
 
-   </c:if>
+   
 
   
   <c:if test="${itemDetails.qrCodeImageName ne null}">
@@ -362,7 +362,7 @@ function deleteAttachment(id)
   
   
   
-  <div class="col-sm-12">
+  <div class="col-sm-12" id="placeholderuploadimages">
   	 <div class="form-group">
       <label for="email">Upload the Images (800px X 800px)</label>
       <input type="file" name="file" multiple/>
@@ -371,7 +371,7 @@ function deleteAttachment(id)
       
       
       	  	  
-	<div class="col-sm-12">
+	<div class="col-sm-12" id="placeholderitemimagesfilenames">
   	 <div class="form-group">
   	 	<table>
   	 	<tr>  
@@ -392,9 +392,9 @@ function deleteAttachment(id)
     </div>
   </div>
   
-    <c:if test="${userdetails.app_type ne 'Restaurant'}">
+    
 
-    <div class="col-sm-12">
+    <div class="col-sm-12" id="placeholderproductdetails">
   	 <div class="form-group">
       <label for="email">Product Details</label>
 	      <textarea class="form-control" id="productdetails" placeholder="Item Name" name="productdetails">
@@ -402,7 +402,7 @@ function deleteAttachment(id)
 	      </textarea>
       </div>
       </div>
-	</c:if>
+	
   
   <div class="col-sm-12">
   	 <div class="form-group" align="center">
@@ -500,7 +500,35 @@ function deleteAttachment(id)
 	itemname.focus();
 	
 	
+
+
+
+if("${userdetails.app_type}"=="SnacksProduction")
+	{
+		placeholderdebitin.style.display="none";
+		placeholdersaleprice.style.display="none";
+		placeholderwholesaleprice.style.display="none";
+		placeholderfranchiseprice.style.display="none";
+		placeholderloyalcustomer1.style.display="none";
+		placeholderloyalcustomer2.style.display="none";
+		placeholderloyalcustomer3.style.display="none";
+		placeholderdistributorprice.style.display="none";
+		placeholderb2b.style.display="none";
+		placeholderproductcode.style.display="none";
+		placeholdersgst.style.display="none";
+		placeholdercgst.style.display="none";
+		placeholderhsncode.style.display="none";
+		placeholdercatalogno.style.display="none";
+		placeholderorderno.style.display="none";
+		placeholderavailableatstores.style.display="none";
+		placeholderuploadimages.style.display="none";
+		placeholderproductdetails.style.display="none";
 		
+		
+		
+	}
+
+
 	
 </script>
 

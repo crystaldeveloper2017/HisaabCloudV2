@@ -109,14 +109,15 @@ function deleteItem(itemId)
                      <th><b>Category Name</b></th>
                      <th><b>Item Name</b></th>
 					
-					<c:if test="${userdetails.app_type ne 'Restaurant'}">
-                     <th><b>Debit In</b></th><th><b>Product Code</b></th>
+					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+                     <th><b>Debit In</b></th>
+					 <th><b>Product Code</b></th>
                      <th><b>Selling Price</b></th>
                      <th><b>Available Qty</b></th>
                      <th><b>Order No</b></th>
                      </c:if>
 
-					<c:if test="${userdetails.app_type eq 'Restaurant'}">
+					<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
 					 <th><b>Price</b></th>
 					</c:if>
 
@@ -132,7 +133,7 @@ function deleteItem(itemId)
 						<td>${item.category_name}</td>
 						<td>${item.item_name}</td>
 						
-						<c:if test="${userdetails.app_type ne 'Restaurant'}">
+						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
 						<td>${item.debit_in}</td>					
 						<td>${item.product_code}</td>
 						<td>${item.price}</td>
@@ -140,7 +141,7 @@ function deleteItem(itemId)
 						<td>${item.order_no}</td>
 						</c:if>
 
-						<c:if test="${userdetails.app_type eq 'Restaurant'}">
+						<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
 						<td>${item.price}</td>						
 						</c:if>
 						

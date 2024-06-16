@@ -17,11 +17,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="HomePageContent" value='${requestScope["outputObject"]}' />
-<c:set var="nozzleCount" value='${requestScope["outputObject"].get("nozzleDetails")}' />
-<c:set var="dispenserCount" value='${requestScope["outputObject"].get("dispenserDetails")}' />
-<c:set var="customerCount" value='${requestScope["outputObject"].get("customerDetails")}' />
-<c:set var="invoiceCount" value='${requestScope["outputObject"].get("invoiceDetails")}' />
-<c:set var="vehicleCount" value='${requestScope["outputObject"].get("vehicleDetails")}' />
+
 <br>
 
 
@@ -115,8 +111,7 @@
 <script type="text/javascript">
         $( function() 
         		{
-            $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-            $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+            
             
                        
             
@@ -128,18 +123,7 @@
         	window.location="?a=showHomePage&fromDate="+txtfromdate.value+"&toDate="+txttodate.value;
         }   
         
-        if('${param.fromDate}'!='')
-        	{
-		        txtfromdate.value='${param.fromDate}';
-		        txttodate.value='${param.toDate}';
-        	}
-        else
-        	{
-        	
-        	txtfromdate.value='${HomePageContent.get("todaysDate")}';
-        	txttodate.value='${HomePageContent.get("todaysDate")}';
-	        
-        	}
+        
         
          
         	
@@ -164,9 +148,9 @@
         
       
         
-        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud (Petrol)</p1>";
+        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud (Snacks Production)</p1>";
 
-        	document.title +=" Petrol";
+        	document.title +=" Snacks Production";
           
         </script>
         

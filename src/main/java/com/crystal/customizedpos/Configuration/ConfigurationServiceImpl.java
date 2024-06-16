@@ -2853,9 +2853,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("customerType", request.getParameter("customerType"));
 			hm.put("customerGroup", "3");
 			hm.put("alternate_mobile_no", request.getParameter("alternate_mobile_no"));
-			hm.put("birthday", request.getParameter("birthday"));
-			hm.put("drpgender", request.getParameter("drpgender"));
-			hm.put("anniversary", request.getParameter("anniversary"));
+			hm.put("txtgstno", request.getParameter("txtgstno"));
+			
+			
 
 			if (hm.get("customerName").toString().contains(delimiter)) {
 				throw new CustomerMobileAlreadyExist("Special Character Not allowed in name");
