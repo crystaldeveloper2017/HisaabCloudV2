@@ -31,7 +31,7 @@ function addItem()
 {	
 	localStorage.setItem("catId",drpcategoryId.value);
 	
-	if('${userdetails.app_type}' != 'Restaurant')
+	if('${userdetails.app_type}' != 'Restaurant' && '${userdetails.app_type}' != 'SnacksProduction')
 		localStorage.setItem("debitin",drpdebitin.value);
 	
 	btnsave.disabled=true;
@@ -69,7 +69,7 @@ function addItem()
 	  	return;
 	  }
 	 
-	 if('${userdetails.app_type}' != 'Restaurant')
+	 if('${userdetails.app_type}' != 'Restaurant' && '${userdetails.app_type}' != 'SnacksProduction')
 	 {
 	 if(drpdebitin.value=="")
 	  {
@@ -89,7 +89,7 @@ function addItem()
 	  }
 	 }
 	 
-	 if(itemsaleprice.value=="")
+	 if(itemsaleprice.value=="" && '${userdetails.app_type}' != 'SnacksProduction')
 	  {
 	  	
 	  
