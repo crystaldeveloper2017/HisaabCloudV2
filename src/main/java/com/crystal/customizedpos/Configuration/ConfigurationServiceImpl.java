@@ -1998,6 +1998,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			hm.put("app_id", appId);
 			hm.put("userId", userid);
 
+
+			if (hm.get("drpdebitin")==null) {
+				hm.put("drpdebitin", "Q");
+			}
+
 			if (hm.get("product_code").equals("")) {
 				long val = lObjConfigDao.getPkForThistable("Item", Long.valueOf(hm.get("app_id").toString()), con);
 				hm.put("product_code", "7000" + val);
