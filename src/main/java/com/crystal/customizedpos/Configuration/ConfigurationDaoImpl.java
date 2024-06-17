@@ -381,6 +381,8 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		valuesMap.put("catalog_no", itemDetails.get("catalog_no"));
 		valuesMap.put("order_no", itemDetails.get("order_no"));
 		valuesMap.put("cgst", itemDetails.get("cgst"));
+		valuesMap.put("raw_material_id", itemDetails.get("drprawmaterialid"));
+		
 
 		Query q = new Query("mst_items", "insert", valuesMap);
 		return insertUpdateEnhanced(q, con);
@@ -6931,11 +6933,12 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
-	public List<LinkedHashMap<String, Object>> getRawMaterialMaster(Connection con)
+	public List<LinkedHashMap<String, Object>> getRawMaterialMaster(HashMap<String, Object> hm,Connection con)
 	throws SQLException, ClassNotFoundException {
 ArrayList<Object> parameters = new ArrayList<>();
+parameters.add(hm.get("app_id") );
 return getListOfLinkedHashHashMap(parameters,
-		"select * from raw_material_master where activate_flag=1  ",
+		"select * from raw_material_master where activate_flag=1  and app_id=?",
 		con);
 }
 
@@ -6953,9 +6956,10 @@ public long addRawMaterial(Connection con, HashMap<String, Object> hm) throws Ex
 	ArrayList<Object> parameters = new ArrayList<>();
 	
 	
-	String query="insert into raw_material_master values (default,?,1,?,sysdate())";
+	String query="insert into raw_material_master values (default,?,1,?,sysdate(),?)";
 	parameters.add(hm.get("txtrawmaterialname"));
 	parameters.add(hm.get("user_id"));
+	parameters.add(hm.get("app_id"));
 	
 	
 	return insertUpdateDuablDB(query, parameters,

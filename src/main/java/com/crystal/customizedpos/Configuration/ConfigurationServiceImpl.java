@@ -1241,6 +1241,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			}
 			outputMap.put("CategoriesList", lObjConfigDao.getCategories(outputMap, con));
+			outputMap.put("RawMaterialsList", lObjConfigDao.getRawMaterialMaster(outputMap,con));
+			
 			outputMap.put("tentativeProductCode", "7000" + lObjConfigDao.getTentativeSequenceNo(appId, "Item", con));
 
 			outputMap.put("storeList", lst); //
@@ -10901,10 +10903,12 @@ outputMap.put("txttodate",toDate);
 		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
 		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
 		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
 		try
 		{
 			String [] colNames= {"raw_material_id","raw_material_name"}; // change according to dao return
-			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getRawMaterialMaster(con);
+			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getRawMaterialMaster(outputMap,con);
 			outputMap.put("ListOfRawmaterials", lst);
 
 

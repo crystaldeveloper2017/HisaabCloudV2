@@ -108,6 +108,10 @@ function deleteItem(itemId)
                      <th><b>Item Id</b></th>
                      <th><b>Category Name</b></th>
                      <th><b>Item Name</b></th>
+
+					<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
+						<th><b>Raw Material</b></th>
+					</c:if>
 					
 					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
                      <th><b>Debit In</b></th>
@@ -132,6 +136,10 @@ function deleteItem(itemId)
 						<td><a href="?a=showItemMasterHistory&item_id=${item.item_id}">${item.item_id}</td>
 						<td>${item.category_name}</td>
 						<td>${item.item_name}</td>
+
+						<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
+							<th><b>${item.raw_material_name}</b></th>
+						</c:if>
 						
 						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
 						<td>${item.debit_in}</td>					

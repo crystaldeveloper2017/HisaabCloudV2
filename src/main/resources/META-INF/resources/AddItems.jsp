@@ -5,6 +5,7 @@
 
 
 <c:set var="CategoriesList" value='${requestScope["outputObject"].get("CategoriesList")}' />
+<c:set var="RawMaterialsList" value='${requestScope["outputObject"].get("RawMaterialsList")}' />
 <c:set var="itemDetails" value='${requestScope["outputObject"].get("itemDetails")}' />
 <c:set var="itemImageFileNames" value='${requestScope["outputObject"].get("itemImageFileNames")}' />
 <c:set var="storeList" value='${requestScope["outputObject"].get("storeList")}' />
@@ -168,6 +169,17 @@ function deleteAttachment(id)
       <select class="form-control" name="drpcategoryId" id="drpcategoryId">
       <c:forEach items="${CategoriesList}" var="cat">
 			    <option value="${cat.category_id}">${cat.category_name}</option>			    
+	   </c:forEach></select>     
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+
+  	<div class="form-group">
+      <label for="email">Raw Material Name * <a href="?a=showAddRawMaterial">(Add Raw Material)</a></label>     
+      <select class="form-control" name="drprawmaterialid" id="drprawmaterialid">
+      <c:forEach items="${RawMaterialsList}" var="raw">
+			    <option value="${raw.raw_material_id}">${raw.raw_material_name}</option>			    
 	   </c:forEach></select>     
     </div>
   </div>
@@ -402,6 +414,10 @@ function deleteAttachment(id)
 	      </textarea>
       </div>
       </div>
+
+
+	  
+
 	
   
   <div class="col-sm-12">
