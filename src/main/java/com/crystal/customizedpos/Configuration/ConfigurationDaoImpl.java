@@ -186,11 +186,12 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	public List<LinkedHashMap<String, Object>> getItemMaster(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select item.*,cat.*,stock.*,"
+		String query = "select mrm.*,item.*,cat.*,stock.*,"
 				+ " case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath "
 				+ "from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join "
 				+ " tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image' "
 				+ " left outer join stock_status stock on stock.item_id=item.item_id and stock.store_id=? "
+				+ " left outer join raw_material_master mrm on mrm.raw_material_id=item.raw_material_id "
 				+ " where item.activate_flag=1 and item.app_id=? and cat.app_id=item.app_id ";
 
 		parameters.add(hm.get("store_id"));

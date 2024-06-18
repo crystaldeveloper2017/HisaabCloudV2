@@ -121,7 +121,7 @@ function deleteItem(itemId)
                      <th><b>Order No</b></th>
                      </c:if>
 
-					<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
+					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
 					 <th><b>Price</b></th>
 					</c:if>
 
@@ -133,12 +133,13 @@ function deleteItem(itemId)
 				<c:forEach items="${message}" var="item">
 					<tr >
 					
-						<td><a href="?a=showItemMasterHistory&item_id=${item.item_id}">${item.item_id}</td>
+						<td>${item.item_id}</td>
+						<%-- <td><a href="?a=showItemMasterHistory&item_id=${item.item_id}">${item.item_id}</td> --%>
 						<td>${item.category_name}</td>
 						<td>${item.item_name}</td>
 
 						<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
-							<th><b>${item.raw_material_name}</b></th>
+							<td>${item.raw_material_name}</td>
 						</c:if>
 						
 						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
@@ -149,7 +150,7 @@ function deleteItem(itemId)
 						<td>${item.order_no}</td>
 						</c:if>
 
-						<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
+						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
 						<td>${item.price}</td>						
 						</c:if>
 						
