@@ -183,6 +183,9 @@ function resetField()
 	
 	hdnSelectedCustomer.value='';
 	setDefaultChecks();
+
+
+	populateItems();
 		
 }
 function savedInvoiceCallback(data1)
@@ -255,14 +258,14 @@ function deleteAttachment(id)
 
 <c:forEach items="${customerMaster}" var="customer">
 			    <option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}</option>			    
-	   </c:forEach>	   	 
+</c:forEach>	   	 
 
   	
 </datalist>
 
 <datalist id="itemList">
 <c:forEach items="${itemList}" var="item">
-			    <option id="${item.item_id}">${item.item_name} (${item.product_code}) ~ PR ${item.PurchaseInvoiceNo} ~${item.purchase_details_id} ~ ${item.QtyAvailable}</option>
+			    <option id="${item.item_id}">${item.item_name}</option>
 			    <input type="hidden" id="hdn${item.item_id}" value="${item.item_name}~${item.price}~${item.wholesale_price}~${item.franchise_rate}~${item.loyalcustomerrate3}~${item.loyalcustomerrate2}~${item.loyalcustomerrate1}~${item.distributor_rate}~${item.b2b_rate}~${item.shrikhand}~${item.qty_available}~${item.gst}">			    
 	   </c:forEach>	   	   	
 </datalist>
@@ -282,7 +285,7 @@ function deleteAttachment(id)
   	</div>
   </div>
   
-  <div class="col-sm-4">
+  <div class="col-sm-4" style="display:none">
   	
     
     <div class="input-group">
@@ -292,7 +295,7 @@ function deleteAttachment(id)
   </div>
 
 
-  <div class="col-sm-4">
+  <div class="col-sm-10">
   	<div class="form-group">
   	
   	<div class="input-group input-group-sm">
@@ -629,7 +632,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+"<a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'> <span style='font-size:12px'>"+ itemDetails[0] + "</span></a> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
-	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
+	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="0"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
 	    	
 	    	
 	    	
@@ -1410,6 +1413,19 @@ function checkforLengthAndEnableDisable()
 				txtsearchcustomer.setAttribute("list", "");
 			}
 }
+
+
+
+
+function populateItems()
+{
+<c:forEach items="${itemList}" var="item">
+	txtitem.value="${item.item_name}";
+	checkforMatchItem();
+</c:forEach>	   	   	
+}
+
+populateItems();
 
 
 
