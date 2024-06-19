@@ -86,10 +86,13 @@ function addCustomer()
   </div>
   
   
-  <div class="col-sm-6">
+  <div class="col-sm-6" id="placeholderforcustomerreference">
   	<div class="form-group">
-      <label for="CustomerName">Customer Reference</label>
+
+      <label for="CustomerReference">Customer Reference</label>
+
       <input type="text" class="form-control" id="customer_reference" value="${customerDetails.customer_reference}" name="customer_reference" placeholder="Customer Reference">
+
       
     </div>
   </div>
@@ -101,7 +104,7 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-3" id="placeholderformobilenumber">
   	<div class="form-group">
       <label for="MobileNumber">Alternate Mobile No</label>
       <input type="text" class="form-control" id="alternate_mobile_no" value="${customerDetails.alternate_mobile_no}" name="alternate_mobile_no" placeholder="Alternate Mobile No" onkeypress="digitsOnly(event)" maxlength="10" required>
@@ -117,7 +120,7 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-12">
+  <div class="col-sm-6">
   	<div class="form-group">
       <label for="Address">Address</label>
       <input type="text" class="form-control" id="address" value="${customerDetails.address}" name="address" placeholder="Address">
@@ -216,6 +219,8 @@ function addCustomer()
 	{
 		placeholderforcustomertype.style="display:none";
 		placeholderforcustomergroup.style="display:none";
+		placeholderforcustomerreference.style="display:none";
+		placeholderformobilenumber.style="display:none";
 	}
 	
 

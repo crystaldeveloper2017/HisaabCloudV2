@@ -89,7 +89,7 @@ function deleteAttachment(id)
     </div>
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-6" id="placeholderfororderno">
   	<div class="form-group">
       <label for="email">Order No</label>
       <input type="text" class="form-control" id="txtorderno" value="${categoryDetails.order_no}"  placeholder="eg. Order No" name="order_no">     
@@ -154,6 +154,13 @@ function deleteAttachment(id)
 		document.getElementById("divTitle").innerHTML="Update Category";
 		document.title +=" Update Category ";
 	</c:if>
+
+
+	if("${userdetails.app_type}"=="SnacksProduction")
+	{
+		placeholderfororderno.style="display:none";
+	}
+	
 </script>
 
 

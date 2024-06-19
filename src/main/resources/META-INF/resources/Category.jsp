@@ -116,9 +116,13 @@ function addCategory()
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
-                     <th><b>Category Id</b></th><th><b>Category Name</b></th>
+                     <th><b>Category Id</b></th>
+                     <th><b>Category Name</b></th>
                      <th><b>Item Count</b></th>
+              <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+      			
                      <th><b>Order No</b></th>
+               </c:if>
                      <th></th><th></th>
                     </tr>
                   </thead>
@@ -128,7 +132,10 @@ function addCategory()
 						<td>${item.categoryId}</td>
 						<td>${item.categoryName}</td>
 						<td><a href="?a=showItemMaster&categoryId=${item.categoryId}">${item.cnt}</a></td>
+        <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
 						<td>${item.order_no }</td>
+        </c:if>
 						<td><a href="?a=showAddCategory&categoryId=${item.categoryId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteCategory('${item.categoryId}')">Delete</button></td>
 					</tr>
 				</c:forEach>

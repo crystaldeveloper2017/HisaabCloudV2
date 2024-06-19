@@ -382,6 +382,8 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		valuesMap.put("order_no", itemDetails.get("order_no"));
 		valuesMap.put("cgst", itemDetails.get("cgst"));
 		valuesMap.put("raw_material_id", itemDetails.get("drprawmaterialid"));
+		valuesMap.put("lds_per_raw_material", itemDetails.get("lds_per_raw_material"));
+		valuesMap.put("packets_in_ld", itemDetails.get("packets_in_ld"));
 		
 
 		Query q = new Query("mst_items", "insert", valuesMap);
@@ -413,11 +415,14 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(itemDetails.get("catalog_no"));
 		parameters.add(itemDetails.get("order_no"));
 		parameters.add(itemDetails.get("cgst"));
+		parameters.add(itemDetails.get("lds_per_raw_material"));
+		parameters.add(itemDetails.get("packets_in_ld"));
+
 
 		parameters.add(Long.parseLong(itemDetails.get("hdnItemId").toString()));
 
 		String insertQuery = "UPDATE mst_items \r\n"
-				+ "SET parent_category_id=?, debit_in=?, item_name=?, price=?, wholesale_price=?, franchise_rate=?, loyalcustomerrate1=?, loyalcustomerrate2=?, loyalcustomerrate3=?,updated_by=?, updated_date=sysdate(),product_code=?,average_cost=?,distributor_rate=?,b2b_rate=?,shrikhand=?,sgst=?,product_details=?,hsn_code=?,catalog_no=?,order_no=?,cgst=? \r\n"
+				+ "SET parent_category_id=?, debit_in=?, item_name=?, price=?, wholesale_price=?, franchise_rate=?, loyalcustomerrate1=?, loyalcustomerrate2=?, loyalcustomerrate3=?,updated_by=?, updated_date=sysdate(),product_code=?,average_cost=?,distributor_rate=?,b2b_rate=?,shrikhand=?,sgst=?,product_details=?,hsn_code=?,catalog_no=?,order_no=?,cgst=?,lds_per_raw_material=?,packets_in_ld=? \r\n"
 				+ "WHERE item_id=?";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
