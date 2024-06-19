@@ -27,10 +27,10 @@
 
     <div class="col-12 col-sm-6">
 
-     <div class="info-box mb-6 " onclick="window.location='?a=showItemMaster'">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+     <div class="info-box mb-6 " onclick="window.location='?a=showGenerateInvoice'">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 				                  <div class="info-box-content">
-								   <span class="info-box-text">1.Item Master</span>
+								   <span class="info-box-text">New Order</span>
 								    </div>
 
               </div>
@@ -38,37 +38,29 @@
 
     <div class="col-12 col-sm-6">
 
- <div class="info-box mb-6 " onclick="window.location='?a=showCategoryMasterNew'">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+ <div class="info-box mb-6 " onclick="window.location='?a=showTodaysPlanning'">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 				                  <div class="info-box-content">
-								   <span class="info-box-text">2 .Category Master</span>
+								   <span class="info-box-text">Todays Planning</span>
 								    </div>
 
               </div>
            </div>
+         
           
     <div class="col-12 col-sm-6">
 
-          <div class="info-box mb-6" onclick="window.location='?a=showRawMaterialsMaster'">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
+          <div class="info-box mb-6" onclick="window.location='?a=showPendingOrders'">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
                 	<div class="info-box-content">
-                <span class="info-box-text">3. Raw Material Master </span>
+                <span class="info-box-text">Pending Orders </span>
 
                        </div>
             </div>
              </div>
 
 
-            <div class="col-12 col-sm-6">
-
-          <div class="info-box mb-6" onclick="window.location='?a=showCustomerMaster'">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-gas-pump"></i></span>
-                	<div class="info-box-content">
-                <span class="info-box-text">4. Customer Master</span>
-
-                       </div>
-            </div>
-             </div>
+            
 
 
               

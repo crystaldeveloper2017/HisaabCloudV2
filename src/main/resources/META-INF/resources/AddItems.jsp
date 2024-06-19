@@ -416,8 +416,19 @@ function deleteAttachment(id)
       </div>
 
 
-	  
-
+	  <div class="col-sm-3" id="placeholderperrawmaterial" >
+  	<div class="form-group">
+      <label for="email">LD's Per bag of Raw Material</label>
+      <input type="text" class="form-control" id="lds_per_raw_material" value="${itemDetails.lds_per_raw_material}" onkeypress="digitsOnly(event)"  name="lds_per_raw_material">
+    </div>
+  </div>
+  
+<div class="col-sm-3" id="placeholderpacketsinld"  >
+  	<div class="form-group">
+      <label for="email">Packets In One LD</label>
+      <input type="text" class="form-control" id="packets_in_ld" value="${itemDetails.packets_in_ld}" onkeypress="digitsOnly(event)"  name="packets_in_ld">
+    </div>
+  </div>
 	
   
   <div class="col-sm-12">
@@ -539,13 +550,25 @@ if("${userdetails.app_type}"=="SnacksProduction")
 		placeholderavailableatstores.style.display="none";
 		placeholderuploadimages.style.display="none";
 		placeholderproductdetails.style.display="none";
-		
+
 		
 		
 	}
 
 
-	
+if("${userdetails.app_type}"=="PetrolPump" || "${userdetails.app_type}"=="Restaurant"|| "${userdetails.app_type}"=="Retail" || "${userdetails.app_type}"=="Jwellery" || "${userdetails.app_type}"=="RetailMobile" || "${userdetails.app_type}"=="Battery")
+	{
+	placeholderperrawmaterial.style.display="none";
+		placeholderpacketsinld.style.display="none";
+	}
+
+
+
+
+
+
+
+
 </script>
 
 <script src="js/jquery.richtext.js"></script>
