@@ -9,7 +9,7 @@
 <c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
 <c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
 <c:set var="message" value='${requestScope["outputObject"].get("message")}' />
-<c:set var="lstPendingRegister" value='${requestScope["outputObject"].get("lstPendingRegister")}' />
+<c:set var="lstCompletedOrders" value='${requestScope["outputObject"].get("lstCompletedOrders")}' />
 
 
 
@@ -84,15 +84,15 @@
                     </tr>
                   </thead>
                   <tbody>
-				<c:forEach items="${lstPendingRegister}" var="pendData">
+				<c:forEach items="${lstCompletedOrders}" var="completeData">
 					<tr >
 					  
 					  
-					  <td>${pendData.invoice_id}</td>
-					  <td>${pendData.customer_name}</td>
-					  <td>${pendData.city}</td>
-					<td>${pendData.invoice_date} </td>
-					<td>${pendData.totalQty} </td>
+					  <td>${completeData.invoice_id}</td>
+					  <td>${completeData.customer_name}</td>
+					  <td>${completeData.city}</td>
+					<td>${completeData.invoice_date} </td>
+					<td>${completeData.totalQty} </td>
 					
 
 					  
@@ -221,7 +221,7 @@ function deleteInvoice(invoice_id)
   
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showPendingRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
+  	  		window.location="?a=showCompletedOrders&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
 		
   }
   
@@ -269,8 +269,8 @@ function deleteInvoice(invoice_id)
   	
   }
   
-  document.getElementById("divTitle").innerHTML="Pending Orders ";
-  document.title +=" Pending Orders ";
+  document.getElementById("divTitle").innerHTML="Completed Orders ";
+  document.title +=" Completed Orders ";
   
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });

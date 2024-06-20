@@ -526,3 +526,18 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showPendingRegister"
   orderNo: 1
+- elementId: 700214
+  elementName: "Todays Planning"
+  parentElementId: 26
+  elementUrl: "?a=showPlanningRegister"
+  orderNo: 1
+- elementId: 700215
+  elementName: "Completed Orders"
+  parentElementId: 26
+  elementUrl: "?a=showCompletedOrders"
+  orderNo: 1
+- elementId: 700216
+  elementName: "Order History"
+  parentElementId: 26
+  elementUrl: "?a=showOrderHistory"
+  orderNo: 1

@@ -9,7 +9,7 @@
 <c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
 <c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
 <c:set var="message" value='${requestScope["outputObject"].get("message")}' />
-<c:set var="lstPendingRegister" value='${requestScope["outputObject"].get("lstPendingRegister")}' />
+<c:set var="lstPlanningRegister" value='${requestScope["outputObject"].get("lstPlanningRegister")}' />
 
 
 
@@ -84,19 +84,19 @@
                     </tr>
                   </thead>
                   <tbody>
-				<c:forEach items="${lstPendingRegister}" var="pendData">
+				<c:forEach items="${lstPlanningRegister}" var="planData">
 					<tr >
 					  
 					  
-					  <td>${pendData.invoice_id}</td>
-					  <td>${pendData.customer_name}</td>
-					  <td>${pendData.city}</td>
-					<td>${pendData.invoice_date} </td>
-					<td>${pendData.totalQty} </td>
+					  <td>${planData.invoice_id}</td>
+					  <td>${planData.customer_name}</td>
+					  <td>${planData.city}</td>
+					<td>${planData.invoice_date} </td>
+					<td>${planData.totalQty} </td>
 					
 
 					  
-					  <td><button class="btn btn-danger" onclick="deleteInvoice('${data.invoice_id}')">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deleteinvoice('${data.invoice_id}')">Delete</button></td>
 						
 					</tr>
 				</c:forEach>
@@ -117,7 +117,7 @@
 <script >
 
 
-function deleteInvoice(invoice_id)
+function deleteinvoice(invoice_id)
 {
 	
 	var answer = window.confirm("Are you sure you want to delete ?");
@@ -145,7 +145,7 @@ function deleteInvoice(invoice_id)
 		  
 		}
 	  };
-	  xhttp.open("GET","?a=deleteInvoice&invoice_id="+invoice_id, true);    
+	  xhttp.open("GET","?a=deleteinvoice&invoice_id="+invoice_id, true);    
 	  xhttp.send();
 }
 
@@ -221,7 +221,7 @@ function deleteInvoice(invoice_id)
   
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showPendingRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
+  	  		window.location="?a=showPlanningRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
 		
   }
   
@@ -269,8 +269,8 @@ function deleteInvoice(invoice_id)
   	
   }
   
-  document.getElementById("divTitle").innerHTML="Pending Orders ";
-  document.title +=" Pending Orders ";
+  document.getElementById("divTitle").innerHTML="Planning Orders ";
+  document.title +=" Planning Orders ";
   
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });

@@ -7046,10 +7046,66 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id",
+			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
 							
 				con);
 	}
 
+	public List<LinkedHashMap<String, Object>> getPlanningRegister(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+		
+
+
+				return getListOfLinkedHashHashMap(parameters,
+			"select *,sum(qty) totalQty from trn_invoice_register tir "+
+			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
+			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
+			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
+			"WHERE tir.app_id = ?  AND sis.curr_status = 1 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
+							
+				con);
+	}
+
+	public List<LinkedHashMap<String, Object>> getCompletedOrders(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+		
+
+
+				return getListOfLinkedHashHashMap(parameters,
+			"select *,sum(qty) totalQty from trn_invoice_register tir "+
+			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
+			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
+			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
+			"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
+							
+				con);
+	}
+
+	public List<LinkedHashMap<String, Object>> getOrderHistory(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+		
+
+
+				return getListOfLinkedHashHashMap(parameters,
+			"select *,sum(qty) totalQty from trn_invoice_register tir "+
+			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
+			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
+			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
+			"WHERE tir.app_id = ?   AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
+							
+				con);
+	}
 				
 }

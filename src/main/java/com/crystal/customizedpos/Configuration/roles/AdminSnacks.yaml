@@ -149,6 +149,9 @@
     - addRawMaterial
     - deleteRawMaterial
     - showPendingRegister
+    - showPlanningRegister
+    - showCompletedOrders
+    - showOrderHistory
   reports:
     - 1
     - 2
@@ -194,5 +197,8 @@
     - 21
     - 26
     - 700213
+    - 700214
+    - 700215
+    - 700216
 
 
