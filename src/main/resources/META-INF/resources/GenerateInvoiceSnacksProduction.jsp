@@ -80,7 +80,7 @@ function saveInvoice()
 	
 	
 	
-	var reqString="customer_id=0"+
+	var reqString="customer_id="+hdnSelectedCustomer.value+
 	"&gross_amount=0"+
 	"&item_discount=0"+
 	"&invoice_discount=0"+
@@ -98,7 +98,8 @@ function saveInvoice()
 	"&user_id=${userdetails.user_id}"+	
 	"&itemDetails="+itemString;
 	
-	
+	alert(reqString);
+	//return;
 		
 	
 	
@@ -1075,7 +1076,7 @@ function quickAddCustomer()
 	    	hdnSelectedCustomerType.value=customerType.value;
 		}
 	  };
-	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customerName="+customerName.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value+"&city="+customerCity.value, true);    
+	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customer_id="+hdnSelectedCustomer.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value+"&city="+customerCity.value, true);    
 	  xhttp.send();
 }
 

@@ -75,20 +75,25 @@
                     <th><b>Customer Name</b></th>
                     <th><b>City</b>
 					<th><b>Invoice Date</b></th>
+					<th><b>Qty</b></th>
+					<th><b></b></th>
+					
 
                      
                      
                     </tr>
                   </thead>
                   <tbody>
-				<c:forEach items="${message}" var="data">
+				<c:forEach items="${lstPendingRegister}" var="pendData">
 					<tr >
 					  
 					  
-					  <td>${data.invoice_id}</td>
-					  <td>${data.customerName}</td>
-					  <td>${data.customerCity}</td>
-					<td>${data.invoice_date} </td>
+					  <td>${pendData.invoice_id}</td>
+					  <td>${pendData.customer_name}</td>
+					  <td>${pendData.city}</td>
+					<td>${pendData.invoice_date} </td>
+					<td>${pendData.totalQty} </td>
+					
 
 					  
 					  <td><button class="btn btn-danger" onclick="deleteTestFuel('${data.test_id}')">Delete</button></td>
@@ -264,8 +269,8 @@ function deleteTestFuel(test_id)
   	
   }
   
-  document.getElementById("divTitle").innerHTML="Pending Register";
-  document.title +=" Pending Register ";
+  document.getElementById("divTitle").innerHTML="Pending Orders ";
+  document.title +=" Pending Orders ";
   
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });

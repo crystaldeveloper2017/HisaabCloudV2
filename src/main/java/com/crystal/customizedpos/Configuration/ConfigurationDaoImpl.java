@@ -808,6 +808,12 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 		List<HashMap<String, Object>> itemDetailsList = (List<HashMap<String, Object>>) hm.get("itemDetails");
 		for (HashMap<String, Object> item : itemDetailsList) {
+
+			if(item.get("qty").equals("0"))
+			{
+				continue;
+			}
+
 			parameters = new ArrayList<>();
 			parameters.add(invoiceId);
 			parameters.add(item.get("item_id"));
@@ -7029,13 +7035,18 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 	public List<LinkedHashMap<String, Object>> getPendingRegister(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
 		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
-		parameters.add(hm.get("app_id"));
+		
 
 
 				return getListOfLinkedHashHashMap(parameters,
-			"select * from trn_invoice_register tir left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ?",
+			"select *,sum(qty) totalQty from trn_invoice_register tir "+
+			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
+			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
+			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
+			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id",
 							
 				con);
 	}

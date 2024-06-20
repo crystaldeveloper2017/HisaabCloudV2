@@ -2663,12 +2663,12 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customer_id", customer_id);
 		try {
 
-			if (!appType.equals("PetrolPump") && !appType.equals("Battery")
+			if (!appType.equals("PetrolPump") && !appType.equals("Battery") && !appType.equals("SnacksProduction")
 					&& !isValidateGrossWithIndividualAmount(hm)) {
 				throw new Exception("invalid Gross with Individual Amount");
 			}
 
-			if (!appType.equals("Battery") && !isValidateTotalWithGrossMinusDiscounts(hm)) {
+			if (!appType.equals("Battery") && !appType.equals("SnacksProduction") &&  !isValidateTotalWithGrossMinusDiscounts(hm)) {
 				throw new Exception("Invalid Total Amount Received Vs Calculated");
 			}
 
