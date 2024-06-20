@@ -50,7 +50,7 @@
           
     <div class="col-12 col-sm-6">
 
-          <div class="info-box mb-6" onclick="window.location='?a=showPendingOrders'">
+          <div class="info-box mb-6" onclick="window.location='?a=showPendingRegister'">
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
                 	<div class="info-box-content">
                 <span class="info-box-text">Pending Orders </span>

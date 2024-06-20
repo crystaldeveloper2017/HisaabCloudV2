@@ -6998,4 +6998,47 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 	return "Raw Material updated Succesfully";
 }
 
+		
+
+	public long saveSnacksInvoice(HashMap<String, Object> hm, Connection con) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(hm.get("invoice_id"));
+
+
+		String insertQuery = "INSERT INTO snacks_invoice_status\r\n"
+				+ "VALUES(default, ?, 0);";
+
+		return insertUpdateDuablDB(insertQuery, parameters, con);
+	}
+
+	// public List<LinkedHashMap<String, Object>> getInwardRegister(String fromDate,String toDate,Connection con, List<LinkedHashMap<String, Object>> hm)
+	// 					throws SQLException, ClassNotFoundException, ParseException {
+	
+	// 				ArrayList<Object> parameters = new ArrayList<>();
+	// 				parameters.add((getDateASYYYYMMDD(fromDate)));
+	// 				parameters.add((getDateASYYYYMMDD(toDate)));
+	// 				parameters.add(hm.get("app_id"));
+
+	// 				return getListOfLinkedHashHashMap(parameters,
+	// 				"select * from trn_invoice_register tir left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ?",
+							
+	// 						con); 
+	// 			}
+
+	public List<LinkedHashMap<String, Object>> getPendingRegister(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+		parameters.add(hm.get("app_id"));
+
+
+				return getListOfLinkedHashHashMap(parameters,
+			"select * from trn_invoice_register tir left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ?",
+							
+				con);
+	}
+
+				
 }

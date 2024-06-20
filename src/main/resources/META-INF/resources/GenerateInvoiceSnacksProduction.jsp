@@ -257,7 +257,7 @@ function deleteAttachment(id)
 <datalist id="customerList">
 
 <c:forEach items="${customerMaster}" var="customer">
-			    <option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}</option>			    
+			    <option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}~${customer.customerCity}</option>			    
 </c:forEach>	   	 
 
   	
@@ -1066,15 +1066,16 @@ function quickAddCustomer()
 	    		}
 	    		
 	    	txtsearchcustomer.disabled=true;
-	    	txtsearchcustomer.value=customerName.value+"~"+mobileNumber.value+"~"+customerType.value;
+	    	txtsearchcustomer.value=customerName.value+"~"+mobileNumber.value+"~"+customerType.value+"~"+customerCity.value;
 	    	customerName.value="";
 	    	mobileNumber.value="";
+			customerCity.value="";
 	    	
 	    	hdnSelectedCustomer.value=xhttp.responseText.split("~")[1];
 	    	hdnSelectedCustomerType.value=customerType.value;
 		}
 	  };
-	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customerName="+customerName.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value, true);    
+	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customerName="+customerName.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value+"&city="+customerCity.value, true);    
 	  xhttp.send();
 }
 

@@ -148,6 +148,7 @@
     - showAddRawMaterial
     - addRawMaterial
     - deleteRawMaterial
+    - showPendingRegister
   reports:
     - 1
     - 2
@@ -191,5 +192,7 @@
     - 700212
     - 7
     - 21
+    - 26
+    - 700213
 
 

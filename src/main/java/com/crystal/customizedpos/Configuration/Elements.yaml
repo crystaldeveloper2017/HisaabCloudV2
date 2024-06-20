@@ -521,3 +521,8 @@ elements:
   parentElementId: 700132
   elementUrl: "?a=showRawMaterialsMaster"
   orderNo: 1
+- elementId: 700213
+  elementName: "Pending Orders"
+  parentElementId: 26
+  elementUrl: "?a=showPendingRegister"
+  orderNo: 1
