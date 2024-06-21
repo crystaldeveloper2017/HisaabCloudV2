@@ -7046,7 +7046,7 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
+			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
 							
 				con);
 	}
@@ -7065,7 +7065,7 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 1 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
+			"WHERE tir.app_id = ?  AND sis.curr_status = 1 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
 							
 				con);
 	}
@@ -7084,7 +7084,7 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
+			"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
 							
 				con);
 	}

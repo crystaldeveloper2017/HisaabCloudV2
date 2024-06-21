@@ -76,7 +76,7 @@
                     <th><b>City</b>
 					<th><b>Invoice Date</b></th>
 					<th><b>Qty</b></th>
-					<th><b></b></th>
+					<th></th>
 					
 
                      
@@ -96,7 +96,7 @@
 					
 
 					  
-					  <td><button class="btn btn-danger" onclick="deleteInvoice('${data.invoice_id}')">Delete</button></td>
+					  <td><button class="btn btn-danger" onclick="deleteInvoice('${pendData.invoice_id}')">Delete</button></td>
 						
 					</tr>
 				</c:forEach>
@@ -125,6 +125,7 @@ function deleteInvoice(invoice_id)
 	{
 		return;    
 	}
+
 	
 	  
 
@@ -145,7 +146,7 @@ function deleteInvoice(invoice_id)
 		  
 		}
 	  };
-	  xhttp.open("GET","?a=deleteInvoice&invoice_id="+invoice_id, true);    
+	  xhttp.open("GET","?a=deleteInvoice&invoiceId="+invoice_id+"&type=S&store_id=${userdetails.store_id}", true);    
 	  xhttp.send();
 }
 
