@@ -77,10 +77,19 @@ function saveInvoice()
 		"~"+rows[x].childNodes[0].childNodes[0].childNodes[1].childNodes[1].innerHTML+ // Item Name
 	    "|";
 	}
+
+
+	
+	if(hdnSelectedCustomer.value=="")
+	{
+		alert("Please select customer");
+		btnsave.disabled=false;
+		return;
+	}
 	
 	
 	
-	var reqString="customer_id=0"+
+	var reqString="customer_id="+hdnSelectedCustomer.value+
 	"&gross_amount=0"+
 	"&item_discount=0"+
 	"&invoice_discount=0"+
@@ -98,7 +107,8 @@ function saveInvoice()
 	"&user_id=${userdetails.user_id}"+	
 	"&itemDetails="+itemString;
 	
-	
+	//alert(reqString);
+	//return;
 		
 	
 	
@@ -257,7 +267,7 @@ function deleteAttachment(id)
 <datalist id="customerList">
 
 <c:forEach items="${customerMaster}" var="customer">
-			    <option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}</option>			    
+			    <option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}~${customer.customerCity}</option>			    
 </c:forEach>	   	 
 
   	
@@ -299,7 +309,7 @@ function deleteAttachment(id)
   	<div class="form-group">
   	
   	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off"  oninput="checkforLengthAndEnableDisable();checkforMatchCustomer()">
+                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer" list="customerList"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off"  oninput="checkforMatchCustomer()">
                   
                   <span class="input-group-append">
                     <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
@@ -366,7 +376,17 @@ function deleteAttachment(id)
   
   
 	   	
-   
+   <div class="col-sm-12">
+  	 <div class="form-group" align="center">	  
+
+	 	Total Quantity : <span id="totalQty">0</span>
+	   	
+   </div>
+   </div>
+  
+</div>
+</form>
+	</div>
    
    
    
@@ -377,7 +397,7 @@ function deleteAttachment(id)
   	 <div class="form-group" align="center">	  
 	   	<button class="btn btn-success" type="button" id="btnsave" onclick='saveInvoice()'>Save (F2)</button>   
 	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
-	   <button class="btn btn-primary" id="btnRegister" type="reset" onclick='window.open("?a=generateDailyInvoiceReport&txtfromdate=${todaysDate}&txttodate=${todaysDate}&txtstore=${userdetails.store_id}")'>Register</button>
+	   
 	   
 	  	   
 	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
@@ -615,7 +635,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 		
 	
 	    	
-	    	console.log(itemDetails);
+	    	//console.log(itemDetails);
 	    	var table = document.getElementById("tblitems");	    	
 	    	var row = table.insertRow(1);	    	
 	    	var cell1 = row.insertCell(0);
@@ -632,7 +652,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+"<a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'> <span style='font-size:12px'>"+ itemDetails[0] + "</span></a> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
-	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="0"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
+	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="0"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
 	    	
 	    	
 	    	
@@ -653,12 +673,6 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 
 function calculateAmount(itemId)
 {
-	var customrate=document.getElementById('txtcustomrate'+itemId).value;
-	var qty=document.getElementById('txtqty'+itemId).value;
-	var amount=(Number(customrate) *Number(qty) ).toFixed(2);
-		 
-	
-	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.childNodes[3].childNodes[0].value= (Number(customrate) *Number(qty) ).toFixed(2);
 	
 	
 	
@@ -737,45 +751,17 @@ function paymentTypeChanged(selection)
 
 function calculateTotal()
 {	
-		var total=0;
-		var totalQtyCalculated=0;
-		var totalDiscountCalculated=0;
-		var grossAmountCalculated=0;
-		var totalGSTCalculated=0;
-		
-		var rows=tblitems.rows;
-		for(var x=1;x<rows.length;x++)
-			{
-				var itemTotalAmount=Number(rows[x].childNodes[3].childNodes[0].value);
-				total+=itemTotalAmount;
-				
-				var itemQty=Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value);
-				
-				totalQtyCalculated+=itemQty;
-				
-				var rate=Number(rows[x].childNodes[3].childNodes[0].value);
-				var grossItemAmount=itemQty*rate;
-				totalDiscountCalculated+=grossItemAmount  -itemTotalAmount;
-				
-				grossAmountCalculated+=grossItemAmount;
-				
-				
-				//totalGSTCalculated+=Number(rows[x].childNodes[7].childNodes[0].value)
-			}
-		
-		
-		total=total-txtinvoicediscount.value+totalGSTCalculated;
-		totalAmount.innerHTML=Number(total).toFixed(2);
-		totalQty.innerHTML=Number(totalQtyCalculated).toFixed(2);
-		txtitemdiscount.innerHTML=Number(totalDiscountCalculated).toFixed(2);
-		grossAmount.innerHTML=Number(grossAmountCalculated).toFixed(2);
-		
-		txtpendingamount.innerHTML=Number(total-txtpaidamount.value).toFixed(2);
-		// 
-		
-		
-		
-		//calculateReturnAmount();
+	var textboxes=document.getElementsByName("quantitiestextboxes");
+	var qtyTota=0;
+
+	for(var m=0;m<textboxes.length;m++)
+	{
+		//alert(textboxes[m].value);
+		qtyTota+=Number(textboxes[m].value);
+	}
+	totalQty.innerHTML=qtyTota;
+	
+
 }
 
 function removethisitem(btn1)
@@ -1066,15 +1052,16 @@ function quickAddCustomer()
 	    		}
 	    		
 	    	txtsearchcustomer.disabled=true;
-	    	txtsearchcustomer.value=customerName.value+"~"+mobileNumber.value+"~"+customerType.value;
+	    	txtsearchcustomer.value=customerName.value+"~"+mobileNumber.value+"~"+customerType.value+"~"+customerCity.value;
 	    	customerName.value="";
 	    	mobileNumber.value="";
+			customerCity.value="";
 	    	
 	    	hdnSelectedCustomer.value=xhttp.responseText.split("~")[1];
 	    	hdnSelectedCustomerType.value=customerType.value;
 		}
 	  };
-	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customerName="+customerName.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value, true);    
+	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customer_id="+hdnSelectedCustomer.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value+"&city="+customerCity.value, true);    
 	  xhttp.send();
 }
 

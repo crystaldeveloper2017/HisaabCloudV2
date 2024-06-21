@@ -2663,16 +2663,27 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		hm.put("customer_id", customer_id);
 		try {
 
-			if (!appType.equals("PetrolPump") && !appType.equals("Battery")
+			if (!appType.equals("PetrolPump") && !appType.equals("Battery") && !appType.equals("SnacksProduction")
 					&& !isValidateGrossWithIndividualAmount(hm)) {
 				throw new Exception("invalid Gross with Individual Amount");
 			}
 
-			if (!appType.equals("Battery") && !isValidateTotalWithGrossMinusDiscounts(hm)) {
+			if (!appType.equals("Battery") && !appType.equals("SnacksProduction") &&  !isValidateTotalWithGrossMinusDiscounts(hm)) {
 				throw new Exception("Invalid Total Amount Received Vs Calculated");
 			}
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
+
+			if (appType.equals("SnacksProduction"))
+
+			{
+
+				hm.put("invoice_id", returnMap.get("invoice_id"));
+				lObjConfigDao.saveSnacksInvoice(hm, con);
+
+
+
+			}
 			hm.put("invoice_id", returnMap.get("invoice_id"));
 
 			String appendor = "";
@@ -11055,5 +11066,154 @@ outputMap.put("txttodate",toDate);
 		return rs;
 	}
 	
+ 
+    
+public CustomResultObject showPendingRegister(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException, ParseException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+		// if parameters are blank then set to defaults
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		
+  
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPendingRegister(outputMap, con);
+		outputMap.put("lstPendingRegister", lst);
+
+
+		rs.setViewName("../PendingRegister.jsp");
+		rs.setReturnObject(outputMap);
+		return rs;
+
+	}
+
+	public CustomResultObject showPlanningRegister(HttpServletRequest request, Connection con)
+	throws SQLException, ClassNotFoundException, ParseException {
+
+	CustomResultObject rs = new CustomResultObject();
+	HashMap<String, Object> outputMap = new HashMap<>();
+
+	String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+	outputMap.put("app_id", appId);
+
+	String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+	String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+	// if parameters are blank then set to defaults
+		if (fromDate.equals("")) 
+	{
+	fromDate = lObjConfigDao.getDateFromDB(con);
+	}
+		if (toDate.equals("")) 
+		{
+	toDate = lObjConfigDao.getDateFromDB(con);
+	}
+
+
+
+	outputMap.put("txtfromdate", fromDate);
+	outputMap.put("txttodate", toDate);
+
+	List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPlanningRegister(outputMap, con);
+	outputMap.put("lstPlanningRegister", lst);
+
+
+	rs.setViewName("../PlanningRegister.jsp");
+	rs.setReturnObject(outputMap);
+	return rs;
+
+	}
+
+	   public CustomResultObject showCompletedOrders(HttpServletRequest request, Connection con)
+	     throws SQLException, ClassNotFoundException, ParseException {
+
+	CustomResultObject rs = new CustomResultObject();
+	HashMap<String, Object> outputMap = new HashMap<>();
+
+	String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+	outputMap.put("app_id", appId);
+
+	String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+	String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+	// if parameters are blank then set to defaults
+		if (fromDate.equals("")) 
+	{
+	fromDate = lObjConfigDao.getDateFromDB(con);
+	}
+		if (toDate.equals("")) 
+		{
+	toDate = lObjConfigDao.getDateFromDB(con);
+	}
+
+
+
+	outputMap.put("txtfromdate", fromDate);
+	outputMap.put("txttodate", toDate);
+
+	List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCompletedOrders(outputMap, con);
+	outputMap.put("lstCompletedOrders", lst);
+
+
+	rs.setViewName("../CompletedOrders.jsp");
+	rs.setReturnObject(outputMap);
+	return rs;
+
+	}
+
+
+	public CustomResultObject showOrderHistory(HttpServletRequest request, Connection con)
+	throws SQLException, ClassNotFoundException, ParseException {
+
+CustomResultObject rs = new CustomResultObject();
+HashMap<String, Object> outputMap = new HashMap<>();
+
+String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+outputMap.put("app_id", appId);
+
+String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+// if parameters are blank then set to defaults
+   if (fromDate.equals("")) 
+{
+fromDate = lObjConfigDao.getDateFromDB(con);
 }
+   if (toDate.equals("")) 
+   {
+toDate = lObjConfigDao.getDateFromDB(con);
+}
+
+
+
+outputMap.put("txtfromdate", fromDate);
+outputMap.put("txttodate", toDate);
+
+List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getOrderHistory(outputMap, con);
+outputMap.put("lstOrderHistory", lst);
+
+
+rs.setViewName("../OrderHistory.jsp");
+rs.setReturnObject(outputMap);
+return rs;
+
+}
+
+	}
 	
