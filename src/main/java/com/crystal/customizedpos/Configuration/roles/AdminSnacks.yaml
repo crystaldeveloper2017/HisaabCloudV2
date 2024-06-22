@@ -1,6 +1,9 @@
 - roleId: 21
   roleName: "AdminSnacks"
   actions:
+    - movetoDone
+    - moveToPending
+    - moveToPlanning
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin

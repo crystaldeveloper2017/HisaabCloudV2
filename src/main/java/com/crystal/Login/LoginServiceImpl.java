@@ -131,7 +131,8 @@ public class LoginServiceImpl extends CommonFunctions {
 
 							if(appType.equals("SnacksProduction"))
 							{
-						
+								outputMap.put("pendingCount", lObjConfiguration.getPendingOrdersCount(outputMap, con).get("count(*)"));
+								outputMap.put("todaysPlanningCount", lObjConfiguration.getPlanningCount(outputMap, con).get("count(*)"));
 							rs.setViewName("../SnacksProductionDashboard.jsp");
 						
 							}

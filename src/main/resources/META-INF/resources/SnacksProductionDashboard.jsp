@@ -25,39 +25,45 @@
 
 <div class="row">
 
+
+<div class="col-md-12">
+
+<div class="card card-widget widget-user-2 shadow-sm">
+
+
+<div class="card-footer p-0">
+<ul class="nav flex-column">
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=showGenerateInvoice'">
+New Order <span class="float-right badge bg-primary"></span>
+</a>
+</li>
+
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=showPendingRegister'">
+Pending Orders <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
+</a>
+</li>
+<li class="nav-item" onclick="window.location='?a=showPlanningRegister'">
+<a href="#" class="nav-link">
+Todays Planning <span class="float-right badge bg-success">${HomePageContent.todaysPlanningCount}</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+
+    
+
     <div class="col-12 col-sm-6">
 
-     <div class="info-box mb-6 " onclick="window.location='?a=showGenerateInvoice'">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
-				                  <div class="info-box-content">
-								   <span class="info-box-text">New Order</span>
-								    </div>
 
-              </div>
-              </div>
-
-    <div class="col-12 col-sm-6">
-
- <div class="info-box mb-6 " onclick="window.location='?a=showPlanningRegister'">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
-				                  <div class="info-box-content">
-								   <span class="info-box-text">Todays Planning</span>
-								    </div>
-
-              </div>
-           </div>
          
           
-    <div class="col-12 col-sm-6">
-
-          <div class="info-box mb-6" onclick="window.location='?a=showPendingRegister'">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
-                	<div class="info-box-content">
-                <span class="info-box-text">Pending Orders </span>
-
-                       </div>
-            </div>
-             </div>
+    
 
 
             

@@ -6,8 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
-<c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
+
 <c:set var="message" value='${requestScope["outputObject"].get("message")}' />
 <c:set var="lstPlanningRegister" value='${requestScope["outputObject"].get("lstPlanningRegister")}' />
 
@@ -19,84 +18,48 @@
 <br>
 
  <div class="card">
- <br>
- <div class="row">
  
-		
-		<div class="col-sm-1" align="center">
-			<label for="txtfromdate">From Date</label>
-		</div>
-		
-		<div class="col-sm-2" align="center">
-			<div class="input-group input-group-sm" style="width: 200px;">
-			 	<input type="text" id="txtfromdate" onchange="checkforvalidfromtodate();ReloadFilters();"  name="txtfromdate" readonly class="form-control date_field" placeholder="From Date"/>
-			</div>
-		</div>
-		
-		<div class="col-sm-1" align="center">
 
-			<label for="txttodate">To Date</label>
-		</div>
-		
-		<div class="col-sm-2" align="center">
-			<div class="input-group input-group-sm" style="width: 200px;">
-				<input type="text" id="txttodate"  onchange="checkforvalidfromtodate();ReloadFilters();"    name="txttodate" readonly class="form-control date_field"  placeholder="To Date"/>
-			</div>
-		</div>
-		
-		     		
-		
-		
-		
-		<div class="col-sm-2" align="center">
-			<div class="card-tools">
-				<div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
-					<div class="icon-bar" style="font-size:22px;color:firebrick">
-						<a title="Download Excel" onclick="downloadExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a> 
- 						<a title="Download PDF" onclick="exportSalesRegister2()"><i class="fa fa-file-pdf-o"></i></a>
-  						<a title="Download Text"  onclick="downloadText()"><i class="fa fa-file-text-o"></i></a>  
-					</div>           
-				</div>
-			</div>
-		</div>
-	</div>
-	<br>
+	
           
                 
               
               
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 800px;">                
+              <div class="card-body table-responsive p-0" style="height: 600px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
                  
-                    <tr>
-                    <th><b>Invoice Id</b></th>                  
-                    <th><b>Customer Name</b></th>
-                    <th><b>City</b>
-					<th><b>Invoice Date</b></th>
-					<th><b>Qty</b></th>
-					<th><b></b></th>
+                    <tr>  
+				             
+				
 					
-
+<th><b>City (Qty)</b></th>
                      
                      
                     </tr>
                   </thead>
                   <tbody>
-				<c:forEach items="${lstPlanningRegister}" var="planData">
+				<c:forEach items="${lstPlanningRegister}" var="pendData">
 					<tr >
 					  
 					  
-					  <td>${planData.invoice_id}</td>
-					  <td>${planData.customer_name}</td>
-					  <td>${planData.city}</td>
-					<td>${planData.invoice_date} </td>
-					<td>${planData.totalQty} </td>
+					  
+					             
+							<td >
+													
+									
+										
+										                                <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
+																		${pendData.city} (${pendData.totalQty})
+
+								
+							</td>
+					
 					
 
 					  
-					  <td><button class="btn btn-danger" onclick="deleteinvoice('${data.invoice_id}')">Delete</button></td>
+					  
 						
 					</tr>
 				</c:forEach>
@@ -110,14 +73,31 @@
 </div>
             
             
-       
+      <div class="col-sm-12">
+  	 <div class="form-group" align="center">	  
+	   	<button class="btn btn-success" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Order Form</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Fry Planning</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Makai Planning</button>   
+		
+		<button class="btn btn-success" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>   
+	   
+	   
+	   
+	  	   
+	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+   </div>
+   </div>
+  
+</div> 
             
    
 
 <script >
 
 
-function deleteinvoice(invoice_id)
+function deleteInvoice(invoice_id)
 {
 	
 	var answer = window.confirm("Are you sure you want to delete ?");
@@ -125,6 +105,7 @@ function deleteinvoice(invoice_id)
 	{
 		return;    
 	}
+
 	
 	  
 
@@ -145,7 +126,7 @@ function deleteinvoice(invoice_id)
 		  
 		}
 	  };
-	  xhttp.open("GET","?a=deleteinvoice&invoice_id="+invoice_id, true);    
+	  xhttp.open("GET","?a=deleteInvoice&invoiceId="+invoice_id+"&type=S&store_id=${userdetails.store_id}", true);    
 	  xhttp.send();
 }
 
@@ -166,8 +147,7 @@ function deleteinvoice(invoice_id)
   });
 
 
-  txtfromdate.value='${txtfromdate}';
-  txttodate.value='${txttodate}';
+  
   
   
   
@@ -197,82 +177,109 @@ function deleteinvoice(invoice_id)
 	}
   }
   
-  function checkforvalidfromtodate()
-  {        	
-  	var fromDate=document.getElementById("txtfromdate").value;
-  	var toDate=document.getElementById("txttodate").value;
-  	
-  	var fromDateArr=fromDate.split("/");
-  	var toDateArr=toDate.split("/");
-  	
-  	
-  	var fromDateArrDDMMYYYY=fromDate.split("/");
-  	var toDateArrDDMMYYYY=toDate.split("/");
-  	
-  	var fromDateAsDate=new Date(fromDateArrDDMMYYYY[2],fromDateArrDDMMYYYY[1]-1,fromDateArrDDMMYYYY[0]);
-  	var toDateAsDate=new Date(toDateArrDDMMYYYY[2],toDateArrDDMMYYYY[1]-1,toDateArrDDMMYYYY[0]);
-  	
-  	if(fromDateAsDate>toDateAsDate)
-  		{
-  			alert("From Date should be less than or equal to To Date");
-  			window.location.reload();        			
-  		}
-  }
   
-  function ReloadFilters()
-  {	 	  
-  	  		window.location="?a=showPlanningRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
-		
-  }
   
-  function checkforMatchCustomer()
-  {
-  	var searchString= document.getElementById("txtsearchcustomer").value;
-  	if(searchString.length<3){return;}
-  	var options1=document.getElementById("customerList").options;
-  	var customerId=0;
-  	for(var x=0;x<options1.length;x++)
-  		{
-  			if(searchString==options1[x].value)
-  				{
-  					customerId=options1[x].id;
-  					break;
-  				}
-  		}
-  	if(customerId!=0)
-  		{
-  			document.getElementById("hdnSelectedCustomer").value=customerId;			
-  			document.getElementById("txtsearchcustomer").disabled=true;
-			ReloadFilters();      				
-  		}        	
-  	
-  }
+ 
+  document.getElementById("divTitle").innerHTML="Todays Planning ";
+  document.title +=" Todays Planning";
+
+
   
-  function checkforLengthAndEnableDisable()
-  {
-  		if(txtsearchcustomer.value.length>=3)
-  			{
-  				txtsearchcustomer.setAttribute("list", "hdnSelectedCustomer");
-  			}
-  		else
-  			{
-  				txtsearchcustomer.setAttribute("list", "");
-  			}
-  }
+        $(document).ready(function() {
+            $('.table tbody tr').click(function(event) {
+                // Avoid checking/unchecking when clicking directly on the checkbox
+                if (!$(event.target).is('.row-checkbox')) {
+                    var checkbox = $(this).find('.row-checkbox');
+                    checkbox.prop('checked', !checkbox.prop('checked'));
+                }
+            });
+        });
+
+
+		function moveToPending()
+		{
+			var checkbxos=document.getElementsByName("namecheckboxes");
+			var requiredInvoiceIds="";
+
+			for(var k=0;k<checkbxos.length;k++)
+			{
+				if(checkbxos[k].checked==true)
+				{
+					
+					requiredInvoiceIds+=checkbxos[k].id+"~";
+				}
+			}
+
+			
+
+			var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+
+	    	  toastr["success"](xhttp.responseText);
+		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
+		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
+		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
+		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
+		    	
+		    	window.location.reload();
+	      
+		  
+		}
+	  };
+	  xhttp.open("GET","?a=moveToPending&invoiceIds="+requiredInvoiceIds, true);    
+	  xhttp.send();
+
+
+
+			
+
+		}
+
+		function moveToDone()
+		{
+			var checkbxos=document.getElementsByName("namecheckboxes");
+			var requiredInvoiceIds="";
+
+			for(var k=0;k<checkbxos.length;k++)
+			{
+				if(checkbxos[k].checked==true)
+				{
+					
+					requiredInvoiceIds+=checkbxos[k].id+"~";
+				}
+			}
+
+			
+
+			var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+
+	    	  toastr["success"](xhttp.responseText);
+		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
+		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
+		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
+		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
+		    	
+		    	window.location.reload();
+	      
+		  
+		}
+	  };
+	  xhttp.open("GET","?a=movetoDone&invoiceIds="+requiredInvoiceIds, true);    
+	  xhttp.send();
+
+
+
+			
+
+		}
+	
   
-  function resetCustomer()
-  {	
-  	txtsearchcustomer.disabled=false;
-  	txtsearchcustomer.value="";
-  	hdnSelectedCustomer.value="";  	
-  	ReloadFilters();
-  	
-  }
-  
-  document.getElementById("divTitle").innerHTML="Planning Orders ";
-  document.title +=" Planning Orders ";
-  
-  $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-  $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
 </script> 

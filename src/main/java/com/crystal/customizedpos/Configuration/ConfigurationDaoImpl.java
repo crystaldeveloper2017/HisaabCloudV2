@@ -80,6 +80,23 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getMap(parameters, "select count(*) from mst_category mc where activate_flag=1 and app_id=?", con);
 	}
 
+
+	public HashMap<String, String> getPendingOrdersCount(HashMap<String, Object> hm, Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		
+		return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=0 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
+	}
+
+
+	public HashMap<String, String> getPlanningCount(HashMap<String, Object> hm, Connection con)
+	throws SQLException, ClassNotFoundException {
+ArrayList<Object> parameters = new ArrayList<>();
+
+return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=1 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
+}
+	
+
 	public HashMap<String, String> getItems(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7036,17 +7053,15 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
-		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
 		
 
 
 				return getListOfLinkedHashHashMap(parameters,
-			"select *,sum(qty) totalQty from trn_invoice_register tir "+
+			"select *,Round(sum(qty),0)  totalQty from trn_invoice_register tir "+
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
+			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.activate_flag=1 group by tir.invoice_id ",
 							
 				con);
 	}
@@ -7107,5 +7122,31 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 							
 				con);
 	}
-				
+
+    
+	public long moveToPending(String invoiceId, Connection con) throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		String insertQuery = "update snacks_invoice_status set curr_status=0 where invoice_id=?";
+		return insertUpdateDuablDB(insertQuery, parameters, con);
+	}	
+
+
+	public long moveToPlanning(String invoiceId, Connection con) throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		String insertQuery = "update snacks_invoice_status set curr_status=1 where invoice_id=?";
+		return insertUpdateDuablDB(insertQuery, parameters, con);
+	}			
+
+	
+
+	public long moveToDone(String invoiceId, Connection con) throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		String insertQuery = "update snacks_invoice_status set curr_status=2 where invoice_id=?";
+		return insertUpdateDuablDB(insertQuery, parameters, con);
+	}	
+	
+	
 }
