@@ -267,7 +267,7 @@ function deleteAttachment(id)
 <datalist id="customerList">
 
 <c:forEach items="${customerMaster}" var="customer">
-			    <option id="${customer.customerId}">${customer.customerName}~${customer.mobileNumber}~${customer.customerType}~${customer.customerCity}</option>			    
+			    <option id="${customer.customerId}">${customer.customerName}~${customer.customerCity}</option>			    
 </c:forEach>	   	 
 
   	

@@ -70,13 +70,10 @@
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
                  
-                    <tr>
-                    <th><b>Invoice Id</b></th>                  
-                    <th><b>Customer Name</b></th>
-                    <th><b>City</b>
-					<th><b>Invoice Date</b></th>
-					<th><b>Qty</b></th>
-					<th></th>
+                    <tr>  
+					<th></th>                  
+					<th><b>Customer (Qty)</b></th>
+				
 					
 
                      
@@ -88,15 +85,14 @@
 					<tr >
 					  
 					  
-					  <td>${pendData.invoice_id}</td>
-					  <td>${pendData.customer_name}</td>
-					  <td>${pendData.city}</td>
-					<td>${pendData.invoice_date} </td>
-					<td>${pendData.totalQty} </td>
+					  <td><input type="checkbox" name="chk1"  value="${store.storeId}">${store.storeName}</td>
+					  <td>${pendData.customer_name} (${pendData.totalQty})</td>
+					  
+					
 					
 
 					  
-					  <td><button class="btn btn-danger" onclick="deleteInvoice('${pendData.invoice_id}')">Delete</button></td>
+					  
 						
 					</tr>
 				</c:forEach>
