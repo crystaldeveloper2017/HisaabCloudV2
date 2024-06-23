@@ -298,22 +298,37 @@ function deleteAttachment(id)
     
   </div>
   </div>
-   
 
-  <div class="col-sm-12">
+
+
+  <div class="col-2">
   	<div class="form-group">	
 	<label for="CustomerName"> Date</label>
+  		
+  	</div>
+  </div>
+   
+
+  <div class="col-10">
+  	<div class="form-group">	
+	
   		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
+  	</div>
+  </div>
+
+
+  <div class="col-2">
+  	<div class="form-group">	
+	<label for="CustomerName"> Party</label>
+  		
   	</div>
   </div>
   
   
 
-  <div class="col-sm-12">
+  <div class="col-10">
   	<div class="form-group">
 
-	<label for="CustomerName">Customer Name</label>
-  	
   	<div class="input-group input-group-sm">
                   <input type="text" class="form-control form-control-sm" id="txtsearchcustomer" list="customerList"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off"  oninput="checkforMatchCustomer()">
                   
