@@ -100,7 +100,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	throws SQLException, ClassNotFoundException {
 	ArrayList<Object> parameters = new ArrayList<>();
 
-	return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=1 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
+	return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=2 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
 	}
 	
 

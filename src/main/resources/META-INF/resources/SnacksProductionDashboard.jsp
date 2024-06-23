@@ -151,7 +151,7 @@ Completed Orders <span class="float-right badge bg-success">${HomePageContent.co
         
       
         
-        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud ";
+        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>";
 
         	document.title +=" Snacks Production";
           
