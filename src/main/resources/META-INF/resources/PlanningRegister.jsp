@@ -78,8 +78,8 @@
 	   	<button class="btn btn-success" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>   
 		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>   
 		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Order Form</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Fry Planning</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Makai Planning</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>   
 		
 		<button class="btn btn-success" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>   
 	   
@@ -279,6 +279,24 @@ function deleteInvoice(invoice_id)
 			
 
 		}
+
+
+	function fryPlanning()
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generatefryPlanning", false);    
+	  xhttp.send();
+}
+
 	
   
 

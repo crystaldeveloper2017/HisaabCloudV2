@@ -2157,6 +2157,24 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 	}
 
+
+	public List<LinkedHashMap<String, Object>> getFryPlanning(Connection con,String appId)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		String query="select mi.item_name ,tid.qty,mi.lds_per_raw_material,tid.qty/mi.lds_per_raw_material noOfBagsreq  from trn_invoice_register tir"+
+		" left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id"+ 
+		" left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id"+ 
+		" left outer join mst_items mi on mi.item_id =tid.item_id"+
+		" left outer join mst_category mc on mc.category_id =mi.parent_category_id "+
+		" where tir.app_id =?  and sis.curr_status=1 and mc.category_name ='Fry'";
+		parameters.add(appId);
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
+
+	
+
 	public LinkedHashMap<String, Object> getInvoiceDetails(String invoiceId, Connection con)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();

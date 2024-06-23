@@ -4911,6 +4911,156 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  document.close();	
 				
 	}
+
+
+	public void generatePDFForFryPlanning(String DestinationPath,String BufferedImagesFolderPath,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException
+	{
+
+		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfItems");
+		String todaysDate=(String) invoiceHistoryDetails.get("todaysDate");
+		
+		
+		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
+		
+		Font font14 = new Font(base, 14, Font.NORMAL);
+		Font font14bold = new Font(base, 14, Font.BOLD);
+		
+		Font font12 = new Font(base, 12, Font.NORMAL); 
+		Font font12Bold = new Font(base, 12, Font.BOLD); 
+
+		Font fontnew = new Font(base, 9, Font.NORMAL); 
+		Font fontBold = new Font(base, 9, Font.BOLD);
+
+		
+		int fixedSize=320;
+		Rectangle pagesize = new Rectangle(250, fixedSize+ListOfItemDetails.size()*17);
+		//Rectangle pagesize = new Rectangle(250, fixedSize+5*17);
+		Document document = new Document(pagesize,2,2,2,2);
+
+		  
+		  PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath));
+		  
+		  InvoiceHistoryPDFHelper event = new InvoiceHistoryPDFHelper();
+	        writer.setPageEvent(event);
+		  document.open();     
+		  
+		  
+		  PdfPTable table = new PdfPTable(5);
+		  table.setWidths(new int[]{5,5,5,5,5});
+
+		 table.setWidthPercentage(100);
+	        PdfPCell cell;        
+	        cell = new PdfPCell(new Phrase("Fry Planning ",font14));	        	        
+			cell.setColspan(5);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+
+			cell = new PdfPCell(new Phrase("Date",font12));	        	        
+			cell.setColspan(2);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+			cell = new PdfPCell(new Phrase(todaysDate,font12));
+			cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+			
+			
+			cell = new PdfPCell(new Phrase("Item Name",font12));	        	        
+			cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+			cell = new PdfPCell(new Phrase(" Bags.",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase(" ",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+
+
+			for(HashMap<String,Object> prod:ListOfItemDetails)
+	        {
+			cell = new PdfPCell(new Phrase(prod.get("item_name").toString(),font12));	        	        
+			cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+			cell = new PdfPCell(new Phrase(" 4 ",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase(" ",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);	
+			}
+	        
+			cell = new PdfPCell(new Phrase("Oil",font12));	        	        
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+			cell = new PdfPCell(new Phrase("",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+
+			cell = new PdfPCell(new Phrase("",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+
+			cell = new PdfPCell(new Phrase("",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("",font12));
+			cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+
+	         
+		  document.add(table);     	        
+		  
+		  document.close();	
+				
+	}
 	
 
 	public void generatePDFForFsmLedger(String DestinationPath,String BufferedImagesFolder,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException, SQLException
