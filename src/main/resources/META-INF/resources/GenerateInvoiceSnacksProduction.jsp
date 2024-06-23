@@ -74,7 +74,7 @@ function saveInvoice()
 	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[0].value)+
 		"~0"+
 		"~0"+
-		"~"+rows[x].childNodes[0].childNodes[0].childNodes[1].childNodes[1].innerHTML+ // Item Name
+		"~"+rows[x].childNodes[0].childNodes[0].childNodes[2].innerHTML+ // Item Name
 	    "|";
 	}
 
@@ -185,6 +185,10 @@ function resetField()
 	txtinvoicedate.value="${todaysDate}";
 	txtinvoicedate.disabled=false;
 	txtitem.disabled=false;
+
+
+	
+	totalQty.innerHTML="0";
 	
 	
 	
@@ -286,16 +290,7 @@ function deleteAttachment(id)
 
 
   
-  
-   
-
-  <div class="col-sm-2">
-  	<div class="form-group">	
-  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
-  	</div>
-  </div>
-  
-  <div class="col-sm-4" style="display:none">
+   <div class="col-sm-4" style="display:none">
   	
     
     <div class="input-group">
@@ -303,10 +298,21 @@ function deleteAttachment(id)
     
   </div>
   </div>
+   
 
+  <div class="col-sm-12">
+  	<div class="form-group">	
+	<label for="CustomerName"> Date</label>
+  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
+  	</div>
+  </div>
+  
+  
 
-  <div class="col-sm-10">
+  <div class="col-sm-12">
   	<div class="form-group">
+
+	<label for="CustomerName">Customer Name</label>
   	
   	<div class="input-group input-group-sm">
                   <input type="text" class="form-control form-control-sm" id="txtsearchcustomer" list="customerList"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off"  oninput="checkforMatchCustomer()">
@@ -345,9 +351,6 @@ function deleteAttachment(id)
 	                  <thead>
 	                    <tr align="center" style="font-size:10px">
 	                     
-	  			<th style="z-index:0">Name</th>
-	  			<th style="z-index:0">Qty</th>	  			
-	  			
 	  			
 	                    </tr>
 	                  </thead>
@@ -379,7 +382,7 @@ function deleteAttachment(id)
    <div class="col-sm-12">
   	 <div class="form-group" align="center">	  
 
-	 	Total Quantity : <span id="totalQty">0</span>
+	 	Total LD : <span id="totalQty" style="font-weight:800">0</span>
 	   	
    </div>
    </div>
@@ -587,8 +590,8 @@ function checkforMatchItem()
 			if(searchString==options1[x].value)
 				{
 				itemId=options1[x].id;
-				purchaseDetailsId=options1[x].innerHTML.split('~')[2];				
-					break;
+				purchaseDetailsId=options1[x].innerHTML.split('~')[2];
+				break;
 				}
 		}
 	if(itemId!=0)
@@ -649,7 +652,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	
 	    	
 	    	
-	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+"<a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'> <span style='font-size:12px'>"+ itemDetails[0] + "</span></a> </div>";
+	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+" <span style='font-size:12px'>"+ itemDetails[0] + "</span> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
 	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="0"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
@@ -783,8 +786,8 @@ function reshuffleSrNos()
 		}
 }
 
-document.getElementById("divTitle").innerHTML="Generate Invoice:- "+"${tentativeSerialNo}";
-document.title +=" Generate Invoice:- "+"${tentativeSerialNo} ";
+document.getElementById("divTitle").innerHTML="Generate Order:- "+"${tentativeSerialNo}";
+document.title +=" Generate Order:- "+"${tentativeSerialNo} ";
 $("#divBackButton").attr("href", "https://www.w3schools.com/jquery/");
 
 
@@ -842,7 +845,7 @@ if('${invoiceDetails.invoice_id}'!='')
     	
     	
     	cell1.innerHTML = '<div>'+m+'</div><input type="hidden" value="${item.item_id}">';    	
-    	cell2.innerHTML = '<a href="#">${item.item_name} ( )</a>';
+    	cell2.innerHTML = '${item.item_name}';
     	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm' id='txtqty"+${item.item_id}+"' onkeyup='calculateAmount(${item.item_id});checkIfEnterisPressed(event);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='${item.qty}'> <input type='hidden' readonly id='hdnavailableqty"+${item.item_id}+"'>";
     	cell3.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
     	cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.rate}" id="txtrate${item.item_id}">';
@@ -1177,216 +1180,6 @@ function showLedger()
 }
 
 
-function printDirectAsFonts(invoiceNo,pendAmount) 
-{
-	
-	
-	
-	try
-	{
-		
-		if(invoiceNo==null)
-			{
-				alert("invoice No found as null");
-				return;
-			}
-	
-	var xhttp = new XMLHttpRequest();
-	var invoiceResponse;
-	var invoiceDetails;
-	var listOfItems;
-	
-		  xhttp.onreadystatechange = function() 
-		  {
-		    if (xhttp.readyState == 4 && xhttp.status == 200) 
-		    { 		      
-		    	console.log(xhttp.responseText);
-		       invoiceResponse=JSON.parse(xhttp.responseText);
-		       invoiceDetails=(invoiceResponse.invoiceDetails);
-		       listOfItems=invoiceDetails.listOfItems;
-		       console.log(listOfItems);
-		   		
-			}
-		  };
-		  xhttp.open("GET","?a=getInvoiceDetailsByNoAjax&invoiceNo="+invoiceNo, false);    
-		  xhttp.send();
-		
-		  console.log(invoiceDetails.invoice_no);
-		  var topay=Number(invoiceDetails.total_amount)-Number(invoiceDetails.paid_amount);
-			
-    var c = new PosPrinterJob(getCurrentDriver(), getCurrentTransport());
-    c.initialize();
-     c.printText("Invoice Estimate: "+invoiceDetails.invoice_no, c.ALIGNMENT_CENTER, c.FONT_SIZE_MEDIUM2); // Invoice no   
-    c.printText(invoiceDetails.store_name, c.ALIGNMENT_CENTER, c.FONT_SIZE_BIG).bold(true); // store name
-    
-    c.printText(invoiceDetails.address_line_1 + invoiceDetails.address_line_2, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // address line 1
-    c.printText(invoiceDetails.address_line_3, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // address line 2     
-    
-    //c.printText(invoiceDetails.city+" - "+invoiceDetails.pincode, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // city pincode
-    
-    c.printText("Phone:- "+invoiceDetails.mobile_no, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    c.printText("Store Timings:- "+invoiceDetails.store_timing, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // timings
-    
-    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    
-    if(invoiceDetails.customer_name!=null)
-    	{
-    		c.printText("Name : "+invoiceDetails.customer_name, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Name
-    	}
-		    c.printText("Date & Time : "+invoiceDetails.theUpdatedDate, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Date & Time
-		    c.printText("Payment Type : "+invoiceDetails.payment_type, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
-    if(invoiceDetails.payment_type!='Pending')
-    	{
-    		c.printText("Payment Mode : "+invoiceDetails.payment_mode, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
-    	}
-    
-    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    c.printText("SR              ITEM NAME       Qty        Rate        AMOUNT  ", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // Payment Type
-    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
-    
-    
-    
-    var totalWeight=0;
-    var totalQty=0;
-    for(var m=0;m<listOfItems.length;m++)
-    	{
-    	
-    	totalWeight+=Number(listOfItems[m].weight);
-    	totalQty+=Number(listOfItems[m].qty);
-    	
-    	var spaceCharacter=" ";
-    	var finalLine="";
-    	
-    	var srnumber=m+1;
-    	if(srnumber<=9)
-    		{
-    			srnumber="0"+srnumber;
-    		}    	
-    	finalLine+=srnumber;  	
-    	
-    	
-    	var itemAllocatedSpace=29;
-    	var itemName=listOfItems[m].item_name
-    	for(k=0;k<itemAllocatedSpace;k++)
-    		{
-	    		if(itemName.length<itemAllocatedSpace)
-	    		{
-	    			if(k%2==0){itemName+=spaceCharacter;}
-	    			if(k%2!=0){itemName=spaceCharacter+itemName;}
-	    		}
-    		}
-    	finalLine+=" "+itemName;
-    	var qtyAllocattedspace=4;
-    	var qtyNum=listOfItems[m].qty;
-    	var qtyWithWhiteSpaces=listOfItems[m].qty;
-    	for(k=0;k<qtyAllocattedspace;k++)
-    		{
-	    		if(qtyWithWhiteSpaces.toString().length<qtyAllocattedspace)
-	    		{
-	    			if(k%2==0){qtyWithWhiteSpaces+=spaceCharacter;}
-	    			if(k%2!=0){qtyWithWhiteSpaces=spaceCharacter+qtyWithWhiteSpaces;}	    					
-	    		}
-    		}    	
-    	finalLine+=" "+qtyWithWhiteSpaces;
-    	
-    	var priceAllocatedSpace=11;
-    	var priceWithSpaces=Number(listOfItems[m].custom_rate).toFixed(0);
-    	for(k=0;k<priceAllocatedSpace;k++)
-    		{
-	    		if(priceWithSpaces.toString().length<priceAllocatedSpace)
-	    		{
-	    			if(k%2==0){priceWithSpaces+=spaceCharacter;}
-	    			if(k%2!=0){priceWithSpaces=spaceCharacter+priceWithSpaces;}	    					
-	    		}
-    		}
-    	finalLine+=" "+priceWithSpaces;
-    	
-    	var amountAllocatedSpace=13;
-    	var Amount=Number(listOfItems[m].custom_rate)*Number(qtyNum);    	
-    	Amount=Amount.toFixed(0);    	
-    	var amountWithSpaces=Amount;
-    	for(k=0;k<amountAllocatedSpace;k++)
-    		{
-	    		if(amountWithSpaces.toString().length<amountAllocatedSpace)
-	    		{
-	    			if(k%2==0){amountWithSpaces+=spaceCharacter;}
-	    			if(k%2!=0){amountWithSpaces=spaceCharacter+amountWithSpaces;}	    					
-	    		}
-    		}
-    	finalLine+=" "+amountWithSpaces;
-
-    	console.log(finalLine);
-    	c.printText(finalLine, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type
-    
-    	}
-    
-        
-    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-    
-    //c.printText("Total Weight : "+totalWeight.toFixed(3), c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
-    c.printText("Total Qty : "+totalQty, c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
-    
-    if(invoiceDetails.invoice_discount!='' && invoiceDetails.invoice_discount!='0.00')
-	{
-	    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-	    c.printText("Invoice Discount :  "+invoiceDetails.invoice_discount, c.ALIGNMENT_RIGHT, c.FONT_SIZE_SMALL); // Remarks
-	}
-    
-    if(invoiceDetails.remarks!='')
-	{
-	    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-	    c.printText("Remarks :  "+invoiceDetails.remarks, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Remarks
-	}
-    
-    var topay=invoiceDetails.total_amount;
-    
-    if(invoiceDetails.payment_type=='Partial')
-    	{    	
-    	
-    	// need to discuss and implement
-    	c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-        c.printText("Total Amount :  "+Number(invoiceDetails.total_amount), c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1);         
-        
-    	c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-        c.printText("Partially Paid Amount :  "+invoiceDetails.paid_amount, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
-        topay=Number(invoiceDetails.total_amount)-Number(invoiceDetails.paid_amount);
-    	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-    c.printText("Total Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
-    
-  
-    
-    
-   
-
-    c.printText("****************************************************************", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
-    c.printText("*Thank You, Visit Again*", c.ALIGNMENT_CENTER, c.FONT_SIZE_NORMAL);
-    
-
-    c.feed(3);
-    c.execute();
-    
-        
-    
-    
-
-	}
-	catch(ex)
-	{
-		alert(ex.message);
-	}
-    
-
-}
 
 
 function checkforLengthAndEnableDisable()

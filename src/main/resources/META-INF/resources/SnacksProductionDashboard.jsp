@@ -49,6 +49,11 @@ Pending Orders <span class="float-right badge bg-danger">${HomePageContent.pendi
 Todays Planning <span class="float-right badge bg-success">${HomePageContent.todaysPlanningCount}</span>
 </a>
 </li>
+<li class="nav-item" onclick="window.location='?a=showCompletedOrders'">
+<a href="#" class="nav-link">
+Completed Orders <span class="float-right badge bg-success">${HomePageContent.completedCount}</span>
+</a>
+</li>
 </ul>
 </div>
 </div>
@@ -146,7 +151,7 @@ Todays Planning <span class="float-right badge bg-success">${HomePageContent.tod
         
       
         
-        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud (Snacks Production)</p1>";
+        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>";
 
         	document.title +=" Snacks Production";
           
