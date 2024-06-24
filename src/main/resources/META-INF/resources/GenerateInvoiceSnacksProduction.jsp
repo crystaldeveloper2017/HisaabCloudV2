@@ -817,28 +817,19 @@ if('${invoiceDetails.invoice_id}'!='')
 		document.title +=" Invoice No:-"+"${invoiceDetails.invoice_no} ";
 		hdnSelectedCustomer.value="${invoiceDetails.customer_id}"
 		
+		
 			
 		if('${invoiceDetails.customer_name}'!='')
 			{
-				txtsearchcustomer.value="${invoiceDetails.customer_name}~${invoiceDetails.mobile_number}~${invoiceDetails.customer_type}";			
+				txtsearchcustomer.value="${invoiceDetails.customer_name}~${invoiceDetails.customercityname}";			
 			}
 		
 		
 		document.getElementById("hdnSelectedCustomerType").value='${invoiceDetails.customer_type}';
 		txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
 		totalQty.innerHTML="${invoiceDetails.totalQuantities}";
-		grossAmount.innerHTML="${invoiceDetails.gross_amount}";
-		txtitemdiscount.innerHTML="${invoiceDetails.item_discount}";
-		txtinvoicediscount.value="${invoiceDetails.invoice_discount}";
-		txtpaymenttype.value="${invoiceDetails.payment_type}";
 		
-		totalAmount.innerHTML="${invoiceDetails.total_amount}";
-		gst.innerHTML="${invoiceDetails.total_gst}";
-		txtpaidamount.value="${invoiceDetails.paid_amount}";
-		paymentTypeChanged(txtpaymenttype.value);
-		txtpendingamount.innerHTML=Number(totalAmount.innerHTML)-Number(txtpaidamount.value);
-		txtremarks.value='${invoiceDetails.remarks}';
-		drppaymentmode.value="${invoiceDetails.payment_mode}";
+		
 		
 		var m=0;
 		var tableNo="";
@@ -850,29 +841,15 @@ if('${invoiceDetails.invoice_id}'!='')
     	var row = table.insertRow(-1);	    	
     	var cell1 = row.insertCell(0);
     	var cell2 = row.insertCell(1);
-    	var cell3 = row.insertCell(2);
-    	var cell4 = row.insertCell(3);
-    	var cell5 = row.insertCell(4);
-    	var cell6 = row.insertCell(5);
-    	var cell7 = row.insertCell(6);
-    	var cell8 = row.insertCell(7);
+		var cell3 = row.insertCell(2);
+    	
     	
     	
     	
     	cell1.innerHTML = '<div>'+m+'</div><input type="hidden" value="${item.item_id}">';    	
-    	cell2.innerHTML = '${item.item_name}';
-    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm' id='txtqty"+${item.item_id}+"' onkeyup='calculateAmount(${item.item_id});checkIfEnterisPressed(event);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='${item.qty}'> <input type='hidden' readonly id='hdnavailableqty"+${item.item_id}+"'>";
-    	cell3.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
-    	cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.rate}" id="txtrate${item.item_id}">';
+    	cell2.innerHTML = '${item.item_name}';    	
+    	cell3.innerHTML = '<input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}">';
     	
-    	cell5.innerHTML = '<input typ="text" id="txtcustomrate${item.item_id}"  class="form-control form-control-sm" value="${item.custom_rate}" onkeyup="calculateAmount(${item.item_id})" onkeypress="digitsOnlyWithDot(event)">';
-    	cell6.innerHTML = Number((Number('${item.rate}') * Number('${item.qty}')) - (Number('${item.custom_rate}') * Number('${item.qty}'))).toFixed(2);
-    	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
-    	cell7.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';
-    	cell8.innerHTML ="<input type='text' class='form-control form-control-sm' value='${item.gst_amount}' readonly id='gst${item.item_id}' onkeyup='calculateAmount(${item.item_id})'> <input type='hidden' id='hdngst${item.item_id}' value='${item.gst}'>";//
-    	
-    	
-		
 	    		//alert('${item.item_id}'+'-${item.item_name}'+'-${item.qty}'+'-${item.rate}'+'-${item.custom_rate}');			    
 		</c:forEach>
  
@@ -901,36 +878,18 @@ if('${invoiceDetails.invoice_id}'!='')
 					{
 						deleteButtons[m].style="display:none";
 					}
+				btnsave.style="display:none";
 			}
 		
-		if('${param.table_id}'!='')
-			{
-				calculateTotal();
-				txtpaymenttype.value='Paid';
-				drppaymentmode.value='Cash';
-				txtsearchcustomer.disabled=false;
-				txtinvoicedate.disabled=false;
-				document.getElementById("divTitle").innerHTML="Invoice For Table No:-"+tableNo;
-				document.title +=" Invoice For Table No:- "+tableNo;
-				txtinvoicediscount.value=0;
-			}
-		
-		if('${param.booking_id}'!='' || '${param.mobile_booking_id}'!='')
-		{
-			calculateTotal();
-			txtpaymenttype.value='Paid';
-			drppaymentmode.value='Cash';
-			txtsearchcustomer.disabled=true;
-			txtinvoicedate.disabled=false;
-			document.getElementById("divTitle").innerHTML="Invoice For Booking Id - ${param.booking_id}";
-			document.title +=" Invoice For Booking Id - ${param.booking_id} ";
-			txtinvoicediscount.value=0;
-		}
 		
 		document.getElementById("generatePDF").style="display:";
 		generatePDF.disabled=false;
-		btnRegister.disabled=false;
 		
+		
+	}
+	else
+	{
+		populateItems();
 	}
 	
 	
@@ -1147,28 +1106,6 @@ function calculateReturnAmount()
 	
 }
 
-function getGSTForAllItems()
-{
-	if('${param.invoice_id}'!='' && '${param.editInvoice}'=='')		
-	{
-		return;
-	}
-	var rows1=tblitems.rows;
-	for(var x=1;x<rows1.length;x++)
-		{
-			var itemId=rows1[x].childNodes[0].childNodes[1].value;
-			
-			calculateAmount(itemId);
-			
-		}
-		
-}
-function simulateCheck()
-{
-	
-	
-	
-}
 
 
 // need to bring thhis flag from db saved for later
@@ -1220,7 +1157,7 @@ function populateItems()
 </c:forEach>	   	   	
 }
 
-populateItems();
+
 
 
 

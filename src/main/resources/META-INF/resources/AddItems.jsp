@@ -162,27 +162,9 @@ function deleteAttachment(id)
 <input type="hidden" name="callerUrl" id="callerUrl" value="">
 
 <div class="row">
-<div class="col-sm-3">
 
-  	<div class="form-group">
-      <label for="email">Category Name * <a href="?a=showAddCategory">(Add Category)</a></label>     
-      <select class="form-control" name="drpcategoryId" id="drpcategoryId">
-      <c:forEach items="${CategoriesList}" var="cat">
-			    <option value="${cat.category_id}">${cat.category_name}</option>			    
-	   </c:forEach></select>     
-    </div>
-  </div>
 
-  <div class="col-sm-6">
-
-  	<div class="form-group">
-      <label for="email">Raw Material Name * <a href="?a=showAddRawMaterial">(Add Raw Material)</a></label>     
-      <select class="form-control" name="drprawmaterialid" id="drprawmaterialid">
-      <c:forEach items="${RawMaterialsList}" var="raw">
-			    <option value="${raw.raw_material_id}">${raw.raw_material_name}</option>			    
-	   </c:forEach></select>     
-    </div>
-  </div>
+  
 
   <div class="col-sm-3">
   	<div class="form-group">
@@ -192,6 +174,20 @@ function deleteAttachment(id)
     </div>
   </div>
   
+
+  <div class="col-sm-6">
+
+  	<div class="form-group">
+      <label for="email">Raw Material Name * </label>     
+      <select class="form-control" name="drprawmaterialid" id="drprawmaterialid">
+      <c:forEach items="${RawMaterialsList}" var="raw">
+			    <option value="${raw.raw_material_id}">${raw.raw_material_name}</option>			    
+	   </c:forEach></select>     
+    </div>
+  </div>
+
+
+ 
 
  
 
@@ -416,19 +412,32 @@ function deleteAttachment(id)
       </div>
 
 
-	  <div class="col-sm-3" id="placeholderperrawmaterial" >
-  	<div class="form-group">
-      <label for="email">LD's Per bag of Raw Material</label>
-      <input type="text" class="form-control" id="lds_per_raw_material" value="${itemDetails.lds_per_raw_material}" onkeypress="digitsOnly(event)"  name="lds_per_raw_material">
-    </div>
-  </div>
-  
 <div class="col-sm-3" id="placeholderpacketsinld"  >
   	<div class="form-group">
-      <label for="email">Packets In One LD</label>
+      <label for="email">Reading Per LD</label>
       <input type="text" class="form-control" id="packets_in_ld" value="${itemDetails.packets_in_ld}" onkeypress="digitsOnly(event)"  name="packets_in_ld">
     </div>
   </div>
+
+	  <div class="col-sm-3" id="placeholderperrawmaterial" >
+  	<div class="form-group">
+      <label for="email">LD Per Bag of Raw Material</label>
+      <input type="text" class="form-control" id="lds_per_raw_material" value="${itemDetails.lds_per_raw_material}" onkeypress="digitsOnly(event)"  name="lds_per_raw_material">
+    </div>
+  </div>
+
+   <div class="col-sm-3">
+
+  	<div class="form-group">
+      <label for="email">Category Name * </label>     
+      <select class="form-control" name="drpcategoryId" id="drpcategoryId">
+      <c:forEach items="${CategoriesList}" var="cat">
+			    <option value="${cat.category_id}">${cat.category_name}</option>			    
+	   </c:forEach></select>     
+    </div>
+  </div>
+  
+
 	
   
   <div class="col-sm-12">

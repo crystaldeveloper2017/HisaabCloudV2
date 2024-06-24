@@ -2181,7 +2181,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(invoiceId);
 		LinkedHashMap<String, Object> itemDetailsMap = new LinkedHashMap<>();
 		itemDetailsMap = getMapReturnObject(parameters, "select \r\n" + "*,\r\n"
-				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,\r\n"
+				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,\r\n"
 				+ "date_format(invoice_date,'%d/%m/%Y') theInvoiceDate,\r\n" + "sum(qty) totalQuantities,\r\n"
 				+ "paym.amount as paid_amount,date_format(invoice.updated_date,'%d/%m/%Y %h:%i%p') theUpdatedDate"
 				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage \r\n" + " from\r\n"
@@ -7101,7 +7101,7 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 
 
 				return getListOfLinkedHashHashMap(parameters,
-			"select *,sum(qty) totalQty from trn_invoice_register tir "+
+			"select *,round(sum(qty),0) totalQty from trn_invoice_register tir "+
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+

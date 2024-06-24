@@ -30,11 +30,11 @@
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
                  
-                    <tr>  
+                    <tr align="center">  
 				             
 				
 					
-<th><b>City (Qty)</b></th>
+<th ><b>Todays Planning</b></th>
                      
                      
                     </tr>
@@ -51,7 +51,7 @@
 									
 										
 										                                <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
-																		${pendData.city} (${pendData.totalQty})
+																		<a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}"> ${pendData.city} (${pendData.totalQty}) </a>
 
 								
 							</td>
@@ -180,8 +180,8 @@ function deleteInvoice(invoice_id)
   
   
  
-  document.getElementById("divTitle").innerHTML="Todays Planning ";
-  document.title +=" Todays Planning";
+  //document.getElementById("divTitle").innerHTML="Todays Planning ";
+  //document.title +=" Todays Planning";
 
 
   

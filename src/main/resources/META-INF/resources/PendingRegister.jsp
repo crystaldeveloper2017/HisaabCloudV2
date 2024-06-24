@@ -51,7 +51,7 @@
 									
 										
 										                                <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
-																		${pendData.city} (${pendData.totalQty})
+																		<a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}"> ${pendData.city} (${pendData.totalQty})</a>
 
 								
 							</td>
