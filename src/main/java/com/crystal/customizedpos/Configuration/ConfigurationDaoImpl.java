@@ -2161,13 +2161,26 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	public List<LinkedHashMap<String, Object>> getFryPlanning(Connection con,String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-
-		String query="select mi.item_name ,tid.qty,mi.lds_per_raw_material,tid.qty/mi.lds_per_raw_material noOfBagsreq  from trn_invoice_register tir"+
-		" left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id"+ 
-		" left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id"+ 
-		" left outer join mst_items mi on mi.item_id =tid.item_id"+
-		" left outer join mst_category mc on mc.category_id =mi.parent_category_id "+
-		" where tir.app_id =?  and sis.curr_status=1 and mc.category_name ='Fry'";
+		String query="select\n" + 
+					"mi.item_name ,\n" + 
+					"tid.qty,\n" + 
+					"mi.lds_per_raw_material,\n" + 
+					"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" + 
+					"from\n" + 
+					"trn_invoice_register tir\n" + 
+					"left outer join snacks_invoice_status sis on\n" + 
+					"sis.invoice_id = tir.invoice_id\n" + 
+					"left outer join trn_invoice_details tid on\n" + 
+					"tid.invoice_id = tir.invoice_id\n" + 
+					"left outer join mst_items mi on\n" + 
+					"mi.item_id = tid.item_id\n" + 
+					"left outer join mst_category mc on\n" + 
+					"mc.category_id = mi.parent_category_id\n" + 
+					"where\n" + 
+					"tir.app_id = ? \n" + 
+					"and sis.curr_status = 1\n" + 
+					"and mc.category_name = 'Fry'\n" + 
+					"group by mi.item_id;\n";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
@@ -7095,8 +7108,6 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
-		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
 		
 
 
@@ -7105,7 +7116,7 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
 			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
 			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 1 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
+			"WHERE tir.app_id = ?  AND sis.curr_status = 1  AND tir.activate_flag=1 group by tir.invoice_id ",
 							
 				con);
 	}

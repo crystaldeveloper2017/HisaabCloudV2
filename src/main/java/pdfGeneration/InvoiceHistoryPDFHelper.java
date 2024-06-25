@@ -5002,7 +5002,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);	       
 
 
-			cell = new PdfPCell(new Phrase(" 4 ",font12));
+			cell = new PdfPCell(new Phrase(prod.get("noOfBagsreq").toString(),font12));
 			cell.setColspan(1);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

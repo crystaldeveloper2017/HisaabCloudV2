@@ -11164,15 +11164,7 @@ public CustomResultObject showPendingRegister(HttpServletRequest request, Connec
 	String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 	String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
 
-	// if parameters are blank then set to defaults
-		if (fromDate.equals("")) 
-	{
-	fromDate = lObjConfigDao.getDateFromDB(con);
-	}
-		if (toDate.equals("")) 
-		{
-	toDate = lObjConfigDao.getDateFromDB(con);
-	}
+	
 
 
 
