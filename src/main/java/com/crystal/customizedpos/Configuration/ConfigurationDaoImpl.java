@@ -2162,7 +2162,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		String query="select\n" + 
-					"mi.item_name ,\n" + 
+					"rmm.raw_material_name,mi.item_name ,\n" + 
 					"tid.qty,\n" + 
 					"mi.lds_per_raw_material,\n" + 
 					"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" + 
@@ -2174,13 +2174,15 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 					"tid.invoice_id = tir.invoice_id\n" + 
 					"left outer join mst_items mi on\n" + 
 					"mi.item_id = tid.item_id\n" + 
+					"left outer join raw_material_master rmm on\n" + 
+					"mi.raw_material_id = rmm.raw_material_id\n" + 
 					"left outer join mst_category mc on\n" + 
 					"mc.category_id = mi.parent_category_id\n" + 
 					"where\n" + 
 					"tir.app_id = ? \n" + 
 					"and sis.curr_status = 1\n" + 
 					"and mc.category_name = 'Fry'\n" + 
-					"group by mi.item_id;\n";
+					"group by rmm.raw_material_id;\n";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 

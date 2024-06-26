@@ -4995,7 +4995,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 			for(HashMap<String,Object> prod:ListOfItemDetails)
 	        {
-			cell = new PdfPCell(new Phrase(prod.get("item_name").toString(),font12));	        	        
+			cell = new PdfPCell(new Phrase(prod.get("raw_material_name").toString(),font12));	        	        
 			cell.setColspan(3);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
