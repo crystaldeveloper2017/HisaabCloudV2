@@ -297,6 +297,23 @@ function deleteInvoice(invoice_id)
 	  xhttp.send();
 }
 
+
+  function makaiPlanning()
+  
+  {
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generatemakaiPlanning", false);    
+	  xhttp.send();
+  }
 	
   
 

@@ -2,6 +2,7 @@
   roleName: "AdminSnacks"
   actions:
     - generatefryPlanning
+    - generatemakaiPlanning
     - movetoDone
     - moveToPending
     - moveToPlanning
