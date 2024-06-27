@@ -340,7 +340,7 @@ function deleteAttachment(id)
 
 
     <div class="ui-widget" style="width:92%">
-	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" name="txtsearchcustomer" onfocus="onfoctext()">
+	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" name="txtsearchcustomer" >
 	</div>
                   
                   
