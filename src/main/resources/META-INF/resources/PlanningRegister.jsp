@@ -49,9 +49,8 @@
 							<td >
 													
 									
-										
-										                                <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
-																		<a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}"> ${pendData.city} (${pendData.totalQty}) </a>
+  <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
+		<a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}"> ${pendData.city} (${pendData.totalQty}) </a>
 
 								
 							</td>
@@ -294,6 +293,22 @@ function deleteInvoice(invoice_id)
 		}
 	  };
 	  xhttp.open("GET","?a=generatefryPlanning", false);    
+	  xhttp.send();
+}
+
+function generateReadingReport()
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generateReadingReport", false);    
 	  xhttp.send();
 }
 

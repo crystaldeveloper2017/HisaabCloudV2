@@ -35,6 +35,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 {
 	private static final String BufferedImagesFolderPath = null;
+	private static final String BufferedImagesFolder = null;
 	CommonFunctions cf=new CommonFunctions();
 	public static void main(String[] args) throws DocumentException, MalformedURLException, IOException 
 	{
@@ -5056,6 +5057,190 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 
 	         
+		  document.add(table);     	        
+		  
+		  document.close();	
+				
+	}
+
+	public void generatePDFForReadingReport(String DestinationPath,String BufferedImagesFolderPath,HashMap<String, Object> invoiceHistoryDetails,Connection con) throws DocumentException, MalformedURLException, IOException
+	{
+
+		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfItems");
+		String todaysDate=(String) invoiceHistoryDetails.get("todaysDate");
+		
+		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
+
+		Font font = new Font(base, 9, Font.NORMAL); 
+
+		
+		Document document = new Document (PageSize.A4, 10, 10, 10, 10);
+		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath));
+		/*PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("F:\\1.pdf"));*/
+		
+		InvoiceHistoryPDFHelper event = new InvoiceHistoryPDFHelper();
+		  writer.setPageEvent(event);
+		document.open();   
+
+
+		PdfPTable table = new PdfPTable(12);
+		table.setWidthPercentage(100);
+		  
+		  table.setWidths(new int[]{5,2,2,2,2,2,2,2,4,3,4,3});
+
+	        
+			
+			PdfPCell cell = new PdfPCell(new Phrase("ITEM ",font));	        	        
+			//cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ",font));
+			//cell.setColspan(1);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase("TOTAL",font));	        	        
+			//cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	
+
+			cell = new PdfPCell(new Phrase("STOCK",font));	        	        
+			//cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);
+
+
+			cell = new PdfPCell(new Phrase("PRODUCTION",font));	        	        
+			//cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("READING",font));	        	        
+			//cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);
+
+
+			for(HashMap<String,Object> prod:ListOfItemDetails)
+	        {
+			cell = new PdfPCell(new Phrase(prod.get("item_name").toString(),font));	        	        
+			//cell.setColspan(3);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	        table.addCell(cell);	       
+
+
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+			cell = new PdfPCell(new Phrase(" ",font));
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+			
+
+			}
+	        
+				         
 		  document.add(table);     	        
 		  
 		  document.close();	

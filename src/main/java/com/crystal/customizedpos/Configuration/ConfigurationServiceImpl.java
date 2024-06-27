@@ -11321,6 +11321,37 @@ public CustomResultObject generatefryPlanning(HttpServletRequest request, Connec
 	return rs;
 }
 
+public CustomResultObject generateReadingReport(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+
+	
+	String appenders = "ReadingReport.pdf";
+	String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolderPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		DestinationPath += appenders;
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		
+	
+
+	try {
+
+
+		HashMap<String, Object> hm=new HashMap<>();
+		hm.put("todaysDate",cf.getDateFromDB(con));
+		hm.put("listOfItems", lObjConfigDao.getReadingReport(con,appId));
+
+		new InvoiceHistoryPDFHelper().generatePDFForReadingReport(DestinationPath, BufferedImagesFolderPath,hm, con);
+
+
+		rs.setAjaxData(appenders);
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+
+	return rs;
+}
 
 
 

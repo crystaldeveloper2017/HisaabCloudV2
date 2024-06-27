@@ -3,6 +3,7 @@
   actions:
     - generatefryPlanning
     - generatemakaiPlanning
+    - generateReadingReport
     - movetoDone
     - moveToPending
     - moveToPlanning
