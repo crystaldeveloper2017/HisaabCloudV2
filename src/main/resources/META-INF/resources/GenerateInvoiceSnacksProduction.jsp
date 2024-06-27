@@ -294,7 +294,7 @@ function deleteAttachment(id)
   	
     
     <div class="input-group">
-    <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
+    <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="alert('hellow2')" onchange="alert('hellow1')">
     
   </div>
   </div>
@@ -323,6 +323,13 @@ function deleteAttachment(id)
   		
   	</div>
   </div>
+
+
+
+
+
+
+  
   
   
 
@@ -330,7 +337,12 @@ function deleteAttachment(id)
   	<div class="form-group">
 
   	<div class="input-group input-group-sm">
-                  <input type="text" class="form-control form-control-sm" id="txtsearchcustomer" list="customerList"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off"  oninput="checkforMatchCustomer()">
+
+
+    <div class="ui-widget" style="width:92%">
+	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" name="txtsearchcustomer" onfocus="onfoctext()">
+	</div>
+                  
                   
                   <span class="input-group-append">
                     <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
@@ -535,6 +547,8 @@ function searchForCustomer(searchString)
 function checkforMatchCustomer()
 {
 	
+  
+
 	var searchString= document.getElementById("txtsearchcustomer").value;	
 	var options1=document.getElementById("customerList").options;
 	var customerId=0;
@@ -899,7 +913,6 @@ function returnThisItem(detailsId)
 }
 function resetCustomer()
 {
-	window.location.reload();
 	txtsearchcustomer.disabled=false;
 	txtsearchcustomer.value="";
 	hdnSelectedCustomer.value=0;	
@@ -1156,6 +1169,52 @@ function populateItems()
 	checkforMatchItem();
 </c:forEach>	   	   	
 }
+
+
+
+$( function() {
+    var availableTags = [
+      
+    ];
+
+  var options1=document.getElementById("customerList").options;
+	var customerId=0;
+	for(var x=0;x<options1.length;x++)
+		{
+			
+					
+          availableTags.push(options1[x].value);
+					
+					
+				
+		}
+
+    
+
+
+    $( "#txtsearchcustomer" ).autocomplete({
+      source: availableTags,
+      select: function(event, ui) {
+                    
+          setTimeout(function() {
+              checkforMatchCustomer();
+          }, 100);
+
+
+                }
+    });
+
+   
+    
+
+  } );
+
+
+
+  function onfoctext()
+   {
+              $("#txtsearchcustomer").autocomplete("search", "~");
+              }
 
 
 
