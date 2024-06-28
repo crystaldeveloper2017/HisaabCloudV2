@@ -11353,7 +11353,146 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 	return rs;
 }
 
+public CustomResultObject showTodaysStock(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+	HashMap<String, Object> outputMap = new HashMap<>();
 
+	try {
+
+		String appType = "";
+		if (request.getSession().getAttribute("userdetails") != null) {
+			appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		}
+		String invoiceId = request.getParameter("invoice_id");
+		String invoiceNo = request.getParameter("invoice_no");
+		String tableId = request.getParameter("table_id");
+		String bookingId = request.getParameter("booking_id");
+		String MobilebookingId = request.getParameter("mobile_booking_id");
+		String txtinvoicedate = request.getParameter("txtinvoicedate");
+		String vehicleId = request.getParameter("vehicleId");
+		
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+				.get("store_id");
+
+		String invoiceTypeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+				.get("invoice_type");
+
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
+
+		outputMap.putAll(lObjConfigDao.getUserConfigurations(userId, con));
+
+		outputMap.put("store_id", storeId);
+		outputMap.put("app_id", appId);
+		outputMap.put("table_id", tableId);
+		outputMap.put("invoice_no", invoiceNo);
+		outputMap.put("txtinvoicedate", txtinvoicedate);
+
+
+		
+
+		if (invoiceId != null) {
+			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
+		}
+
+		if (tableId != null) {
+			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetailsForTable(tableId, con));
+		}
+
+		
+		if (invoiceId == null) {
+
+			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
+			outputMap.put("todaysDateMinusOneMonth", lObjConfigDao.getDateFromDBMinusOneMonth(con));
+			outputMap.put("tentativeSerialNo",
+					lObjConfigDao.getTentativeSequenceNo(appId, "trn_invoice_register", con));
+		}
+
+		// outputMap.put("itemList",
+		// lObjConfigDao.getItemMasterForGenerateInvoiceForThisStore(outputMap,con));
+		if (!invoiceTypeId.equals("1")) {
+			outputMap.put("itemList", lObjConfigDao.getItemMasterForGenerateInvoice(outputMap, con));
+		}
+
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getItemMasterOrderCategory(outputMap, con);
+		LinkedHashMap<Object, Object> reqHm = new LinkedHashMap<>();
+		List<LinkedHashMap<String, Object>> lsttemp = new ArrayList<>();
+		String categoryName = "";
+		for (LinkedHashMap<String, Object> temp : lst) {
+			if (categoryName.equals(""))
+				categoryName = temp.get("catNameTrimmed").toString();
+			if (categoryName.equals(temp.get("catNameTrimmed"))) {
+				lsttemp.add(temp);
+			} else {
+
+				reqHm.put(categoryName, lsttemp);
+
+				lsttemp = new ArrayList<>();
+				categoryName = temp.get("catNameTrimmed").toString();
+				lsttemp.add(temp);
+			}
+		}
+
+		reqHm.put(categoryName, lsttemp);
+
+		outputMap.put("lsitOfCategories", lObjConfigDao.getCategoriesWithAtLeastOneItem(outputMap, con));
+		outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
+
+		outputMap.put("lstOfSwipeMaster", lObjConfigDao.getSwipeMaster(outputMap, con));
+		outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
+		outputMap.put("categoriesWithItem", reqHm);
+
+		if (invoiceTypeId.equals("2")) // means services and we need unique model no and unique no for this app id
+		{
+			outputMap.put("listUniqueModelNo", lObjConfigDao.getUniqueModelNoForThisApp(con, appId));
+		}
+
+
+		rs.setViewName("../TodaysStock.jsp");
+
+		rs.setReturnObject(outputMap);
+
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+	return rs;
+}
+
+public CustomResultObject generateOrderReport(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+
+	
+	String appenders = "OrderForm.pdf";
+	String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolderPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		DestinationPath += appenders;
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		
+	
+
+	try {
+
+
+		HashMap<String, Object> hm=new HashMap<>();
+		hm.put("todaysDate",cf.getDateFromDB(con));
+		hm.put("listOfItems", lObjConfigDao.getReadingReport(con,appId));
+
+		new InvoiceHistoryPDFHelper().generatePDFForOrderReport(DestinationPath, BufferedImagesFolderPath,hm, con);
+
+
+		rs.setAjaxData(appenders);
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+
+	return rs;
+}
 
 	}
 	

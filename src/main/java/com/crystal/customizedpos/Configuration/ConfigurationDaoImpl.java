@@ -5435,7 +5435,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "	tum.name attendantName,\r\n"
 				+ "	tum2.name updated_by_supervisor,\r\n"
 				+ "	(select sum(test_quantity) from trn_test_fuel_register ttfr\r\n"
-				+ "where test_date =accounting_date and user_id=tnr.attendant_id and ttfr.activate_flag=1 and  ttfr.test_type='S' and shift_id =tnr.shift_id and ttfr.nozzle_id=tnr.nozzle_id)\r\n"
+				+ "where test_date =accounting_date and user_id=tnr.attendant_id and ttfr.activate_flag=1 and shift_id =tnr.shift_id and ttfr.nozzle_id=tnr.nozzle_id)\r\n"
 				+ "as testFuel \r\n"
 				+ "from\r\n"
 				+ "	trn_nozzle_register tnr,\r\n"

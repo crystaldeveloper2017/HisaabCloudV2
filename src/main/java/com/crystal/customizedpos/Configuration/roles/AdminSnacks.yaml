@@ -2,6 +2,8 @@
   roleName: "AdminSnacks"
   actions:
     - generatefryPlanning
+    - generateOrderReport
+    - showTodaysStock
     - generatemakaiPlanning
     - generateReadingReport
     - movetoDone

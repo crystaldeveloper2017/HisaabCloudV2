@@ -54,6 +54,11 @@ Todays Planning <span class="float-right badge bg-success">${HomePageContent.tod
 Completed Orders <span class="float-right badge bg-success">${HomePageContent.completedCount}</span>
 </a>
 </li>
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=showTodaysStock'">
+Today's Stock  <span class="float-right badge bg-danger">${HomePageContent.tpdaysStock}</span>
+</a>
+</li>
 </ul>
 </div>
 </div>

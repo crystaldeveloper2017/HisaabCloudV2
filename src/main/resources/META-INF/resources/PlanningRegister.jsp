@@ -76,7 +76,7 @@
   	 <div class="form-group" align="center">	  
 	   	<button class="btn btn-success" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>   
 		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Order Form</button>   
+		<button class="btn btn-success" type="button" id="btnsave" onclick='generateOrderReport()'>Generate Order Form</button>   
 		<button class="btn btn-success" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>   
 		<button class="btn btn-success" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>   
 		
@@ -312,7 +312,21 @@ function generateReadingReport()
 	  xhttp.send();
 }
 
-
+function generateOrderReport()
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generateOrderReport", false);    
+	  xhttp.send();
+}
   function makaiPlanning()
   
   {
