@@ -7245,7 +7245,24 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		parameters.add(invoiceId);
 		String insertQuery = "update snacks_invoice_status set curr_status=2 where invoice_id=?";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
-	}	
+	}
+
+    public void saveTodaysStock(String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con) throws SQLException, ParseException {
+
+		for(HashMap<String,Object> hm: itemListRequired)
+		{
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("item_id"));
+		parameters.add(hm.get("qty"));
+		parameters.add(getDateASYYYYMMDD(stockDate));
+		String insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
+		insertUpdateDuablDB(insertQuery, parameters, con);
+		}
+    }
+
+	
+
+
 	
 	
 }

@@ -72,43 +72,18 @@ function saveInvoice()
 	    itemString+=
 	    	itemId+ 
 	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[0].value)+
-		"~0"+
-		"~0"+
-		"~"+rows[x].childNodes[0].childNodes[0].childNodes[2].innerHTML+ // Item Name
 	    "|";
 	}
 
 
 	
-	if(hdnSelectedCustomer.value=="")
-	{
-		alert("Please select customer");
-		btnsave.disabled=false;
-		return;
-	}
 	
 	
 	
-	var reqString="customer_id="+hdnSelectedCustomer.value+
-	"&gross_amount=0"+
-	"&item_discount=0"+
-	"&invoice_discount=0"+
-	"&total_amount=0"+
-	"&payment_type=Pending"+
-	"&payment_mode="+
-	"&paid_amount=0"+
-	"&invoice_date="+txtinvoicedate.value+
-	"&remarks="+
-	"&hdnPreviousInvoiceId="+
-	"&table_id="+
-	"&booking_id="+
-	"&appId=${userdetails.app_id}"+
-	"&store_id=${userdetails.store_id}"+
-	"&user_id=${userdetails.user_id}"+	
-	"&itemDetails="+itemString;
 	
-	//alert(reqString);
-	//return;
+	var reqString="stock_date="+txtinvoicedate.value+"&itemDetails="+itemString;
+	
+	
 		
 	
 	
@@ -162,7 +137,7 @@ function saveInvoice()
 	      
 	    }
 	  };
-	  xhttp.open("POST", "?a=saveInvoice", true);
+	  xhttp.open("POST", "?a=saveTodaysStock", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");	  
 	  xhttp.send(encodeURI(reqString));
 	

@@ -11494,5 +11494,38 @@ public CustomResultObject generateOrderReport(HttpServletRequest request, Connec
 	return rs;
 }
 
+public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+
+
+	List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
+	String stockDate=request.getParameter("stock_date");
+	String[] itemsList = request.getParameter("itemDetails").split("\\|");
+				for (String item : itemsList) {
+					String[] itemDetails = item.split("~");
+					HashMap<String, Object> itemDetailsMap = new HashMap<>();
+					itemDetailsMap.put("item_id", itemDetails[0]);
+					itemDetailsMap.put("qty", itemDetails[1]);
+					if(itemDetails[1].equals("0"))
+					{continue;}
+					itemListRequired.add(itemDetailsMap);
+					// ID, QTY
+				}
+
+
+	
+	try {
+
+		lObjConfigDao.saveTodaysStock(stockDate,itemListRequired, con);
+		
+		rs.setAjaxData("App Created Succesfully");
+
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+	return rs;
+}
+
 	}
 	
