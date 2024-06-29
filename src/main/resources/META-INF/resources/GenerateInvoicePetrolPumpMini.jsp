@@ -901,7 +901,6 @@ if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
 		drppaymentmode.disabled='true';
 	txtpaymenttype.disabled='true';
 }
-alert('${vehicleDetails}');
 if('${vehicleDetails.vehicle_id}'!='')
 {
 txtsearchcustomer.value="${vehicleDetails.customer_name}~${vehicleDetails.mobile_number}~${vehicleDetails.customer_type}";
