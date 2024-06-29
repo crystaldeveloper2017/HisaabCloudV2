@@ -11527,5 +11527,54 @@ public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection
 	return rs;
 }
 
+public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Connection con) throws SQLException
+	{
+		CustomResultObject rs=new CustomResultObject();
+		HashMap<String, Object> outputMap=new HashMap<>();
+		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
+		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		outputMap.put("app_id", appId);
+
+
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		outputMap.put("txtfromdate", fromDate);
+
+		
+		try
+		{
+			String [] colNames= {"stock_id","item_name","qty"}; // change according to dao return
+			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getTodaysStockRegister(fromDate,con);
+			outputMap.put("lstITodaysStockRegister", lst);
+
+
+			
+			if(!exportFlag.isEmpty())
+			{
+				outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"TodaysStockRegister","TodaysStockRegister");
+			}
+		else
+			{
+				
+				rs.setViewName("../TodaysStockRegister.jsp");
+				
+			}	
+			
+			
+
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}		
+		rs.setReturnObject(outputMap);
+
+		return rs;
 	}
-	
+
+}

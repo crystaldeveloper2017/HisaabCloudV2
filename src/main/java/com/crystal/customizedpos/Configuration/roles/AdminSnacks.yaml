@@ -2,6 +2,7 @@
   roleName: "AdminSnacks"
   actions:
     - generatefryPlanning
+    - showTodaysStockRegister
     - saveTodaysStock
     - generateOrderReport
     - showTodaysStock
@@ -166,6 +167,7 @@
     - 2
   elements:
     - 23
+    - 700217
     - 700188
     - 24
     - 700183

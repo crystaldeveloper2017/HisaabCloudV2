@@ -541,3 +541,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showOrderHistory"
   orderNo: 1
+- elementId: 700217
+  elementName: "Todays Stock Register"
+  parentElementId: 26
+  elementUrl: "?a=showTodaysStockRegister"
+  orderNo: 1
