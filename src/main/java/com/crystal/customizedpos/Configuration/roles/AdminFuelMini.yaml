@@ -2,6 +2,8 @@
   roleName: "AdminFuelMini"
   actions:
     - getVehicleIdForCustomer
+    - showPrintLabelsScreenVehicle
+    - printLabelsVehicle
     - reloadSession
     - deleteCheckin
     - showAddVisitor
@@ -149,6 +151,7 @@
     - 2
   elements:
     - 23
+    - 700128
     - 700188
     - 24
     - 700183
@@ -188,6 +191,5 @@
     - 16
     - 700179
     - 4
-    - 700210
 
 

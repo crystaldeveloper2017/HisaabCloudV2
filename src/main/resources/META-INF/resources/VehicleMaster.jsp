@@ -109,7 +109,7 @@ function deleteItem(vehicleId)
 						<td>${vehicle.updated_date}</td>
             <td>${vehicle.preferred_fuel_type}</td>
 
-						<td><a href="?a=showAddVehicle&vehicleId=${item.vehicle_id}">Edit</a></td>
+						<td><a href="?a=showAddVehicle&vehicleId=${vehicle.vehicle_id}">Edit</a></td>
 						<td><button class="btn btn-danger" onclick="deleteItem('${item.vehicle_id}')">Delete</button></td>
 					</tr>
 				</c:forEach>

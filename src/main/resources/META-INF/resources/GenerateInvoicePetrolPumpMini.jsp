@@ -48,6 +48,7 @@ function resetCustomer()
 	txtsearchcustomer.disabled=false;
 	txtsearchcustomer.value="";
 	hdnSelectedCustomer.value=0;
+	drpvehicledetails.innerHTML="";
 	
 }
 
@@ -232,7 +233,7 @@ function saveInvoice()
   	</div>
   </div>
 
-			<div class="col-6">
+			<div class="col-6" style="display:none">
   	<div class="form-group">
       
     <label for="email">Shift Name</label>  
@@ -257,7 +258,7 @@ function saveInvoice()
     </div>
   </div>
   
-   <div class="col-6">
+   <div class="col-6" style="display:none"> 
   	<div class="form-group">
       
       <label for="email">Nozzle</label>
@@ -270,7 +271,7 @@ function saveInvoice()
   
   
    
-   <div class="col-6">
+   <div class="col-6" style="display:none">
   	<div class="form-group">
       
       <label for="email">Payment Type</label>
@@ -320,9 +321,16 @@ function saveInvoice()
             
     </div>
   </div>
+
+  <div class="col-6">
+  	<div class="form-group">
+      <label for="email">Slip No</label>
+      <input type="text" class="form-control" id="slip_no" value="${invoiceDetails.slip_no}"  placeholder="Slip No" name="slip_no">
+    </div>
+  </div>
   
   
-  <div class="col-6" name="paymentModeElements">
+  <div class="col-6" name="paymentModeElements" style="display:none">
   	<div class="form-group">
       
       <label for="email">Payment Mode</label>
@@ -439,8 +447,8 @@ function saveInvoice()
 <script >
 	
 
-document.getElementById("divTitle").innerHTML="Generate Invoice Fuel";
-document.title +=" Generate Invoice Fuel ";
+document.getElementById("divTitle").innerHTML="Generate Credit Memo";
+document.title +=" Generate Credit Memo ";
 
 if('${param.order_id}'!='')
 	{

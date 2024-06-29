@@ -1,5 +1,5 @@
-- roleId: 19
-  roleName: "AdminFuelMini"
+- roleId: 20
+  roleName: "SuperVisorFuelMini"
   actions:
     - getVehicleIdForCustomer
     - reloadSession
