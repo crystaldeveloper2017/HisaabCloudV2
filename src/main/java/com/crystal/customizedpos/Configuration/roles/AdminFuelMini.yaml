@@ -146,6 +146,7 @@
     - showDailyInvoiceReportParameter
     - showGenerateQrForVehicle
     - generateQrForVehicle
+    - showScanVehicleQR
   reports:
     - 1
     - 2

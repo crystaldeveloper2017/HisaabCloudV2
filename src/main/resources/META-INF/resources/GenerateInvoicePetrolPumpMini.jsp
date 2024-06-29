@@ -29,6 +29,8 @@
 
 
 <c:set var="invoiceDetails" value='${requestScope["outputObject"].get("invoiceDetails")}' />
+<c:set var="vehicleDetails" value='${requestScope["outputObject"].get("vehicleDetails")}' />
+
 
 
 
@@ -226,7 +228,7 @@ function saveInvoice()
 </datalist>
 			
 			
-			<div class="col-6">
+			<div class="col-12">
   	<div class="form-group">	
   	<label for="email">Invoice Date</label>
   		<input type="text" id="txtinvoicedate" onchange="getAttendantList()" name="txtinvoicedate" class="form-control form-control-sm" value="" placeholder="Invoice Date" readonly/>
@@ -283,7 +285,7 @@ function saveInvoice()
     </div>
   </div>
 
-  <div class="col-6">
+  <div class="col-12">
 	<div class="form-group">
 	
 	
@@ -312,7 +314,7 @@ function saveInvoice()
 </div>
 
   
-    <div class="col-6" name="customerVehicleElements">
+    <div class="col-12" name="customerVehicleElements">
   	<div class="form-group">
       
       <label for="txtsearchcustomervehicle">Customer Vehicle</label>
@@ -322,10 +324,10 @@ function saveInvoice()
     </div>
   </div>
 
-  <div class="col-6">
+  <div class="col-12">
   	<div class="form-group">
       <label for="email">Slip No</label>
-      <input type="text" class="form-control" id="slip_no" value="${invoiceDetails.slip_no}"  placeholder="Slip No" name="slip_no">
+      <input type="number" class="form-control" id="slip_no" value="${invoiceDetails.slip_no}"  placeholder="Slip No" name="slip_no">
     </div>
   </div>
   
@@ -860,34 +862,7 @@ if('${param.order_id}'!='')
 	}
 
 
-	function getAttendantList()
-{
-	var shift=drpshiftid.options[drpshiftid.selectedIndex].value;
 	
-		const xhttp = new XMLHttpRequest();
-		xhttp.onload = function() {
-		var lsitofattendants=JSON.parse(this.responseText)["listofAttendants"];
-		console.log("List of attendants are");
-		console.log(lsitofattendants);
-		var reqString="";
-		for(var m=0;m<lsitofattendants.length;m++)
-		{
-			//console.log(lsitofattendants.name+" "+ lsitofattendants[m].nozzle_name +" ");
-			reqString+="<option value="+lsitofattendants[m].nozzle_id+">"+" "+lsitofattendants[m].name+"~Checked In to ~Nozzle No : "+lsitofattendants[m].nozzle_name+"~"+lsitofattendants[m].item_name+"~"+lsitofattendants[m].user_id+"</option>";
-		}
-		//<option value="${nozzle.nozzle_id}">${nozzle.name }~Checked In to ~Nozzle No : ${nozzle.nozzle_name}~${nozzle.item_name} at ~(${nozzle.check_in_time }) ~ ${nozzle.attendant_id } ~ ${nozzle.nozzle_id}</option>    
-		
-		drpnozzle.innerHTML=reqString;
-
- 
-    
-    }
-    xhttp.open("GET", "?a=getAttendantsForDateAndShiftUnclubbed&collection_date="+txtinvoicedate.value+"&shift_id="+shift);
-    xhttp.send();
-	
-	
-	
-}
 
 
 
@@ -900,68 +875,10 @@ else
 {	
 	txtinvoicedate.value="${todaysDate}";
 }
-if(txtinvoicedate.value!='')
-{
-	getAttendantList();
-}
-
-
-
-if("${param.invoice_id}"!="")
-{
-
-	txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";		
-	drpshiftid.value="${invoiceDetails.shift_id}";	
-	txtpaymenttype.value="${invoiceDetails.payment_type}";
-	drppaymentmode.value="${invoiceDetails.payment_mode}";
-	txtsearchcustomer.value="${invoiceDetails.customer_name}";
-	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
-	
-
-	getAttendantList();
-	checkforMatchCustomerVehicle();
-
-
-	// sleeping 1 second so that the attendant list is populated
-	sleep(1000).then(() => {    
-	drpnozzle.value="${invoiceDetails.nozzle_id}";
-	});
 
 
 
 
-
-	var m=0;
-	<c:forEach items="${invoiceDetails.listOfItems}" var="item">
-		
-		m++;
-		tableNo='${item.table_no}';
-		var table = document.getElementById("tblitems");	    	
-    	var row = table.insertRow(-1);	    	
-    	var cell1 = row.insertCell(0);
-    	var cell2 = row.insertCell(1);
-    	var cell3 = row.insertCell(2);
-    	
-    	
-    	
-    	
-    	
-    	cell1.innerHTML = '<a href="#">${item.item_name} ( )</a>';
-    	
-    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},0)"><i class="fa fa-minus"></i></button></span><input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty${item.item_id}" value="${item.qty}"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity(${item.item_id},1)"><i class="fa fa-plus"></i></button></span></div>';
-    	
-    	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
-    	cell3.innerHTML ='<input typ="text" class="form-control form-control-sm" value="'+itemTotal+'">';
-    	
-    	
-		</c:forEach>
-
-		calculateTotal();
-
-		disableAllComponents();
-		
-	
-}
 
 
 function sleep(ms) {
@@ -983,6 +900,18 @@ if('${param.payment_type}'=='Paid' && '${param.payment_mode}'=='Card')
 		drppaymentmode.value='Card';
 		drppaymentmode.disabled='true';
 	txtpaymenttype.disabled='true';
+}
+alert('${vehicleDetails}');
+if('${vehicleDetails.vehicle_id}'!='')
+{
+txtsearchcustomer.value="${vehicleDetails.customer_name}~${vehicleDetails.mobile_number}~${vehicleDetails.customer_type}";
+txtsearchcustomer.disabled=true;
+hdnSelectedCustomer.value="${vehicleDetails.customer_id}";
+
+var reqString="<option value=${vehicleDetails.vehicle_id}>${vehicleDetails.vehicle_name}~${vehicleDetails.vehicle_number}</option>";
+drpvehicledetails.innerHTML=reqString;
+//drpvehicledetails.value="${vehicleDetails.vehicle_name}~${vehicleDetails.vehicle_number}";
+drpvehicledetails.disabled=true;
 }
 
 
