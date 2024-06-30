@@ -11518,7 +11518,7 @@ public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection
 
 		lObjConfigDao.saveTodaysStock(stockDate,itemListRequired, con);
 		
-		rs.setAjaxData("App Created Succesfully");
+		rs.setAjaxData("Saved Stock Successfully");
 
 	} catch (Exception e) {
 		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));

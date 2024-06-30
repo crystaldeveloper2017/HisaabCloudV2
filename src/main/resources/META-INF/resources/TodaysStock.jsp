@@ -92,25 +92,16 @@ function saveInvoice()
 	  xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) 
 	    {
-	    	var invoiceId=this.responseText.split("~");
+	    	
 	      	//alert("Invoice Saved Succesfully"+invoiceId[0]);
 	      	
-	      	if(invoiceId.length==1)
-	      		{
-	      			alert('An Error Has Occured. Please Contact Support');
-	      			resetField();
-	      			return;
-	      		}
+	      
 	      	
 	      	
 	      	
-	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
-	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-	    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
-	    	}
-	    	//window.location.reload();
+	      	alert(this.responseText);
+			
+	    	window.location.reload();
 	    	btnsave.disabled=false;
 	      	
 	      	
