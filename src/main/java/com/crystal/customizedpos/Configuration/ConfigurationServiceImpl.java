@@ -5665,7 +5665,7 @@ outputMap.put("txttodate",toDate);
 		outputMap.put("txtfromdate", fromDate);
 
 		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSalesGroupByItemShift(outputMap, con);
-		List<LinkedHashMap<String, Object>> lstOld = lObjConfigDao.getNozzleSales(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstOld = lObjConfigDao.getNozzleSalesForExport(outputMap, con);
 		outputMap.put("lstNozzleSales", lst);
 
 		List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);

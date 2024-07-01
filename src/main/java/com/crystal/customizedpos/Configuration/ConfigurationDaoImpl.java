@@ -5420,6 +5420,51 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				con);
 	}
 
+	public List<LinkedHashMap<String, Object>> getNozzleSalesForExport(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+
+		String query = "select totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,attendantName,check_in_time,check_out_time,opening_reading,closing_reading,testFuel,"
+				+ "updated_by_supervisor,FormattedUpdatedDate"
+				+ ",closing_reading-opening_reading-COALESCE(TestFuel,0) diffReading,rate,round(totalizer_closing_reading-totalizer_opening_reading - (COALESCE(TestFuel,0) * rate),2) totalAmount from ( select\r\n"
+				+ "	totalizer_opening_reading,totalizer_closing_reading,nozzle_name,item_name,shift_name,check_in_time,check_out_time,opening_reading,closing_reading,\r\n"
+				+ "	date_format(tnr.updated_date, '%d/%m/%Y %H:%i:%s') as FormattedUpdatedDate,rate,\r\n"
+				+ "	tum.name attendantName,\r\n"
+				+ "	tum2.name updated_by_supervisor,\r\n"
+				+ "	(select sum(test_quantity) from trn_test_fuel_register ttfr\r\n"
+				+ "where test_date =accounting_date and user_id=tnr.attendant_id  and ttfr.activate_flag=1 and shift_id =tnr.shift_id and ttfr.nozzle_id=tnr.nozzle_id)\r\n"
+				+ "as testFuel \r\n"
+				+ "from\r\n"
+				+ "	trn_nozzle_register tnr,\r\n"
+				+ "	nozzle_master nm,\r\n"
+				+ "	tbl_user_mst tum,\r\n"
+				+ "	mst_items item,\r\n"
+				+ "	tbl_user_mst tum2,\r\n"
+				+ "	shift_master shift\r\n"
+				+ "where\r\n"
+				+ "	tnr.app_id = ? \r\n"
+				+ "	and nm.nozzle_id = tnr.nozzle_id\r\n"
+				+ "	and tum.user_id = tnr.attendant_id\r\n"
+				+ "	and tum2.user_id = tnr.updated_by\r\n"
+				+ "	and shift.shift_id = tnr.shift_id\r\n"
+				+ "	and accounting_date=? \r\n"
+				+ "	and tnr.shift_id=? \r\n"
+				+ "	and item.item_id = tnr.item_id\r\n"
+				+ "order by\r\n"
+				+ "	shift_name,nozzle_name ) as T";
+
+		if (hm.get("shiftid") == null || hm.get("shiftid").equals("-1")) {
+			query = query.replaceAll("and tnr.shift_id=\\?", "");
+		} else {
+			parameters.add(hm.get("shiftid"));
+		}
+		return getListOfLinkedHashHashMap(parameters,
+				query,
+				con);
+	}
+
 	public List<LinkedHashMap<String, Object>> getNozzleSalesGroupByItemShift(HashMap<String, Object> hm,
 			Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
@@ -5527,6 +5572,94 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	}
 
 	public List<LinkedHashMap<String, Object>> getPaymentsForDatesAttendantWise(HashMap<String, Object> hm,
+			Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		if (!hm.get("shiftid").equals("-1")) {
+			parameters.add(hm.get("shiftid").toString());
+		}
+
+		parameters.add(hm.get("app_id"));
+
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		if (!hm.get("shiftid").equals("-1")) {
+			parameters.add(hm.get("shiftid").toString());
+		}
+
+		parameters.add(hm.get("app_id"));
+
+		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+		if (!hm.get("shiftid").equals("-1")) {
+			parameters.add(hm.get("shiftid").toString());
+		}
+		parameters.add(hm.get("app_id"));
+
+		String query = "select name,\r\n"
+				+ "sum(Cash) csh,\r\n"
+				+ "sum(Card) cswp,\r\n"
+				+ "sum(Paytm) pytm,\r\n"
+				+ "sum(Pending) pnding,\r\n"
+				+ "sum(LoyaltyPoints) loyaltyPoints,\r\n"
+				+ "shift_name,from_time,to_time,dt,attendant_id from \r\n"
+				+ "(select \r\n"
+				+ "name,\r\n"
+				+ "case when paymentMode='Cash' then amt else 0 end Cash,\r\n"
+				+ "case when paymentMode='Card' then amt else 0 end Card,\r\n"
+				+ "case when paymentMode='Paytm' then amt else 0 end Paytm,\r\n"
+				+ "case when paymentMode='Pending' then amt else 0 end Pending,\r\n"
+				+ "case when paymentMode='LoyaltyPoints' then amt else 0 end LoyaltyPoints,\r\n"
+				+ "shift_id,dt,attendant_id\r\n"
+				+ "from (\r\n"
+				+ " select\r\n"
+				+ "	sum(amount) amt,\r\n"
+				+ "	tum.name, tsc.collection_mode paymentMode,shift_id,collection_date dt,tsc.attendant_id\r\n"
+				+ "from\r\n"
+				+ "	trn_supervisor_collection tsc ,\r\n"
+				+ "	tbl_user_mst tum\r\n"
+				+ "where\r\n"
+				+ "	tsc.attendant_id = tum.user_id\r\n"
+				+ "	and tsc.collection_date =? and tsc.shift_id=? \r\n"
+				+ "	and tum.app_id=? and tsc.activate_flag=1 \r\n"
+				+ "group by\r\n"
+				+ "	tum.name,tsc.collection_date,tsc.shift_id,tsc.collection_mode \r\n"
+				+ " union all \r\n"
+				+ "\r\n"
+				+ "select\r\n"
+				+ "	sum(total_amount) amt,tum.name ,tpr.payment_mode paymentMode,shift_id,tir.invoice_date dt,tum.user_id\r\n"
+				+ "from\r\n"
+				+ "	trn_invoice_register tir\r\n"
+				+ "inner join rlt_invoice_fuel_details rifd\r\n"
+				+ "on rifd.invoice_id =tir.invoice_id \r\n"
+				+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
+				+ "inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id \r\n"
+				+ "where invoice_date =? and tpr.payment_mode !='Cash'\r\n"
+				+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,tpr.payment_mode,rifd.shift_id union all \r\n"
+				+ "\r\n"
+				+ "select\r\n"
+				+ "	sum(total_amount) amt,tum.name ,'Pending',shift_id,tir.invoice_date dt,rifd.attendant_id\r\n"
+				+ "from\r\n"
+				+ "	trn_invoice_register tir\r\n"
+				+ "inner join rlt_invoice_fuel_details rifd\r\n"
+				+ "on rifd.invoice_id =tir.invoice_id \r\n"
+				+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
+				+ "where invoice_date =? and tir.payment_type='Pending'\r\n"
+				+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id) as T) as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id";
+
+		if (hm.get("shiftid").equals("-1")) {
+			query = query.replaceAll("and tsc.shift_id=\\?", "");
+			query = query.replaceAll("and rifd.shift_id=\\?", "");
+			query = query.replaceAll("and rifd.shift_id=\\?", "");
+		}
+
+		return getListOfLinkedHashHashMap(parameters,
+				query,
+				con);
+	}
+
+
+	public List<LinkedHashMap<String, Object>> getPaymentsForDatesAttendantWiseExport(HashMap<String, Object> hm,
 			Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
