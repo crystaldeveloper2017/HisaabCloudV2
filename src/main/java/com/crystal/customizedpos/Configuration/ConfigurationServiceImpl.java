@@ -5674,7 +5674,7 @@ outputMap.put("txttodate",toDate);
 
 		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao
 				.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
-		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWise(outputMap,
+		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWiseExport(outputMap,
 				con);
 		List<LinkedHashMap<String, Object>> lstCardSwipes = lObjConfigDao.getCardSwipes(outputMap, con);
 		List<LinkedHashMap<String, Object>> lstPaytmSlotwise = lObjConfigDao.getPaytmSlotWise(outputMap, con);

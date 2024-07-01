@@ -244,7 +244,7 @@ function getAttendantList()
     	  {
     	  	//console.log(lsitofattendants[m].username);
     	  	
-    	  	var tempString=k.toString().replace("attendantNameGoesHere",lsitofattendants[m].username);
+    	  	var tempString=k.toString().replace("attendantNameGoesHere",lsitofattendants[m].name);
 			tempString=tempString.replace("nozzleNoGoesHere",lsitofattendants[m].nozzle_name);			
     	  	tempString=tempString.replace("idGoesHere",lsitofattendants[m].user_id + "~" +lsitofattendants[m].nozzle_id);
     	  	reqString+=tempString;
