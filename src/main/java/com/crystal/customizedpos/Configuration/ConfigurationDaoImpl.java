@@ -7429,13 +7429,19 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 
     public void saveTodaysStock(String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con) throws SQLException, ParseException {
 
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		String insertQuery = "delete from trn_todays_stock_snacks where stock_date=?";
+		parameters.add(getDateASYYYYMMDD(stockDate));
+		insertUpdateDuablDB(insertQuery, parameters, con);
+		
 		for(HashMap<String,Object> hm: itemListRequired)
 		{
-		ArrayList<Object> parameters = new ArrayList<>();
+		parameters = new ArrayList<>();
 		parameters.add(hm.get("item_id"));
 		parameters.add(hm.get("qty"));
 		parameters.add(getDateASYYYYMMDD(stockDate));
-		String insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
+		insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
 		insertUpdateDuablDB(insertQuery, parameters, con);
 		}
     }

@@ -25503,3 +25503,767 @@ INFO :26-Jun-2024 22:11:08,114: http-nio-8080-exec-8      com.crystal.Frameworkp
 INFO :26-Jun-2024 22:11:08,386: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
 com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=generatemakaiPlanning','
 a generatemakaiPlanning','2024-06-26 22:12:35','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+ERROR:02-Jul-2024 23:34:16,450: restartedMain             com.crystal.Frameworkpackage.CommonFunctions.setApplicationConfig : Inside this method: setApplicationConfig
+ERROR:02-Jul-2024 23:34:16,453: restartedMain             com.crystal.Frameworkpackage.CommonFunctions.setApplicationConfig : Config.yaml file found
+DEBUG:02-Jul-2024 23:34:16,634: restartedMain             com.crystal.Frameworkpackage.CommonFunctions.checkIfMysqlIsRunning : check if Mysql is running
+DEBUG:02-Jul-2024 23:34:16,639: restartedMain             com.crystal.Frameworkpackage.CommonFunctions.checkIfMysqlIsRunning : jdbc:mysql://hisaabcloud.in:3306?user=remotenuuser&password=Shoaeb@786&characterEncoding=utf8&sessionVariables=sql_mode='STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,PIPES_AS_CONCAT'
+ERROR:02-Jul-2024 23:34:18,388: restartedMain             com.crystal.Frameworkpackage.CommonFunctions.copyAttachmentsFromDBToGivenPath : Destination path is/home/ubuntu/ags_attachments/
+ERROR:02-Jul-2024 23:34:18,388: restartedMain             com.crystal.Frameworkpackage.CommonFunctions.copyAttachmentsFromDBToGivenPath : copyAttachmentsToBufferfalse
+DEBUG:02-Jul-2024 23:34:49,827: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1357.96/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:34:49,828: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 227.09/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:34:49,828: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 197.832/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:34:49,829: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:34:49,841: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.7383/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:34:49,847: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 20
+DEBUG:02-Jul-2024 23:34:49,847: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 47
+DEBUG:02-Jul-2024 23:34:49,848: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:34:49,849: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:34:49 IST 2024
+DEBUG:02-Jul-2024 23:34:49,849: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:34:49,851: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- showTodaysStock
+DEBUG:02-Jul-2024 23:34:50,213: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:34:50,213: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:34:50,218: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:34:50,501: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:36:21
+DEBUG:02-Jul-2024 23:34:50,503: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+DEBUG:02-Jul-2024 23:34:50,508: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Session Found as Null and the action is also not bypassed
+INFO :02-Jul-2024 23:34:50,509: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+INFO :02-Jul-2024 23:34:51,566: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'','http://localhost:8080/?a=showTodaysStock','
+a showTodaysStock','2024-07-02 23:36:21','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:05,401: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.07/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:05,403: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 251.258/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:05,404: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 199.172/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:05,406: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:05,407: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.5625/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:05,408: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 14
+DEBUG:02-Jul-2024 23:36:05,409: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 47
+DEBUG:02-Jul-2024 23:36:05,410: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:05,412: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:05 IST 2024
+DEBUG:02-Jul-2024 23:36:05,413: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:05,415: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- validateLogin
+DEBUG:02-Jul-2024 23:36:06,011: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:06,011: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:06,012: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:06,104: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:37
+DEBUG:02-Jul-2024 23:36:06,104: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-true
+INFO :02-Jul-2024 23:36:06,105: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+INFO :02-Jul-2024 23:36:06,105: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@6c38864
+INFO :02-Jul-2024 23:36:06,112: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: SELECT user.name,user.user_id,user.username,store.store_id,store.store_name,DATEDIFF(valid_till, CURDATE()) validDays,date_format(valid_till,'%d/%m/%Y') as validTillDDMMYYY,app1.app_id,app1.app_type,config.*,app1.threads_overlap FROM  tbl_user_mst user,mst_store store,user_configurations config,mst_app app1  where app1.app_id =user.app_id and ((username='testsohil' and password='a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3') or (mobile='testsohil' and password='a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3')) and user.activate_flag=1 and store.store_id=user.store_id and config.user_id=user.user_id 
+INFO :02-Jul-2024 23:36:06,152: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_name from acl_user_role_rlt userrole where userrole.user_id=310 and 
+userrole.activate_flag=1 
+INFO :02-Jul-2024 23:36:06,237: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.copyImagesFromDBToBufferFolder : Destination path is/home/ubuntu/HisaabCloudV2/target/classes/META-INF/resources/BufferedImagesFolder/
+INFO :02-Jul-2024 23:36:06,280: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:06 IST 2024
+INFO :02-Jul-2024 23:36:06,280: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 889
+INFO :02-Jul-2024 23:36:06,281: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1945
+INFO :02-Jul-2024 23:36:06,281: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 11
+INFO :02-Jul-2024 23:36:06,281: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 47
+INFO :02-Jul-2024 23:36:06,385: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:06,386: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Calling System GC
+INFO :02-Jul-2024 23:36:06,460: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Call Completed
+INFO :02-Jul-2024 23:36:06,460: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1945
+INFO :02-Jul-2024 23:36:06,461: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 11
+INFO :02-Jul-2024 23:36:06,461: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 47
+INFO :02-Jul-2024 23:36:06,462: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:06,841: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'','http://localhost:8080/?actionName=validateLogin','
+actionName validateLogin
+txtusername testsohil
+txtpassword 123','2024-07-02 23:37:37','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:06,910: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.07/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:06,910: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 258.422/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:06,911: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 198.723/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:06,911: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:06,911: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.5625/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:06,912: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 27
+DEBUG:02-Jul-2024 23:36:06,912: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 47
+DEBUG:02-Jul-2024 23:36:06,912: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:06,912: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:06 IST 2024
+DEBUG:02-Jul-2024 23:36:06,912: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:06,913: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- showHomePage
+DEBUG:02-Jul-2024 23:36:07,628: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:07,629: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:07,629: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:07,685: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:38
+DEBUG:02-Jul-2024 23:36:07,685: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:07,686: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:07,757: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:07,820: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:07,821: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:07,821: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:07,822: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:07,823: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@65eea8ac
+INFO :02-Jul-2024 23:36:07,824: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from nozzle_master where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:07,868: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from dispenser_master dm where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:07,899: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from mst_customer mc where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:07,929: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from trn_invoice_register tir where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:07,960: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from mst_vehicle mv where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:07,991: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from mst_category mc where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:08,022: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from mst_items mi where activate_flag=1 and app_id=231
+INFO :02-Jul-2024 23:36:08,052: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from user_configurations uc where user_id ='310'
+INFO :02-Jul-2024 23:36:08,082: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=0 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1
+INFO :02-Jul-2024 23:36:08,127: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=1 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1
+INFO :02-Jul-2024 23:36:08,158: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=2 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1
+INFO :02-Jul-2024 23:36:08,189: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select userrole.role_id from acl_user_role_rlt userrole where userrole.user_id=310 and 
+userrole.activate_flag=1 
+INFO :02-Jul-2024 23:36:08,252: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Found a view Name so redirecting to ../SnacksProductionDashboard.jsp
+INFO :02-Jul-2024 23:36:08,940: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:08 IST 2024
+INFO :02-Jul-2024 23:36:08,941: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 2039
+INFO :02-Jul-2024 23:36:08,941: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1935
+INFO :02-Jul-2024 23:36:08,942: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 21
+INFO :02-Jul-2024 23:36:08,942: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 47
+INFO :02-Jul-2024 23:36:08,942: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:08,942: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1935
+INFO :02-Jul-2024 23:36:08,943: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 21
+INFO :02-Jul-2024 23:36:08,943: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 47
+INFO :02-Jul-2024 23:36:08,943: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:09,298: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=showHomePage','
+a showHomePage','2024-07-02 23:37:38','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:12,806: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:12,807: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 285.914/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:12,807: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 198.266/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:12,807: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:12,808: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.5625/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:12,808: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 15
+DEBUG:02-Jul-2024 23:36:12,808: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 47
+DEBUG:02-Jul-2024 23:36:12,808: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:12,809: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:12 IST 2024
+DEBUG:02-Jul-2024 23:36:12,809: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:12,809: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- showTodaysStock
+DEBUG:02-Jul-2024 23:36:13,128: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:13,128: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:13,129: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:13,178: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:44
+DEBUG:02-Jul-2024 23:36:13,178: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:13,178: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:13,255: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:13,318: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:13,319: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:13,319: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:13,320: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:13,320: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@7859d2c9
+INFO :02-Jul-2024 23:36:13,321: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from user_configurations uc where user_id ='310'
+INFO :02-Jul-2024 23:36:13,352: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select date_format(sysdate(),'%d/%m/%Y') as dt1 from dual
+INFO :02-Jul-2024 23:36:13,396: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select date_format(DATE_SUB(sysdate(),INTERVAL 1 MONTH),'%d/%m/%Y') as dt1 from dual
+INFO :02-Jul-2024 23:36:13,426: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select current_seq_no+1 as  current_seq_no from seq_master where app_id='231' and sequence_name='trn_invoice_register'
+INFO :02-Jul-2024 23:36:13,456: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	item.*,
+	cat.*,
+	case
+		when concat(attachment_id, file_name) is null then 'dummyImage.jpg'
+		else concat(attachment_id, file_name)
+	end as ImagePath,tpir.invoice_no PurchaseInvoiceNo,tpid.details_id purchase_details_id,store_id,tpid.qty - sum(COALESCE (tid.qty ,0)) as QtyAvailable
+from
+	mst_items item inner join mst_category cat on cat.category_id = item.parent_category_id
+left outer join tbl_attachment_mst tam on tam.file_id = item.item_id and tam.type = 'Image'
+left outer join trn_purchase_invoice_details tpid  on tpid.item_id =item.item_id
+left outer join trn_purchase_invoice_register tpir  on tpid.invoice_id =tpir.invoice_id  and tpir.store_id ='161'
+left outer join trn_invoice_details tid on tpid.details_id =tid.purchase_details_id 
+where
+	item.activate_flag = 1
+	and item.app_id = '231'
+	and cat.app_id = item.app_id
+	group by item.item_id,tpid.details_id --  having QtyAvailable>0 
+order by
+	item_name;
+INFO :02-Jul-2024 23:36:13,506: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select item.item_id,
+item.parent_category_id,
+item.debit_in,
+item.item_name,
+item.price,
+item.wholesale_price,
+item.franchise_rate,
+item.loyalcustomerrate1,
+item.loyalcustomerrate2,
+item.loyalcustomerrate3,
+item.activate_flag,
+item.updated_by,
+item.updated_date,
+item.product_code,
+item.average_cost,
+item.distributor_rate,
+item.b2b_rate,
+item.shrikhand,
+item.app_id,
+item.sgst,item.cgst,
+item.hsn_code,
+item.catalog_no,
+item.order_no,cat.*,replace(cat.category_name,' ','') catNameTrimmed, case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join  tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image'  where item.activate_flag=1 and item.app_id='231' and cat.app_id=item.app_id  group by item.item_id order by cat.order_no,cat.category_name,item.order_no
+INFO :02-Jul-2024 23:36:13,551: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	category_id,category_name,count(1) cnt
+from
+	mst_items mi ,
+	mst_category mc
+where
+	mi.parent_category_id = mc.category_id
+	and mi.app_id = '231'
+	and mi.activate_flag = 1
+	group by mi.parent_category_id having cnt>=1 order by mc.order_no;
+INFO :02-Jul-2024 23:36:13,594: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from shift_master where app_id='231' and activate_flag=1
+INFO :02-Jul-2024 23:36:13,624: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	*
+from
+	swipe_machine_master smm,
+	mst_bank mb
+where
+	mb.bank_id = smm.account_id
+	and smm.activate_flag = 1 and smm.app_id='231' 
+INFO :02-Jul-2024 23:36:13,656: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select shift_id from shift_master where app_id='231' and activate_flag=1 and current_time() between from_time and to_time
+INFO :02-Jul-2024 23:36:13,685: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select userrole.role_id from acl_user_role_rlt userrole where userrole.user_id=310 and 
+userrole.activate_flag=1 
+INFO :02-Jul-2024 23:36:13,747: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Found a view Name so redirecting to ../TodaysStock.jsp
+INFO :02-Jul-2024 23:36:14,099: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:14 IST 2024
+INFO :02-Jul-2024 23:36:14,100: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 1300
+INFO :02-Jul-2024 23:36:14,100: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1931
+INFO :02-Jul-2024 23:36:14,101: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 25
+INFO :02-Jul-2024 23:36:14,101: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:14,101: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:14,101: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1931
+INFO :02-Jul-2024 23:36:14,102: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 25
+INFO :02-Jul-2024 23:36:14,102: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:14,102: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:14,487: http-nio-8080-exec-2      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=showTodaysStock','
+a showTodaysStock','2024-07-02 23:37:44','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:14,564: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:14,565: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 321.965/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:14,566: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 197.688/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:14,568: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:14,568: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.8203/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:14,568: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 21
+DEBUG:02-Jul-2024 23:36:14,569: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:14,569: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:14,570: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:14 IST 2024
+DEBUG:02-Jul-2024 23:36:14,570: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:14,570: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- getItemsAndStockForThisDate
+DEBUG:02-Jul-2024 23:36:15,137: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:15,137: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:15,138: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:15,210: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:46
+DEBUG:02-Jul-2024 23:36:15,211: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:15,212: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:15,276: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:15,337: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:15,337: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:15,338: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:15,338: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:15,338: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@3ec8732f
+INFO :02-Jul-2024 23:36:15,339: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+item_name,mi.item_id ,ttss.qty
+from
+mst_items mi
+left outer join trn_todays_stock_snacks ttss on
+ttss.item_id = mi.item_id and ttss.stock_date ='2024-07-02'
+where 
+ mi.app_id ='231' 
+INFO :02-Jul-2024 23:36:15,430: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:15 IST 2024
+INFO :02-Jul-2024 23:36:15,430: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 875
+INFO :02-Jul-2024 23:36:15,430: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1938
+INFO :02-Jul-2024 23:36:15,431: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 18
+INFO :02-Jul-2024 23:36:15,431: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:15,431: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:15,431: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Calling System GC
+INFO :02-Jul-2024 23:36:15,453: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Call Completed
+INFO :02-Jul-2024 23:36:15,454: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1938
+INFO :02-Jul-2024 23:36:15,454: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 18
+INFO :02-Jul-2024 23:36:15,454: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:15,454: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:15,770: http-nio-8080-exec-6      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=getItemsAndStockForThisDate&date=02/07/2024','
+a getItemsAndStockForThisDate
+date 02/07/2024','2024-07-02 23:37:46','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:21,187: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:21,188: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 316.812/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:21,188: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 197.789/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:21,188: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:21,189: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.0234/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:21,189: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 30
+DEBUG:02-Jul-2024 23:36:21,189: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:21,189: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:21,190: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:21 IST 2024
+DEBUG:02-Jul-2024 23:36:21,190: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:21,190: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- saveTodaysStock
+DEBUG:02-Jul-2024 23:36:21,610: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:21,611: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:21,611: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:21,868: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:52
+DEBUG:02-Jul-2024 23:36:21,869: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:21,869: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:21,939: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:22,006: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:22,006: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:22,006: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:22,006: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:22,007: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@2ef39c66
+INFO :02-Jul-2024 23:36:22,008: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: delete from trn_todays_stock_snacks where stock_date='2024-07-02'
+INFO :02-Jul-2024 23:36:22,038: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589048','10','2024-07-02')
+INFO :02-Jul-2024 23:36:22,071: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589047','20','2024-07-02')
+INFO :02-Jul-2024 23:36:22,101: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589046','20','2024-07-02')
+INFO :02-Jul-2024 23:36:22,132: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589042','10','2024-07-02')
+INFO :02-Jul-2024 23:36:22,161: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589038','20','2024-07-02')
+INFO :02-Jul-2024 23:36:22,243: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:22 IST 2024
+INFO :02-Jul-2024 23:36:22,243: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 1072
+INFO :02-Jul-2024 23:36:22,243: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1927
+INFO :02-Jul-2024 23:36:22,244: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 29
+INFO :02-Jul-2024 23:36:22,244: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:22,244: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:22,244: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1927
+INFO :02-Jul-2024 23:36:22,244: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 29
+INFO :02-Jul-2024 23:36:22,244: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:22,245: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:22,552: http-nio-8080-exec-10     com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=saveTodaysStock','
+a saveTodaysStock
+stock_date 02/07/2024
+itemDetails 589048~10|589047~20|589046~20|589045~0|589043~0|589042~10|589041~0|589040~0|589039~0|589038~20|589044~0|','2024-07-02 23:37:52','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:23,751: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 317.277/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 197.77/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.0234/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 27
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:23,752: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:23,753: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:23 IST 2024
+DEBUG:02-Jul-2024 23:36:23,753: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:23,753: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- showTodaysStock
+DEBUG:02-Jul-2024 23:36:24,189: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:24,190: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:24,194: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:24,236: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:55
+DEBUG:02-Jul-2024 23:36:24,236: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:24,237: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:24,330: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:24,438: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:24,439: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:24,439: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:24,439: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:24,439: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@7859d2c9
+INFO :02-Jul-2024 23:36:24,440: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from user_configurations uc where user_id ='310'
+INFO :02-Jul-2024 23:36:24,499: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select date_format(sysdate(),'%d/%m/%Y') as dt1 from dual
+INFO :02-Jul-2024 23:36:24,546: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select date_format(DATE_SUB(sysdate(),INTERVAL 1 MONTH),'%d/%m/%Y') as dt1 from dual
+INFO :02-Jul-2024 23:36:24,609: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select current_seq_no+1 as  current_seq_no from seq_master where app_id='231' and sequence_name='trn_invoice_register'
+INFO :02-Jul-2024 23:36:24,903: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	item.*,
+	cat.*,
+	case
+		when concat(attachment_id, file_name) is null then 'dummyImage.jpg'
+		else concat(attachment_id, file_name)
+	end as ImagePath,tpir.invoice_no PurchaseInvoiceNo,tpid.details_id purchase_details_id,store_id,tpid.qty - sum(COALESCE (tid.qty ,0)) as QtyAvailable
+from
+	mst_items item inner join mst_category cat on cat.category_id = item.parent_category_id
+left outer join tbl_attachment_mst tam on tam.file_id = item.item_id and tam.type = 'Image'
+left outer join trn_purchase_invoice_details tpid  on tpid.item_id =item.item_id
+left outer join trn_purchase_invoice_register tpir  on tpid.invoice_id =tpir.invoice_id  and tpir.store_id ='161'
+left outer join trn_invoice_details tid on tpid.details_id =tid.purchase_details_id 
+where
+	item.activate_flag = 1
+	and item.app_id = '231'
+	and cat.app_id = item.app_id
+	group by item.item_id,tpid.details_id --  having QtyAvailable>0 
+order by
+	item_name;
+INFO :02-Jul-2024 23:36:24,950: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select item.item_id,
+item.parent_category_id,
+item.debit_in,
+item.item_name,
+item.price,
+item.wholesale_price,
+item.franchise_rate,
+item.loyalcustomerrate1,
+item.loyalcustomerrate2,
+item.loyalcustomerrate3,
+item.activate_flag,
+item.updated_by,
+item.updated_date,
+item.product_code,
+item.average_cost,
+item.distributor_rate,
+item.b2b_rate,
+item.shrikhand,
+item.app_id,
+item.sgst,item.cgst,
+item.hsn_code,
+item.catalog_no,
+item.order_no,cat.*,replace(cat.category_name,' ','') catNameTrimmed, case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join  tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image'  where item.activate_flag=1 and item.app_id='231' and cat.app_id=item.app_id  group by item.item_id order by cat.order_no,cat.category_name,item.order_no
+INFO :02-Jul-2024 23:36:24,994: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	category_id,category_name,count(1) cnt
+from
+	mst_items mi ,
+	mst_category mc
+where
+	mi.parent_category_id = mc.category_id
+	and mi.app_id = '231'
+	and mi.activate_flag = 1
+	group by mi.parent_category_id having cnt>=1 order by mc.order_no;
+INFO :02-Jul-2024 23:36:25,025: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from shift_master where app_id='231' and activate_flag=1
+INFO :02-Jul-2024 23:36:25,055: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	*
+from
+	swipe_machine_master smm,
+	mst_bank mb
+where
+	mb.bank_id = smm.account_id
+	and smm.activate_flag = 1 and smm.app_id='231' 
+INFO :02-Jul-2024 23:36:25,084: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select shift_id from shift_master where app_id='231' and activate_flag=1 and current_time() between from_time and to_time
+INFO :02-Jul-2024 23:36:25,115: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select userrole.role_id from acl_user_role_rlt userrole where userrole.user_id=310 and 
+userrole.activate_flag=1 
+INFO :02-Jul-2024 23:36:25,174: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Found a view Name so redirecting to ../TodaysStock.jsp
+INFO :02-Jul-2024 23:36:25,220: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:25 IST 2024
+INFO :02-Jul-2024 23:36:25,220: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 2168
+INFO :02-Jul-2024 23:36:25,221: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1933
+INFO :02-Jul-2024 23:36:25,221: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 23
+INFO :02-Jul-2024 23:36:25,221: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:25,221: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:25,221: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1933
+INFO :02-Jul-2024 23:36:25,221: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 23
+INFO :02-Jul-2024 23:36:25,222: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:25,222: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:25,543: http-nio-8080-exec-1      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=showTodaysStock','
+a showTodaysStock','2024-07-02 23:37:55','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:25,656: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:25,656: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 318.363/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:25,656: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 198.129/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:25,656: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:25,656: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.0234/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:25,656: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 21
+DEBUG:02-Jul-2024 23:36:25,657: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:25,657: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:25,657: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:25 IST 2024
+DEBUG:02-Jul-2024 23:36:25,657: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:25,658: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- getItemsAndStockForThisDate
+DEBUG:02-Jul-2024 23:36:25,959: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:25,959: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:25,959: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:25,989: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:37:56
+DEBUG:02-Jul-2024 23:36:25,990: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:25,990: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:26,051: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:26,110: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:26,111: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:26,111: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:26,111: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:26,111: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@3ec8732f
+INFO :02-Jul-2024 23:36:26,114: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+item_name,mi.item_id ,ttss.qty
+from
+mst_items mi
+left outer join trn_todays_stock_snacks ttss on
+ttss.item_id = mi.item_id and ttss.stock_date ='2024-07-02'
+where 
+ mi.app_id ='231' 
+INFO :02-Jul-2024 23:36:26,208: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:26 IST 2024
+INFO :02-Jul-2024 23:36:26,209: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 573
+INFO :02-Jul-2024 23:36:26,209: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1936
+INFO :02-Jul-2024 23:36:26,209: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 20
+INFO :02-Jul-2024 23:36:26,209: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:26,209: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:26,209: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Calling System GC
+INFO :02-Jul-2024 23:36:26,920: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Call Completed
+INFO :02-Jul-2024 23:36:26,920: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1936
+INFO :02-Jul-2024 23:36:26,920: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 20
+INFO :02-Jul-2024 23:36:26,920: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:26,920: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:27,418: http-nio-8080-exec-4      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=getItemsAndStockForThisDate&date=02/07/2024','
+a getItemsAndStockForThisDate
+date 02/07/2024','2024-07-02 23:37:56','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:37,272: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:37,272: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 319.043/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:37,273: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 198.199/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:37,273: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:37,273: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.2812/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:37,273: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 26
+DEBUG:02-Jul-2024 23:36:37,273: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:37,274: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:37,274: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:37 IST 2024
+DEBUG:02-Jul-2024 23:36:37,274: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:37,274: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- saveTodaysStock
+DEBUG:02-Jul-2024 23:36:37,805: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:37,806: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:37,806: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:37,841: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:38:08
+DEBUG:02-Jul-2024 23:36:37,841: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:37,842: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:37,902: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:37,962: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:37,963: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:37,964: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:37,964: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:37,965: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@2ef39c66
+INFO :02-Jul-2024 23:36:37,967: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: delete from trn_todays_stock_snacks where stock_date='2024-07-02'
+INFO :02-Jul-2024 23:36:37,999: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589048','12','2024-07-02')
+INFO :02-Jul-2024 23:36:38,031: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589047','20','2024-07-02')
+INFO :02-Jul-2024 23:36:38,064: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589046','20','2024-07-02')
+INFO :02-Jul-2024 23:36:38,096: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589042','10','2024-07-02')
+INFO :02-Jul-2024 23:36:38,126: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into trn_todays_stock_snacks values (default,'589038','20','2024-07-02')
+INFO :02-Jul-2024 23:36:38,202: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:38 IST 2024
+INFO :02-Jul-2024 23:36:38,202: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 946
+INFO :02-Jul-2024 23:36:38,202: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1931
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 25
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1931
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 25
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:38,203: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:38,491: http-nio-8080-exec-8      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=saveTodaysStock','
+a saveTodaysStock
+stock_date 02/07/2024
+itemDetails 589048~12|589047~20|589046~20|589045~0|589043~0|589042~10|589041~0|589040~0|589039~0|589038~20|589044~0|','2024-07-02 23:38:08','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:39,111: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:39,112: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 319.379/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:39,112: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 198.047/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:39,112: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:39,112: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.2812/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:39,112: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 23
+DEBUG:02-Jul-2024 23:36:39,112: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:39,113: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:39,113: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:39 IST 2024
+DEBUG:02-Jul-2024 23:36:39,113: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:39,113: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- showTodaysStock
+DEBUG:02-Jul-2024 23:36:41,110: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:41,111: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:41,111: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:41,196: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:38:12
+DEBUG:02-Jul-2024 23:36:41,196: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:41,197: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:41,752: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:41,848: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:41,848: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:41,848: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:41,849: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:41,849: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@7859d2c9
+INFO :02-Jul-2024 23:36:41,849: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from user_configurations uc where user_id ='310'
+INFO :02-Jul-2024 23:36:41,944: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select date_format(sysdate(),'%d/%m/%Y') as dt1 from dual
+INFO :02-Jul-2024 23:36:41,989: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select date_format(DATE_SUB(sysdate(),INTERVAL 1 MONTH),'%d/%m/%Y') as dt1 from dual
+INFO :02-Jul-2024 23:36:42,037: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select current_seq_no+1 as  current_seq_no from seq_master where app_id='231' and sequence_name='trn_invoice_register'
+INFO :02-Jul-2024 23:36:42,085: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	item.*,
+	cat.*,
+	case
+		when concat(attachment_id, file_name) is null then 'dummyImage.jpg'
+		else concat(attachment_id, file_name)
+	end as ImagePath,tpir.invoice_no PurchaseInvoiceNo,tpid.details_id purchase_details_id,store_id,tpid.qty - sum(COALESCE (tid.qty ,0)) as QtyAvailable
+from
+	mst_items item inner join mst_category cat on cat.category_id = item.parent_category_id
+left outer join tbl_attachment_mst tam on tam.file_id = item.item_id and tam.type = 'Image'
+left outer join trn_purchase_invoice_details tpid  on tpid.item_id =item.item_id
+left outer join trn_purchase_invoice_register tpir  on tpid.invoice_id =tpir.invoice_id  and tpir.store_id ='161'
+left outer join trn_invoice_details tid on tpid.details_id =tid.purchase_details_id 
+where
+	item.activate_flag = 1
+	and item.app_id = '231'
+	and cat.app_id = item.app_id
+	group by item.item_id,tpid.details_id --  having QtyAvailable>0 
+order by
+	item_name;
+INFO :02-Jul-2024 23:36:42,179: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select item.item_id,
+item.parent_category_id,
+item.debit_in,
+item.item_name,
+item.price,
+item.wholesale_price,
+item.franchise_rate,
+item.loyalcustomerrate1,
+item.loyalcustomerrate2,
+item.loyalcustomerrate3,
+item.activate_flag,
+item.updated_by,
+item.updated_date,
+item.product_code,
+item.average_cost,
+item.distributor_rate,
+item.b2b_rate,
+item.shrikhand,
+item.app_id,
+item.sgst,item.cgst,
+item.hsn_code,
+item.catalog_no,
+item.order_no,cat.*,replace(cat.category_name,' ','') catNameTrimmed, case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from mst_items item inner join mst_category cat on cat.category_id=item.parent_category_id left outer join  tbl_attachment_mst tam on tam.file_id=item.item_id and tam.type='Image'  where item.activate_flag=1 and item.app_id='231' and cat.app_id=item.app_id  group by item.item_id order by cat.order_no,cat.category_name,item.order_no
+INFO :02-Jul-2024 23:36:42,225: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	category_id,category_name,count(1) cnt
+from
+	mst_items mi ,
+	mst_category mc
+where
+	mi.parent_category_id = mc.category_id
+	and mi.app_id = '231'
+	and mi.activate_flag = 1
+	group by mi.parent_category_id having cnt>=1 order by mc.order_no;
+INFO :02-Jul-2024 23:36:42,299: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select * from shift_master where app_id='231' and activate_flag=1
+INFO :02-Jul-2024 23:36:42,380: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+	*
+from
+	swipe_machine_master smm,
+	mst_bank mb
+where
+	mb.bank_id = smm.account_id
+	and smm.activate_flag = 1 and smm.app_id='231' 
+INFO :02-Jul-2024 23:36:42,426: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select shift_id from shift_master where app_id='231' and activate_flag=1 and current_time() between from_time and to_time
+INFO :02-Jul-2024 23:36:42,506: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select userrole.role_id from acl_user_role_rlt userrole where userrole.user_id=310 and 
+userrole.activate_flag=1 
+INFO :02-Jul-2024 23:36:42,697: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Found a view Name so redirecting to ../TodaysStock.jsp
+INFO :02-Jul-2024 23:36:42,760: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:42 IST 2024
+INFO :02-Jul-2024 23:36:42,761: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 3656
+INFO :02-Jul-2024 23:36:42,761: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1938
+INFO :02-Jul-2024 23:36:42,761: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 18
+INFO :02-Jul-2024 23:36:42,761: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:42,761: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:42,761: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Calling System GC
+INFO :02-Jul-2024 23:36:42,793: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Call Completed
+INFO :02-Jul-2024 23:36:42,794: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1938
+INFO :02-Jul-2024 23:36:42,794: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 18
+INFO :02-Jul-2024 23:36:42,795: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:42,796: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:43,439: http-nio-8080-exec-9      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=showTodaysStock','
+a showTodaysStock','2024-07-02 23:38:12','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
+DEBUG:02-Jul-2024 23:36:43,547: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 1358.02/home/ubuntu/.vscode-server/extensions/redhat.java-1.32.0-linux-x64/jre/17.0.11-linux-x86_64/bin/java
+DEBUG:02-Jul-2024 23:36:43,547: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 332.098/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+DEBUG:02-Jul-2024 23:36:43,548: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 197.863/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:43,548: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 96.7539/snap/ubuntu-desktop-installer/1286/usr/bin/python3.10
+DEBUG:02-Jul-2024 23:36:43,549: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 88.2812/home/ubuntu/.vscode-server/bin/5437499feb04f7a586f677b155b039bc2b3669eb/node
+DEBUG:02-Jul-2024 23:36:43,549: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM freeMemory: 33
+DEBUG:02-Jul-2024 23:36:43,550: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM totalMemory also equals to initial heap size of JVM : 57
+DEBUG:02-Jul-2024 23:36:43,550: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : JVM maxMemory also equals to maximum heap size of JVM: 1956
+DEBUG:02-Jul-2024 23:36:43,551: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request Start Time Tue Jul 02 23:36:43 IST 2024
+DEBUG:02-Jul-2024 23:36:43,551: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Inside Serve Request
+DEBUG:02-Jul-2024 23:36:43,552: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Action Flag receieved is :- getItemsAndStockForThisDate
+DEBUG:02-Jul-2024 23:36:45,884: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Connection Opened Succesfully
+INFO :02-Jul-2024 23:36:45,884: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.getDateTime : will fire db query 1
+INFO :02-Jul-2024 23:36:45,884: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.getMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select sysdate() as dt1 from dual
+DEBUG:02-Jul-2024 23:36:45,912: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Datetime From DB Received as2024-07-02 23:38:16
+DEBUG:02-Jul-2024 23:36:45,912: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : is ByPassed :-false
+INFO :02-Jul-2024 23:36:45,913: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:45,983: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.getListOfString : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select role_id from acl_user_role_rlt rlt where user_id=310 and activate_flag=1 
+INFO :02-Jul-2024 23:36:46,040: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.getMapfromRequest : Going to Make audittrail entry 
+DEBUG:02-Jul-2024 23:36:46,040: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : session is not null
+DEBUG:02-Jul-2024 23:36:46,041: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting userdetails{name=Sohil, user_id=310, username=testsohil, store_id=161, store_name=Snacks Production, validDays=29, validTillDDMMYYY=31/07/2024, app_id=231, app_type=SnacksProduction, invoice_format=1, invoice_default_checked_print=N, invoice_default_checked_generatepdf=N, restaurant_default_checked_generatepdf=N, invoice_type=0, user_total_payments=N, user_payment_collections=N, user_counter_sales=N, user_payment_sales=N, user_store_sales=N, user_store_bookings=N, user_store_expenses=1, threads_overlap=null}
+DEBUG:02-Jul-2024 23:36:46,041: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : getting threads_overlap0
+INFO :02-Jul-2024 23:36:46,041: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Class and Method Info From Databasecom.crystal.Frameworkpackage.FrmActionService@3ec8732f
+INFO :02-Jul-2024 23:36:46,041: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.getListOfLinkedHashHashMap : 
+com.mysql.cj.jdbc.ClientPreparedStatement: select
+item_name,mi.item_id ,ttss.qty
+from
+mst_items mi
+left outer join trn_todays_stock_snacks ttss on
+ttss.item_id = mi.item_id and ttss.stock_date ='2024-07-02'
+where 
+ mi.app_id ='231' 
+INFO :02-Jul-2024 23:36:46,111: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Request End Time Tue Jul 02 23:36:46 IST 2024
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : 
+Time Taken For Request -- 2573
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1926
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 30
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : Used Memory in JVM: 1926
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : freeMemory in JVM: 30
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : totalMemory in JVM shows current size of java heap : 57
+INFO :02-Jul-2024 23:36:46,112: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.serveRequest : maxMemory in JVM: 1956
+INFO :02-Jul-2024 23:36:46,511: http-nio-8080-exec-3      com.crystal.Frameworkpackage.CommonFunctions.insertUpdate : 
+com.mysql.cj.jdbc.ClientPreparedStatement: insert into frm_audit_trail VALUES (default,'testsohil','http://localhost:8080/?a=getItemsAndStockForThisDate&date=02/07/2024','
+a getItemsAndStockForThisDate
+date 02/07/2024','2024-07-02 23:38:16','0:0:0:0:0:0:0:1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',sysdate(),'WebPortal')
