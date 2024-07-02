@@ -5203,6 +5203,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				table.addCell(cell);
 
 				int finalReading=Integer.parseInt(prod.get("packets_in_ld").toString())*toProduce;
+				finalReading=((finalReading + 499) / 500) * 500;
+
 
 				cell = new PdfPCell(new Phrase(String.valueOf(finalReading),font));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
