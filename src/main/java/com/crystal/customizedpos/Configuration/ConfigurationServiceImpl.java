@@ -11338,14 +11338,37 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 
 
 		HashMap<String, Object> hm=new HashMap<>();
+		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getReadingReport(con,appId);
 
 		hm.put("todaysDate",cf.getDateFromDB(con));
-		hm.put("listOfItems", lObjConfigDao.getReadingReport(con,appId));
+		hm.put("listOfItems", listOfItems);
+
+
+		List<LinkedHashMap<String, Object>> itemDetailsList= lObjConfigDao.getReadingReportDetails(con, appId);
 
 		
 		List<LinkedHashMap<String, Object>> listOfCustomers =lObjConfigDao.getCustomersListForPlanning(con,appId);
 
 		hm.put("listOfCustomers",listOfCustomers);
+
+		HashMap<String,String> hmDetails=new HashMap<String,String>();
+		for(LinkedHashMap<String,Object> temp:itemDetailsList)
+		{
+			hmDetails.put(temp.get("theKey").toString(), temp.get("qty").toString());
+		}
+
+		HashMap<String,String> stockDetails=new HashMap<String,String>();
+		for(LinkedHashMap<String,Object> temp:listOfItems)
+		{
+			String currStock=temp.get("currStock")==null?"0":temp.get("currStock").toString();
+			stockDetails.put(temp.get("item_id").toString(), currStock);
+		}
+
+		hm.put("hmDetails",hmDetails);
+		hm.put("stockDetails",stockDetails);
+		
+
+		
 		
 		
 

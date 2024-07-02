@@ -5067,6 +5067,12 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	{
 
 		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfItems");
+		List<LinkedHashMap<String, Object>> listOfCustomers= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfCustomers");
+		HashMap<String,String> hmDetails=  (HashMap<String, String>) invoiceHistoryDetails.get("hmDetails");
+		HashMap<String,String> stockDetails=  (HashMap<String, String>) invoiceHistoryDetails.get("stockDetails");
+		
+		
+		
 		String todaysDate=(String) invoiceHistoryDetails.get("todaysDate");
 		
 		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
@@ -5083,10 +5089,10 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		document.open();   
 
 
-		PdfPTable table = new PdfPTable(12);
+		PdfPTable table = new PdfPTable(15);
 		table.setWidthPercentage(100);
 		  
-		  table.setWidths(new int[]{5,2,2,2,2,2,2,2,4,3,4,3});
+		  table.setWidths(new int[]{5,2,2,2,2,2,2,2,2,2,2,3,3,3,3});
 
 	        
 			
@@ -5097,47 +5103,26 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);	       
 
 
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);	
+			int numberofBlanks=10;
+			int numberofBlanksHeader=numberofBlanks-listOfCustomers.size();
 
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
+			for(LinkedHashMap<String,Object> customerDetails: listOfCustomers)
+			{
+				cell = new PdfPCell(new Phrase(customerDetails.get("city").toString(),font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+			}
 
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase(" ",font));
-			//cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
+			for(int k=0;k<numberofBlanksHeader;k++)
+			{
+				cell = new PdfPCell(new Phrase(" ",font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+			}
 			
 			cell = new PdfPCell(new Phrase("TOTAL",font));	        	        
 			//cell.setColspan(3);
@@ -5165,77 +5150,66 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);
 
 
+		
+
 			for(HashMap<String,Object> prod:ListOfItemDetails)
 	        {
 			cell = new PdfPCell(new Phrase(prod.get("item_name").toString(),font));	        	        
 			//cell.setColspan(3);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);	       
-
-
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
 
+			int totalQty=0;
 			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
+			
+			for(LinkedHashMap<String,Object> customerDetails: listOfCustomers)
+			{
+				String qty=hmDetails.get(customerDetails.get("customer_id").toString()+"~"+prod.get("item_id").toString());
+				qty=qty==null?"0":qty;
+				totalQty+=Integer.parseInt(qty);
+				cell = new PdfPCell(new Phrase(qty,font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+			}
 
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
+			for(int k=0;k<numberofBlanksHeader;k++)
+			{
+				cell = new PdfPCell(new Phrase(" ",font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+			}
+
+			cell = new PdfPCell(new Phrase(String.valueOf(totalQty),font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+				
+				String currStock=stockDetails.get(prod.get("item_id").toString());
+				cell = new PdfPCell(new Phrase(currStock,font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+
+				int toProduce=totalQty-Integer.parseInt(currStock);
+				toProduce=toProduce<0?0:toProduce;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(toProduce),font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
+
+				int finalReading=Integer.parseInt(prod.get("packets_in_ld").toString())*toProduce;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(finalReading),font));
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setVerticalAlignment(Element.ALIGN_CENTER);
+				table.addCell(cell);
 
 			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-			
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-			
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-			
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
-			
-			cell = new PdfPCell(new Phrase(" ",font));
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_CENTER);
-	        table.addCell(cell);
 			
 
 			}
