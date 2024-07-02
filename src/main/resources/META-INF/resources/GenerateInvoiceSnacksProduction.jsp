@@ -252,7 +252,21 @@ function deleteAttachment(id)
 }
 
 
-
+function generateOrderReport()
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generateOrderReport&invoice_id=${param.invoice_id}", false);    
+	  xhttp.send();
+}
 
 
 
@@ -431,6 +445,9 @@ function deleteAttachment(id)
 	   
 	  	   
 	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+		<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>   
+
+	   
    </div>
    </div>
   
