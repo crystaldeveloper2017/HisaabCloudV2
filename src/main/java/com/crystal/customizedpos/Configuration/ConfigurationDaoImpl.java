@@ -2189,30 +2189,43 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	}
 
 
+
+	public List<LinkedHashMap<String, Object>> getReadingReportDetails(Connection con,String appId)
+	throws ClassNotFoundException, SQLException {
+ArrayList<Object> parameters = new ArrayList<>();
+String query="select\n" + 
+"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,mc.customer_name,concat( mc.customer_id,'~',tid.item_id ) theKey\n" + 
+"from\n" + 
+"trn_invoice_register tir\n" + 
+"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 
+"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" + 
+"left outer join mst_customer mc on mc.customer_id =tir.customer_id\n" + 
+"left outer join mst_items mi on mi.item_id =tid.item_id\n" + 
+"where\n" + 
+"tir.app_id = ?\n" + 
+"and sis.curr_status =1";
+parameters.add(appId);
+return getListOfLinkedHashHashMap(parameters, query, con);
+
+}
+	
+
+
 	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con,String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		String query="select\n" + 
-					"rmm.raw_material_name,mi.item_name ,\n" + 
-					"tid.qty,\n" + 
-					"mi.lds_per_raw_material,\n" + 
-					"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" + 
-					"from\n" + 
-					"trn_invoice_register tir\n" + 
-					"left outer join snacks_invoice_status sis on\n" + 
-					"sis.invoice_id = tir.invoice_id\n" + 
-					"left outer join trn_invoice_details tid on\n" + 
-					"tid.invoice_id = tir.invoice_id\n" + 
-					"left outer join mst_items mi on\n" + 
-					"mi.item_id = tid.item_id\n" + 
-					"left outer join raw_material_master rmm on\n" + 
-					"mi.raw_material_id = rmm.raw_material_id\n" + 
-					"left outer join mst_category mc on\n" + 
-					"mc.category_id = mi.parent_category_id\n" + 
-					"where\n" + 
-					"tir.app_id = ? \n" + 
-					"and sis.curr_status = 1\n" + 
-					"group by rmm.raw_material_id;\n";
+"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" + 
+"from\n" + 
+"trn_invoice_register tir\n" + 
+"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 
+"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" + 
+"left outer join mst_items mi on mi.item_id =tid.item_id\n" + 
+"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n" + 
+"where\n" + 
+"tir.app_id = ?\n" + 
+"and sis.curr_status =1\n" + 
+"group by tid.item_id";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
@@ -7415,6 +7428,17 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		
 		con); 
 }
+
+    public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con,String appId) throws ClassNotFoundException, SQLException {
+        ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(appId);
+	return getListOfLinkedHashHashMap(parameters,
+		"select city,mc.customer_id,customer_name  from trn_invoice_register tir "+
+		"inner join mst_customer mc on mc.customer_id =tir.customer_id \r\n" + //
+		"inner join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id \r\n" + //
+						"where tir.app_id=? and sis.curr_status=1",
+		con); 
+    }
 
 	
 
