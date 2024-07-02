@@ -1,6 +1,7 @@
 - roleId: 21
   roleName: "AdminSnacks"
   actions:
+    - getItemsAndStockForThisDate
     - generatefryPlanning
     - showTodaysStockRegister
     - saveTodaysStock

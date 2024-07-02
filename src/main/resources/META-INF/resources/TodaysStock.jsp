@@ -166,7 +166,7 @@ function resetField()
 	setDefaultChecks();
 
 
-	populateItems();
+	
 		
 }
 function savedInvoiceCallback(data1)
@@ -279,7 +279,7 @@ function deleteAttachment(id)
   <div class="col-10">
   	<div class="form-group">	
 	
-  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
+  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" onchange="getItemsAndStockForThisDate()" readonly/>
   	</div>
   </div>
 
@@ -582,13 +582,12 @@ function checkforMatchItem()
 }
 
 
-function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
+function getItemDetailsAndAddToTable(itemId,itemName,qty)
 {
 		      
 	
 	
 
-		var itemDetails=document.getElementById("hdn"+itemId).value.split("~");
 		
 	
 	    	
@@ -606,10 +605,10 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	
 	    	
 	    	
-	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+" <span style='font-size:12px'>"+ itemDetails[0] + "</span> </div>";
+	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+1+"'>"+" <span style='font-size:12px'>"+ itemName + "</span> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
-	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="0"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
+	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="'+qty+'"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemName+'></div>';
 	    	
 	    	
 	    	
@@ -619,9 +618,6 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	document.getElementById("txtqty"+itemId).select();
 	    	document.getElementById("txtqty"+itemId).focus();
 	    	
-	    	$("#txtqty"+itemId).focus(function() { $(this).select(); } );
-	    	$("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
-	    	$("#txtamount"+itemId).focus(function() { $(this).select(); } );
 	    	
 			
 }
@@ -828,7 +824,7 @@ if('${invoiceDetails.invoice_id}'!='')
 	}
 	else
 	{
-		populateItems();
+		
 	}
 	
 	
@@ -1073,27 +1069,21 @@ function showLedger()
 
 
 
-function checkforLengthAndEnableDisable()
+
+function getItemsAndStockForThisDate()
 {
-		if(txtsearchcustomer.value.length>=3)
-			{
-				txtsearchcustomer.setAttribute("list", "customerList");
-			}
-		else
-			{
-				txtsearchcustomer.setAttribute("list", "");
-			}
-}
 
+  $.get("?a=getItemsAndStockForThisDate&date="+txtinvoicedate.value, function(data, status){
 
+	var listOfItems=JSON.parse(data);
 
+	for(var k=0;k<listOfItems.length;k++)
+	{		
+		getItemDetailsAndAddToTable(listOfItems[k].item_id,listOfItems[k].item_name,listOfItems[k].qty);
+	}
+    
+  });
 
-function populateItems()
-{
-<c:forEach items="${itemList}" var="item">
-	txtitem.value="${item.item_name}";
-	checkforMatchItem();
-</c:forEach>	   	   	
 }
 
 
@@ -1151,7 +1141,7 @@ $( function() {
 
 
 
-
+getItemsAndStockForThisDate();
  
 
 

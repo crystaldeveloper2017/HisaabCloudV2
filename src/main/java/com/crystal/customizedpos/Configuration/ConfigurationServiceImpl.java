@@ -11610,4 +11610,33 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 		return rs;
 	}
 
+
+	public CustomResultObject getItemsAndStockForThisDate(HttpServletRequest request, Connection conWithF)
+			throws ClassNotFoundException, SQLException, JsonProcessingException {
+
+		CustomResultObject rs = new CustomResultObject();
+
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		try{
+
+		String date = request.getParameter("date");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+
+		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getItemsAndStockForThisDate(date,appId,conWithF);
+		
+
+		rs.setAjaxData(mapper.writeValueAsString(listOfItems));
+		}
+		catch(Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}
+
+		return rs;
+
+	}
+
 }

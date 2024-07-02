@@ -7440,6 +7440,23 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		con); 
     }
 
+    public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date,String appId, Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(getDateASYYYYMMDD(date));
+		parameters.add(appId);
+		
+	return getListOfLinkedHashHashMap(parameters,
+		"select\n" + 
+"item_name,mi.item_id ,ttss.qty\n" + 
+"from\n" + 
+"mst_items mi\n" + 
+"left outer join trn_todays_stock_snacks ttss on\n" + 
+"ttss.item_id = mi.item_id and ttss.stock_date =?\n" + 
+"where \n" + 
+" mi.app_id =? ",
+conWithF); 
+    }
+
 	
 
 }
