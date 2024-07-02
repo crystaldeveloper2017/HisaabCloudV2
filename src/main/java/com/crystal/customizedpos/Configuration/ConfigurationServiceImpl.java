@@ -11338,8 +11338,18 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 
 
 		HashMap<String, Object> hm=new HashMap<>();
+
 		hm.put("todaysDate",cf.getDateFromDB(con));
 		hm.put("listOfItems", lObjConfigDao.getReadingReport(con,appId));
+
+		
+		List<LinkedHashMap<String, Object>> listOfCustomers =lObjConfigDao.getCustomersListForPlanning(con,appId);
+
+		hm.put("listOfCustomers",listOfCustomers);
+		
+		
+
+		
 
 		new InvoiceHistoryPDFHelper().generatePDFForReadingReport(DestinationPath, BufferedImagesFolderPath,hm, con);
 

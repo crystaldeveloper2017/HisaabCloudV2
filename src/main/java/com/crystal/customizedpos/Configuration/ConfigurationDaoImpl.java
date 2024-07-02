@@ -7416,6 +7416,15 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		con); 
 }
 
+    public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con,String appId) throws ClassNotFoundException, SQLException {
+        ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(appId);
+	return getListOfLinkedHashHashMap(parameters,
+		"select city  from trn_invoice_register tir inner join mst_customer mc on mc.customer_id =tir.customer_id \r\n" + //
+						"where tir.app_id=? ",
+		con); 
+    }
+
 	
 
 }
