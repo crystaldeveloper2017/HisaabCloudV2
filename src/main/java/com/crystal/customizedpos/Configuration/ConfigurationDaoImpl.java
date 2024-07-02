@@ -6444,7 +6444,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 				+ "sum( tsc.item_price * test_quantity) as CashAmount from trn_test_fuel_register tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2,nozzle_master nm  \r\n"
 				+ "where test_date=? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.user_id and nm.nozzle_id=tsc.nozzle_id \r\n"
 				+ "and \r\n"
-				+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' and tsc.app_id=? ";
+				+ "tum2.user_id =tsc.updated_by and tsc.test_type='A' and tsc.app_id=? and tsc.activate_flag=1";
 
 		if (!shiftId.equals("-1")) {
 			query += " and tsc.shift_id=?";
