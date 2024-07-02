@@ -2188,6 +2188,28 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 	}
 
+	public List<LinkedHashMap<String, Object>> getOrderFormDetails(Connection con,String appId,String invoiceId)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query="select\n" + 
+"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" + 
+"from\n" + 
+"trn_invoice_register tir\n" + 
+"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 
+"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" + 
+"left outer join mst_items mi on mi.item_id =tid.item_id\n" + 
+"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n" + 
+"where\n" + 
+"tir.app_id = ? and tir.invoice_id=? \n" + 
+" \n" + 
+"group by tid.item_id";
+		parameters.add(appId);
+		parameters.add(invoiceId);
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
+
+
 
 
 	public List<LinkedHashMap<String, Object>> getReadingReportDetails(Connection con,String appId)

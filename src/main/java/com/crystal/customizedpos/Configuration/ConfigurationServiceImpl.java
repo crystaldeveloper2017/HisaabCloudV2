@@ -11505,7 +11505,7 @@ public CustomResultObject generateOrderReport(HttpServletRequest request, Connec
 		DestinationPath += appenders;
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		
+		String invoiceId= request.getParameter("invoice_id");
 	
 
 	try {
@@ -11513,7 +11513,8 @@ public CustomResultObject generateOrderReport(HttpServletRequest request, Connec
 
 		HashMap<String, Object> hm=new HashMap<>();
 		hm.put("todaysDate",cf.getDateFromDB(con));
-		hm.put("listOfItems", lObjConfigDao.getReadingReport(con,appId));
+		hm.put("listOfItems", lObjConfigDao.getOrderFormDetails(con,appId,invoiceId));
+		hm.put("invoiceDetails",lObjConfigDao.getInvoiceDetails(invoiceId, con));
 
 		new InvoiceHistoryPDFHelper().generatePDFForOrderReport(DestinationPath, BufferedImagesFolderPath,hm, con);
 

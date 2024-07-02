@@ -5228,6 +5228,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 		List<LinkedHashMap<String, Object>> ListOfItemDetails= (List<LinkedHashMap<String, Object>>) invoiceHistoryDetails.get("listOfItems");
 		String todaysDate=(String) invoiceHistoryDetails.get("todaysDate");
+		LinkedHashMap<String, Object> invoiceDetails=  (LinkedHashMap<String, Object>) invoiceHistoryDetails.get("invoiceDetails");
+
 		
 		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
 
@@ -5269,7 +5271,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        table.addCell(cell);	
 			
-			cell = new PdfPCell(new Phrase(" ",font));	        	        
+			cell = new PdfPCell(new Phrase(invoiceDetails.get("customerName").toString(),font));	        	        
 			cell.setColspan(2);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
