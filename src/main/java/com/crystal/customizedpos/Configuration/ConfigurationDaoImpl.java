@@ -5754,7 +5754,7 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
 				+ "where invoice_date =? and tir.payment_type='Pending'\r\n"
 				+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id union all  select sum(ttfr.test_quantity*ttfr.item_price*-1) amt,tum.name,'Cash',shift_id,test_date dt,tum.user_id  from trn_test_fuel_register ttfr inner join tbl_user_mst tum on tum.user_id =ttfr.user_id "
-										+"where test_date=? and ttfr.test_type ='A' and ttfr.activate_flag =1 and ttfr.shift_id =? and ttfr.app_id =? " 
+										+"where test_date=? and ttfr.test_type ='A' and ttfr.activate_flag =1 and ttfr.shift_id=? and ttfr.app_id =? " 
 										+"group by tum.name,ttfr.shift_id) as T"
 										+") as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id";
 
