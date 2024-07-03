@@ -107,7 +107,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	throws SQLException, ClassNotFoundException {
 	ArrayList<Object> parameters = new ArrayList<>();
 
-	return getMap(parameters, "select round(sum(qty),0) todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ", con);
+	return getMap(parameters, "select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ", con);
 	}
 
 	
