@@ -56,7 +56,7 @@ Completed Orders <span class="float-right badge bg-success">${HomePageContent.co
 </li>
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showTodaysStock'">
-Today's Stock  <span class="float-right badge bg-danger">${HomePageContent.tpdaysStock}</span>
+Today's Stock  <span class="float-right badge bg-danger">${HomePageContent.todaysStock}</span>
 </a>
 </li>
 </ul>

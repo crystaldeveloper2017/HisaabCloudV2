@@ -102,6 +102,15 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 	return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=2 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
 	}
+
+	public HashMap<String, String> getTodaysStockCount(HashMap<String, Object> hm, Connection con)
+	throws SQLException, ClassNotFoundException {
+	ArrayList<Object> parameters = new ArrayList<>();
+
+	return getMap(parameters, "select round(sum(qty),0) todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ", con);
+	}
+
+	
 	
 
 	public HashMap<String, String> getItems(HashMap<String, Object> hm, Connection con)
