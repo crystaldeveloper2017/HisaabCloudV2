@@ -2192,7 +2192,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		String query="select\n" + 
-"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" + 
+"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,ttss.qty currStock,mi.packets_in_ld\n" + 
 "from\n" + 
 "trn_invoice_register tir\n" + 
 "left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 

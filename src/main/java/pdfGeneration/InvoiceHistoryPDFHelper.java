@@ -5375,7 +5375,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);	       
 
 
-			cell = new PdfPCell(new Phrase(" ",font));
+			cell = new PdfPCell(new Phrase(prod.get("qty").toString(),font));
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_CENTER);
 	        table.addCell(cell);
