@@ -1081,7 +1081,7 @@ function getItemsAndStockForThisDate()
 	{		
 		getItemDetailsAndAddToTable(listOfItems[k].item_id,listOfItems[k].item_name,listOfItems[k].qty);
 	}
-    
+    calculateTotal();
   });
 
 }
