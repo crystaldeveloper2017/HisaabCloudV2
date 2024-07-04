@@ -1,4 +1,5 @@
 # Default Maven Ignore Files
+logs/
 target/
 build/
 tmp/
