@@ -3112,7 +3112,7 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		"inner join mst_items item on item.item_id = tnr.item_id\n" + 
 		"inner join tbl_user_mst tum2 on tum2.user_id = tnr.updated_by\n" + 
 		"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" + 
-		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
+		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and  ttfr.user_id=tum.user_id and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
 		"where\n" + 
 		"tnr.app_id = ? and tnr.activate_flag=1 \n" + 
 		"and accounting_date between ? and ?\n" + 
