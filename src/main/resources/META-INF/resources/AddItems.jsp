@@ -341,7 +341,7 @@ function deleteAttachment(id)
 
   
   <c:if test="${itemDetails.qrCodeImageName ne null}">
-    <div class="col-sm-6">
+    <div class="col-sm-6" id="placeholderQRCode">
   	<div class="form-group">
       <label for="email">QR Code </label>
             
@@ -354,7 +354,7 @@ function deleteAttachment(id)
   </c:if>
   
   <c:if test="${itemDetails.barcodeCodeImageName ne null}">
-    <div class="col-sm-6">
+    <div class="col-sm-6" id="placeholderBarcode">
   	<div class="form-group">
       <label for="email">Barcode </label>
             
@@ -555,10 +555,12 @@ if("${userdetails.app_type}"=="SnacksProduction")
 		placeholdercgst.style.display="none";
 		placeholderhsncode.style.display="none";
 		placeholdercatalogno.style.display="none";
-		placeholderorderno.style.display="none";
 		placeholderavailableatstores.style.display="none";
 		placeholderuploadimages.style.display="none";
 		placeholderproductdetails.style.display="none";
+		placeholderQRCode.style.display="none";
+		placeholderBarcode.style.display="none";
+		
 
 		
 		

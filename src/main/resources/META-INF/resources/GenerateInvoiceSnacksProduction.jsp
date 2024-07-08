@@ -99,7 +99,7 @@ function saveInvoice()
 	"&paid_amount=0"+
 	"&invoice_date="+txtinvoicedate.value+
 	"&remarks="+
-	"&hdnPreviousInvoiceId="+
+	"&hdnPreviousInvoiceId="+hdnPreviousInvoiceId.value+
 	"&table_id="+
 	"&booking_id="+
 	"&appId=${userdetails.app_id}"+
@@ -199,7 +199,7 @@ function resetField()
 	setDefaultChecks();
 
 
-	populateItems();
+	//populateItems();
 		
 }
 function savedInvoiceCallback(data1)
@@ -373,7 +373,7 @@ function generateOrderReport()
             
       <input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
    			<input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
-   			<input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
+   			<input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="${invoiceDetails.invoice_id}">
    			      
     </div>
   </div>
@@ -621,7 +621,7 @@ function fetchPendingAmountForThisCustomer(customerId)
 }
 
 
-function checkforMatchItem()
+function checkforMatchItem(qty)
 {
 	
 	
@@ -643,7 +643,7 @@ function checkforMatchItem()
 	if(itemId!=0)
 		{
 				// code to check if item already exist inselection				
-				getItemDetailsAndAddToTable(itemId,purchaseDetailsId);
+				getItemDetailsAndAddToTable(itemId,purchaseDetailsId,qty);
 				document.getElementById("txtitem").value="";
 		}
 	else
@@ -674,7 +674,7 @@ function checkforMatchItem()
 }
 
 
-function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
+function getItemDetailsAndAddToTable(itemId,purchaseDetailsId,qty)
 {
 		      
 	
@@ -701,7 +701,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+" <span style='font-size:12px'>"+ itemDetails[0] + "</span> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
-	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="0"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
+	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="'+qty+'"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
 	    	
 	    	
 	    	
@@ -838,90 +838,12 @@ $("#divBackButton").attr("href", "https://www.w3schools.com/jquery/");
 
 
 $( "#txtinvoicedate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-if('${invoiceDetails.invoice_id}'!='')
-	{
-		
-		
-		
 
-		document.getElementById("divTitle").innerHTML="Invoice No:-"+"${invoiceDetails.invoice_no}";
-		document.title +=" Invoice No:-"+"${invoiceDetails.invoice_no} ";
-		hdnSelectedCustomer.value="${invoiceDetails.customer_id}"
-		
-		
-			
-		if('${invoiceDetails.customer_name}'!='')
-			{
-				txtsearchcustomer.value="${invoiceDetails.customer_name}~${invoiceDetails.customercityname}";			
-			}
-		
-		
-		document.getElementById("hdnSelectedCustomerType").value='${invoiceDetails.customer_type}';
-		txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
-		totalQty.innerHTML="${invoiceDetails.totalQuantities}";
-		
-		
-		
-		var m=0;
-		var tableNo="";
-		<c:forEach items="${invoiceDetails.listOfItems}" var="item">
-		
-		m++;
-		tableNo='${item.table_no}';
-		var table = document.getElementById("tblitems");	    	
-    	var row = table.insertRow(-1);	    	
-    	var cell1 = row.insertCell(0);
-    	var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-    	
-    	
-    	
-    	
-    	cell1.innerHTML = '<div>'+m+'</div><input type="hidden" value="${item.item_id}">';    	
-    	cell2.innerHTML = '${item.item_name}';    	
-    	cell3.innerHTML = '<input type="text" style="text-align:center" class="form-control form-control-sm"  id="txtqty${item.item_id}" onkeyup="calculateAmount(${item.item_id});checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="${item.qty}">';
-    	
-	    		//alert('${item.item_id}'+'-${item.item_name}'+'-${item.qty}'+'-${item.rate}'+'-${item.custom_rate}');			    
-		</c:forEach>
- 
-		
-		if('${param.editInvoice}'=='Y')
-			{
-				hdnPreviousInvoiceId.value="${invoiceDetails.invoice_id}";
-				var returnButtons=document.getElementsByName('returnButtons');
-				for(var m=0;m<returnButtons.length;m++)
-					{
-						returnButtons[m].style="display:none";
-					}
-				txtsearchcustomer.disabled=true;
-				//txtinvoicedate.disabled=true;
-				document.getElementById("divTitle").innerHTML="Edit Invoice:-"+"${invoiceDetails.invoice_no}";
-				document.title +=" Edit Invoice:- "+ " ${invoiceDetails.invoice_no} ";
-			}
-		else
-			{
-				$("#frm :input").prop('disabled', true);
-				$("[name=returnButtons]").prop('disabled', false);
-				
-				
-				var deleteButtons=document.getElementsByName('deleteButtons');
-				for(var m=0;m<deleteButtons.length;m++)
-					{
-						deleteButtons[m].style="display:none";
-					}
-				btnsave.style="display:none";
-			}
-		
-		
-		document.getElementById("generatePDF").style="display:";
-		generatePDF.disabled=false;
-		
-		
-	}
-	else
-	{
+
 		populateItems();
-	}
+	
+	
+
 	
 	
 function returnThisItem(detailsId)
@@ -1181,10 +1103,47 @@ function checkforLengthAndEnableDisable()
 
 function populateItems()
 {
-<c:forEach items="${itemList}" var="item">
-	txtitem.value="${item.item_name}";
-	checkforMatchItem();
-</c:forEach>	   	   	
+
+if("${invoiceDetails.invoice_id}"!="")
+{
+	
+	txtsearchcustomer.value="${invoiceDetails.customer_name}";
+	txtsearchcustomer.disabled=true;
+	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
+	txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
+
+	
+
+		<c:forEach items="${itemList}" var="allItems">
+			<c:forEach items="${invoiceDetails.listOfItems}" var="orderItem">
+
+				<c:if test="${allItems.item_name eq orderItem.item_name}">
+					txtitem.value="${allItems.item_name}";
+					checkforMatchItem("${orderItem.qty}");
+				</c:if>
+
+				<c:if test="${allItems.item_name ne orderItem.item_name}">
+					txtitem.value="${allItems.item_name}";
+					checkforMatchItem(0);
+				</c:if>
+
+			</c:forEach>
+		</c:forEach>
+
+	calculateTotal();
+	
+}
+else
+{
+	<c:forEach items="${itemList}" var="item">
+		txtitem.value="${item.item_name}";
+		checkforMatchItem(0);
+	</c:forEach>
+}
+return;
+
+
+	   	   	
 }
 
 
