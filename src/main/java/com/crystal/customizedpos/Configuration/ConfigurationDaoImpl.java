@@ -80,38 +80,41 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getMap(parameters, "select count(*) from mst_category mc where activate_flag=1 and app_id=?", con);
 	}
 
-
 	public HashMap<String, String> getPendingOrdersCount(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		
-		return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=0 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
-	}
 
+		return getMap(parameters,
+				"select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=0 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1",
+				con);
+	}
 
 	public HashMap<String, String> getPlanningCount(HashMap<String, Object> hm, Connection con)
-	throws SQLException, ClassNotFoundException {
-	ArrayList<Object> parameters = new ArrayList<>();
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
 
-	return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=1 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
+		return getMap(parameters,
+				"select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=1 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1",
+				con);
 	}
-	
-	public HashMap<String, String> getCompletedCount(HashMap<String, Object> hm, Connection con)
-	throws SQLException, ClassNotFoundException {
-	ArrayList<Object> parameters = new ArrayList<>();
 
-	return getMap(parameters, "select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=2 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1", con);
+	public HashMap<String, String> getCompletedCount(HashMap<String, Object> hm, Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		return getMap(parameters,
+				"select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=2 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1",
+				con);
 	}
 
 	public HashMap<String, String> getTodaysStockCount(HashMap<String, Object> hm, Connection con)
-	throws SQLException, ClassNotFoundException {
-	ArrayList<Object> parameters = new ArrayList<>();
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
 
-	return getMap(parameters, "select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ", con);
+		return getMap(parameters,
+				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ",
+				con);
 	}
-
-	
-	
 
 	public HashMap<String, String> getItems(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
@@ -418,7 +421,6 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		valuesMap.put("raw_material_id", itemDetails.get("drprawmaterialid"));
 		valuesMap.put("lds_per_raw_material", itemDetails.get("lds_per_raw_material"));
 		valuesMap.put("packets_in_ld", itemDetails.get("packets_in_ld"));
-		
 
 		Query q = new Query("mst_items", "insert", valuesMap);
 		return insertUpdateEnhanced(q, con);
@@ -451,7 +453,6 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(itemDetails.get("cgst"));
 		parameters.add(itemDetails.get("lds_per_raw_material"));
 		parameters.add(itemDetails.get("packets_in_ld"));
-
 
 		parameters.add(Long.parseLong(itemDetails.get("hdnItemId").toString()));
 
@@ -842,8 +843,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		List<HashMap<String, Object>> itemDetailsList = (List<HashMap<String, Object>>) hm.get("itemDetails");
 		for (HashMap<String, Object> item : itemDetailsList) {
 
-			if(item.get("qty").equals("0"))
-			{
+			if (item.get("qty").equals("0")) {
 				continue;
 			}
 
@@ -889,15 +889,12 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			parameters.add(item.get("cgst_percentage"));
 			parameters.add(item.get("cgst_amount"));
 			parameters.add(item.get("itemAmount"));
-			
 
 			long detailsId = insertUpdateDuablDB("insert into trn_invoice_details"
 					+ "(details_id, invoice_id, item_id, qty, rate, custom_rate, updated_by,"
 					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount) "
 					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?)", parameters,
 					conWithF);
-
-		
 
 			parameters.clear();
 
@@ -1343,9 +1340,6 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("alternate_mobile_no"));
 		parameters.add(hm.get("customer_reference"));
 		parameters.add(hm.get("txtgstno"));
-		
-
-		
 
 		parameters.add(Long.valueOf(customerId));
 		insertUpdateDuablDB(
@@ -1402,7 +1396,6 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(hm.get("appId"));
 		parameters.add(hm.get("userId"));
 		parameters.add(hm.get("drpfueltype"));
-
 
 		String insertQuery = "INSERT INTO mst_vehicle\r\n"
 				+ "VALUES(default, ?, ?, ?, ?, 1, ?, sysdate(),?);";
@@ -1490,8 +1483,6 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		parameters.add(Long.valueOf(customerId));
 		return getMap(parameters, "select * from mst_vendor where vendor_id=?", con);
 	}
-
-	
 
 	public LinkedHashMap<String, String> getPendingAmountForThisCustomer(long customerId, String fromDate,
 			String toDate, Connection con) throws SQLException, ParseException {
@@ -2166,134 +2157,128 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 	}
 
-
-	public List<LinkedHashMap<String, Object>> getFryPlanning(Connection con,String appId)
+	public List<LinkedHashMap<String, Object>> getFryPlanning(Connection con, String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query="select\n" + 
-					"rmm.raw_material_name,mi.item_name ,\n" + 
-					"tid.qty,\n" + 
-					"mi.lds_per_raw_material,\n" + 
-					"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" + 
-					"from\n" + 
-					"trn_invoice_register tir\n" + 
-					"left outer join snacks_invoice_status sis on\n" + 
-					"sis.invoice_id = tir.invoice_id\n" + 
-					"left outer join trn_invoice_details tid on\n" + 
-					"tid.invoice_id = tir.invoice_id\n" + 
-					"left outer join mst_items mi on\n" + 
-					"mi.item_id = tid.item_id\n" + 
-					"left outer join raw_material_master rmm on\n" + 
-					"mi.raw_material_id = rmm.raw_material_id\n" + 
-					"left outer join mst_category mc on\n" + 
-					"mc.category_id = mi.parent_category_id\n" + 
-					"where\n" + 
-					"tir.app_id = ? \n" + 
-					"and sis.curr_status = 1\n" + 
-					"and mc.category_name = 'Fry'\n" + 
-					"group by rmm.raw_material_id;\n";
+		String query = "select\n" +
+				"rmm.raw_material_name,mi.item_name ,\n" +
+				"tid.qty,\n" +
+				"mi.lds_per_raw_material,\n" +
+				"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"left outer join snacks_invoice_status sis on\n" +
+				"sis.invoice_id = tir.invoice_id\n" +
+				"left outer join trn_invoice_details tid on\n" +
+				"tid.invoice_id = tir.invoice_id\n" +
+				"left outer join mst_items mi on\n" +
+				"mi.item_id = tid.item_id\n" +
+				"left outer join raw_material_master rmm on\n" +
+				"mi.raw_material_id = rmm.raw_material_id\n" +
+				"left outer join mst_category mc on\n" +
+				"mc.category_id = mi.parent_category_id\n" +
+				"where\n" +
+				"tir.app_id = ? \n" +
+				"and sis.curr_status = 1\n" +
+				"and mc.category_name = 'Fry'\n" +
+				"group by rmm.raw_material_id;\n";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
 
-	public List<LinkedHashMap<String, Object>> getOrderFormDetails(Connection con,String appId,String invoiceId)
+	public List<LinkedHashMap<String, Object>> getOrderFormDetails(Connection con, String appId, String invoiceId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query="select\n" + 
-"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,ttss.qty currStock,mi.packets_in_ld\n" + 
-"from\n" + 
-"trn_invoice_register tir\n" + 
-"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 
-"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" + 
-"left outer join mst_items mi on mi.item_id =tid.item_id\n" + 
-"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n" + 
-"where\n" + 
-"tir.app_id = ? and tir.invoice_id=? \n" + 
-" \n" + 
-"group by tid.item_id";
+		String query = "select\n" +
+				"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,ttss.qty currStock,mi.packets_in_ld\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" +
+				"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" +
+				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
+				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n"
+				+
+				"where\n" +
+				"tir.app_id = ? and tir.invoice_id=? \n" +
+				" \n" +
+				"group by tid.item_id";
 		parameters.add(appId);
 		parameters.add(invoiceId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
 
-
-
-
-	public List<LinkedHashMap<String, Object>> getReadingReportDetails(Connection con,String appId)
-	throws ClassNotFoundException, SQLException {
-ArrayList<Object> parameters = new ArrayList<>();
-String query="select\n" + 
-"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,mc.customer_name,concat( mc.customer_id,'~',tid.item_id ) theKey\n" + 
-"from\n" + 
-"trn_invoice_register tir\n" + 
-"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 
-"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" + 
-"left outer join mst_customer mc on mc.customer_id =tir.customer_id\n" + 
-"left outer join mst_items mi on mi.item_id =tid.item_id\n" + 
-"where\n" + 
-"tir.app_id = ?\n" + 
-"and sis.curr_status =1";
-parameters.add(appId);
-return getListOfLinkedHashHashMap(parameters, query, con);
-
-}
-	
-
-
-	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con,String appId)
+	public List<LinkedHashMap<String, Object>> getReadingReportDetails(Connection con, String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query="select\n" + 
-"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" + 
-"from\n" + 
-"trn_invoice_register tir\n" + 
-"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" + 
-"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" + 
-"left outer join mst_items mi on mi.item_id =tid.item_id\n" + 
-"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n" + 
-"where\n" + 
-"tir.app_id = ?\n" + 
-"and sis.curr_status =1\n" + 
-"group by tid.item_id";
+		String query = "select\n" +
+				"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,mc.customer_name,concat( mc.customer_id,'~',tid.item_id ) theKey\n"
+				+
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" +
+				"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" +
+				"left outer join mst_customer mc on mc.customer_id =tir.customer_id\n" +
+				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
+				"where\n" +
+				"tir.app_id = ?\n" +
+				"and sis.curr_status =1";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
 
-
-	public List<LinkedHashMap<String, Object>> getMakaiPlanning(Connection con,String appId)
+	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con, String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query="select\n" + 
-					"rmm.raw_material_name,mi.item_name ,\n" + 
-					"tid.qty,\n" + 
-					"mi.lds_per_raw_material,\n" + 
-					"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" + 
-					"from\n" + 
-					"trn_invoice_register tir\n" + 
-					"left outer join snacks_invoice_status sis on\n" + 
-					"sis.invoice_id = tir.invoice_id\n" + 
-					"left outer join trn_invoice_details tid on\n" + 
-					"tid.invoice_id = tir.invoice_id\n" + 
-					"left outer join mst_items mi on\n" + 
-					"mi.item_id = tid.item_id\n" + 
-					"left outer join raw_material_master rmm on\n" + 
-					"mi.raw_material_id = rmm.raw_material_id\n" + 
-					"left outer join mst_category mc on\n" + 
-					"mc.category_id = mi.parent_category_id\n" + 
-					"where\n" + 
-					"tir.app_id = ? \n" + 
-					"and sis.curr_status = 1\n" + 
-					"and mc.category_name = 'Makai'\n" + 
-					"group by rmm.raw_material_id;\n";
+		String query = "select\n" +
+				"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" +
+				"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" +
+				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
+				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n"
+				+
+				"where\n" +
+				"tir.app_id = ?\n" +
+				"and sis.curr_status =1\n" +
+				"group by tid.item_id";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
 
-	
+	public List<LinkedHashMap<String, Object>> getMakaiPlanning(Connection con, String appId)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query = "select\n" +
+				"rmm.raw_material_name,mi.item_name ,\n" +
+				"tid.qty,\n" +
+				"mi.lds_per_raw_material,\n" +
+				"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"left outer join snacks_invoice_status sis on\n" +
+				"sis.invoice_id = tir.invoice_id\n" +
+				"left outer join trn_invoice_details tid on\n" +
+				"tid.invoice_id = tir.invoice_id\n" +
+				"left outer join mst_items mi on\n" +
+				"mi.item_id = tid.item_id\n" +
+				"left outer join raw_material_master rmm on\n" +
+				"mi.raw_material_id = rmm.raw_material_id\n" +
+				"left outer join mst_category mc on\n" +
+				"mc.category_id = mi.parent_category_id\n" +
+				"where\n" +
+				"tir.app_id = ? \n" +
+				"and sis.curr_status = 1\n" +
+				"and mc.category_name = 'Makai'\n" +
+				"group by rmm.raw_material_id;\n";
+		parameters.add(appId);
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
 
 	public LinkedHashMap<String, Object> getInvoiceDetails(String invoiceId, Connection con)
 			throws ClassNotFoundException, SQLException {
@@ -2986,81 +2971,84 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 	public String getOpeningBalanceForLedger(String employeeId, String fromDate,
 			String toDate, String appId, Connection con) throws ParseException, ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,dt,sum(paymentAmount)-sum(SalesAmount) openingledger,remarks,shift_name\n" + 
-		"from (\n" + 
-		"select\n" + 
-		"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt,'Nozzle' remarks,shift_name\n" + 
-		"from\n" + 
-		"trn_nozzle_register tnr\n" + 
-		"inner join nozzle_master nm on nm.nozzle_id = tnr.nozzle_id\n" + 
-		"inner join tbl_user_mst tum on tum.user_id = tnr.attendant_id\n" + 
-		"inner join mst_items item on item.item_id = tnr.item_id\n" + 
-		"inner join tbl_user_mst tum2 on tum2.user_id = tnr.updated_by\n" + 
-		"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" + 
-		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
-		"where\n" + 
-		"tnr.app_id = ?\n" + 
-		"and accounting_date between ? and ? and tnr.activate_flag=1\n" + 
-		"and tum.user_id = ?\n" + 
-		"union all\n" + 
-		"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date,'Nozzle' remarks,shift_name from\n" + 
-		"trn_invoice_register tir ,\n" + 
-		"trn_invoice_details tid ,\n" + 
-		"rlt_invoice_fuel_details rifd,\n" + 
-		"tbl_user_mst tum,\n" + 
-		"shift_master sm,\n" + 
-		"mst_items mi\n" + 
-		"where\n" + 
-		"tir.invoice_id =tid.invoice_id\n" + 
-		"and rifd.invoice_id =tid.invoice_id\n" + 
-		"and tum.user_id =rifd.attendant_id\n" + 
-		"and rifd.shift_id =sm.shift_id\n" + 
-		"and tid.item_id =mi.item_id and (mi.item_name!='Petrol') and (mi.item_name!='Diesel')\n" + 
-		"and tir.app_id =? and tir.activate_flag=1\n" + 
-		"and tum.user_id =?\n" + 
-		"and tir.invoice_date between ? and ?\n" + 
-		"union all\n" + 
-		"select\n" + 
-		"0 SalesAmount,\n" + 
-		"amount  paymentAmount,\n" + 
-		"collection_date dt,'Nozzle' remarks,shift_name\n" + 
-		"from\n" + 
-		"trn_supervisor_collection tsc ,\n" + 
-		"tbl_user_mst tum,\n" + 
-		"shift_master sm2\n" + 
-		"where\n" + 
-		"sm2.shift_id =tsc.shift_id and sm2.activate_flag =1 and\n" + 
-		"tsc.attendant_id = tum.user_id\n" + 
-		"and tsc.collection_date between ? and ?\n" + 
-		"and tum.app_id=? and tsc.activate_flag=1\n" + 
-		"and tum.user_id =?\n" + 
-		"union all\n" + 
-		"select\n" + 
-		"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle',shift_name\n" + 
-		"from\n" + 
-		"trn_invoice_register tir\n" + 
-		"inner join rlt_invoice_fuel_details rifd\n" + 
-		"on rifd.invoice_id =tir.invoice_id\n" + 
-		"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" + 
-		"inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id\n" + 
-		"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" + 
-		"where invoice_date between ? and ? and tpr.payment_mode !='Cash' and sm.activate_flag =1\n" + 
-		"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" + 
-		"union all\n" + 
-		"select\n" + 
-		"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle' remarks,shift_name\n" + 
-		"from\n" + 
-		"trn_invoice_register tir\n" + 
-		"inner join rlt_invoice_fuel_details rifd\n" + 
-		"on rifd.invoice_id =tir.invoice_id\n" + 
-		"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" + 
-		"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" + 
-		"where invoice_date between ? and ? and tir.payment_type='Pending' and sm.activate_flag =1\n" + 
-		"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" + 
-		"union all select case when payment_type ='Debit' then amount else 0 end as salesAmount ,case when payment_type ='Credit' then amount else 0 end as paymentAmount ,payment_date,remarks,'NA' from trn_employee_payment_register tepr where payment_date between ? and ? and tepr.app_id=? and tepr.employee_id=? and tepr.activate_flag=1 )\n" + 
-		"as T ;\n";
-
-				
+		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,dt,sum(paymentAmount)-sum(SalesAmount) openingledger,remarks,shift_name\n"
+				+
+				"from (\n" +
+				"select\n" +
+				"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt,'Nozzle' remarks,shift_name\n"
+				+
+				"from\n" +
+				"trn_nozzle_register tnr\n" +
+				"inner join nozzle_master nm on nm.nozzle_id = tnr.nozzle_id\n" +
+				"inner join tbl_user_mst tum on tum.user_id = tnr.attendant_id\n" +
+				"inner join mst_items item on item.item_id = tnr.item_id\n" +
+				"inner join tbl_user_mst tum2 on tum2.user_id = tnr.updated_by\n" +
+				"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" +
+				"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n"
+				+
+				"where\n" +
+				"tnr.app_id = ?\n" +
+				"and accounting_date between ? and ? and tnr.activate_flag=1\n" +
+				"and tum.user_id = ?\n" +
+				"union all\n" +
+				"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date,'Nozzle' remarks,shift_name from\n"
+				+
+				"trn_invoice_register tir ,\n" +
+				"trn_invoice_details tid ,\n" +
+				"rlt_invoice_fuel_details rifd,\n" +
+				"tbl_user_mst tum,\n" +
+				"shift_master sm,\n" +
+				"mst_items mi\n" +
+				"where\n" +
+				"tir.invoice_id =tid.invoice_id\n" +
+				"and rifd.invoice_id =tid.invoice_id\n" +
+				"and tum.user_id =rifd.attendant_id\n" +
+				"and rifd.shift_id =sm.shift_id\n" +
+				"and tid.item_id =mi.item_id and (mi.item_name!='Petrol') and (mi.item_name!='Diesel')\n" +
+				"and tir.app_id =? and tir.activate_flag=1\n" +
+				"and tum.user_id =?\n" +
+				"and tir.invoice_date between ? and ?\n" +
+				"union all\n" +
+				"select\n" +
+				"0 SalesAmount,\n" +
+				"amount  paymentAmount,\n" +
+				"collection_date dt,'Nozzle' remarks,shift_name\n" +
+				"from\n" +
+				"trn_supervisor_collection tsc ,\n" +
+				"tbl_user_mst tum,\n" +
+				"shift_master sm2\n" +
+				"where\n" +
+				"sm2.shift_id =tsc.shift_id and sm2.activate_flag =1 and\n" +
+				"tsc.attendant_id = tum.user_id\n" +
+				"and tsc.collection_date between ? and ?\n" +
+				"and tum.app_id=? and tsc.activate_flag=1\n" +
+				"and tum.user_id =?\n" +
+				"union all\n" +
+				"select\n" +
+				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle',shift_name\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"inner join rlt_invoice_fuel_details rifd\n" +
+				"on rifd.invoice_id =tir.invoice_id\n" +
+				"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" +
+				"inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id\n" +
+				"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" +
+				"where invoice_date between ? and ? and tpr.payment_mode !='Cash' and sm.activate_flag =1\n" +
+				"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" +
+				"union all\n" +
+				"select\n" +
+				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle' remarks,shift_name\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"inner join rlt_invoice_fuel_details rifd\n" +
+				"on rifd.invoice_id =tir.invoice_id\n" +
+				"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" +
+				"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" +
+				"where invoice_date between ? and ? and tir.payment_type='Pending' and sm.activate_flag =1\n" +
+				"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" +
+				"union all select case when payment_type ='Debit' then amount else 0 end as salesAmount ,case when payment_type ='Credit' then amount else 0 end as paymentAmount ,payment_date,remarks,'NA' from trn_employee_payment_register tepr where payment_date between ? and ? and tepr.app_id=? and tepr.employee_id=? and tepr.activate_flag=1 )\n"
+				+
+				"as T ;\n";
 
 		parameters.add((appId));
 		parameters.add(getDateASYYYYMMDD(fromDate));
@@ -3086,7 +3074,6 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		parameters.add(getDateASYYYYMMDD(toDate));
 		parameters.add((appId));
 		parameters.add(employeeId);
-
 
 		parameters.add(getDateASYYYYMMDD(fromDate));
 		parameters.add(getDateASYYYYMMDD(toDate));
@@ -3096,86 +3083,88 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		return getMap(parameters, query, con).get("openingledger");
 
 	}
-	
 
 	public List<LinkedHashMap<String, Object>> getFSMLedger(String employeeId, String fromDate,
 			String toDate, String appId, Connection con) throws ParseException, ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,date_format(dt, '%d/%m/%Y') as formattedDt,sum(paymentAmount)-sum(SalesAmount) diff,remarks,shift_name\n" + 
-		"from (\n" + 
-		"select\n" + 
-		"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt,'Nozzle' remarks,shift_name\n" + 
-		"from\n" + 
-		"trn_nozzle_register tnr\n" + 
-		"inner join nozzle_master nm on nm.nozzle_id = tnr.nozzle_id\n" + 
-		"inner join tbl_user_mst tum on tum.user_id = tnr.attendant_id\n" + 
-		"inner join mst_items item on item.item_id = tnr.item_id\n" + 
-		"inner join tbl_user_mst tum2 on tum2.user_id = tnr.updated_by\n" + 
-		"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" + 
-		"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and  ttfr.user_id=tum.user_id and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n" + 
-		"where\n" + 
-		"tnr.app_id = ? and tnr.activate_flag=1 \n" + 
-		"and accounting_date between ? and ?\n" + 
-		"and tum.user_id = ?\n" + 
-		"union all\n" + 
-		"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date,'Nozzle' remarks,shift_name from\n" + 
-		"trn_invoice_register tir ,\n" + 
-		"trn_invoice_details tid ,\n" + 
-		"rlt_invoice_fuel_details rifd,\n" + 
-		"tbl_user_mst tum,\n" + 
-		"shift_master sm,\n" + 
-		"mst_items mi\n" + 
-		"where\n" + 
-		"tir.invoice_id =tid.invoice_id\n" + 
-		"and rifd.invoice_id =tid.invoice_id\n" + 
-		"and tum.user_id =rifd.attendant_id\n" + 
-		"and rifd.shift_id =sm.shift_id\n" + 
-		"and tid.item_id =mi.item_id and (mi.item_name!='Petrol') and (mi.item_name!='Diesel')\n" + 
-		"and tir.app_id =? and tir.activate_flag=1\n" + 
-		"and tum.user_id =?\n" + 
-		"and tir.invoice_date between ? and ?\n" + 
-		"union all\n" + 
-		"select\n" + 
-		"0 SalesAmount,\n" + 
-		"amount  paymentAmount,\n" + 
-		"collection_date dt,'Nozzle' remarks,shift_name\n" + 
-		"from\n" + 
-		"trn_supervisor_collection tsc ,\n" + 
-		"tbl_user_mst tum,\n" + 
-		"shift_master sm2\n" + 
-		"where\n" + 
-		"sm2.shift_id =tsc.shift_id and sm2.activate_flag =1 and\n" + 
-		"tsc.attendant_id = tum.user_id\n" + 
-		"and tsc.collection_date between ? and ?\n" + 
-		"and tum.app_id=? and tsc.activate_flag=1\n" + 
-		"and tum.user_id =?\n" + 
-		"union all\n" + 
-		"select\n" + 
-		"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle',shift_name\n" + 
-		"from\n" + 
-		"trn_invoice_register tir\n" + 
-		"inner join rlt_invoice_fuel_details rifd\n" + 
-		"on rifd.invoice_id =tir.invoice_id\n" + 
-		"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" + 
-		"inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id\n" + 
-		"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" + 
-		"where invoice_date between ? and ? and tpr.payment_mode !='Cash' and sm.activate_flag =1\n" + 
-		"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" + 
-		"union all\n" + 
-		"select\n" + 
-		"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle' remarks,shift_name\n" + 
-		"from\n" + 
-		"trn_invoice_register tir\n" + 
-		"inner join rlt_invoice_fuel_details rifd\n" + 
-		"on rifd.invoice_id =tir.invoice_id\n" + 
-		"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" + 
-		"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" + 
-		"where invoice_date between ? and ? and tir.payment_type='Pending' and sm.activate_flag =1\n" + 
-		"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" + 
-		"union all select case when payment_type ='Debit' then amount else 0 end as salesAmount ,case when payment_type ='Credit' then amount else 0 end as paymentAmount ,payment_date,remarks,'NA' from trn_employee_payment_register tepr where payment_date between ? and ? and tepr.app_id=? and tepr.employee_id=? and tepr.activate_flag=1 )\n" + 
-		"as T group by dt,remarks,shift_name order by dt,shift_name;\n";
-
-				
+		String query = "select sum(SalesAmount) salesAmt,sum(paymentAmount) paymentAmt,date_format(dt, '%d/%m/%Y') as formattedDt,sum(paymentAmount)-sum(SalesAmount) diff,remarks,shift_name\n"
+				+
+				"from (\n" +
+				"select\n" +
+				"((totalizer_closing_reading-totalizer_opening_reading-(COALESCE (ttfr.test_quantity,0)*tnr.rate))) SalesAmount,0 paymentAmount,accounting_date dt,'Nozzle' remarks,shift_name\n"
+				+
+				"from\n" +
+				"trn_nozzle_register tnr\n" +
+				"inner join nozzle_master nm on nm.nozzle_id = tnr.nozzle_id\n" +
+				"inner join tbl_user_mst tum on tum.user_id = tnr.attendant_id\n" +
+				"inner join mst_items item on item.item_id = tnr.item_id\n" +
+				"inner join tbl_user_mst tum2 on tum2.user_id = tnr.updated_by\n" +
+				"inner JOIN shift_master shift on shift.shift_id = tnr.shift_id\n" +
+				"left outer join trn_test_fuel_register ttfr on ttfr.nozzle_id =nm.nozzle_id and ttfr.test_date =accounting_date and test_type='S' and  ttfr.user_id=tum.user_id and ttfr.shift_id  =tnr.shift_id and ttfr.activate_flag =1\n"
+				+
+				"where\n" +
+				"tnr.app_id = ? and tnr.activate_flag=1 \n" +
+				"and accounting_date between ? and ?\n" +
+				"and tum.user_id = ?\n" +
+				"union all\n" +
+				"select (custom_rate*qty) salesAmount,0 paymentAmount,tir.invoice_date,'Nozzle' remarks,shift_name from\n"
+				+
+				"trn_invoice_register tir ,\n" +
+				"trn_invoice_details tid ,\n" +
+				"rlt_invoice_fuel_details rifd,\n" +
+				"tbl_user_mst tum,\n" +
+				"shift_master sm,\n" +
+				"mst_items mi\n" +
+				"where\n" +
+				"tir.invoice_id =tid.invoice_id\n" +
+				"and rifd.invoice_id =tid.invoice_id\n" +
+				"and tum.user_id =rifd.attendant_id\n" +
+				"and rifd.shift_id =sm.shift_id\n" +
+				"and tid.item_id =mi.item_id and (mi.item_name!='Petrol') and (mi.item_name!='Diesel')\n" +
+				"and tir.app_id =? and tir.activate_flag=1\n" +
+				"and tum.user_id =?\n" +
+				"and tir.invoice_date between ? and ?\n" +
+				"union all\n" +
+				"select\n" +
+				"0 SalesAmount,\n" +
+				"amount  paymentAmount,\n" +
+				"collection_date dt,'Nozzle' remarks,shift_name\n" +
+				"from\n" +
+				"trn_supervisor_collection tsc ,\n" +
+				"tbl_user_mst tum,\n" +
+				"shift_master sm2\n" +
+				"where\n" +
+				"sm2.shift_id =tsc.shift_id and sm2.activate_flag =1 and\n" +
+				"tsc.attendant_id = tum.user_id\n" +
+				"and tsc.collection_date between ? and ?\n" +
+				"and tum.app_id=? and tsc.activate_flag=1\n" +
+				"and tum.user_id =?\n" +
+				"union all\n" +
+				"select\n" +
+				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle',shift_name\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"inner join rlt_invoice_fuel_details rifd\n" +
+				"on rifd.invoice_id =tir.invoice_id\n" +
+				"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" +
+				"inner join trn_payment_register tpr on tpr.ref_id=tir.invoice_id\n" +
+				"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" +
+				"where invoice_date between ? and ? and tpr.payment_mode !='Cash' and sm.activate_flag =1\n" +
+				"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" +
+				"union all\n" +
+				"select\n" +
+				"0 salesAmount,(total_amount) paymentAmount,tir.invoice_date dt,'Nozzle' remarks,shift_name\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"inner join rlt_invoice_fuel_details rifd\n" +
+				"on rifd.invoice_id =tir.invoice_id\n" +
+				"inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id\n" +
+				"left outer join shift_master sm on sm.shift_id =rifd.shift_id\n" +
+				"where invoice_date between ? and ? and tir.payment_type='Pending' and sm.activate_flag =1\n" +
+				"and tir.app_id =? and tir.activate_flag=1 and tum.user_id =?\n" +
+				"union all select case when payment_type ='Debit' then amount else 0 end as salesAmount ,case when payment_type ='Credit' then amount else 0 end as paymentAmount ,payment_date,remarks,'NA' from trn_employee_payment_register tepr where payment_date between ? and ? and tepr.app_id=? and tepr.employee_id=? and tepr.activate_flag=1 )\n"
+				+
+				"as T group by dt,remarks,shift_name order by dt,shift_name;\n";
 
 		parameters.add((appId));
 		parameters.add(getDateASYYYYMMDD(fromDate));
@@ -3201,7 +3190,6 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		parameters.add(getDateASYYYYMMDD(toDate));
 		parameters.add((appId));
 		parameters.add(employeeId);
-
 
 		parameters.add(getDateASYYYYMMDD(fromDate));
 		parameters.add(getDateASYYYYMMDD(toDate));
@@ -4473,13 +4461,33 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				+ "	group by item.item_id,tpid.details_id"
 				+ " --  having QtyAvailable>0 \r\n"
 				+ "order by\r\n"
-				+ "	item_name;";
+				+ "	item.order_no;";
 
 		parameters.add(hm.get("store_id"));
 		parameters.add(hm.get("app_id"));
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
 	}
+
+	public List<LinkedHashMap<String, Object>> getListOfItemsForSnacksProduction(String invoiceId,String appId,Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		parameters.add(appId);
+		
+		
+		String query = "select\n" + 
+"*\n" + 
+"from\n" + 
+"mst_items mi left outer join trn_invoice_details tid on tid.item_id =mi.item_id   and tid.invoice_id=?\n" + 
+"where mi.app_id =? and mi.activate_flag =1 order by order_no\n";
+
+		
+
+		return getListOfLinkedHashHashMap(parameters, query, con);
+	}
+
+	
 
 	public List<LinkedHashMap<String, Object>> getItemMasterForGenerateInvoiceType1(HashMap<String, Object> hm,
 			Connection con)
@@ -5727,8 +5735,6 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		}
 		parameters.add(hm.get("app_id"));
 
-
-		
 		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 		if (!hm.get("shiftid").equals("-1")) {
 			parameters.add(hm.get("shiftid").toString());
@@ -5785,9 +5791,9 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				+ "inner join tbl_user_mst tum on tum.user_id =rifd.attendant_id  \r\n"
 				+ "where invoice_date =? and tir.payment_type='Pending'\r\n"
 				+ "and rifd.shift_id=? and tir.app_id =? and tir.activate_flag=1 group by tum.name,rifd.shift_id union all  select sum(ttfr.test_quantity*ttfr.item_price*-1) amt,tum.name,'Cash',shift_id,test_date dt,tum.user_id  from trn_test_fuel_register ttfr inner join tbl_user_mst tum on tum.user_id =ttfr.user_id "
-										+"where test_date=? and ttfr.test_type ='A' and ttfr.activate_flag =1 and ttfr.shift_id=? and ttfr.app_id =? " 
-										+"group by tum.name,ttfr.shift_id) as T"
-										+") as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id";
+				+ "where test_date=? and ttfr.test_type ='A' and ttfr.activate_flag =1 and ttfr.shift_id=? and ttfr.app_id =? "
+				+ "group by tum.name,ttfr.shift_id) as T"
+				+ ") as M,shift_master shft where shft.shift_id=M.shift_id group by name,M.shift_id";
 
 		if (hm.get("shiftid").equals("-1")) {
 			query = query.replaceAll("and tsc.shift_id=\\?", "");
@@ -5800,7 +5806,6 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				query,
 				con);
 	}
-
 
 	public List<LinkedHashMap<String, Object>> getPaymentsForDatesAttendantWiseGroupByPayment(
 			HashMap<String, Object> hm, Connection con)
@@ -6243,7 +6248,7 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		parameters.add(vehicleId);
 
 		return getMap(parameters,
-		"select * from mst_vehicle mv,mst_customer mc where mv.vehicle_id=? and mc.customer_id=mv.customer_id ",
+				"select * from mst_vehicle mv,mst_customer mc where mv.vehicle_id=? and mc.customer_id=mv.customer_id ",
 				con);
 	}
 
@@ -6476,7 +6481,7 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				con);
 	}
 
-	public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date, String shiftId,String appId,
+	public LinkedHashMap<String, String> getPumpTestEquivalentCash(String collection_date, String shiftId, String appId,
 			Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7128,8 +7133,6 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 
 	public long addPaymentFromEmployee(HashMap<String, Object> hm, Connection conWithF) throws Exception {
 
-
-		
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("employee_payment_id", "~default");
 		valuesMap.put("employee_id", hm.get("employee_id"));
@@ -7140,12 +7143,10 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		valuesMap.put("remarks", hm.get("remarks"));
 		valuesMap.put("app_id", hm.get("app_id"));
 		valuesMap.put("updated_by", hm.get("user_id"));
-		valuesMap.put("updated_date","~sysdate()");
+		valuesMap.put("updated_date", "~sysdate()");
 		valuesMap.put("activate_flag", "~1");
 		Query q = new Query("trn_employee_payment_register", "insert", valuesMap);
 		return insertUpdateEnhanced(q, conWithF);
-		
-		
 
 	}
 
@@ -7166,30 +7167,26 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				+ "	group by invoice_no ) and inv.activate_flag=0";
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));
-		parameters.add( hm.get("app_id"));
-
+		parameters.add(hm.get("app_id"));
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
 
-	public LinkedHashMap<String, String> getLastMonthSalesForThisCustomer(long customerId, Connection con) throws SQLException, ParseException {
+	public LinkedHashMap<String, String> getLastMonthSalesForThisCustomer(long customerId, Connection con)
+			throws SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select\n" + 
-		"sum(total_amount) lstSalesAmount\n" + 
-		"from\n" + 
-		"trn_invoice_register tir\n" + 
-		"where\n" +  
-		" customer_id =? and tir.activate_flag =1 and tir.invoice_date between DATE_SUB(NOW(), INTERVAL 1 MONTH) and sysdate()\n";
-
-		
+		String query = "select\n" +
+				"sum(total_amount) lstSalesAmount\n" +
+				"from\n" +
+				"trn_invoice_register tir\n" +
+				"where\n" +
+				" customer_id =? and tir.activate_flag =1 and tir.invoice_date between DATE_SUB(NOW(), INTERVAL 1 MONTH) and sysdate()\n";
 
 		parameters.add(customerId);
 
 		return getMap(parameters, query, con);
 	}
-
-
 
 	public List<LinkedHashMap<String, Object>> getEmployeePaymentRegister(HashMap<String, Object> hm, Connection con)
 			throws ParseException, ClassNotFoundException, SQLException {
@@ -7198,12 +7195,12 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 		String query = "select * from trn_employee_payment_register tepr where payment_date between ? and ? and app_id=? and activate_flag=1";
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txtfromdate")));
 		parameters.add(getDateASYYYYMMDD((String) hm.get("txttodate")));
-		parameters.add( hm.get("app_id"));
-
+		parameters.add(hm.get("app_id"));
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
+
 	public String receivedCashtovault(long submissionId, String userId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(userId);
@@ -7213,6 +7210,7 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 				parameters, conWithF);
 		return "Vault Received Succesfully";
 	}
+
 	public List<LinkedHashMap<String, Object>> getItemMasterFuel(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7248,76 +7246,73 @@ return getListOfLinkedHashHashMap(parameters, query, con);
 
 		String query = "select * from mst_vehicle mv , mst_customer mc where mv.customer_id =mc.customer_id and mv.activate_flag =1 and mc.app_id=?";
 
-		
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
-	public List<LinkedHashMap<String, Object>> getRawMaterialMaster(HashMap<String, Object> hm,Connection con)
-	throws SQLException, ClassNotFoundException {
-ArrayList<Object> parameters = new ArrayList<>();
-parameters.add(hm.get("app_id") );
-return getListOfLinkedHashHashMap(parameters,
-		"select * from raw_material_master where activate_flag=1  and app_id=?",
-		con);
-}
 
+	public List<LinkedHashMap<String, Object>> getRawMaterialMaster(HashMap<String, Object> hm, Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		return getListOfLinkedHashHashMap(parameters,
+				"select * from raw_material_master where activate_flag=1  and app_id=?",
+				con);
+	}
 
-public LinkedHashMap<String, String> getRawMaterialDetails(HashMap<String, Object> hm, Connection con) throws SQLException {
-	ArrayList<Object> parameters = new ArrayList<>();
-	parameters.add(hm.get("raw_material_id"));
-	
-	
-	return getMap(parameters,
-			"select * from raw_material_master where raw_material_id=?",
-			con);
-}
-public long addRawMaterial(Connection con, HashMap<String, Object> hm) throws Exception {
-	ArrayList<Object> parameters = new ArrayList<>();
-	
-	
-	String query="insert into raw_material_master values (default,?,1,?,sysdate(),?)";
-	parameters.add(hm.get("txtrawmaterialname"));
-	parameters.add(hm.get("user_id"));
-	parameters.add(hm.get("app_id"));
-	
-	
-	return insertUpdateDuablDB(query, parameters,
-			con);
-}
+	public LinkedHashMap<String, String> getRawMaterialDetails(HashMap<String, Object> hm, Connection con)
+			throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("raw_material_id"));
 
-		public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName,String updatedBy) throws Exception {
+		return getMap(parameters,
+				"select * from raw_material_master where raw_material_id=?",
+				con);
+	}
 
-	ArrayList<Object> parameters = new ArrayList<>();
-	
-	
-	parameters.add(rawmaterialName);
-	parameters.add(updatedBy);
+	public long addRawMaterial(Connection con, HashMap<String, Object> hm) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
 
-	parameters.add(rawmaterialId);
-	
+		String query = "insert into raw_material_master values (default,?,1,?,sysdate(),?)";
+		parameters.add(hm.get("txtrawmaterialname"));
+		parameters.add(hm.get("user_id"));
+		parameters.add(hm.get("app_id"));
 
-	insertUpdateDuablDB("UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
-			parameters, con);
-	return "Raw Material updated Succesfully";
+		return insertUpdateDuablDB(query, parameters,
+				con);
+	}
 
-}
-public String deleteRawMaterial(long rawmaterialId,String userId, Connection conWithF) throws Exception {
-	ArrayList<Object> parameters = new ArrayList<>();
-	
-	parameters.add(userId);
-	parameters.add(rawmaterialId);
-	insertUpdateDuablDB("UPDATE raw_material_master  SET activate_flag=0,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
-			parameters, conWithF);
-	return "Raw Material updated Succesfully";
-}
+	public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName, String updatedBy)
+			throws Exception {
 
-		
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(rawmaterialName);
+		parameters.add(updatedBy);
+
+		parameters.add(rawmaterialId);
+
+		insertUpdateDuablDB(
+				"UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
+				parameters, con);
+		return "Raw Material updated Succesfully";
+
+	}
+
+	public String deleteRawMaterial(long rawmaterialId, String userId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(userId);
+		parameters.add(rawmaterialId);
+		insertUpdateDuablDB(
+				"UPDATE raw_material_master  SET activate_flag=0,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
+				parameters, conWithF);
+		return "Raw Material updated Succesfully";
+	}
 
 	public long saveSnacksInvoice(HashMap<String, Object> hm, Connection con) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		parameters.add(hm.get("invoice_id"));
-
 
 		String insertQuery = "INSERT INTO snacks_invoice_status\r\n"
 				+ "VALUES(default, ?, 0);";
@@ -7325,34 +7320,36 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
 
-	// public List<LinkedHashMap<String, Object>> getInwardRegister(String fromDate,String toDate,Connection con, List<LinkedHashMap<String, Object>> hm)
-	// 					throws SQLException, ClassNotFoundException, ParseException {
-	
-	// 				ArrayList<Object> parameters = new ArrayList<>();
-	// 				parameters.add((getDateASYYYYMMDD(fromDate)));
-	// 				parameters.add((getDateASYYYYMMDD(toDate)));
-	// 				parameters.add(hm.get("app_id"));
+	// public List<LinkedHashMap<String, Object>> getInwardRegister(String
+	// fromDate,String toDate,Connection con, List<LinkedHashMap<String, Object>>
+	// hm)
+	// throws SQLException, ClassNotFoundException, ParseException {
 
-	// 				return getListOfLinkedHashHashMap(parameters,
-	// 				"select * from trn_invoice_register tir left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ?",
-							
-	// 						con); 
-	// 			}
+	// ArrayList<Object> parameters = new ArrayList<>();
+	// parameters.add((getDateASYYYYMMDD(fromDate)));
+	// parameters.add((getDateASYYYYMMDD(toDate)));
+	// parameters.add(hm.get("app_id"));
+
+	// return getListOfLinkedHashHashMap(parameters,
+	// "select * from trn_invoice_register tir left outer join snacks_invoice_status
+	// sis ON tir.invoice_id = sis.invoice_id WHERE tir.app_id = ? AND
+	// sis.curr_status = 0 AND tir.invoice_date BETWEEN ? AND ?",
+
+	// con);
+	// }
 
 	public List<LinkedHashMap<String, Object>> getPendingRegister(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
-		
 
+		return getListOfLinkedHashHashMap(parameters,
+				"select *,Round(sum(qty),0)  totalQty from trn_invoice_register tir " +
+						"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
+						"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
+						"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
+						"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.activate_flag=1 group by tir.invoice_id ",
 
-				return getListOfLinkedHashHashMap(parameters,
-			"select *,Round(sum(qty),0)  totalQty from trn_invoice_register tir "+
-			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
-			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
-			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.activate_flag=1 group by tir.invoice_id ",
-							
 				con);
 	}
 
@@ -7360,16 +7357,14 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
-		
 
+		return getListOfLinkedHashHashMap(parameters,
+				"select *,round(sum(qty),0) totalQty from trn_invoice_register tir " +
+						"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
+						"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
+						"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
+						"WHERE tir.app_id = ?  AND sis.curr_status = 1  AND tir.activate_flag=1 group by tir.invoice_id ",
 
-				return getListOfLinkedHashHashMap(parameters,
-			"select *,round(sum(qty),0) totalQty from trn_invoice_register tir "+
-			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
-			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
-			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 1  AND tir.activate_flag=1 group by tir.invoice_id ",
-							
 				con);
 	}
 
@@ -7379,16 +7374,14 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		parameters.add(hm.get("app_id"));
 		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
-		
 
+		return getListOfLinkedHashHashMap(parameters,
+				"select *,sum(qty) totalQty from trn_invoice_register tir " +
+						"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
+						"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
+						"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
+						"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
 
-				return getListOfLinkedHashHashMap(parameters,
-			"select *,sum(qty) totalQty from trn_invoice_register tir "+
-			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
-			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
-			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
-							
 				con);
 	}
 
@@ -7398,36 +7391,30 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		parameters.add(hm.get("app_id"));
 		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
-		
 
+		return getListOfLinkedHashHashMap(parameters,
+				"select *,sum(qty) totalQty from trn_invoice_register tir " +
+						"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
+						"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
+						"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
+						"WHERE tir.app_id = ?   AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
 
-				return getListOfLinkedHashHashMap(parameters,
-			"select *,sum(qty) totalQty from trn_invoice_register tir "+
-			"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id "+
-			"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id "+
-			"left outer join mst_customer cust ON cust.customer_id = tir.customer_id "+
-			"WHERE tir.app_id = ?   AND tir.invoice_date BETWEEN ? AND ? group by tir.invoice_id AND tir.activate_flag=1",
-							
 				con);
 	}
 
-    
 	public long moveToPending(String invoiceId, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(invoiceId);
 		String insertQuery = "update snacks_invoice_status set curr_status=0 where invoice_id=?";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
-	}	
-
+	}
 
 	public long moveToPlanning(String invoiceId, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(invoiceId);
 		String insertQuery = "update snacks_invoice_status set curr_status=1 where invoice_id=?";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
-	}			
-
-	
+	}
 
 	public long moveToDone(String invoiceId, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7436,64 +7423,63 @@ public String deleteRawMaterial(long rawmaterialId,String userId, Connection con
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
 
-    public void saveTodaysStock(String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con) throws SQLException, ParseException {
+	public void saveTodaysStock(String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con)
+			throws SQLException, ParseException {
 
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		String insertQuery = "delete from trn_todays_stock_snacks where stock_date=?";
 		parameters.add(getDateASYYYYMMDD(stockDate));
 		insertUpdateDuablDB(insertQuery, parameters, con);
-		
-		for(HashMap<String,Object> hm: itemListRequired)
-		{
-		parameters = new ArrayList<>();
-		parameters.add(hm.get("item_id"));
-		parameters.add(hm.get("qty"));
-		parameters.add(getDateASYYYYMMDD(stockDate));
-		insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
-		insertUpdateDuablDB(insertQuery, parameters, con);
+
+		for (HashMap<String, Object> hm : itemListRequired) {
+			parameters = new ArrayList<>();
+			parameters.add(hm.get("item_id"));
+			parameters.add(hm.get("qty"));
+			parameters.add(getDateASYYYYMMDD(stockDate));
+			insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
+			insertUpdateDuablDB(insertQuery, parameters, con);
 		}
-    }
+	}
 
-	
-	public List<LinkedHashMap<String, Object>> getTodaysStockRegister(String toDate,Connection con)
-	throws SQLException, ClassNotFoundException, ParseException {
-	ArrayList<Object> parameters = new ArrayList<>();
-	parameters.add((getDateASYYYYMMDD(toDate)));
-	return getListOfLinkedHashHashMap(parameters,
-		"select * from trn_todays_stock_snacks ttss,mst_items mi where mi.item_id=ttss.item_id  and stock_date=?",
-		
-		con); 
-}
+	public List<LinkedHashMap<String, Object>> getTodaysStockRegister(String toDate, Connection con)
+			throws SQLException, ClassNotFoundException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add((getDateASYYYYMMDD(toDate)));
+		return getListOfLinkedHashHashMap(parameters,
+				"select * from trn_todays_stock_snacks ttss,mst_items mi where mi.item_id=ttss.item_id  and stock_date=?",
 
-    public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con,String appId) throws ClassNotFoundException, SQLException {
-        ArrayList<Object> parameters = new ArrayList<>();
+				con);
+	}
+
+	public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con, String appId)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(appId);
-	return getListOfLinkedHashHashMap(parameters,
-		"select city,mc.customer_id,customer_name  from trn_invoice_register tir "+
-		"inner join mst_customer mc on mc.customer_id =tir.customer_id \r\n" + //
-		"inner join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id \r\n" + //
+		return getListOfLinkedHashHashMap(parameters,
+				"select city,mc.customer_id,customer_name  from trn_invoice_register tir " +
+						"inner join mst_customer mc on mc.customer_id =tir.customer_id \r\n" + //
+						"inner join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id \r\n" + //
 						"where tir.app_id=? and sis.curr_status=1",
-		con); 
-    }
+				con);
+	}
 
-    public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date,String appId, Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
+	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date, String appId,
+			Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(getDateASYYYYMMDD(date));
 		parameters.add(appId);
-		
-	return getListOfLinkedHashHashMap(parameters,
-		"select\n" + 
-"item_name,mi.item_id ,ttss.qty\n" + 
-"from\n" + 
-"mst_items mi\n" + 
-"left outer join trn_todays_stock_snacks ttss on\n" + 
-"ttss.item_id = mi.item_id and ttss.stock_date =?\n" + 
-"where \n" + 
-" mi.app_id =? ",
-conWithF); 
-    }
 
-	
+		return getListOfLinkedHashHashMap(parameters,
+				"select\n" +
+						"item_name,mi.item_id ,ttss.qty\n" +
+						"from\n" +
+						"mst_items mi\n" +
+						"left outer join trn_todays_stock_snacks ttss on\n" +
+						"ttss.item_id = mi.item_id and ttss.stock_date =?\n" +
+						"where \n" +
+						" mi.app_id =? ",
+				conWithF);
+	}
 
 }

@@ -686,7 +686,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId,qty)
 	    	
 	    	//console.log(itemDetails);
 	    	var table = document.getElementById("tblitems");	    	
-	    	var row = table.insertRow(1);	    	
+	    	var row = table.insertRow(-1);	    	
 	    	var cell1 = row.insertCell(0);
 	    	var cell2 = row.insertCell(1);
 	    	
@@ -1115,20 +1115,15 @@ if("${invoiceDetails.invoice_id}"!="")
 	
 
 		<c:forEach items="${itemList}" var="allItems">
-			<c:forEach items="${invoiceDetails.listOfItems}" var="orderItem">
 
-				<c:if test="${allItems.item_name eq orderItem.item_name}">
+			
 					txtitem.value="${allItems.item_name}";
-					checkforMatchItem("${orderItem.qty}");
-				</c:if>
+					checkforMatchItem("${allItems.qty}");
 
-				<c:if test="${allItems.item_name ne orderItem.item_name}">
-					txtitem.value="${allItems.item_name}";
-					checkforMatchItem(0);
-				</c:if>
+
+				
 
 			</c:forEach>
-		</c:forEach>
 
 	calculateTotal();
 	

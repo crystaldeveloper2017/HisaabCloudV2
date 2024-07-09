@@ -1429,8 +1429,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				outputMap.put("listUniqueModelNo", lObjConfigDao.getUniqueModelNoForThisApp(con, appId));
 			}
 
+		
+
+
 			if (appType.equals("Battery")) {
 				outputMap.put("vehicleMaster", lObjConfigDao.getListOfUniqueVehicleName(con, appId));
+			}
+
+			if (appType.equals("SnacksProduction") && invoiceId!=null) {
+				outputMap.put("itemList", lObjConfigDao.getListOfItemsForSnacksProduction(invoiceId,appId,con));
 			}
 
 			rs.setViewName("../GenerateInvoice" + appType + ".jsp");
