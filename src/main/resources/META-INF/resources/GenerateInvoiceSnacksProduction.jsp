@@ -1,14 +1,40 @@
 <style>
 
 
-	th
-	{
-		vertical-align:middle!important;
-	}
-	td
-	{
-		vertical-align:middle!important;
-	}
+
+
+
+
+
+	 .table th:first-child,
+    .table td:first-child {
+        width: 70%; /* 70% width for the first column */
+		border: 1px solid #000000; /* Dark black border */
+        padding: 8px; /* Padding around content */
+        text-align: left;
+		vertical-align:middle;
+		border-left-width:medium!important;
+		border-right-width:medium!important;
+		border-top-width:medium!important;
+		border-bottom-width:medium!important;
+
+		
+    }
+
+    .table th:last-child,
+    .table td:last-child {
+        width: 30%; /* 30% width for the second column */
+		border: 1px solid #000000; /* Dark black border */
+        padding: 8px; /* Padding around content */
+        text-align: left;
+		vertical-align:middle;
+		border-left-width:medium!important;
+		border-right-width:medium!important;
+		border-top-width:medium!important;
+		border-bottom-width:medium!important;
+
+		
+    }
 	
 
 </style>
@@ -351,17 +377,11 @@ function generateOrderReport()
 
 
     <div class="ui-widget" style="width:92%">
-	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" name="txtsearchcustomer" >
+	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" onclick="checkIfReadonlyThenReset()" name="txtsearchcustomer" >
 	</div>
                   
                   
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
-                  </span>
                   
-                  <span class="input-group-append">
-                    <button type="button" class="btn btn-primary btn-flat" onclick="addCustomer()">Add</button>
-                  </span>
     </div>
   	
   	
@@ -384,7 +404,7 @@ function generateOrderReport()
   
   
   <div class="col-sm-12">  
-	  <div class="card-body table-sm table-responsive p-0" style="height: 370px;">                
+	  <div class=" table-sm table-responsive p-0" style="height: 370px;">                
 	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center" style="font-size:10px">
@@ -443,11 +463,14 @@ function generateOrderReport()
 	  	   
 	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
 
+	   <c:if test="${param.invoice_id ne null}">
+			<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>   
+	   </c:if>
 
-	<c:if test="${param.editInvoice eq 'N'}">
-		<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>
-		<button class="btn btn-success" type="button" id="btnorder" onclick='showEditInvoice()'>Edit Invoice</button>   
-	</c:if>
+	   <c:if test="${param.editInvoice eq 'N'}">
+	   		<button class="btn btn-success" type="button" id="btnorder" onclick='showEditInvoice()'>Edit Invoice</button>   
+
+	   </c:if>
 
 	   
    </div>
@@ -582,8 +605,8 @@ function checkforMatchCustomer()
 		}
 	if(customerId!=0)
 		{
-			document.getElementById("hdnSelectedCustomer").value=customerId;			
-			document.getElementById("txtsearchcustomer").disabled=true;			
+			document.getElementById("hdnSelectedCustomer").value=customerId;
+			document.getElementById("txtsearchcustomer").readOnly=true;
 			document.getElementById("hdnSelectedCustomerType").value=document.getElementById("txtsearchcustomer").value.split("~")[2];
 			
 		}
@@ -700,7 +723,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId,qty)
 	    	
 	    	
 	    	
-	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+" <span style='font-size:12px'>"+ itemDetails[0] + "</span> </div>";
+	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+" <span>"+ itemDetails[0] + "</span> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
 	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="'+qty+'"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'></div>';
@@ -840,12 +863,7 @@ $("#divBackButton").attr("href", "https://www.w3schools.com/jquery/");
 
 
 $( "#txtinvoicedate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-
-
-		populateItems();
-	
-	
-
+populateItems();
 	
 	
 function returnThisItem(detailsId)
@@ -854,7 +872,7 @@ function returnThisItem(detailsId)
 }
 function resetCustomer()
 {
-	txtsearchcustomer.disabled=false;
+	txtsearchcustomer.readOnly=false;
 	txtsearchcustomer.value="";
 	hdnSelectedCustomer.value=0;	
 }
@@ -1199,7 +1217,7 @@ $( function() {
   function onfoctext()
    {
               $("#txtsearchcustomer").autocomplete("search", "~");
-   }
+              }
 
 
 
@@ -1212,6 +1230,13 @@ $( function() {
 
 
  
-
+function checkIfReadonlyThenReset()
+{
+	
+	if(txtsearchcustomer.readOnly)
+	{
+		resetCustomer();
+	}
+}
 
 </script>
