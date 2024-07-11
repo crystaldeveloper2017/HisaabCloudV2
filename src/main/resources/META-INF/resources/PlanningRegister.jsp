@@ -1,349 +1,147 @@
 <style>
-	.date_field {position: relative; z-index:1000;}
-	.ui-datepicker{position: relative; z-index:1000!important;}
+    .date_field { position: relative; z-index: 1000; }
+    .ui-datepicker { position: relative; z-index: 1000!important; }
+    .center-checkbox { text-align: center; } /* CSS to center align checkboxes */
 </style>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-
 <c:set var="message" value='${requestScope["outputObject"].get("message")}' />
 <c:set var="lstPlanningRegister" value='${requestScope["outputObject"].get("lstPlanningRegister")}' />
 
-
-
-
-
-
 <br>
 
- <div class="card">
- 
-
-	
-          
-                
-              
-              
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 600px;">                
-                <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                
-                 
-                    <tr align="center">  
-				             
-				
-					
-<th ><b>Todays Planning</b></th>
-                     
-                     
+<div class="card">
+    <div class="card-body table-responsive p-0" style="height: 600px;">
+        <table id="example1" class="table table-head-fixed table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+            <thead>
+                <tr align="center">
+                    <th><input type="checkbox" id="selectAllCheckbox" onclick="toggleAllCheckboxes(this)"></th>
+                    <th><b>Todays Planning</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${lstPlanningRegister}" var="pendData">
+                    <tr>
+                        <td class="center-checkbox"> <!-- Apply center alignment here -->
+                            <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
+                        </td>
+                        <td>
+                            <a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}&editInvoice=N">${pendData.city} (${pendData.totalQty}) </a>
+                        </td>
                     </tr>
-                  </thead>
-                  <tbody>
-				<c:forEach items="${lstPlanningRegister}" var="pendData">
-					<tr >
-					  
-					  
-					  
-					             
-							<td >
-													
-									
-  <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
-		<a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}"> ${pendData.city} (${pendData.totalQty}) </a>
-
-								
-							</td>
-					
-					
-
-					  
-					  
-						
-					</tr>
-				</c:forEach>
-				
-				
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-             
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
-            
-            
-      <div class="col-sm-12">
-  	 <div class="form-group" align="center">	  
-	   	<button class="btn btn-success" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='generateOrderReport()'>Generate Order Form</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>   
-		<button class="btn btn-success" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>   
-		
-		<button class="btn btn-success" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>   
-	   
-	   
-	   
-	  	   
-	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
-   </div>
-   </div>
-  
-</div> 
-            
-   
 
-<script >
+<div class="col-sm-12">
+    <div class="form-group" align="center">
+        <button class="btn btn-success" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>
+        <button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>
+        <button class="btn btn-success" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>
+        <button class="btn btn-success" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>
+        <button class="btn btn-success" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>
 
+        <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+    </div>
+</div>
 
-function deleteInvoice(invoice_id)
-{
-	
-	var answer = window.confirm("Are you sure you want to delete ?");
-	if (!answer) 
-	{
-		return;    
-	}
+<script>
+    // JavaScript function to toggle all checkboxes based on select all checkbox
+    function toggleAllCheckboxes(selectAllCheckbox) {
+        var checkboxes = document.getElementsByName('namecheckboxes');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = selectAllCheckbox.checked;
+        }
+    }
 
-	
-	  
-
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-	      
-		  toastr["success"](xhttp.responseText);
-	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-	    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
-	    	
-	    	window.location.reload();
-	      
-		  
-		}
-	  };
-	  xhttp.open("GET","?a=deleteInvoice&invoiceId="+invoice_id+"&type=S&store_id=${userdetails.store_id}", true);    
-	  xhttp.send();
-}
-
-
-  $(function () {
-    
-    $('#example1').DataTable({
-      "paging": true,      
-      "lengthChange": false,
-      "searching": false,      
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-      "pageLength": 100,
-      "order": [[ 2, 'desc' ]]
-
-    });
-  });
-
-
-  
-  
-  
-  
-  function exportSalesRegister2()
-  {
-	try
-	{
-	
-		window.open("?a=exportSalesRegister2&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&customerId="+hdnSelectedCustomer.value);
-		return;
-		
-	  var xhttp = new XMLHttpRequest();
-		  xhttp.onreadystatechange = function() 
-		  {
-		    if (xhttp.readyState == 4 && xhttp.status == 200) 
-		    { 		      
-		    	//window.location="BufferedImagesFolder/"+xhttp.responseText;
-		    	window.open("BufferedImagesFolder/"+xhttp.responseText,'_blank','height=500,width=500,status=no, toolbar=no,menubar=no,location=no');
-			}
-		  };
-		  xhttp.open("GET","?a=exportSalesRegister2", true);    
-		  xhttp.send();
-	}
-	catch(ex)
-	{
-		alert(ex.message);
-	}
-  }
-  
-  
-  
- 
-  //document.getElementById("divTitle").innerHTML="Todays Planning ";
-  //document.title +=" Todays Planning";
-
-
-  
-        $(document).ready(function() {
-            $('.table tbody tr').click(function(event) {
-                // Avoid checking/unchecking when clicking directly on the checkbox
-                if (!$(event.target).is('.row-checkbox')) {
-                    var checkbox = $(this).find('.row-checkbox');
-                    checkbox.prop('checked', !checkbox.prop('checked'));
-                }
-            });
+    $(function () {
+        $('#example1').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "pageLength": 100,
+            "order": [[2, 'desc']]
         });
+    });
 
+    function moveToPending() {
+        var checkboxes = document.getElementsByName("namecheckboxes");
+        var requiredInvoiceIds = "";
 
-		function moveToPending()
-		{
-			var checkbxos=document.getElementsByName("namecheckboxes");
-			var requiredInvoiceIds="";
+        for (var k = 0; k < checkboxes.length; k++) {
+            if (checkboxes[k].checked == true) {
+                requiredInvoiceIds += checkboxes[k].id + "~";
+            }
+        }
 
-			for(var k=0;k<checkbxos.length;k++)
-			{
-				if(checkbxos[k].checked==true)
-				{
-					
-					requiredInvoiceIds+=checkbxos[k].id+"~";
-				}
-			}
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                alert(xhttp.responseText);
+                window.location = "?a=showHomePage";
+            }
+        };
+        xhttp.open("GET", "?a=moveToPending&invoiceIds=" + requiredInvoiceIds, true);
+        xhttp.send();
+    }
 
-			
+    function moveToDone() {
+        var checkboxes = document.getElementsByName("namecheckboxes");
+        var requiredInvoiceIds = "";
 
-			var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
+        for (var k = 0; k < checkboxes.length; k++) {
+            if (checkboxes[k].checked == true) {
+                requiredInvoiceIds += checkboxes[k].id + "~";
+            }
+        }
 
-	    	  toastr["success"](xhttp.responseText);
-		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
-		    	
-		    	window.location.reload();
-	      
-		  
-		}
-	  };
-	  xhttp.open("GET","?a=moveToPending&invoiceIds="+requiredInvoiceIds, true);    
-	  xhttp.send();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                alert(xhttp.responseText);
+                window.location = "?a=showHomePage";
+            }
+        };
+        xhttp.open("GET", "?a=movetoDone&invoiceIds=" + requiredInvoiceIds, true);
+        xhttp.send();
+    }
 
+    function fryPlanning() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                window.open("BufferedImagesFolder/" + xhttp.responseText);
+            }
+        };
+        xhttp.open("GET", "?a=generatefryPlanning", false);
+        xhttp.send();
+    }
 
+    function generateReadingReport() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                window.open("BufferedImagesFolder/" + xhttp.responseText);
+            }
+        };
+        xhttp.open("GET", "?a=generateReadingReport", false);
+        xhttp.send();
+    }
 
-			
-
-		}
-
-		function moveToDone()
-		{
-			var checkbxos=document.getElementsByName("namecheckboxes");
-			var requiredInvoiceIds="";
-
-			for(var k=0;k<checkbxos.length;k++)
-			{
-				if(checkbxos[k].checked==true)
-				{
-					
-					requiredInvoiceIds+=checkbxos[k].id+"~";
-				}
-			}
-
-			
-
-			var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-
-	    	  toastr["success"](xhttp.responseText);
-		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
-		    	
-		    	window.location.reload();
-	      
-		  
-		}
-	  };
-	  xhttp.open("GET","?a=movetoDone&invoiceIds="+requiredInvoiceIds, true);    
-	  xhttp.send();
-
-
-
-			
-
-		}
-
-
-	function fryPlanning()
-{
-	
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-	    	//alert(xhttp.responseText);
-	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
-		}
-	  };
-	  xhttp.open("GET","?a=generatefryPlanning", false);    
-	  xhttp.send();
-}
-
-function generateReadingReport()
-{
-	
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-	    	//alert(xhttp.responseText);
-	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
-		}
-	  };
-	  xhttp.open("GET","?a=generateReadingReport", false);    
-	  xhttp.send();
-}
-
-function generateOrderReport()
-{
-	
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-	    	//alert(xhttp.responseText);
-	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
-		}
-	  };
-	  xhttp.open("GET","?a=generateOrderReport", false);    
-	  xhttp.send();
-}
-  function makaiPlanning()
-  
-  {
-	
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-	    	//alert(xhttp.responseText);
-	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
-		}
-	  };
-	  xhttp.open("GET","?a=generatemakaiPlanning", false);    
-	  xhttp.send();
-  }
-	
-  
-
-</script> 
+    function makaiPlanning() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                window.open("BufferedImagesFolder/" + xhttp.responseText);
+            }
+        };
+        xhttp.open("GET", "?a=generatemakaiPlanning", false);
+        xhttp.send();
+    }
+</script>

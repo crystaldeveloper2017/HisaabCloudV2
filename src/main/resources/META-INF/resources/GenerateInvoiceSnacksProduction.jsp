@@ -127,16 +127,8 @@ function saveInvoice()
 	      			return;
 	      		}
 	      	
-	      	
-	      	
-	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
-	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-	    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
-	    	}
-	    	//window.location.reload();
-	    	btnsave.disabled=false;
+	      	alert("Invoice Saved Succesfully "+invoiceId[0]);
+			window.location="?a=showPendingRegister";
 	      	
 	      	
 	      	
@@ -251,6 +243,11 @@ function deleteAttachment(id)
 		
 }
 
+
+function showEditInvoice()
+{
+	window.location="?a=showGenerateInvoice&invoice_id=${param.invoice_id}&editInvoice=Y";
+}
 
 function generateOrderReport()
 {
@@ -445,7 +442,12 @@ function generateOrderReport()
 	   
 	  	   
 	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
-		<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>   
+
+
+	<c:if test="${param.editInvoice eq 'N'}">
+		<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>
+		<button class="btn btn-success" type="button" id="btnorder" onclick='showEditInvoice()'>Edit Invoice</button>   
+	</c:if>
 
 	   
    </div>
@@ -1104,7 +1106,7 @@ function checkforLengthAndEnableDisable()
 function populateItems()
 {
 
-if("${invoiceDetails.invoice_id}"!="")
+if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="Y")
 {
 	
 	txtsearchcustomer.value="${invoiceDetails.customer_name}";
@@ -1115,27 +1117,39 @@ if("${invoiceDetails.invoice_id}"!="")
 	
 
 		<c:forEach items="${itemList}" var="allItems">
-
-			
-					txtitem.value="${allItems.item_name}";
-					checkforMatchItem("${allItems.qty}");
-
-
-				
-
-			</c:forEach>
+						txtitem.value="${allItems.item_name}";
+						checkforMatchItem("${allItems.qty}");
+		</c:forEach>
 
 	calculateTotal();
 	
 }
-else
+else if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="N")
 {
+
+	txtsearchcustomer.value="${invoiceDetails.customer_name}";
+	txtsearchcustomer.disabled=true;
+	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
+	txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
+
 	<c:forEach items="${itemList}" var="item">
-		txtitem.value="${item.item_name}";
-		checkforMatchItem(0);
+	
+		<c:if test="${item.qty ne null}">
+			txtitem.value="${item.item_name}";
+			checkforMatchItem("${item.qty}");
+		</c:if>
+	</c:forEach>
+} else
+{
+
+
+	<c:forEach items="${itemList}" var="item">
+		
+			txtitem.value="${item.item_name}";
+			checkforMatchItem("0");
+		
 	</c:forEach>
 }
-return;
 
 
 	   	   	
@@ -1185,7 +1199,7 @@ $( function() {
   function onfoctext()
    {
               $("#txtsearchcustomer").autocomplete("search", "~");
-              }
+   }
 
 
 

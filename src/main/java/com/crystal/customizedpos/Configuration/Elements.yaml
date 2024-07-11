@@ -541,3 +541,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showOrderHistory"
   orderNo: 1
+- elementId: 700217
+  elementName: "Item Ordering"
+  parentElementId: 700132
+  elementUrl: "?a=showItemOrdering"
+  orderNo: 1

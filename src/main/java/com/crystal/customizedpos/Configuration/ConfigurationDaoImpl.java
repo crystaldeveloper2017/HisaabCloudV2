@@ -83,9 +83,16 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 	public HashMap<String, String> getPendingOrdersCount(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
 		ArrayList<Object> parameters = new ArrayList<>();
+		
+String query="select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=0 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1";
 
+if(hm.get("user_id")!=null)
+		{
+			query+=" and tir.updated_by=? ";
+			parameters.add(hm.get("user_id"));
+		}
 		return getMap(parameters,
-				"select count(*) from snacks_invoice_status sis,trn_invoice_register tir where curr_status=0 and tir.invoice_id=sis.invoice_id and tir.activate_flag=1",
+		query,
 				con);
 	}
 
@@ -244,7 +251,7 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 			query += " and parent_category_id=? ";
 		}
 		query += " group by item.item_id";
-		query += " order by item_name";
+		query += " order by item.order_no";
 		return getListOfLinkedHashHashMap(parameters, query, con);
 	}
 
@@ -4469,25 +4476,22 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getListOfLinkedHashHashMap(parameters, query, con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getListOfItemsForSnacksProduction(String invoiceId,String appId,Connection con)
+	public List<LinkedHashMap<String, Object>> getListOfItemsForSnacksProduction(String invoiceId, String appId,
+			Connection con)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(invoiceId);
 		parameters.add(appId);
-		
-		
-		String query = "select\n" + 
-"*\n" + 
-"from\n" + 
-"mst_items mi left outer join trn_invoice_details tid on tid.item_id =mi.item_id   and tid.invoice_id=?\n" + 
-"where mi.app_id =? and mi.activate_flag =1 order by order_no\n";
 
-		
+		String query = "select\n" +
+				"*\n" +
+				"from\n" +
+				"mst_items mi left outer join trn_invoice_details tid on tid.item_id =mi.item_id   and tid.invoice_id=?\n"
+				+
+				"where mi.app_id =? and mi.activate_flag =1 order by order_no\n";
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
 	}
-
-	
 
 	public List<LinkedHashMap<String, Object>> getItemMasterForGenerateInvoiceType1(HashMap<String, Object> hm,
 			Connection con)
@@ -6160,6 +6164,19 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
 
+	public long addItemOrdering(Connection conWithF, HashMap<String, String> hm) throws SQLException, ParseException {
+
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(hm.get("item_order_no"));
+		parameters.add(hm.get("user_id"));
+		parameters.add(hm.get("item_id"));
+
+		String insertQuery = "update mst_items set order_no=?,updated_by=?,updated_date=sysdate() where item_id=?";
+
+		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
+	}
+
 	public long addConfigureLR(Connection conWithF, HashMap<String, String> hm) throws SQLException, ParseException {
 
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7343,14 +7360,18 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
 
-		return getListOfLinkedHashHashMap(parameters,
-				"select *,Round(sum(qty),0)  totalQty from trn_invoice_register tir " +
-						"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
-						"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
-						"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
-						"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.activate_flag=1 group by tir.invoice_id ",
+		String query = "select *,Round(sum(qty),0)  totalQty from trn_invoice_register tir " +
+				"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
+				"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
+				"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
+				"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.activate_flag=1 ";
+		if (hm.get("user_id") != null) {
+			query += " and tir.updated_by=? ";
+			parameters.add(hm.get("user_id"));
+		}
+		query += " group by tir.invoice_id ";
 
-				con);
+		return getListOfLinkedHashHashMap(parameters, query, con);
 	}
 
 	public List<LinkedHashMap<String, Object>> getPlanningRegister(HashMap<String, Object> hm, Connection con)

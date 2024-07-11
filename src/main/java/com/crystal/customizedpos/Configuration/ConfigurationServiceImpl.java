@@ -1379,14 +1379,14 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				hm.put("customer_name", lst.get(0).get("customer_name"));
 				outputMap.put("invoiceDetails", hm);
 			}
-
+			outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
 			if (invoiceId == null) {
 
 				outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
 				outputMap.put("todaysDateMinusOneMonth", lObjConfigDao.getDateFromDBMinusOneMonth(con));
 				outputMap.put("tentativeSerialNo",
 						lObjConfigDao.getTentativeSequenceNo(appId, "trn_invoice_register", con));
-				outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
+				
 			}
 
 			// outputMap.put("itemList",
@@ -1727,6 +1727,31 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			rs.setAjaxData("App Created Succesfully");
 
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	
+
+	public CustomResultObject showItemOrdering(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+
+		String app_type = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		outputMap.put("app_type", app_type);
+
+		try {
+
+			outputMap.put("itemList", lObjConfigDao.getItemMaster(outputMap, con));
+			
+			rs.setViewName("../ItemOrdering.jsp");
+			rs.setReturnObject(outputMap);
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
@@ -9317,6 +9342,38 @@ outputMap.put("txttodate",toDate);
 
 	}
 
+
+	public CustomResultObject saveItemOrdering(HttpServletRequest request, Connection con)
+			throws SQLException, ParseException, ClassNotFoundException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, String> hm = new HashMap<String, String>();
+
+		String itemString = request.getParameter("itemString");
+	
+
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		hm.put("user_id", userId);
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		hm.put("app_id", appId);
+
+		
+
+		String[] itemStringArr = itemString.split("\\|");
+		for (String s : itemStringArr) {
+			String[] item = s.split("~");
+			hm.put("item_id", item[0]);
+			hm.put("item_order_no", item[1]);
+			lObjConfigDao.addItemOrdering(con, hm);
+
+		}
+
+		rs.setAjaxData("Data saved Succesfully");
+		return rs;
+
+	}
+
+
 	public CustomResultObject addConfigureLR(HttpServletRequest request, Connection con)
 			throws SQLException, ParseException, ClassNotFoundException {
 		CustomResultObject rs = new CustomResultObject();
@@ -11145,6 +11202,16 @@ public CustomResultObject showPendingRegister(HttpServletRequest request, Connec
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 
+
+
+
+		boolean adminFlag = (Boolean) request.getSession().getAttribute("adminFlag");
+		
+		if(!adminFlag)
+		{
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		outputMap.put("user_id", userId);
+		}
 		
   
 		

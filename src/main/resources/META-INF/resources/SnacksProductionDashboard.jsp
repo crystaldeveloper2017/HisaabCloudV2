@@ -44,6 +44,9 @@ New Order <span class="float-right badge bg-primary"></span>
 Pending Orders <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
 </a>
 </li>
+
+<c:if test="${adminFlag eq true}">
+
 <li class="nav-item" onclick="window.location='?a=showPlanningRegister'">
 <a href="#" class="nav-link">
 Todays Planning <span class="float-right badge bg-success">${HomePageContent.todaysPlanningCount}</span>
@@ -56,11 +59,14 @@ Completed Orders <span class="float-right badge bg-success">${HomePageContent.co
 </li>
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showTodaysStock'">
-Today's Stock  <span class="float-right badge bg-danger">${HomePageContent.todaysStock}</span>
+Today's Stock (${HomePageContent.todaysStock})<span class="float-right badge bg-danger"></span>
 </a>
 </li>
+
+</c:if>
+
 </ul>
-</div>
+</div>  
 </div>
 
 </div>

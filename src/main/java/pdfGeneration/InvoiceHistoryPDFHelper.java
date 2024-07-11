@@ -5077,8 +5077,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		
 		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
 
-		Font font = new Font(base, 9, Font.NORMAL); 
-		Font fontbold = new Font(base, 11, Font.BOLD);
+		Font font = new Font(base, 10, Font.NORMAL); 
+		Font fontbold = new Font(base, 10, Font.BOLD);
 
 
 		
@@ -5090,18 +5090,28 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  writer.setPageEvent(event);
 		document.open();   
 
-		PdfPTable table = new PdfPTable(1);
+		PdfPTable table = new PdfPTable(4);
 		PdfPCell cell;        
-		cell = new PdfPCell(new Phrase("Reading Report",new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD)));	        
-		cell.setBorder(Rectangle.NO_BORDER);
-		
+		table.setWidthPercentage(100);
+		cell = new PdfPCell(new Phrase("Reading Report ",new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD)));	        
+		cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(3);
+		cell.setRowspan(2);
 		table.addCell(cell);	        
-	  document.add(table);
 	  
 
+		cell = new PdfPCell(new Phrase("Print Date - "+cf.getDateFromDB(con),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));	        
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setVerticalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(1);
+		cell.setRowspan(2);
+		table.addCell(cell);	        
+
+
+	  document.add(table);
+
 	  
-	  document.add(new Paragraph("\n"));
 
 	 
 		table = new PdfPTable(16);
@@ -5110,17 +5120,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  table.setWidths(new int[]{5,2,2,2,2,2,2,2,2,2,2,3,2,2,3,3});
 
 
-		  cell = new PdfPCell(new Phrase("Reading Report Print Date ",font));	        	        
-			cell.setColspan(8);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
-
-			cell = new PdfPCell(new Phrase(cf.getDateFromDB(con).toString(),font));	        	        
-			cell.setColspan(8);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        table.addCell(cell);
+		 
 	        
 			
 			 cell = new PdfPCell(new Phrase("ITEM ",font));	        	        
@@ -5198,7 +5198,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			//cell.setColspan(3);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(17);
+			cell.setFixedHeight(20);
 	        table.addCell(cell);
 
 			int totalQty=0;
@@ -5360,7 +5360,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		
 		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
 
-		Font font = new Font(base, 9, Font.NORMAL); 
+		Font font = new Font(base, 10, Font.NORMAL); 
 		Font fontbold = new Font(base, 10, Font.BOLD); 
 		
 
@@ -5373,19 +5373,30 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  writer.setPageEvent(event);
 		document.open();   
 
-		PdfPTable table = new PdfPTable(1);
+		PdfPTable table = new PdfPTable(4);
 		PdfPCell cell;        
-		cell = new PdfPCell(new Phrase("Order Form",new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD)));	        
-		
-		cell.setBorder(Rectangle.NO_BORDER);
-		
+		table.setWidthPercentage(100);
+		cell = new PdfPCell(new Phrase("Order Form ",new Font(Font.FontFamily.TIMES_ROMAN, 20, Font.BOLD)));	        
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		cell.setColspan(3);
+		cell.setRowspan(2);
+		table.addCell(cell);	        
+	  
+
+	  cell = new PdfPCell(new Phrase("Order Date - "+invoiceDetails.get("theInvoiceDate").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));	        
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(cell);	        
+
+		cell = new PdfPCell(new Phrase("Print Date - "+cf.getDateFromDB(con),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD)));	        
+		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		table.addCell(cell);	        
+
+
 	  document.add(table);
 	  
 
 	  
-	  document.add(new Paragraph("\n"));
+	  
 
 	 
 	  
@@ -5399,7 +5410,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			cell.setColspan(1);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(17);
+			cell.setFixedHeight(20);
 	        table.addCell(cell);	
 			
 			cell = new PdfPCell(new Phrase(invoiceDetails.get("customerName").toString() + " ( "+ invoiceDetails.get("customercityname").toString() +" )",font));	        	        
@@ -5423,39 +5434,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);
 
 
-			cell = new PdfPCell(new Phrase("Order Date",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
-
-			cell.setColspan(1);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(17);
-	        table.addCell(cell);	
-
-
-			cell = new PdfPCell(new Phrase(invoiceDetails.get("theInvoiceDate").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
-
-			cell.setColspan(5);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(17);
-	        table.addCell(cell);
 			
-			cell = new PdfPCell(new Phrase("Order Print Date",new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
-
-			cell.setColspan(3);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(17);
-	        table.addCell(cell);	
-
-
-			cell = new PdfPCell(new Phrase(cf.getDateFromDB(con),new Font(Font.FontFamily.TIMES_ROMAN, 8, Font.BOLD)));
-
-			cell.setColspan(3);
-	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(17);
-	        table.addCell(cell);
 	        
 			cell = new PdfPCell(new Phrase("ITEM ",font));	        	        
 			//cell.setColspan(3);
@@ -5704,14 +5683,10 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		BaseFont base = BaseFont.createFont(BufferedImagesFolderPath+"/CALIBRI.TTF", BaseFont.WINANSI, false);
 		
 		Font font14 = new Font(base, 14, Font.NORMAL);
-		Font font14bold = new Font(base, 14, Font.BOLD);
 		
 		Font font12 = new Font(base, 12, Font.NORMAL); 
-		Font font12Bold = new Font(base, 12, Font.BOLD); 
 
-		Font fontnew = new Font(base, 9, Font.NORMAL); 
-		Font fontBold = new Font(base, 9, Font.BOLD);
-
+		
 		
 		int fixedSize=320;
 		Rectangle pagesize = new Rectangle(250, fixedSize+ListOfItemDetails.size()*17);

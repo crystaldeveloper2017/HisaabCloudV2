@@ -38,7 +38,7 @@ public class LoginServiceImpl extends CommonFunctions {
 				List<String> roles = lObjLoginDao.getRoles(user_id, con);				
 				request.getSession().setAttribute("username", Username);
 				request.getSession().setAttribute("userdetails", loginDetails);				
-				boolean isAdmin=roles.contains("SuperAdmin") || roles.contains("Admin") || roles.contains("AdminServices") || roles.contains("AdminJwellery") ||roles.contains("AdminFuel");
+				boolean isAdmin=roles.contains("SuperAdmin") || roles.contains("Admin") || roles.contains("AdminServices") || roles.contains("AdminJwellery") ||roles.contains("AdminFuel")||roles.contains("AdminSnacks");
 				request.getSession().setAttribute("adminFlag", isAdmin);			
 				request.getSession().setAttribute("projectName", projectName);				
 				copyImagesFromDBToBufferFolder(request.getServletContext(),con);
@@ -97,6 +97,9 @@ public class LoginServiceImpl extends CommonFunctions {
 			outputMap.put("categoryDetails", lObjConfiguration.getCategoryCount(outputMap, con).get("count(*)"));
 			
 			outputMap.put("itemDetails", lObjConfiguration.getItems(outputMap, con).get("count(*)"));
+
+			boolean adminFlag = (Boolean) request.getSession().getAttribute("adminFlag");
+
 			
 			String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 			outputMap.putAll(lObjConfiguration.getUserConfigurations(userId, con));
@@ -130,7 +133,11 @@ public class LoginServiceImpl extends CommonFunctions {
 							}
 
 							if(appType.equals("SnacksProduction"))
-							{
+							{							
+								if(adminFlag)
+								{
+									outputMap.put("user_id", null);
+								}
 								outputMap.put("pendingCount", lObjConfiguration.getPendingOrdersCount(outputMap, con).get("count(*)"));
 								outputMap.put("todaysPlanningCount", lObjConfiguration.getPlanningCount(outputMap, con).get("count(*)"));
 								outputMap.put("completedCount", lObjConfiguration.getCompletedCount(outputMap, con).get("count(*)"));
