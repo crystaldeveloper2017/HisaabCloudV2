@@ -11602,6 +11602,48 @@ public CustomResultObject generateOrderReport(HttpServletRequest request, Connec
 	return rs;
 }
 
+public CustomResultObject generateOrderForms(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+
+	
+	
+	String appenders = "OrderForm.pdf";
+	String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolderPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		DestinationPath += appenders;
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String reqinvoiceId= request.getParameter("requiredInvoiceIds");
+		String[] invoiceIds=reqinvoiceId.split("~");
+	
+
+	try {
+
+		List<HashMap<String, Object>> lstReqInvoiceIds=new ArrayList<>();
+		for(String invoiceId:invoiceIds)
+		{
+			HashMap<String, Object> hm=new HashMap<>();
+			hm.put("todaysDate",cf.getDateFromDB(con));
+			hm.put("listOfItems", lObjConfigDao.getOrderFormDetails(con,appId,invoiceId));
+			hm.put("invoiceDetails",lObjConfigDao.getInvoiceDetails(invoiceId, con));
+			lstReqInvoiceIds.add(hm);
+		}
+		
+
+		new InvoiceHistoryPDFHelper().generatePDFForOrdersReport(DestinationPath, BufferedImagesFolderPath,lstReqInvoiceIds, con);
+
+
+		rs.setAjaxData(appenders);
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+
+	return rs;
+}
+
+
+
 public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection con) throws SQLException {
 	CustomResultObject rs = new CustomResultObject();
 

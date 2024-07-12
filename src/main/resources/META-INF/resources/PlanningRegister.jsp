@@ -43,6 +43,7 @@
         <button class="btn btn-success" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>
         <button class="btn btn-success" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>
         <button class="btn btn-success" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>
+        <button class="btn btn-success" type="button" id="btnsave" onclick='generateOrderForms()'>Generate Order Forms</button>
 
         <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
     </div>
@@ -144,4 +145,30 @@
         xhttp.open("GET", "?a=generatemakaiPlanning", false);
         xhttp.send();
     }
+
+    function generateOrderForms() {
+
+        var checkboxes = document.getElementsByName("namecheckboxes");
+        var requiredInvoiceIds = "";
+
+        for (var k = 0; k < checkboxes.length; k++) {
+            if (checkboxes[k].checked == true) {
+                requiredInvoiceIds += checkboxes[k].id + "~";
+            }
+        }
+
+      
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                window.open("BufferedImagesFolder/" + xhttp.responseText);
+            }
+        };
+        xhttp.open("GET", "?a=generateOrderForms&requiredInvoiceIds="+requiredInvoiceIds, false);
+        xhttp.send();
+    }
+
+    
 </script>
