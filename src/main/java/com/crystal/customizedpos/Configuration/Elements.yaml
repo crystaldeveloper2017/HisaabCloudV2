@@ -546,3 +546,48 @@ elements:
   parentElementId: 700132
   elementUrl: "?a=showItemOrdering"
   orderNo: 1
+- elementId: 700218
+  elementName: "Masters"
+  parentElementId: -1
+  elementUrl: ""
+  orderNo: 6
+- elementId: 700219
+  elementName: "Item Master"
+  parentElementId: 700218
+  elementUrl: "?a=showItemMaster"
+  orderNo: 1
+- elementId: 700301
+  elementName: "Category Master"
+  parentElementId: 700218
+  elementUrl: "?a=showCategoryMasterNew"
+  orderNo: 1
+- elementId: 700302
+  elementName: "Raw Material Master"
+  parentElementId: 700218
+  elementUrl: "?a=showRawMaterialsMaster"
+  orderNo: 1
+- elementId: 700303
+  elementName: "Customer Master"
+  parentElementId: 700218
+  elementUrl: "?a=showCustomerMaster"
+  orderNo: 1
+- elementId: 700307
+  elementName: "Item Ordering"
+  parentElementId: 700218
+  elementUrl: "?a=showItemOrdering"
+  orderNo: 1
+- elementId: 700304
+  elementName: "Users"
+  parentElementId: -1
+  elementUrl: ""
+  orderNo: 2
+- elementId: 700305
+  elementName: "Employee Master"
+  parentElementId: 700304
+  elementUrl: "?a=showEmployeeMaster"
+  orderNo: 4
+- elementId: 700306
+  elementName: "User Role Mapping"
+  parentElementId: 700304
+  elementUrl: "?a=showUserRoleMapping"
+  orderNo: 4
