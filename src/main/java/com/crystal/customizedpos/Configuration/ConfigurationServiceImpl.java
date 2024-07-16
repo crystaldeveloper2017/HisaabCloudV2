@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -3939,6 +3940,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("customerDetails", hm);
 			outputMap.put("DistinctCityNames", lObjConfigDao.getDistinctCityNames(appId, con));
 			outputMap.put("groupList", lObjConfigDao.getCustomerGroup(appId, con));
+			outputMap.put("ciphertext",cf.getAESEncryptedString(String.valueOf(customerId) , "PasswordGoesHere@786"));
 
 			rs.setViewName("../AddCustomer.jsp");
 			rs.setReturnObject(outputMap);
@@ -6551,6 +6553,90 @@ outputMap.put("txttodate",toDate);
 		return rs;
 	}
 	
+
+	public CustomResultObject showLedgerForCustomerWithVehicle(HttpServletRequest request, Connection con)
+			throws Exception {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+		String cipherText=request.getParameter("cipher") == null ? "" : request.getParameter("cipher");
+		//cipherText=URLDecoder.decode(cipherText, StandardCharsets.UTF_8.name());
+		String customerId=cf.getPlainTextFromCiper(cipherText, "PasswordGoesHere@786");
+		
+
+		
+
+		// if parameters are blank then set to defaults
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		if (customerId.equals("")) {
+			rs.setViewName("../CustomerLedgerItemVehicleGenerated.jsp");
+			rs.setReturnObject(outputMap);
+			return rs;
+		}
+
+		try {
+
+			String[] colNames = { "transaction_date", "Type", "RefId", "creditDebit", "upd1", "debitAmount",
+					"creditAmount" };
+
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCustomerLedgerItemReport(customerId, fromDate,
+					toDate, con);
+
+			if (!exportFlag.isEmpty()) {
+				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, customerId,
+						"CustomerInvoiceHistory");
+			} else {
+
+				LinkedHashMap<String, Object> totalDetails = gettotalDetailsLedger(lst);
+				Date toDateDate = new SimpleDateFormat("dd/MM/yyyy").parse(fromDate);
+
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(toDateDate);
+				cal.add(Calendar.DATE, -1);
+				toDateDate = cal.getTime();
+
+				toDate = new SimpleDateFormat("dd/MM/yyyy").format(toDateDate);
+				String startOfApplication = "23/01/1992";
+				String pendingAmount = lObjConfigDao
+						.getPendingAmountForThisCustomer(Long.valueOf(customerId), startOfApplication, toDate, con)
+						.get("PendingAmount");
+				Double openingAmount = pendingAmount == null ? 0 : Double.parseDouble(pendingAmount);
+				totalDetails.put("openingAmount", openingAmount);
+				Double totalAmount = openingAmount - Double.parseDouble(totalDetails.get("debitSum").toString())
+						+ Double.parseDouble(totalDetails.get("creditSum").toString());
+
+				totalDetails.put("totalAmount", String.format("%.2f", totalAmount));
+				outputMap.put("totalDetails", totalDetails);
+
+				outputMap.put("ListLedger", lst);
+				outputMap.put("customerDetails", lObjConfigDao.getCustomerDetails(Long.valueOf(customerId), con));
+
+				rs.setViewName("../CustomerLedgerItemVehicleGeneratedGuest.jsp");
+				rs.setReturnObject(outputMap);
+			}
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		rs.setReturnObject(outputMap);
+		return rs;
+	}
 
 	public CustomResultObject showCustomerLedgerWithItem(HttpServletRequest request, Connection con)
 			throws SQLException, ClassNotFoundException {

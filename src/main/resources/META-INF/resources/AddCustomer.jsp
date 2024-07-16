@@ -7,6 +7,9 @@
 <c:set var="customerDetails" value='${requestScope["outputObject"].get("customerDetails")}' />
 <c:set var="groupList" value='${requestScope["outputObject"].get("groupList")}' />
 <c:set var="DistinctCityNames" value='${requestScope["outputObject"].get("DistinctCityNames")}' />
+<c:set var="ciphertext" value='${requestScope["outputObject"].get("ciphertext")}' />
+
+
 
    
 
@@ -168,6 +171,20 @@ function addCustomer()
 	  <input type="text" class="form-control" id="txtgstno" value="${customerDetails.gst_no}" name="txtgstno" placeholder="GST No.">     
     </div>
   </div>
+
+   <div class="col-sm-12">
+  	 <div class="form-group">
+            <label for="textToCopy">Public Ledger Link</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="textToCopy" >
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="copyButton" readonly>
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+  </div>
   
   
   <div class="col-sm-12" align="center">
@@ -225,4 +242,21 @@ function addCustomer()
 	
 
 </script>
+
+  <script>
+        $(document).ready(function() {
+            $('#copyButton').click(function() {
+                var copyText = $('#textToCopy');
+                copyText.select();
+                document.execCommand('copy');
+                alert('Copied the text: ' + copyText.val());
+            });
+        });
+
+	var encodedurl=encodeURIComponent('${ciphertext}');
+	alert(encodedurl);
+
+	document.getElementById("textToCopy").value=window.location.toString().split("?a")[0]+"?a=showLedgerForCustomerWithVehicle&cipher="+encodedurl;
+
+    </script>
 
