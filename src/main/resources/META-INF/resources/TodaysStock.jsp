@@ -1,14 +1,37 @@
+
 <style>
 
 
-	th
-	{
-		vertical-align:middle!important;
-	}
-	td
-	{
-		vertical-align:middle!important;
-	}
+
+
+
+
+
+	 .table th:first-child,
+    .table td:first-child {
+        width: 70%; /* 70% width for the first column */
+		border: 1px solid #000000; /* Dark black border */
+        text-align: left;
+		vertical-align:middle;
+
+		    padding: 0px!important;
+			margin:3px;
+			padding-left:10px!important;
+		
+
+		
+    }
+
+    .table th:last-child,
+    .table td:last-child {
+        width: 30%; /* 30% width for the second column */
+		border: 1px solid #000000; /* Dark black border */
+        text-align: left;
+		vertical-align:middle;
+		padding: 0px!important;
+		margin:3px;
+		
+    }
 	
 
 </style>
@@ -298,7 +321,7 @@ function deleteAttachment(id)
   
   
   <div class="col-sm-12">  
-	  <div class="card-body table-sm table-responsive p-0" style="height: 370px;">                
+	  <div class="card-body table-sm table-responsive p-0" style="height: 800px;">                
 	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center" style="font-size:10px">

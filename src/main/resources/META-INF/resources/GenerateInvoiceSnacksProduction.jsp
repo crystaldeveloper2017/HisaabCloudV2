@@ -10,13 +10,13 @@
     .table td:first-child {
         width: 70%; /* 70% width for the first column */
 		border: 1px solid #000000; /* Dark black border */
-        padding: 8px; /* Padding around content */
         text-align: left;
 		vertical-align:middle;
-		border-left-width:medium!important;
-		border-right-width:medium!important;
-		border-top-width:medium!important;
-		border-bottom-width:medium!important;
+
+		    padding: 0px!important;
+			margin:3px;
+			padding-left:10px!important;
+		
 
 		
     }
@@ -25,14 +25,10 @@
     .table td:last-child {
         width: 30%; /* 30% width for the second column */
 		border: 1px solid #000000; /* Dark black border */
-        padding: 8px; /* Padding around content */
         text-align: left;
 		vertical-align:middle;
-		border-left-width:medium!important;
-		border-right-width:medium!important;
-		border-top-width:medium!important;
-		border-bottom-width:medium!important;
-
+		padding: 0px!important;
+		margin:3px;
 		
     }
 	
@@ -330,7 +326,7 @@ function generateOrderReport()
    <div class="col-sm-4" style="display:none">
   	
     
-    <div class="input-group">
+    <div class="input-group" >
     <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="alert('hellow2')" onchange="alert('hellow1')">
     
   </div>
@@ -339,7 +335,7 @@ function generateOrderReport()
 
 
   <div class="col-2">
-  	<div class="form-group">	
+  	<div class="form-group" style="margin-bottom:0px">	
 	<label for="CustomerName"> Date</label>
   		
   	</div>
@@ -347,7 +343,7 @@ function generateOrderReport()
    
 
   <div class="col-10">
-  	<div class="form-group">	
+  	<div class="form-group" style="margin-bottom:0px">	
 	
   		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
   	</div>
@@ -355,7 +351,7 @@ function generateOrderReport()
 
 
   <div class="col-2">
-  	<div class="form-group">	
+  	<div class="form-group" style="margin-bottom:0px"> 	
 	<label for="CustomerName"> Party</label>
   		
   	</div>
@@ -376,7 +372,7 @@ function generateOrderReport()
   	<div class="input-group input-group-sm">
 
 
-    <div class="ui-widget" style="width:92%">
+    <div class="ui-widget" style="width:100%">
 	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" onclick="checkIfReadonlyThenReset()" name="txtsearchcustomer" >
 	</div>
                   
@@ -404,8 +400,8 @@ function generateOrderReport()
   
   
   <div class="col-sm-12">  
-	  <div class=" table-sm table-responsive p-0" style="height: 370px;">                
-	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+	  <div class=" table-sm table-responsive p-0" >                
+	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center" style="font-size:10px">
 	                     

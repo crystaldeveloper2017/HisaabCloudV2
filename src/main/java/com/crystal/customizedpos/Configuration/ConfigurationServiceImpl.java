@@ -11425,7 +11425,7 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 
 		hm.put("listOfCustomers",listOfCustomers);
 
-		HashMap<String,String> hmDetails=new HashMap<String,String>();
+		LinkedHashMap<String,String> hmDetails=new LinkedHashMap<String,String>();
 		for(LinkedHashMap<String,Object> temp:itemDetailsList)
 		{
 			hmDetails.put(temp.get("theKey").toString(), temp.get("qty").toString());

@@ -5198,7 +5198,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			//cell.setColspan(3);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setFixedHeight(20);
+			cell.setMinimumHeight(20);
 	        table.addCell(cell);
 
 			int totalQty=0;

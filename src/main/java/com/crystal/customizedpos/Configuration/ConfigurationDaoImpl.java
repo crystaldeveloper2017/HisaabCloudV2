@@ -2251,7 +2251,7 @@ if(hm.get("user_id")!=null)
 				"where\n" +
 				"tir.app_id = ?\n" +
 				"and sis.curr_status =1\n" +
-				"group by tid.item_id";
+				"group by tid.item_id order by mi.order_no";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
@@ -7499,7 +7499,7 @@ if(hm.get("user_id")!=null)
 						"left outer join trn_todays_stock_snacks ttss on\n" +
 						"ttss.item_id = mi.item_id and ttss.stock_date =?\n" +
 						"where \n" +
-						" mi.app_id =? ",
+						" mi.app_id =? and mi.activate_flag=1 order by mi.order_no desc",
 				conWithF);
 	}
 
