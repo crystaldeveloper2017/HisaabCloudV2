@@ -7481,7 +7481,7 @@ if(hm.get("user_id")!=null)
 				"select city,mc.customer_id,customer_name  from trn_invoice_register tir " +
 						"inner join mst_customer mc on mc.customer_id =tir.customer_id \r\n" + //
 						"inner join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id \r\n" + //
-						"where tir.app_id=? and sis.curr_status=1",
+						"where tir.app_id=? and sis.curr_status=1 and tir.activate_flag=1 ",
 				con);
 	}
 

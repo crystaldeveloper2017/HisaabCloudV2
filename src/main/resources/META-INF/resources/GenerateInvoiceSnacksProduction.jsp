@@ -1153,6 +1153,7 @@ else if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="N")
 			checkforMatchItem("${item.qty}");
 		</c:if>
 	</c:forEach>
+	calculateTotal();
 } else
 {
 
