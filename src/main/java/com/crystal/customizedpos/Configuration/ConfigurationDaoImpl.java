@@ -428,6 +428,8 @@ if(hm.get("user_id")!=null)
 		valuesMap.put("raw_material_id", itemDetails.get("drprawmaterialid"));
 		valuesMap.put("lds_per_raw_material", itemDetails.get("lds_per_raw_material"));
 		valuesMap.put("packets_in_ld", itemDetails.get("packets_in_ld"));
+		valuesMap.put("packaging_type", itemDetails.get("packaging_type"));
+
 
 		Query q = new Query("mst_items", "insert", valuesMap);
 		return insertUpdateEnhanced(q, con);

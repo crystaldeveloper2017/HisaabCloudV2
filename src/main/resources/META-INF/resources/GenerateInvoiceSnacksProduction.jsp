@@ -456,8 +456,9 @@ function generateOrderReport()
 	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
 	   
 	   
-	  	   
-	   <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+	  	    <c:if test="${param.invoice_id ne null}">
+	   <button class="btn btn-primary"  id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+</c:if>
 
 	   <c:if test="${param.invoice_id ne null}">
 			<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>   
@@ -467,6 +468,7 @@ function generateOrderReport()
 	   		<button class="btn btn-success" type="button" id="btnorder" onclick='showEditInvoice()'>Edit Invoice</button>   
 
 	   </c:if>
+
 
 	   
    </div>

@@ -111,6 +111,8 @@ function deleteItem(itemId)
 
 					<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
 						<th><b>Raw Material</b></th>
+						<th><b>Packaging Type</b></th>
+
 					</c:if>
 					
 					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
@@ -140,6 +142,7 @@ function deleteItem(itemId)
 
 						<c:if test="${userdetails.app_type eq 'SnacksProduction'}">
 							<td>${item.raw_material_name}</td>
+							<td>${item.packaging_type}</td>
 						</c:if>
 						
 						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">

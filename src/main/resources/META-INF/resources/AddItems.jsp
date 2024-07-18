@@ -438,7 +438,12 @@ function deleteAttachment(id)
   </div>
   
 
-	
+	<div class="col-sm-3" id="placeholderforpackagingtype">
+  	<div class="form-group">
+      <label for="packagingtype">Packaging Type *</label>
+  				<select id="packagingType" name="packagingType" class="form-control" >
+  				<option value="12">12</option>
+  				<option value="14">14</option>
   
   <div class="col-sm-12">
   	 <div class="form-group" align="center">
@@ -571,6 +576,7 @@ if("${userdetails.app_type}"=="PetrolPump" || "${userdetails.app_type}"=="Restau
 	{
 	placeholderperrawmaterial.style.display="none";
 		placeholderpacketsinld.style.display="none";
+		placeholderforpackagingtype.style.display="none";
 	}
 
 
