@@ -2280,7 +2280,7 @@ if(hm.get("user_id")!=null)
 				"left outer join mst_category mc on\n" +
 				"mc.category_id = mi.parent_category_id\n" +
 				"where\n" +
-				"tir.app_id = ? \n" +
+				"tir.app_id = ? and tir.activate_flag=1 \n" +
 				"and sis.curr_status = 1\n" +
 				"and mc.category_name = 'Makai'\n" +
 				"group by rmm.raw_material_id;\n";
