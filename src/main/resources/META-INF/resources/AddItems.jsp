@@ -441,9 +441,12 @@ function deleteAttachment(id)
 	<div class="col-sm-3" id="placeholderforpackagingtype">
   	<div class="form-group">
       <label for="packagingtype">Packaging Type *</label>
-  				<select id="packagingType" name="packagingType" class="form-control" >
+  				<select id="packaging_type" name="packaging_type" class="form-control" >
   				<option value="12">12</option>
   				<option value="14">14</option>
+				</select>	
+		</div>
+		</div>
   
   <div class="col-sm-12">
   	 <div class="form-group" align="center">
@@ -467,6 +470,14 @@ function deleteAttachment(id)
 	<c:if test="${itemDetails.item_id ne null}">
 		document.getElementById('drpcategoryId').value='${itemDetails.parent_category_id}';
 		document.getElementById('drpdebitin').value='${itemDetails.debit_in}';
+		document.getElementById('drprawmaterialid').value='${itemDetails.raw_material_id}';
+	document.getElementById('packaging_type').value='${itemDetails.packaging_type}';
+
+
+		
+		
+
+
 		
 	</c:if>
 	<c:if test="${itemDetails.item_id eq null}">
@@ -563,12 +574,34 @@ if("${userdetails.app_type}"=="SnacksProduction")
 		placeholderavailableatstores.style.display="none";
 		placeholderuploadimages.style.display="none";
 		placeholderproductdetails.style.display="none";
-		placeholderQRCode.style.display="none";
-		placeholderBarcode.style.display="none";
+		
 		
 
 		
 		
+	}
+
+	if("${userdetails.app_type}"=="SnacksProduction" && "${itemDetails.item_id}"!="")
+	{
+		placeholderQRCode.style.display="none";
+		placeholderBarcode.style.display="none";
+		placeholderdebitin.style.display="none";
+		placeholdersaleprice.style.display="none";
+		placeholderwholesaleprice.style.display="none";
+		placeholderfranchiseprice.style.display="none";
+		placeholderloyalcustomer1.style.display="none";
+		placeholderloyalcustomer2.style.display="none";
+		placeholderloyalcustomer3.style.display="none";
+		placeholderdistributorprice.style.display="none";
+		placeholderb2b.style.display="none";
+		placeholderproductcode.style.display="none";
+		placeholdersgst.style.display="none";
+		placeholdercgst.style.display="none";
+		placeholderhsncode.style.display="none";
+		placeholdercatalogno.style.display="none";
+		placeholderavailableatstores.style.display="none";
+		placeholderuploadimages.style.display="none";
+		placeholderproductdetails.style.display="none";
 	}
 
 
