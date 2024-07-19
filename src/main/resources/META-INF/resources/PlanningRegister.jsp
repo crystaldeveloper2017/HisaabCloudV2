@@ -37,15 +37,28 @@
 </div>
 
 <div class="col-sm-12">
-    <div class="form-group" align="center">
-        <button class="btn btn-success" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>
-        <button class="btn btn-success" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>
-        <button class="btn btn-success" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>
-        <button class="btn btn-success" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>
-        <button class="btn btn-success" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>
-        <button class="btn btn-success" type="button" id="btnsave" onclick='generateOrderForms()'>Generate Order Forms</button>
-
-        <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+    <div class="form-group text-center row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick='moveToPending()'>Move to Pending</button>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick='generateReadingReport()'>Generate Reading Report</button>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick='fryPlanning()'>Fry Planning</button>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick='makaiPlanning()'>Makai Planning</button>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick='moveToDone()'>Move to Done</button>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick='generateOrderForms()'>Generate Order Forms</button>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-primary btn-block" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
+        </div>
     </div>
 </div>
 
@@ -157,18 +170,13 @@
             }
         }
 
-      
-
-
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 window.open("BufferedImagesFolder/" + xhttp.responseText);
             }
         };
-        xhttp.open("GET", "?a=generateOrderForms&requiredInvoiceIds="+requiredInvoiceIds, false);
+        xhttp.open("GET", "?a=generateOrderForms&requiredInvoiceIds=" + requiredInvoiceIds, false);
         xhttp.send();
     }
-
-    
 </script>

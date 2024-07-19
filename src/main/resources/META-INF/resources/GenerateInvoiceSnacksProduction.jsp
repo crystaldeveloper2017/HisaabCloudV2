@@ -149,7 +149,7 @@ function saveInvoice()
 	      			return;
 	      		}
 	      	
-	      	alert("Invoice Saved Succesfully "+invoiceId[0]);
+	      	alert("Order Saved Successfully ");
 			window.location="?a=showPendingRegister";
 	      	
 	      	
@@ -731,12 +731,17 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId,qty)
 	    	
 	    	
 	    	
-	    	document.getElementById("txtqty"+itemId).select();
-	    	document.getElementById("txtqty"+itemId).focus();
+	    	//document.getElementById("txtqty"+itemId).select();
+	    	//document.getElementById("txtqty"+itemId).focus();
 	    	
-	    	$("#txtqty"+itemId).focus(function() { $(this).select(); } );
-	    	$("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
-	    	$("#txtamount"+itemId).focus(function() { $(this).select(); } );
+	    	$("#txtqty"+itemId).focus(function() { 
+				if(document.getElementById("txtqty"+itemId).value=="0")
+				{
+					document.getElementById("txtqty"+itemId).value=""; }
+				}
+				);
+	    	//$("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
+	    	//$("#txtamount"+itemId).focus(function() { $(this).select(); } );
 	    	
 			
 }
@@ -855,8 +860,8 @@ function reshuffleSrNos()
 		}
 }
 
-document.getElementById("divTitle").innerHTML="Generate Order:- "+"${tentativeSerialNo}";
-document.title +=" Generate Order:- "+"${tentativeSerialNo} ";
+document.getElementById("divTitle").innerHTML="Generate Order";
+document.title +=" Generate Order ";
 $("#divBackButton").attr("href", "https://www.w3schools.com/jquery/");
 
 

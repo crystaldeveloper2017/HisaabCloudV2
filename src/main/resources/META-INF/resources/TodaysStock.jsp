@@ -324,7 +324,7 @@ function deleteAttachment(id)
 	  <div class="card-body table-sm table-responsive p-0" style="height: 800px;">                
 	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
-	                    <tr align="center" style="font-size:10px">
+	                    <tr align="center" >
 	                     
 	  			
 	                    </tr>
@@ -627,8 +627,11 @@ function getItemDetailsAndAddToTable(itemId,itemName,qty)
 	    	
 	    	
 	    	
-	    	
-	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+1+"'>"+" <span style='font-size:12px'>"+ itemName + "</span> </div>";
+	    	if(qty==null)
+			{
+				qty=0;
+			}
+	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+1+"'>"+" <span style='font-size:16px'>"+ itemName + "</span> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
 	    	cell2.innerHTML = '<div class="input-group"><input type="number" style="text-align:center" class="form-control form-control-sm"  name="quantitiestextboxes" id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="'+qty+'"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemName+'></div>';
@@ -638,8 +641,16 @@ function getItemDetailsAndAddToTable(itemId,itemName,qty)
 	    	
 	    	
 	    	
-	    	document.getElementById("txtqty"+itemId).select();
-	    	document.getElementById("txtqty"+itemId).focus();
+	    	$("#txtqty"+itemId).focus(function() { 
+
+				if(document.getElementById("txtqty"+itemId).value=="0")
+				{
+					document.getElementById("txtqty"+itemId).value=""; 
+				}
+
+
+
+});
 	    	
 	    	
 			
