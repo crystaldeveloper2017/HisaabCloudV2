@@ -6552,7 +6552,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			        table.addCell(cell);
 			        
 			        totalQty+=Double.parseDouble(prod.get("qty").toString());
-			        cell = new PdfPCell(new Phrase( String.format("%.0f", totalQty) ,font ));
+			        cell = new PdfPCell(new Phrase( String.format("%.0f", prod.get("qty")) ,font ));
 			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			        table.addCell(cell);
