@@ -2169,28 +2169,36 @@ if(hm.get("user_id")!=null)
 	public List<LinkedHashMap<String, Object>> getFryPlanning(Connection con, String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select\n" +
-				"rmm.raw_material_name,mi.item_name ,\n" +
-				"tid.qty,\n" +
-				"mi.lds_per_raw_material,\n" +
-				"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" +
-				"from\n" +
-				"trn_invoice_register tir\n" +
-				"left outer join snacks_invoice_status sis on\n" +
-				"sis.invoice_id = tir.invoice_id\n" +
-				"left outer join trn_invoice_details tid on\n" +
-				"tid.invoice_id = tir.invoice_id\n" +
-				"left outer join mst_items mi on\n" +
-				"mi.item_id = tid.item_id\n" +
-				"left outer join raw_material_master rmm on\n" +
-				"mi.raw_material_id = rmm.raw_material_id\n" +
-				"left outer join mst_category mc on\n" +
-				"mc.category_id = mi.parent_category_id\n" +
-				"where\n" +
-				"tir.app_id = ? and tir.activate_flag=1 \n" +
-				"and sis.curr_status = 1\n" +
-				"and mc.category_name = 'Fry'\n" +
-				"group by rmm.raw_material_id;\n";
+		String query = "select\n" + 
+"raw_material_name,round(ceil(sum(finalReqBags)),0) noOfBagsreq\n" + 
+"from\n" + 
+"(\n" + 
+"select\n" + 
+"item_name,\n" + 
+"raw_material_name,\n" + 
+"sum(tid.qty) orderQty ,\n" + 
+"COALESCE (ttss.qty,0) stockQty,\n" + 
+"sum(tid.qty) - COALESCE (ttss.qty,0) reqQtyToProduce,\n" + 
+"((sum(tid.qty) - COALESCE (ttss.qty,0)) / mi.lds_per_raw_material) finalReqBags,\n" + 
+"mi.lds_per_raw_material\n" + 
+"from\n" + 
+"trn_invoice_register tir\n" + 
+"left outer join snacks_invoice_status sis on\n" + 
+"sis.invoice_id = tir.invoice_id\n" + 
+"left outer join trn_invoice_details tid on\n" + 
+"tid.invoice_id = tir.invoice_id\n" + 
+"left outer join mst_items mi on\n" + 
+"mi.item_id = tid.item_id\n" + 
+"left outer join raw_material_master rmm on\n" + 
+"mi.raw_material_id = rmm.raw_material_id\n" + 
+"left outer join mst_category mc on\n" + 
+"mc.category_id = mi.parent_category_id\n" + 
+"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id  and ttss.stock_date =CURDATE()\n" + 
+"where\n" + 
+"tir.app_id = ? and tir.activate_flag=1 and mc.category_name='Fry'\n" + 
+"and sis.curr_status = 1 group by item_name order by item_name,raw_material_name) as M\n" + 
+"where reqQtyToProduce>0\n" + 
+"group by raw_material_name\n";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
@@ -2262,28 +2270,36 @@ if(hm.get("user_id")!=null)
 	public List<LinkedHashMap<String, Object>> getMakaiPlanning(Connection con, String appId)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		String query = "select\n" +
-				"rmm.raw_material_name,mi.item_name ,\n" +
-				"tid.qty,\n" +
-				"mi.lds_per_raw_material,\n" +
-				"ceil( sum(tid.qty) / mi.lds_per_raw_material) noOfBagsreq\n" +
-				"from\n" +
-				"trn_invoice_register tir\n" +
-				"left outer join snacks_invoice_status sis on\n" +
-				"sis.invoice_id = tir.invoice_id\n" +
-				"left outer join trn_invoice_details tid on\n" +
-				"tid.invoice_id = tir.invoice_id\n" +
-				"left outer join mst_items mi on\n" +
-				"mi.item_id = tid.item_id\n" +
-				"left outer join raw_material_master rmm on\n" +
-				"mi.raw_material_id = rmm.raw_material_id\n" +
-				"left outer join mst_category mc on\n" +
-				"mc.category_id = mi.parent_category_id\n" +
-				"where\n" +
-				"tir.app_id = ? and tir.activate_flag=1 \n" +
-				"and sis.curr_status = 1\n" +
-				"and mc.category_name = 'Makai'\n" +
-				"group by rmm.raw_material_id;\n";
+		String query = "select\n" + 
+"raw_material_name,round(ceil(sum(finalReqBags)),0) noOfBagsreq\n" + 
+"from\n" + 
+"(\n" + 
+"select\n" + 
+"item_name,\n" + 
+"raw_material_name,\n" + 
+"sum(tid.qty) orderQty ,\n" + 
+"COALESCE (ttss.qty,0) stockQty,\n" + 
+"sum(tid.qty) - COALESCE (ttss.qty,0) reqQtyToProduce,\n" + 
+"((sum(tid.qty) - COALESCE (ttss.qty,0)) / mi.lds_per_raw_material) finalReqBags,\n" + 
+"mi.lds_per_raw_material\n" + 
+"from\n" + 
+"trn_invoice_register tir\n" + 
+"left outer join snacks_invoice_status sis on\n" + 
+"sis.invoice_id = tir.invoice_id\n" + 
+"left outer join trn_invoice_details tid on\n" + 
+"tid.invoice_id = tir.invoice_id\n" + 
+"left outer join mst_items mi on\n" + 
+"mi.item_id = tid.item_id\n" + 
+"left outer join raw_material_master rmm on\n" + 
+"mi.raw_material_id = rmm.raw_material_id\n" + 
+"left outer join mst_category mc on\n" + 
+"mc.category_id = mi.parent_category_id\n" + 
+"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id  and ttss.stock_date =CURDATE()\n" + 
+"where\n" + 
+"tir.app_id = ? and tir.activate_flag=1 and mc.category_name='Makai'\n" + 
+"and sis.curr_status = 1 group by item_name order by item_name,raw_material_name) as M\n" + 
+"where reqQtyToProduce>0\n" + 
+"group by raw_material_name\n";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
