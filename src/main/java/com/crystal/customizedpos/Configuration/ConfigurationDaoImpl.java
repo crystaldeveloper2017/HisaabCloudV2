@@ -2259,7 +2259,7 @@ if(hm.get("user_id")!=null)
 				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n"
 				+
 				"where\n" +
-				"tir.app_id = ?\n" +
+				"tir.app_id = ? and tir.activate_flag=1 \n" +
 				"and sis.curr_status =1\n" +
 				"group by tid.item_id order by mi.order_no";
 		parameters.add(appId);

@@ -6001,6 +6001,10 @@ outputMap.put("txttodate",toDate);
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchWithModelNo(DestinationPath,
 						BufferedImagesFolderPath, lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
 			}
+			else if (invoiceFormatName.equals("3InchForSnacks")) {
+				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchForSnacks(DestinationPath,
+						BufferedImagesFolderPath, lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
+			}
 
 			outputMap.put("returnData", appenders);
 		} catch (Exception e) {
