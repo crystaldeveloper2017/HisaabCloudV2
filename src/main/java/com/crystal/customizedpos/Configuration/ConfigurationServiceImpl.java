@@ -2480,6 +2480,29 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	
+
+	public CustomResultObject deleteOrders(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		String invoiceIds = (request.getParameter("invoiceIds"));
+		String[] invoiceIdsArr=invoiceIds.split("~");
+		try {
+
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+			for(String invoiceId:invoiceIdsArr)
+			{
+				lObjConfigDao.deleteInvoice(Long.valueOf(invoiceId), userId,con);
+			}
+			rs.setAjaxData("Deleted Selected Invoices");
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
 	public CustomResultObject moveToPlanning(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		String invoiceIds = (request.getParameter("invoiceIds"));
@@ -2734,6 +2757,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		request.setAttribute("invoiceId", hdnPreviousInvoiceId);
 		request.setAttribute("type", "S");
+
 		if (hdnPreviousInvoiceId != null && !hdnPreviousInvoiceId.equals("") && !hdnPreviousInvoiceId.equals("0")) {
 			deleteInvoice(request, con);
 			String invoiceNo = lObjConfigDao.getInvoiceNoByInvoiceId(hdnPreviousInvoiceId, con).get("invoice_no");
@@ -2769,14 +2793,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
 
 			if (appType.equals("SnacksProduction"))
-
 			{
-
 				hm.put("invoice_id", returnMap.get("invoice_id"));
+				HashMap<String, String> invoiceSnacksDetails=lObjConfigDao.getInvoiceSnacksDetails(hdnPreviousInvoiceId,con);
+				if (hdnPreviousInvoiceId != null && !hdnPreviousInvoiceId.equals("") && !hdnPreviousInvoiceId.equals("0")) 
+				{
+				hm.put("curr_status", invoiceSnacksDetails.get("curr_status"));
+				}
+				else
+				{
+					hm.put("curr_status", 0);
+				}
 				lObjConfigDao.saveSnacksInvoice(hm, con);
-
-
-
 			}
 			hm.put("invoice_id", returnMap.get("invoice_id"));
 
@@ -5875,9 +5903,8 @@ outputMap.put("txttodate",toDate);
 
 		try {
 
-			generateInvoicePDFService(request, con);
-
-			rs.setAjaxData(appenders);
+			HashMap<String, Object> returnObject= generateInvoicePDFService(request, con);			
+			rs.setAjaxData(returnObject.get("returnData").toString());
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
@@ -5885,6 +5912,8 @@ outputMap.put("txttodate",toDate);
 
 		return rs;
 	}
+
+	
 
 	public CustomResultObject generateInvoicePDFBattery(HttpServletRequest request, Connection con)
 			throws SQLException {
@@ -6002,8 +6031,13 @@ outputMap.put("txttodate",toDate);
 						BufferedImagesFolderPath, lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
 			}
 			else if (invoiceFormatName.equals("3InchForSnacks")) {
+				LinkedHashMap<String, Object> invoiceDetails=lObjConfigDao.getInvoiceDetails(invoiceId, con);
+				
+				appenders=invoiceDetails.get("customercityname").toString().trim()+getDateASYYYYMMDD(invoiceDetails.get("theInvoiceDate").toString())+".pdf";
+				DestinationPath=BufferedImagesFolderPath+appenders;
+				
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchForSnacks(DestinationPath,
-						BufferedImagesFolderPath, lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
+						BufferedImagesFolderPath,invoiceDetails , con);
 			}
 
 			outputMap.put("returnData", appenders);

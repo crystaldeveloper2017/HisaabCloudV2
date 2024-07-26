@@ -51,6 +51,7 @@
 <div class="col-sm-12">
     <div class="form-group" align="center">
         <button class="btn btn-success" type="button" id="btnsave" onclick='moveToPlanning()'>Move to Planning</button>
+        <button class="btn btn-danger" type="button" id="btnsave" onclick='deleteOrders()'>Delete</button>
         <button class="btn btn-primary" style="display:none" id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
     </div>
 </div>
@@ -95,6 +96,36 @@
             }
         };
         xhttp.open("GET", "?a=moveToPlanning&invoiceIds=" + requiredInvoiceIds, true);
+        xhttp.send();
+    }
+
+
+    function deleteOrders() {
+
+
+        var answer = window.confirm("Are you sure you want to delete ?");
+        if (!answer) 
+        {
+            return;    
+        }
+
+        var checkboxes = document.getElementsByName("namecheckboxes");
+        var requiredInvoiceIds = "";
+
+        for (var k = 0; k < checkboxes.length; k++) {
+            if (checkboxes[k].checked) {
+                requiredInvoiceIds += checkboxes[k].id + "~";
+            }
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                alert(xhttp.responseText);
+                window.location = "?a=showHomePage";
+            }
+        };
+        xhttp.open("GET", "?a=deleteOrders&invoiceIds=" + requiredInvoiceIds, true);
         xhttp.send();
     }
 

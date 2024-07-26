@@ -43,6 +43,14 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 		return getMap(parameters, "select count(*) from dispenser_master dm where activate_flag=1 and app_id=?", con);
 	}
 
+	public HashMap<String, String> getInvoiceSnacksDetails(String invoiceId, Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		return getMap(parameters, "select * from snacks_invoice_status where invoice_id=?", con);
+	}
+	
+
 	public HashMap<String, String> getCustomers(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -3788,8 +3796,10 @@ if(hm.get("user_id")!=null)
 
 	public String deleteInvoice(long invoiceId, String userId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
+		
+		parameters.add(userId);
 		parameters.add(invoiceId);
-		insertUpdate("UPDATE trn_invoice_register SET activate_flag=0 WHERE invoice_id=?", parameters,
+		insertUpdate("UPDATE trn_invoice_register SET activate_flag=0,updated_by=? WHERE invoice_id=?", parameters,
 				conWithF);
 		parameters.clear();
 
@@ -7348,9 +7358,10 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		parameters.add(hm.get("invoice_id"));
+		parameters.add(hm.get("curr_status"));
 
 		String insertQuery = "INSERT INTO snacks_invoice_status\r\n"
-				+ "VALUES(default, ?, 0);";
+				+ "VALUES(default, ?, ?);";
 
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}

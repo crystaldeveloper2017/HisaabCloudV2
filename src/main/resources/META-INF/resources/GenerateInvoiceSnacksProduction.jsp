@@ -194,7 +194,7 @@ function resetField()
 	$("#tblitems").find("tr:gt(0)").remove();
 
 	txtsearchcustomer.value="";
-	txtsearchcustomer.disabled=false;
+	txtsearchcustomer.readOnly=false;
 	
 	txtinvoicedate.value="${todaysDate}";
 	txtinvoicedate.disabled=false;
@@ -373,7 +373,7 @@ function generateOrderReport()
 
 
     <div class="ui-widget" style="width:100%">
-	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer" onclick="checkIfReadonlyThenReset()" name="txtsearchcustomer" >
+	  <input type="text" id="txtsearchcustomer" class='form-control' placeholder="Search For Customer"  name="txtsearchcustomer" onclick="resetCustomer()"> 
 	</div>
                   
                   
@@ -449,39 +449,33 @@ function generateOrderReport()
    
    	
   
-  
- <div class="col-sm-12">
-  	 <div class="form-group" align="center">	  
-	   	<button class="btn btn-success" type="button" id="btnsave" onclick='saveInvoice()'>Save (F2)</button>   
-	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
-	   
-	   
-	  	    <c:if test="${param.invoice_id ne null}">
-	   <button class="btn btn-primary"  id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Generate PDF</button>
-</c:if>
-
-	   <c:if test="${param.invoice_id ne null}">
-			<button class="btn btn-success" type="button" id="btnorder" onclick='generateOrderReport()'>Generate Order Form</button>   
-	   </c:if>
-
-	   <c:if test="${param.editInvoice eq 'N'}">
-	   		<button class="btn btn-success" type="button" id="btnorder" onclick='showEditInvoice()'>Edit Invoice</button>   
-
-	   </c:if>
 
 
-	   
-   </div>
-   </div>
+  <div class="col-sm-12">
+    <div class="form-group text-center row">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-primary" type="button" id="btnsave" onclick='saveInvoice()'>Save</button>   
+        </div>
+		<c:if test="${param.editInvoice ne null}">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-primary" type="button" id="btnorder" onclick='showEditInvoice()'>Edit</button>   
+        </div>
+		
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-2">
+            <button class="btn btn-primary"  id="generatePDF" type="button" onclick='generateInvoice("${invoiceDetails.invoice_id}");'>Order PDF</button>
+        </div>
+		</c:if>
+    </div>
+</div>
+
+
+
   
 </div>
 </form>
 	</div>
 	
-	
-	<div class="col-sm-5" id="categoryPopulate">
-		
-	</div>
+
 	
 </div> 
 
@@ -900,60 +894,7 @@ function formatQty(qtyTextBox)
 	qtyTextBox.value=Number(qtyTextBox.value).toFixed(0);
 		
 }
-function showItems(categoryname)
-{
-	
-	
-	
-	var reqString='<div class="container" style="height: 80vh;overflow-y: auto; 	min-width:100%" ><div class="row">';
-	const array = [];
-	
-	<c:forEach items="${itemList}" var="item">	
-	var itemName="${item.item_name}";
-	
-	var categoryName="${item.category_name}"
-		if (!array.includes(categoryName))
-			{
-		    	array.push(categoryName);
-			}	
-		if(categoryname==undefined || "${item.category_name}"==categoryname)
-			{
-				reqString+='<div class="col-sm">'
-					reqString+='<img style="padding:5px" onclick="showThisItemIntoSelection(${item.item_id})" height="80px" width="80px" src="BufferedImagesFolder/${item.ImagePath}">';
-					reqString+="<div>${item.item_name}</div>";
-				reqString+='</div>';
-			}
-			
-	</c:forEach>
-	reqString+='</div></div>';
-	
-	var categoryString='<div class="container" style="min-width:100%"  ><div class="row">';
-	for(var m=0;m<array.length;m++)
-		{
-			if(array[m]==categoryname)
-				{
-				categoryString+='<div class="col-sm">'
-					categoryString+='<img style="border:1px solid;padding:5px" onclick="showItems(\''+array[m]+'\')" height="60px" width="60px" src="BufferedImagesFolder/dummyImageCategory.svg">';
-					categoryString+="<div>"+array[m]+"</div>";
-				categoryString+='</div>';
-				continue;
-				}
-			categoryString+='<div class="col-sm">'
-				categoryString+='<img style="padding:5px" onclick="showItems(\''+array[m]+'\')" height="60px" width="60px" src="BufferedImagesFolder/dummyImageCategory.svg">';
-				categoryString+="<div>"+array[m]+"</div>";
-			categoryString+='</div>';
-		}
-	
-	
-	
-	
-	
-	
-	categoryString+='</div></div>';
-	  document.getElementById("categoryPopulate").innerHTML=categoryString+reqString;
-	  
-	  
-}
+
 
 
 function showThisItemIntoSelection(itemId)
@@ -1003,7 +944,7 @@ function quickAddCustomer()
 	    			return;
 	    		}
 	    		
-	    	txtsearchcustomer.disabled=true;
+	    	txtsearchcustomer.readOnly=true;
 	    	txtsearchcustomer.value=customerName.value+"~"+mobileNumber.value+"~"+customerType.value+"~"+customerCity.value;
 	    	customerName.value="";
 	    	mobileNumber.value="";
@@ -1062,7 +1003,7 @@ window.addEventListener('keydown', function (e) {
 	} 
 	});
 	
-showItems();
+
 
 
 $('[data-widget="pushmenu"]').PushMenu("collapse");
@@ -1085,7 +1026,7 @@ function calculateReturnAmount()
 
 // need to bring thhis flag from db saved for later
 document.getElementById('row7').className='col-sm-12';
-categoryPopulate.style="display:none";
+
 
 function setDefaultChecks()
 {
@@ -1131,7 +1072,7 @@ if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="Y")
 {
 	
 	txtsearchcustomer.value="${invoiceDetails.customer_name}";
-	txtsearchcustomer.disabled=true;
+	txtsearchcustomer.readOnly=true;
 	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
 	txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
 
@@ -1139,7 +1080,7 @@ if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="Y")
 
 		<c:forEach items="${itemList}" var="allItems">
 						txtitem.value="${allItems.item_name}";
-						checkforMatchItem("${allItems.qty}");
+						checkforMatchItem(Number("${allItems.qty}").toFixed(0));
 		</c:forEach>
 
 	calculateTotal();
@@ -1149,7 +1090,7 @@ else if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="N")
 {
 
 	txtsearchcustomer.value="${invoiceDetails.customer_name}";
-	txtsearchcustomer.disabled=true;
+	txtsearchcustomer.readOnly=true;
 	hdnSelectedCustomer.value="${invoiceDetails.customer_id}";
 	txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
 
@@ -1157,7 +1098,7 @@ else if("${invoiceDetails.invoice_id}"!="" && "${param.editInvoice}"=="N")
 	
 		<c:if test="${item.qty ne null}">
 			txtitem.value="${item.item_name}";
-			checkforMatchItem("${item.qty}");
+			checkforMatchItem(Number("${item.qty}").toFixed(0));			
 		</c:if>
 	</c:forEach>
 	calculateTotal();
@@ -1236,11 +1177,10 @@ $( function() {
  
 function checkIfReadonlyThenReset()
 {
-	
-	if(txtsearchcustomer.readOnly)
-	{
-		resetCustomer();
-	}
+		resetCustomer();	
 }
+
+
+
 
 </script>

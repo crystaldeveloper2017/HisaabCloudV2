@@ -1,6 +1,7 @@
 - roleId: 21
   roleName: "AdminSnacks"
   actions:
+    - deleteOrders
     - generateOrderForms
     - saveItemOrdering
     - showItemOrdering
