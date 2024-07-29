@@ -2256,8 +2256,8 @@ if(hm.get("user_id")!=null)
 				"left outer join mst_customer mc on mc.customer_id =tir.customer_id\n" +
 				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
 				"where\n" +
-				"tir.app_id = ? and tir.invoice_id in ("+questionMarks+")\n" +
-				"and sis.curr_status =1";
+				"tir.invoice_id in ("+questionMarks+")\n" +
+				"and sis.curr_status =1 and tir.app_id = ? ";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
