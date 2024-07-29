@@ -5,54 +5,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
-<c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
+
 <c:set var="message" value='${requestScope["outputObject"].get("message")}' />
 <c:set var="lstCompletedOrders" value='${requestScope["outputObject"].get("lstCompletedOrders")}' />
 
 <br>
 
 <div class="card">
-    <br>
-    <div class="row">
-        <!-- Your existing code for the date pickers and buttons -->
-   <div class="col-sm-1" align="center">
-			<label for="txtfromdate">From Date</label>
-		</div>
-		
-		<div class="col-sm-2" align="center">
-			<div class="input-group input-group-sm" style="width: 200px;">
-			 	<input type="text" id="txtfromdate" onchange="checkforvalidfromtodate();ReloadFilters();"  name="txtfromdate" readonly class="form-control date_field" placeholder="From Date"/>
-			</div>
-		</div>
-		
-		<div class="col-sm-1" align="center">
-
-			<label for="txttodate">To Date</label>
-		</div>
-		
-		<div class="col-sm-2" align="center">
-			<div class="input-group input-group-sm" style="width: 200px;">
-				<input type="text" id="txttodate"  onchange="checkforvalidfromtodate();ReloadFilters();"    name="txttodate" readonly class="form-control date_field"  placeholder="To Date"/>
-			</div>
-		</div>
-		
-		     		
-		
-		
-		
-		<div class="col-sm-2" align="center">
-			<div class="card-tools">
-				<div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
-					<div class="icon-bar" style="font-size:22px;color:firebrick">
-						<a title="Download Excel" onclick="downloadExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a> 
- 						<a title="Download PDF" onclick="exportSalesRegister2()"><i class="fa fa-file-pdf-o"></i></a>
-  						<a title="Download Text"  onclick="downloadText()"><i class="fa fa-file-text-o"></i></a>  
-					</div>           
-				</div>
-			</div>
-		</div>
-	</div>
+    
     <br>
 
     <div class="card-body table-responsive p-0" style="height: 800px;">
@@ -82,19 +42,19 @@
                 </c:forEach>
             </tbody>
         </table>
-		
     </div>
 
-
-
-<div class="row" align="center">
-	<div class="col col-12">
-		<button class="btn btn-danger" onclick="deleteOrders()">Delete Selected</button>
-	</div>
-</div>
-
-	
-
+    <div class="row text-center">
+        <div class="col-md-4 col-sm-12 mb-2">
+            <button class="btn btn-danger btn-block" onclick="deleteOrders()">Delete Selected</button>
+        </div>
+        <div class="col-md-4 col-sm-12 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick="moveToPlanning()">Move to Planning</button>
+        </div>
+        <div class="col-md-4 col-sm-12 mb-2">
+            <button class="btn btn-success btn-block" type="button" id="btnsave" onclick="moveToPending()">Move to Pending</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -134,46 +94,10 @@ $(function() {
     });
 });
 
-txtfromdate.value = '${txtfromdate}';
-txttodate.value = '${txttodate}';
 
-function exportSalesRegister2() {
-    try {
-        window.open("?a=exportSalesRegister2&txtfromdate=" + txtfromdate.value + "&txttodate=" + txttodate.value + "&customerId=" + hdnSelectedCustomer.value);
-        return;
 
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                window.open("BufferedImagesFolder/" + xhttp.responseText, '_blank', 'height=500,width=500,status=no,toolbar=no,menubar=no,location=no');
-            }
-        };
-        xhttp.open("GET", "?a=exportSalesRegister2", true);
-        xhttp.send();
-    } catch (ex) {
-        alert(ex.message);
-    }
-}
 
-function checkforvalidfromtodate() {
-    var fromDate = document.getElementById("txtfromdate").value;
-    var toDate = document.getElementById("txttodate").value;
 
-    var fromDateArrDDMMYYYY = fromDate.split("/");
-    var toDateArrDDMMYYYY = toDate.split("/");
-
-    var fromDateAsDate = new Date(fromDateArrDDMMYYYY[2], fromDateArrDDMMYYYY[1] - 1, fromDateArrDDMMYYYY[0]);
-    var toDateAsDate = new Date(toDateArrDDMMYYYY[2], toDateArrDDMMYYYY[1] - 1, toDateArrDDMMYYYY[0]);
-
-    if (fromDateAsDate > toDateAsDate) {
-        alert("From Date should be less than or equal to To Date");
-        window.location.reload();
-    }
-}
-
-function ReloadFilters() {
-    window.location = "?a=showCompletedOrders&txtfromdate=" + txtfromdate.value + "&txttodate=" + txttodate.value;
-}
 
 function checkforMatchCustomer() {
     var searchString = document.getElementById("txtsearchcustomer").value;
@@ -223,16 +147,53 @@ function toggleSelectAll(source) {
     }
 }
 
-
 function deleteOrders() {
+    var answer = window.confirm("Are you sure you want to delete ?");
+    if (!answer) {
+        return;    
+    }
 
+    var checkboxes = document.getElementsByName("namecheckboxes");
+    var requiredInvoiceIds = "";
 
-        var answer = window.confirm("Are you sure you want to delete ?");
-        if (!answer) 
-        {
-            return;    
+    for (var k = 0; k < checkboxes.length; k++) {
+        if (checkboxes[k].checked) {
+            requiredInvoiceIds += checkboxes[k].id + "~";
+        }
+    }
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            alert(xhttp.responseText);
+            window.location = "?a=showHomePage";
+        }
+    };
+    xhttp.open("GET", "?a=deleteOrders&invoiceIds=" + requiredInvoiceIds, true);
+    xhttp.send();
+}
+
+function moveToPending() {
+        var checkboxes = document.getElementsByName("namecheckboxes");
+        var requiredInvoiceIds = "";
+
+        for (var k = 0; k < checkboxes.length; k++) {
+            if (checkboxes[k].checked == true) {
+                requiredInvoiceIds += checkboxes[k].id + "~";
+            }
         }
 
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                alert(xhttp.responseText);
+                window.location = "?a=showHomePage";
+            }
+        };
+        xhttp.open("GET", "?a=moveToPending&invoiceIds=" + requiredInvoiceIds, true);
+        xhttp.send();
+    }
+    function moveToPlanning() {
         var checkboxes = document.getElementsByName("namecheckboxes");
         var requiredInvoiceIds = "";
 
@@ -249,7 +210,8 @@ function deleteOrders() {
                 window.location = "?a=showHomePage";
             }
         };
-        xhttp.open("GET", "?a=deleteOrders&invoiceIds=" + requiredInvoiceIds, true);
+        xhttp.open("GET", "?a=moveToPlanning&invoiceIds=" + requiredInvoiceIds, true);
         xhttp.send();
     }
+
 </script>

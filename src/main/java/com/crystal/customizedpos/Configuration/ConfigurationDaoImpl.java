@@ -2234,9 +2234,18 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public List<LinkedHashMap<String, Object>> getReadingReportDetails(Connection con, String appId)
+	public List<LinkedHashMap<String, Object>> getReadingReportDetails(Connection con, String appId,String[] invoiceIds)
 			throws ClassNotFoundException, SQLException {
+
 		ArrayList<Object> parameters = new ArrayList<>();
+
+		String questionMarks = "";
+		for (String s : invoiceIds) {
+			parameters.add(s);
+			questionMarks += "?,";
+		}
+		questionMarks = questionMarks.substring(0, questionMarks.length() - 1);
+
 		String query = "select\n" +
 				"mi.item_name ,tid.item_id,tir.customer_id,round(tid.qty,0) qty,mc.customer_name,concat( mc.customer_id,'~',tid.item_id ) theKey\n"
 				+
@@ -2247,16 +2256,24 @@ if(hm.get("user_id")!=null)
 				"left outer join mst_customer mc on mc.customer_id =tir.customer_id\n" +
 				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
 				"where\n" +
-				"tir.app_id = ?\n" +
+				"tir.app_id = ? and tir.invoice_id in ("+questionMarks+")\n" +
 				"and sis.curr_status =1";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
 
-	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con, String appId)
+	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con, String appId,String[] invoiceIds)
 			throws ClassNotFoundException, SQLException {
-		ArrayList<Object> parameters = new ArrayList<>();
+
+				ArrayList<Object> parameters = new ArrayList<>();
+				String questionMarks = "";
+		for (String s : invoiceIds) {
+			parameters.add(s);
+			questionMarks += "?,";
+		}
+		questionMarks = questionMarks.substring(0, questionMarks.length() - 1);
+		
 		String query = "select\n" +
 				"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" +
 				"from\n" +
@@ -2267,8 +2284,8 @@ if(hm.get("user_id")!=null)
 				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n"
 				+
 				"where\n" +
-				"tir.app_id = ? and tir.activate_flag=1 \n" +
-				"and sis.curr_status =1\n" +
+				"tir.activate_flag=1 and tir.invoice_id in ("+questionMarks+")\n" +
+				"and sis.curr_status =1 and tir.app_id = ?  \n" +
 				"group by tid.item_id order by mi.order_no";
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters, query, con);
@@ -7422,15 +7439,14 @@ if(hm.get("user_id")!=null)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
-		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
-		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+		
 
 		return getListOfLinkedHashHashMap(parameters,
 				"select *,sum(qty) totalQty from trn_invoice_register tir " +
 						"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
 						"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
 						"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
-						"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.invoice_date BETWEEN ? AND ? AND tir.activate_flag=1 group by tir.invoice_id ",
+						"WHERE tir.app_id = ?  AND sis.curr_status = 2 AND tir.activate_flag=1 group by tir.invoice_id ",
 
 				con);
 	}
@@ -7502,15 +7518,21 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con, String appId)
+	public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con, String appId,String[] invoiceIds)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
+		String questionMarks = "";
+		for (String s : invoiceIds) {
+			parameters.add(s);
+			questionMarks += "?,";
+		}
+		questionMarks = questionMarks.substring(0, questionMarks.length() - 1);
 		parameters.add(appId);
 		return getListOfLinkedHashHashMap(parameters,
 				"select city,mc.customer_id,customer_name  from trn_invoice_register tir " +
 						"inner join mst_customer mc on mc.customer_id =tir.customer_id \r\n" + //
 						"inner join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id \r\n" + //
-						"where tir.app_id=? and sis.curr_status=1 and tir.activate_flag=1 ",
+						"where  sis.curr_status=1 and tir.activate_flag=1 and tir.invoice_id in ("+questionMarks+") and tir.app_id=? ",
 				con);
 	}
 

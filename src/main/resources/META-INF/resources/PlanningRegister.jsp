@@ -138,13 +138,24 @@
     }
 
     function generateReadingReport() {
+
+
+        var checkboxes = document.getElementsByName("namecheckboxes");
+        var requiredInvoiceIds = "";
+
+        for (var k = 0; k < checkboxes.length; k++) {
+            if (checkboxes[k].checked == true) {
+                requiredInvoiceIds += checkboxes[k].id + "~";
+            }
+        }
+
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 window.open("BufferedImagesFolder/" + xhttp.responseText);
             }
         };
-        xhttp.open("GET", "?a=generateReadingReport", false);
+        xhttp.open("GET", "?a=generateReadingReport&requiredInvoiceIds="+requiredInvoiceIds, false);
         xhttp.send();
     }
 

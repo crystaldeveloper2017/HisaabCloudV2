@@ -11379,7 +11379,7 @@ public CustomResultObject showPendingRegister(HttpServletRequest request, Connec
 
 	}
 
-	   public CustomResultObject showCompletedOrders(HttpServletRequest request, Connection con)
+	public CustomResultObject showCompletedOrders(HttpServletRequest request, Connection con)
 	     throws SQLException, ClassNotFoundException, ParseException {
 
 	CustomResultObject rs = new CustomResultObject();
@@ -11388,23 +11388,7 @@ public CustomResultObject showPendingRegister(HttpServletRequest request, Connec
 	String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 	outputMap.put("app_id", appId);
 
-	String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
-	String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
-
-	// if parameters are blank then set to defaults
-		if (fromDate.equals("")) 
-	{
-	fromDate = lObjConfigDao.getDateFromDB(con);
-	}
-		if (toDate.equals("")) 
-		{
-	toDate = lObjConfigDao.getDateFromDB(con);
-	}
-
-
-
-	outputMap.put("txtfromdate", fromDate);
-	outputMap.put("txttodate", toDate);
+	
 
 	List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCompletedOrders(outputMap, con);
 	outputMap.put("lstCompletedOrders", lst);
@@ -11522,6 +11506,9 @@ public CustomResultObject generatefryPlanning(HttpServletRequest request, Connec
 public CustomResultObject generateReadingReport(HttpServletRequest request, Connection con) throws SQLException {
 	CustomResultObject rs = new CustomResultObject();
 
+
+	String reqinvoiceId= request.getParameter("requiredInvoiceIds");
+	String[] invoiceIds=reqinvoiceId.split("~");
 	
 	String appenders = "ReadingReport.pdf";
 	String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
@@ -11536,16 +11523,16 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 
 
 		HashMap<String, Object> hm=new HashMap<>();
-		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getReadingReport(con,appId);
+		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getReadingReport(con,appId,invoiceIds);
 
 		hm.put("todaysDate",cf.getDateFromDB(con));
 		hm.put("listOfItems", listOfItems);
 
 
-		List<LinkedHashMap<String, Object>> itemDetailsList= lObjConfigDao.getReadingReportDetails(con, appId);
+		List<LinkedHashMap<String, Object>> itemDetailsList= lObjConfigDao.getReadingReportDetails(con, appId,invoiceIds);
 
 		
-		List<LinkedHashMap<String, Object>> listOfCustomers =lObjConfigDao.getCustomersListForPlanning(con,appId);
+		List<LinkedHashMap<String, Object>> listOfCustomers =lObjConfigDao.getCustomersListForPlanning(con,appId,invoiceIds);
 
 		hm.put("listOfCustomers",listOfCustomers);
 
