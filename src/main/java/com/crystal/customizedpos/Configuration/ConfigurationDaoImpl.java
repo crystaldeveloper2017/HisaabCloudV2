@@ -468,13 +468,14 @@ if(hm.get("user_id")!=null)
 		parameters.add(itemDetails.get("catalog_no"));
 		parameters.add(itemDetails.get("order_no"));
 		parameters.add(itemDetails.get("cgst"));
+		parameters.add(itemDetails.get("drprawmaterialid"));
 		parameters.add(itemDetails.get("lds_per_raw_material"));
 		parameters.add(itemDetails.get("packets_in_ld"));
 		parameters.add(itemDetails.get("packaging_type"));
 		parameters.add(Long.parseLong(itemDetails.get("hdnItemId").toString()));
 
 		String insertQuery = "UPDATE mst_items \r\n"
-				+ "SET parent_category_id=?, debit_in=?, item_name=?, price=?, wholesale_price=?, franchise_rate=?, loyalcustomerrate1=?, loyalcustomerrate2=?, loyalcustomerrate3=?,updated_by=?, updated_date=sysdate(),product_code=?,average_cost=?,distributor_rate=?,b2b_rate=?,shrikhand=?,sgst=?,product_details=?,hsn_code=?,catalog_no=?,order_no=?,cgst=?,lds_per_raw_material=?,packets_in_ld=?,packaging_type=? \r\n"
+				+ "SET parent_category_id=?, debit_in=?, item_name=?, price=?, wholesale_price=?, franchise_rate=?, loyalcustomerrate1=?, loyalcustomerrate2=?, loyalcustomerrate3=?,updated_by=?, updated_date=sysdate(),product_code=?,average_cost=?,distributor_rate=?,b2b_rate=?,shrikhand=?,sgst=?,product_details=?,hsn_code=?,catalog_no=?,order_no=?,cgst=?,raw_material_id=?,lds_per_raw_material=?,packets_in_ld=?,packaging_type=? \r\n"
 				+ "WHERE item_id=?";
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
