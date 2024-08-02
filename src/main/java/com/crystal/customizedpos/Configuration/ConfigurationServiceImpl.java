@@ -1439,7 +1439,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 			if (appType.equals("SnacksProduction")) {
-				
+				if(packaging_type==null)
+				{
+					packaging_type="12";
+				}
 				outputMap.put("itemList", lObjConfigDao.getListOfItemsForSnacksProduction(invoiceId,appId,packaging_type,con));
 			}
 
