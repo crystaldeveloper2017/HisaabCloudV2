@@ -17,7 +17,10 @@
             <thead>
                 <tr align="center">
                     <th><input type="checkbox" id="selectAllCheckbox" onclick="toggleAllCheckboxes(this)"></th>
-                    <th><b>Todays Planning</b></th>
+                    <th><b>Todays Planning</b> <div class="custom-control custom-switch">
+<input type="checkbox" class="custom-control-input" id="chkconsiderstock">
+<label class="custom-control-label" for="chkconsiderstock">Consider Stock</label>
+</div></th>
                 </tr>
             </thead>
             <tbody>
@@ -155,7 +158,7 @@
                 window.open("BufferedImagesFolder/" + xhttp.responseText);
             }
         };
-        xhttp.open("GET", "?a=generateReadingReport&requiredInvoiceIds="+requiredInvoiceIds, false);
+        xhttp.open("GET", "?a=generateReadingReport&requiredInvoiceIds="+requiredInvoiceIds+"&chkconsiderstock="+chkconsiderstock.checked, false);
         xhttp.send();
     }
 

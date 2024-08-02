@@ -366,7 +366,7 @@ function generateOrderReport()
   
   
 
-  <div class="col-10">
+  <div class="col-8">
   	<div class="form-group">
 
   	<div class="input-group input-group-sm">
@@ -394,7 +394,15 @@ function generateOrderReport()
   
   
   
-  
+   <div class="col-2">
+  	<div class="form-group" style="margin-bottom:0px"> 	
+	<div class="custom-control custom-switch">
+<input type="checkbox" class="custom-control-input" id="chk14packaging" onchange="changePackaging()">
+<label class="custom-control-label" for="chk14packaging">14 Packaging</label>
+</div>
+  		
+  	</div>
+  </div>
   
   
   
@@ -1178,6 +1186,23 @@ $( function() {
 function checkIfReadonlyThenReset()
 {
 		resetCustomer();	
+}
+
+function changePackaging()
+{
+	if(chk14packaging.checked==true)
+	{
+		window.location="?a=showGenerateInvoice&packaging_type=14";
+	}
+	else
+	{
+		window.location="?a=showGenerateInvoice&packaging_type=12";
+	}
+}
+
+if("${param.packaging_type}"=="14")
+{
+	chk14packaging.checked=true;
 }
 
 

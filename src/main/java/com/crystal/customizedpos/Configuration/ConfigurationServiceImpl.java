@@ -1329,6 +1329,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			String MobilebookingId = request.getParameter("mobile_booking_id");
 			String txtinvoicedate = request.getParameter("txtinvoicedate");
 			String vehicleId = request.getParameter("vehicleId");
+			String packaging_type = request.getParameter("packaging_type");
 			
 
 			String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
@@ -1437,8 +1438,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				outputMap.put("vehicleMaster", lObjConfigDao.getListOfUniqueVehicleName(con, appId));
 			}
 
-			if (appType.equals("SnacksProduction") && invoiceId!=null) {
-				outputMap.put("itemList", lObjConfigDao.getListOfItemsForSnacksProduction(invoiceId,appId,con));
+			if (appType.equals("SnacksProduction")) {
+				
+				outputMap.put("itemList", lObjConfigDao.getListOfItemsForSnacksProduction(invoiceId,appId,packaging_type,con));
 			}
 
 			rs.setViewName("../GenerateInvoice" + appType + ".jsp");
@@ -6033,7 +6035,7 @@ outputMap.put("txttodate",toDate);
 			else if (invoiceFormatName.equals("3InchForSnacks")) {
 				LinkedHashMap<String, Object> invoiceDetails=lObjConfigDao.getInvoiceDetails(invoiceId, con);
 				
-				appenders=invoiceDetails.get("customercityname").toString().trim()+getDateASYYYYMMDD(invoiceDetails.get("theInvoiceDate").toString())+".pdf";
+				appenders=invoiceDetails.get("customercityname").toString().trim()+"-"+getDateASDDMMYYYY(invoiceDetails.get("theInvoiceDate").toString())+".pdf";
 				DestinationPath=BufferedImagesFolderPath+appenders;
 				
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchForSnacks(DestinationPath,
@@ -11508,6 +11510,7 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 
 
 	String reqinvoiceId= request.getParameter("requiredInvoiceIds");
+	String chkconsiderstock= request.getParameter("chkconsiderstock");
 	String[] invoiceIds=reqinvoiceId.split("~");
 	
 	String appenders = "ReadingReport.pdf";
@@ -11523,7 +11526,7 @@ public CustomResultObject generateReadingReport(HttpServletRequest request, Conn
 
 
 		HashMap<String, Object> hm=new HashMap<>();
-		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getReadingReport(con,appId,invoiceIds);
+		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getReadingReport(con,appId,invoiceIds,chkconsiderstock);
 
 		hm.put("todaysDate",cf.getDateFromDB(con));
 		hm.put("listOfItems", listOfItems);

@@ -2264,10 +2264,22 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con, String appId,String[] invoiceIds)
+	public List<LinkedHashMap<String, Object>> getReadingReport(Connection con, String appId,String[] invoiceIds,String considerStock)
 			throws ClassNotFoundException, SQLException {
 
 				ArrayList<Object> parameters = new ArrayList<>();
+
+				if(considerStock.equals("true"))
+				{
+					parameters.add(1);
+				}
+				else
+				{
+					parameters.add(0);
+				}
+
+				
+
 				String questionMarks = "";
 		for (String s : invoiceIds) {
 			parameters.add(s);
@@ -2276,7 +2288,7 @@ if(hm.get("user_id")!=null)
 		questionMarks = questionMarks.substring(0, questionMarks.length() - 1);
 		
 		String query = "select\n" +
-				"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,ttss.qty currStock,mi.packets_in_ld\n" +
+				"mi.item_name ,tid.item_id,tir.customer_id,tid.qty,round(ttss.qty*?,0) currStock,mi.packets_in_ld\n" +
 				"from\n" +
 				"trn_invoice_register tir\n" +
 				"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" +
@@ -4522,19 +4534,21 @@ if(hm.get("user_id")!=null)
 		return getListOfLinkedHashHashMap(parameters, query, con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getListOfItemsForSnacksProduction(String invoiceId, String appId,
+	public List<LinkedHashMap<String, Object>> getListOfItemsForSnacksProduction(String invoiceId, String appId,String packaging_type,
 			Connection con)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(invoiceId);
 		parameters.add(appId);
+		parameters.add(packaging_type);
+		
 
 		String query = "select\n" +
 				"*\n" +
 				"from\n" +
 				"mst_items mi left outer join trn_invoice_details tid on tid.item_id =mi.item_id   and tid.invoice_id=?\n"
 				+
-				"where mi.app_id =? and mi.activate_flag =1 order by order_no\n";
+				"where mi.app_id =? and mi.activate_flag =1 and mi.packaging_type=? order by order_no\n";
 
 		return getListOfLinkedHashHashMap(parameters, query, con);
 	}

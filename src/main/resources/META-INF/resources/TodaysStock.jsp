@@ -375,6 +375,8 @@ function deleteAttachment(id)
   	 <div class="form-group" align="center">	  
 	   	<button class="btn btn-success" type="button" id="btnsave" onclick='saveInvoice()'>Save (F2)</button>   
 	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
+	   <button class="btn btn-primary" type="reset" onclick='resetStock()'>Reset Stock</button>
+	   
 	   
 	   
 	  	   
@@ -1176,6 +1178,22 @@ $( function() {
 
 
 getItemsAndStockForThisDate();
+
+function resetStock()
+{	
+	var rows=tblitems.rows;
+	var requiredDetails=[];
+	var arr = [];
+	var itemString="";
+	var confirmMessage="";
+	var proceedFlag=true;
+	var messageToShow="";
+	for (var x= 1; x < rows.length; x++) 
+	{   
+	    rows[x].childNodes[1].childNodes[0].childNodes[0].value='0';
+	}
+	calculateTotal();
+}
  
 
 

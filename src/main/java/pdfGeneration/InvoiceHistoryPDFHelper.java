@@ -5243,16 +5243,16 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 				table.addCell(cell);
 				
-				String currStock=stockDetails.get(prod.get("item_id").toString());
-				stockTotal+=Integer.valueOf(currStock);
-				cell = new PdfPCell(new Phrase(currStock,font));
+				int currStock=(int) Double.parseDouble(stockDetails.get(prod.get("item_id").toString()));
+				stockTotal+=currStock;
+				cell = new PdfPCell(new Phrase(String.valueOf(currStock),font));
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setVerticalAlignment(Element.ALIGN_CENTER);
 
 				table.addCell(cell);
 
 
-				int toProduce=totalQty-Integer.parseInt(currStock);
+				int toProduce=totalQty-(currStock);
 				toProduce=toProduce<0?0:toProduce;
 				toProduceTotal+=toProduce;
 
