@@ -405,7 +405,7 @@ if(hm.get("user_id")!=null)
 	}
 
 	public long saveItem(HashMap<String, Object> itemDetails, Connection con)
-			throws SQLException {
+			throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("item_id", "~default");
@@ -432,11 +432,48 @@ if(hm.get("user_id")!=null)
 		valuesMap.put("hsn_code", itemDetails.get("hsn_code"));
 		valuesMap.put("catalog_no", itemDetails.get("catalog_no"));
 		valuesMap.put("order_no", itemDetails.get("order_no"));
-		valuesMap.put("cgst", itemDetails.get("cgst"));
-		valuesMap.put("raw_material_id", itemDetails.get("drprawmaterialid"));
-		valuesMap.put("lds_per_raw_material", itemDetails.get("lds_per_raw_material"));
-		valuesMap.put("packets_in_ld", itemDetails.get("packets_in_ld"));
-		valuesMap.put("packaging_type", itemDetails.get("packaging_type"));
+		valuesMap.put("cgst", itemDetails.get("cgst"));		
+
+		if(itemDetails.get("drprawmaterialid")==null)
+		{
+			valuesMap.put("raw_material_id", "~null");		
+		}
+		else
+		{
+			valuesMap.put("raw_material_id", itemDetails.get("drprawmaterialid"));
+		}
+
+		if(itemDetails.get("lds_per_raw_material").equals("") ||  itemDetails.get("lds_per_raw_material")==null)
+		{
+			valuesMap.put("lds_per_raw_material", "~null");		
+		}
+		else
+		{
+			valuesMap.put("lds_per_raw_material", itemDetails.get("lds_per_raw_material"));
+		}
+
+		
+		if(itemDetails.get("packets_in_ld").equals("") | itemDetails.get("packets_in_ld")==null)
+		{
+			valuesMap.put("packets_in_ld", "~null");		
+		}
+		else
+		{
+			valuesMap.put("packets_in_ld", itemDetails.get("packets_in_ld"));
+		}
+
+		if(itemDetails.get("packaging_type").equals("") | itemDetails.get("packaging_type")==null)
+		{
+			valuesMap.put("packaging_type", "~null");		
+		}
+		else
+		{
+			valuesMap.put("packaging_type", itemDetails.get("packaging_type"));
+		}
+
+
+		
+		
 
 
 		Query q = new Query("mst_items", "insert", valuesMap);
@@ -1624,7 +1661,7 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public long addTermsAndCondition(Connection conWithF, HashMap<String, Object> hm) throws SQLException {
+	public long addTermsAndCondition(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("terms_condition_id", "~default");
 		valuesMap.put("terms_condition_content", hm.get("termscondition"));
@@ -5082,7 +5119,7 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public long AddVisitor(Connection conWithF, HashMap<String, Object> hm) throws SQLException {
+	public long AddVisitor(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("visitor_id", "~default");
@@ -5102,7 +5139,7 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public String updateVisitor(long visitorId, Connection conWithF, HashMap<String, Object> hm) throws SQLException {
+	public String updateVisitor(long visitorId, Connection conWithF, HashMap<String, Object> hm) throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("visitor_name", hm.get("visitorname"));
@@ -5334,7 +5371,7 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public long checkInNozzleNew(Connection conWithF, HashMap<String, Object> hm) throws SQLException, ParseException {
+	public long checkInNozzleNew(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		hm.put("itemId", getNozzleDetails(hm.get("nozzle_id").toString(), conWithF).get("item_id"));
@@ -5361,7 +5398,7 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public long checkOutNozzle(Connection conWithF, HashMap<String, Object> hm) throws SQLException {
+	public long checkOutNozzle(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("closing_reading", hm.get("closing_reading"));
@@ -6014,7 +6051,7 @@ if(hm.get("user_id")!=null)
 	}
 
 	public long saveCollectionSupervisor(Connection conWithF, HashMap<String, Object> hm)
-			throws SQLException, ParseException {
+			throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("collection_id", "~default");
@@ -7178,7 +7215,7 @@ if(hm.get("user_id")!=null)
 
 	}
 
-	public long saveItemRestaurant(HashMap<String, Object> hm, Connection con) throws SQLException {
+	public long saveItemRestaurant(HashMap<String, Object> hm, Connection con) throws Exception {
 
 		HashMap<String, Object> valuesMap = new HashMap<String, Object>();
 		valuesMap.put("item_id", "~default");

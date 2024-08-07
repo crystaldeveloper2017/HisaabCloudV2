@@ -175,7 +175,7 @@ function deleteAttachment(id)
   </div>
   
 
-  <div class="col-sm-6">
+  <div class="col-sm-6" id="placeholderrawmaterialid">
 
   	<div class="form-group">
       <label for="email">Raw Material Name * </label>     
@@ -607,9 +607,10 @@ if("${userdetails.app_type}"=="SnacksProduction")
 
 if("${userdetails.app_type}"=="PetrolPump" || "${userdetails.app_type}"=="Restaurant"|| "${userdetails.app_type}"=="Retail" || "${userdetails.app_type}"=="Jwellery" || "${userdetails.app_type}"=="RetailMobile" || "${userdetails.app_type}"=="Battery")
 	{
-	placeholderperrawmaterial.style.display="none";
+		placeholderperrawmaterial.style.display="none";
 		placeholderpacketsinld.style.display="none";
 		placeholderforpackagingtype.style.display="none";
+		placeholderrawmaterialid.style.display="none";		
 	}
 
 
