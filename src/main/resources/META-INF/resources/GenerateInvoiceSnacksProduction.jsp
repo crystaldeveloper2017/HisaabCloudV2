@@ -268,7 +268,7 @@ function deleteAttachment(id)
 
 function showEditInvoice()
 {
-	window.location="?a=showGenerateInvoice&invoice_id=${param.invoice_id}&editInvoice=Y";
+	window.location="?a=showGenerateInvoice&invoice_id=${param.invoice_id}&editInvoice=Y&packaging_type=${param.packaging_type}";
 }
 
 function generateOrderReport()

@@ -7462,6 +7462,7 @@ if(hm.get("user_id")!=null)
 				"left outer join snacks_invoice_status sis ON tir.invoice_id = sis.invoice_id " +
 				"left outer join trn_invoice_details tid ON tir.invoice_id = tid.invoice_id " +
 				"left outer join mst_customer cust ON cust.customer_id = tir.customer_id " +
+				"left outer join mst_items mi ON mi.item_id = tid.item_id " +
 				"WHERE tir.app_id = ?  AND sis.curr_status = 0 AND tir.activate_flag=1 ";
 		if (hm.get("user_id") != null) {
 			query += " and tir.updated_by=? ";
