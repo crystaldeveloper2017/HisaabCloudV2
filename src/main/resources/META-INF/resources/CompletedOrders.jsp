@@ -39,7 +39,7 @@
                             <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${completeData.invoice_id}">
                         </td>
                         <td>
-                            <a href="?a=showGenerateInvoice&invoice_id=${completeData.invoice_id}&editInvoice=N">${completeData.city} (${completeData.totalQty})</a>
+                            <a href="?a=showGenerateInvoice&invoice_id=${completeData.invoice_id}&editInvoice=N&packaging_type=${completeData.packaging_type}">${completeData.city} (${completeData.totalQty})</a>
                         </td>
                     </tr>
                 </c:forEach>
