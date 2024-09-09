@@ -50,6 +50,8 @@ function deleteCustomer(customerId)
 
 
 <div class="row">
+      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
 <div class="col-sm-3" align="center">
 	<div class="input-group input-group-sm" style="width: 200px;">
   					<select id="drpcustomertype" name="drpcustomertype" class="form-control float-right" onchange='reloadFilter()' style="margin-right: 15px;" >
@@ -65,6 +67,9 @@ function deleteCustomer(customerId)
   					</select>
                   </div>
 </div>
+
+ </c:if>
+
       <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
     <div class="col-sm-3" align="left" >
 	<div class="input-group input-group-sm" style="width: 200px;">
@@ -186,7 +191,15 @@ function deleteCustomer(customerId)
   document.title +=" Customer Master ";
   function actualSearch()
   {
-				window.location="?a=showCustomerMaster&searchInput="+txtsearch.value+"&groupId="+drpgroupId.value+"&customerType="+drpcustomertype.value;
+		  if("${userdetails.app_type}"=='SnacksProduction')
+{
+				window.location="?a=showCustomerMaster&searchInput="+txtsearch.value;
+
+}
+else{
+					window.location="?a=showCustomerMaster&searchInput="+txtsearch.value+"&groupId="+drpgroupId.value+"&customerType="+drpcustomertype.value;
+
+}
   }
   
   function searchprod(evnt)
