@@ -254,7 +254,7 @@ function addCustomer()
         });
 
 	var encodedurl=encodeURIComponent('${ciphertext}');
-	alert(encodedurl);
+	
 
 	document.getElementById("textToCopy").value=window.location.toString().split("?a")[0]+"?a=showLedgerForCustomerWithVehicle&cipher="+encodedurl;
 

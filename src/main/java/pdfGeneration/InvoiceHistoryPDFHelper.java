@@ -5002,8 +5002,10 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	        table.addCell(cell);	       
 
-
-			cell = new PdfPCell(new Phrase(prod.get("noOfBagsreq").toString(),font12));
+			String noOfBagsFormatted=String.format("%.0f", prod.get("noOfBagsreq"));
+	        	
+			
+			cell = new PdfPCell(new Phrase(noOfBagsFormatted,font12));
 			cell.setColspan(1);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -5758,7 +5760,10 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 	        table.addCell(cell);	       
 
 
-			cell = new PdfPCell(new Phrase(prod.get("noOfBagsreq").toString(),font12));
+			String noOfBagsFormatted=String.format("%.0f", prod.get("noOfBagsreq"));
+	        	
+			
+			cell = new PdfPCell(new Phrase(noOfBagsFormatted,font12));
 			cell.setColspan(1);
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
