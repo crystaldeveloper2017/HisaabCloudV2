@@ -3363,6 +3363,70 @@ if(hm.get("user_id")!=null)
 
 	}
 
+	public List<LinkedHashMap<String, Object>> getCustomerLedgerItemReportItemAmount(String customerId, String fromDate,
+			String toDate, Connection con) throws ParseException, ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		String query = "select\r\n"
+				+ "	tir.invoice_date orderDate,\r\n"
+				+ "	invoice_no,\r\n"
+				+ "	tir.invoice_id as RefId,\r\n"
+				+ "	date_format(tir.invoice_date, '%d/%m/%Y') as transaction_date,\r\n"
+				+ "	item_amount as Amount,\r\n"
+				+ "	concat('Invoice (', remarks, ' )') as type,\r\n"
+				+ "	date_format(tir.updated_date, '%d/%m/%Y %H:%i:%s') upd1,\r\n"
+				+ "	'Debit' as creditDebit,\r\n"
+				+ "	 round(tid.item_amount,2) as debitAmount,\r\n"
+				+ "	0 creditAmount,mi.item_name ,tid.qty,tid.custom_rate,mv.vehicle_number,round(tid.item_amount,2) itemAmount \r\n"
+				+ "from\r\n"
+				+ "	trn_invoice_register tir inner join trn_invoice_details tid on tid.invoice_id=tir.invoice_id inner join mst_items mi on mi.item_id =tid.item_id \r\n"
+				+ "left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=tir.invoice_id left outer join mst_vehicle mv on mv.vehicle_id=rifd.vehicle_id where\r\n"
+				+ "	tir.customer_id = ?\r\n"
+				+ "	and tir.activate_flag = 1\r\n"
+				+ "	and date(invoice_date) between ? and ?\r\n"
+				+ "union all\r\n"
+				+ "select\r\n"
+				+ "	payment_date orderDate,\r\n"
+				+ "	invoice_no,\r\n"
+				+ "	ref_id RefId,\r\n"
+				+ "	date_format(payment_date, '%d/%m/%Y') as transaction_date,\r\n"
+				+ "	amount*-1 as Amount,\r\n"
+				+ "	concat(payment_mode, ' ( ', tpr.remarks, ' ) ', ' ( ', tpr.payment_for, ' ) ') as type,\r\n"
+				+ "	date_format(tpr.updated_date, '%d/%m/%Y %H:%i:%s') upd1,\r\n"
+				+ "	case\r\n"
+				+ "		when payment_for = 'Debit Entry' then 'Debit'\r\n"
+				+ "		else 'Credit'\r\n"
+				+ "	end as creditDebit,\r\n"
+				+ "	case\r\n"
+				+ "		when payment_for = 'Debit Entry' then amount*-1\r\n"
+				+ "		else 0\r\n"
+				+ "	end as debitAmount,\r\n"
+				+ "	case\r\n"
+				+ "		when payment_for != 'Debit Entry' then amount\r\n"
+				+ "		else 0\r\n"
+				+ "	end as creditAmount,'','','','',''\r\n"
+				+ "from\r\n"
+				+ "	trn_payment_register tpr left outer join trn_invoice_register tir2 on tir2.invoice_id =tpr.ref_id\r\n"
+				+ "where\r\n"
+				+ "	tpr.customer_id = ?\r\n"
+				+ "	and  tpr.activate_flag = 1\r\n"
+				+ "	and date(tpr.payment_date) between ? and ?\r\n"
+				+ "order by\r\n"
+				+ "	orderDate,\r\n"
+				+ "	upd1";
+
+		parameters.add((customerId));
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+
+		parameters.add((customerId));
+		parameters.add(getDateASYYYYMMDD(fromDate));
+		parameters.add(getDateASYYYYMMDD(toDate));
+
+		return getListOfLinkedHashHashMap(parameters, query, con);
+
+	}
+
+
 	public List<LinkedHashMap<String, Object>> getStockModifications(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
