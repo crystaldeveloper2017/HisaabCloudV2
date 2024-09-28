@@ -1518,7 +1518,21 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				//   cell.setPadding(0);
 				//   cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				//   table.addCell(cell);
+if (!invoiceHistoryDetails.get("remarks").equals(""))
+{
 
+ 
+	cell = new PdfPCell(new Phrase(String.valueOf("Remarks : "+String.valueOf(invoiceHistoryDetails.get("remarks"))),font ));
+	cell.setBorder(Rectangle.NO_BORDER);
+	cell.setColspan(1);
+	cell.setPadding(0);
+	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	table.addCell(cell);
+
+}
+				
+			 
+			
 				  
 				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
 				  cell.setBorder(Rectangle.NO_BORDER);
