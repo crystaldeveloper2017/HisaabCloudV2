@@ -506,9 +506,36 @@ if(hm.get("user_id")!=null)
 		parameters.add(itemDetails.get("order_no"));
 		parameters.add(itemDetails.get("cgst"));
 		parameters.add(itemDetails.get("drprawmaterialid"));
-		parameters.add(itemDetails.get("lds_per_raw_material"));
-		parameters.add(itemDetails.get("packets_in_ld"));
-		parameters.add(itemDetails.get("packaging_type"));
+
+		int lds_per_raw_material=0;
+		if(!itemDetails.get("lds_per_raw_material").equals(""))
+		{
+			lds_per_raw_material=Integer.parseInt(itemDetails.get("lds_per_raw_material").toString());
+		}		
+		parameters.add(lds_per_raw_material);
+
+
+		int packets_in_ld=0;
+		if(!itemDetails.get("packets_in_ld").equals(""))
+		{
+			packets_in_ld=Integer.parseInt(itemDetails.get("packets_in_ld").toString());
+		}
+		parameters.add(packets_in_ld);
+
+
+		int packaging_type=0;
+		if(!itemDetails.get("packaging_type").equals(""))
+		{
+			packaging_type=Integer.parseInt(itemDetails.get("packaging_type").toString());
+		}
+		parameters.add(packaging_type);
+
+
+
+
+		
+
+
 		parameters.add(Long.parseLong(itemDetails.get("hdnItemId").toString()));
 
 		String insertQuery = "UPDATE mst_items \r\n"
