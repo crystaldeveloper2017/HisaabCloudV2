@@ -7133,7 +7133,7 @@ if(hm.get("user_id")!=null)
 		return getListOfLinkedHashHashMap(parameters,
 				"select *,tum.name attendantName,tum2.name superVisorName from trn_nozzle_register tnr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
 						+ " where accounting_date between ? and ? and tnr.activate_flag=1 and tnr.app_id=? and tnr.shift_id=shft.shift_id and "
-						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id order by nozzle_name,shift_name",
+						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id order by tnr.accounting_date desc,nozzle_name,shift_name  ",
 				con);
 	}
 

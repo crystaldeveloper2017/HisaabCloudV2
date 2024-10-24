@@ -2841,8 +2841,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			calcuLatedGrossAmount += Double.valueOf(item.get("qty").toString())
 					* Double.valueOf(item.get("rate").toString());
 		}
-		System.out.println(
-				"Gross Amount Received " + GrossAmount + " vs " + calcuLatedGrossAmount + "calculated Gross Amount");
+		logger.debug("Gross Amount Received " + GrossAmount + " vs " + calcuLatedGrossAmount + "calculated Gross Amount");
 		return Double.valueOf(new DecimalFormat("0.").format(GrossAmount))
 				.equals(Double.valueOf(new DecimalFormat("0.").format(calcuLatedGrossAmount)));
 	}
@@ -2861,10 +2860,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String formattedDouble = df.format(calculatedTotalAmount);
 
 		double formattedDoubleValue = new Double(formattedDouble);
-
-		System.out.println(
-				"calculatedTotalAmount " + formattedDoubleValue + " vs " + totalAmount + "total Amount Received");
-
+		logger.debug("calculatedTotalAmount " + formattedDoubleValue + " vs " + totalAmount + "total Amount Received");
 		return Double.valueOf(new DecimalFormat("0.").format(totalAmount))
 				.equals(Double.valueOf(new DecimalFormat("0.").format(formattedDoubleValue)));
 	}

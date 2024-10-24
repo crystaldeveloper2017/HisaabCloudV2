@@ -74,14 +74,15 @@
                     <th><b>Nozzle Name</b></th>                  
                     <th><b>Shift</b></th>
                     <th><b>Attendant Name</b>
+					<th><b>Accounting Date</b>
                     <th><b>Check In Time</b>
                     <th><b>Check Out Time</b></th>
                     <th><b>Opening Reading</b>
                     <th><b>Closing Reading</b>
                     <th><b>Rate</b>
-                    <th><b>Supervisor Name</b>
-                     
-                    </tr>
+                    <th><b>Supervisor Name</b></th>
+					<th></th>
+					
                   </thead>
                   <tbody>
 				<c:forEach items="${lstCheckinRegister}" var="item">
@@ -91,6 +92,8 @@
 					  <td>${item.nozzle_name}${item.item_name}</td>
 					 <td>${item.shift_name} ${item.from_time} ${item.to_time}</td>
 					  <td>${item.attendantName}</td>
+					  <td>${item.accounting_date}</td>
+					  
 					  <td>${item.check_in_time}</td>
 					  <td>${item.check_out_time}</td>
 					  <td>${item.opening_reading}</td>

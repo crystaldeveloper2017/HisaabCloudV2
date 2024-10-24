@@ -150,7 +150,8 @@ function saveInvoice()
 	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
 	    	}
 	    	
-	    	//alert(txtinvoicedate.value);
+	    	alert(invoiceId);
+			printDirectAsFonts(invoiceId[0],0);
 	    	window.location="?a=showGenerateInvoice&txtinvoicedate="+txtinvoicedate.value;	    		
 	      	return;
 	      	
@@ -197,6 +198,216 @@ function saveInvoice()
 
 
 
+function printDirectAsFonts(invoiceNo,pendAmount) 
+{
+	
+	
+	
+	try
+	{
+		
+		if(invoiceNo==null)
+			{
+				alert("invoice No found as null");
+				return;
+			}
+	
+	var xhttp = new XMLHttpRequest();
+	var invoiceResponse;
+	var invoiceDetails;
+	var listOfItems;
+	
+		  xhttp.onreadystatechange = function() 
+		  {
+		    if (xhttp.readyState == 4 && xhttp.status == 200) 
+		    { 		      
+		    	console.log(xhttp.responseText);
+		       invoiceResponse=JSON.parse(xhttp.responseText);
+		       invoiceDetails=(invoiceResponse.invoiceDetails);
+		       listOfItems=invoiceDetails.listOfItems;
+		       console.log(listOfItems);
+		   		
+			}
+		  };
+		  xhttp.open("GET","?a=getInvoiceDetailsByNoAjax&invoiceNo="+invoiceNo, false);    
+		  xhttp.send();
+		
+		  console.log(invoiceDetails.invoice_no);
+		  var topay=Number(invoiceDetails.total_amount)-Number(invoiceDetails.paid_amount);
+			
+    var c = new PosPrinterJob(getCurrentDriver(), getCurrentTransport());
+    c.initialize();
+     c.printText("Invoice Estimate: "+invoiceDetails.invoice_no, c.ALIGNMENT_CENTER, c.FONT_SIZE_MEDIUM2); // Invoice no   
+    c.printText(invoiceDetails.store_name, c.ALIGNMENT_CENTER, c.FONT_SIZE_BIG).bold(true); // store name
+    
+    c.printText(invoiceDetails.address_line_1 + invoiceDetails.address_line_2, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // address line 1
+    c.printText(invoiceDetails.address_line_3, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // address line 2     
+    
+    //c.printText(invoiceDetails.city+" - "+invoiceDetails.pincode, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // city pincode
+    
+    c.printText("Phone:- "+invoiceDetails.mobile_no, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    c.printText("Store Timings:- "+invoiceDetails.store_timing, c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // timings
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    
+    if(invoiceDetails.customer_name!=null)
+    	{
+    		c.printText("Name : "+invoiceDetails.customer_name, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Name
+    	}
+		    c.printText("Date & Time : "+invoiceDetails.theUpdatedDate, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Date & Time
+		    c.printText("Payment Type : "+invoiceDetails.payment_type, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
+    if(invoiceDetails.payment_type!='Pending')
+    	{
+    		c.printText("Payment Mode : "+invoiceDetails.payment_mode, c.ALIGNMENT_LEFT, c.FONT_SIZE_NORMAL); // Payment Type
+    	}
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    c.printText("SR              ITEM NAME       Qty        Rate        AMOUNT  ", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // Payment Type
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL); // mobile
+    
+    
+    
+    var totalWeight=0;
+    var totalQty=0;
+    for(var m=0;m<listOfItems.length;m++)
+    	{
+    	
+    	totalWeight+=Number(listOfItems[m].weight);
+    	totalQty+=Number(listOfItems[m].qty);
+    	
+    	var spaceCharacter=" ";
+    	var finalLine="";
+    	
+    	var srnumber=m+1;
+    	if(srnumber<=9)
+    		{
+    			srnumber="0"+srnumber;
+    		}    	
+    	finalLine+=srnumber;  	
+    	
+    	
+    	var itemAllocatedSpace=29;
+    	var itemName=listOfItems[m].item_name
+    	for(k=0;k<itemAllocatedSpace;k++)
+    		{
+	    		if(itemName.length<itemAllocatedSpace)
+	    		{
+	    			if(k%2==0){itemName+=spaceCharacter;}
+	    			if(k%2!=0){itemName=spaceCharacter+itemName;}
+	    		}
+    		}
+    	finalLine+=" "+itemName;
+    	var qtyAllocattedspace=4;
+    	var qtyNum=listOfItems[m].qty;
+    	var qtyWithWhiteSpaces=listOfItems[m].qty;
+    	for(k=0;k<qtyAllocattedspace;k++)
+    		{
+	    		if(qtyWithWhiteSpaces.toString().length<qtyAllocattedspace)
+	    		{
+	    			if(k%2==0){qtyWithWhiteSpaces+=spaceCharacter;}
+	    			if(k%2!=0){qtyWithWhiteSpaces=spaceCharacter+qtyWithWhiteSpaces;}	    					
+	    		}
+    		}    	
+    	finalLine+=" "+qtyWithWhiteSpaces;
+    	
+    	var priceAllocatedSpace=11;
+    	var priceWithSpaces=Number(listOfItems[m].custom_rate).toFixed(0);
+    	for(k=0;k<priceAllocatedSpace;k++)
+    		{
+	    		if(priceWithSpaces.toString().length<priceAllocatedSpace)
+	    		{
+	    			if(k%2==0){priceWithSpaces+=spaceCharacter;}
+	    			if(k%2!=0){priceWithSpaces=spaceCharacter+priceWithSpaces;}	    					
+	    		}
+    		}
+    	finalLine+=" "+priceWithSpaces;
+    	
+    	var amountAllocatedSpace=13;
+    	var Amount=Number(listOfItems[m].custom_rate)*Number(qtyNum);    	
+    	Amount=Amount.toFixed(0);    	
+    	var amountWithSpaces=Amount;
+    	for(k=0;k<amountAllocatedSpace;k++)
+    		{
+	    		if(amountWithSpaces.toString().length<amountAllocatedSpace)
+	    		{
+	    			if(k%2==0){amountWithSpaces+=spaceCharacter;}
+	    			if(k%2!=0){amountWithSpaces=spaceCharacter+amountWithSpaces;}	    					
+	    		}
+    		}
+    	finalLine+=" "+amountWithSpaces;
+
+    	console.log(finalLine);
+    	c.printText(finalLine, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Payment Type
+    
+    	}
+    
+        
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    
+    //c.printText("Total Weight : "+totalWeight.toFixed(3), c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
+    c.printText("Total Qty : "+totalQty, c.ALIGNMENT_RIGHT, c.FONT_SIZE_NORMAL); // Payment Type
+    
+    if(invoiceDetails.invoice_discount!='' && invoiceDetails.invoice_discount!='0.00')
+	{
+	    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+	    c.printText("Invoice Discount :  "+invoiceDetails.invoice_discount, c.ALIGNMENT_RIGHT, c.FONT_SIZE_SMALL); // Remarks
+	}
+    
+    if(invoiceDetails.remarks!='')
+	{
+	    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+	    c.printText("Remarks :  "+invoiceDetails.remarks, c.ALIGNMENT_LEFT, c.FONT_SIZE_SMALL); // Remarks
+	}
+    
+    var topay=invoiceDetails.total_amount;
+    
+    if(invoiceDetails.payment_type=='Partial')
+    	{    	
+    	
+    	// need to discuss and implement
+    	c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+        c.printText("Total Amount :  "+Number(invoiceDetails.total_amount), c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1);         
+        
+    	c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+        c.printText("Partially Paid Amount :  "+invoiceDetails.paid_amount, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
+        topay=Number(invoiceDetails.total_amount)-Number(invoiceDetails.paid_amount);
+    	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    c.printText("----------------------------------------------------------------", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    c.printText("Total Amount :  "+topay, c.ALIGNMENT_RIGHT, c.FONT_SIZE_MEDIUM1); // Payment Type
+    
+  
+    
+    
+   
+
+    c.printText("****************************************************************", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    c.printText("*Thank You, Visit Again*", c.ALIGNMENT_CENTER, c.FONT_SIZE_NORMAL);
+    
+
+    c.feed(3);
+    c.execute();
+    
+        
+    
+    
+
+	}
+	catch(ex)
+	{
+		alert(ex.message);
+	}
+    
+
+}
 
 
 
