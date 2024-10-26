@@ -1737,8 +1737,17 @@ function printDirectAsFonts(invoiceNo,pendAmount)
     
    
 
+	c.printText("", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+	c.printText("", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+
+	c.printText("****************************************************************", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
+    c.printText("*Powered By HisaabCloud.in*", c.ALIGNMENT_CENTER, c.FONT_SIZE_NORMAL);
+
     c.printText("****************************************************************", c.ALIGNMENT_CENTER, c.FONT_SIZE_SMALL);
     c.printText("*Thank You, Visit Again*", c.ALIGNMENT_CENTER, c.FONT_SIZE_NORMAL);
+
+
+	
     
 
 
