@@ -591,3 +591,18 @@ elements:
   parentElementId: 700304
   elementUrl: "?a=showUserRoleMapping"
   orderNo: 4
+- elementId: 700307
+  elementName: "Deposit Cash To Bank"
+  parentElementId: 700165
+  elementUrl: "?a=showDepositCashToBank"
+  orderNo: 1
+- elementId: 700308
+  elementName: " Cash Deposit Register "
+  parentElementId: 26
+  elementUrl: "?a=showCashDepositRegister"
+  orderNo: 1
+- elementId: 700309
+  elementName: " Cash Ledger Report "
+  parentElementId: 26
+  elementUrl: "?a=showCashLedgerReport"
+  orderNo: 1

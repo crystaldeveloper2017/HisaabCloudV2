@@ -6639,13 +6639,7 @@ if(hm.get("user_id")!=null)
 		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
 
 		return getListOfLinkedHashHashMap(parameters,
-				"select \r\n"
-						+ "*,\r\n"
-						+ "tum.name as AttendantName,shift_name,tum2.name as SupervisorName\r\n"
-						+ "from trn_supervisor_collection tsc,shift_master sm ,tbl_user_mst tum  ,tbl_user_mst tum2  \r\n"
-						+ "where collection_date  between ? and ? and sm.shift_id=tsc.shift_id and tum.user_id =tsc.attendant_id\r\n"
-						+ "and \r\n"
-						+ "tum2.user_id =tsc.updated_by;",
+				"",
 				con);
 	}
 
@@ -7700,4 +7694,25 @@ if(hm.get("user_id")!=null)
 				conWithF);
 	}
 
+	public long addDepositCashToBank(Connection con, HashMap<String, Object> hm) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(hm.get("txtaccountid"));
+		parameters.add(getDateASYYYYMMDD(hm.get("txtdate").toString()));
+		parameters.add(hm.get("txtamount"));
+		parameters.add(hm.get("user_id"));
+		
+
+		return insertUpdateDuablDB("insert into trn_cash_deposit_to_bank_register values (default,?,?,?,?,sysdate(),1)",
+				parameters, con);
+	}
+
+
+	public String deleteCashDepositRegister(long bankId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(bankId);
+		insertUpdateDuablDB("UPDATE trn_cash_deposit_to_bank_register SET activate_flag=0,updated_date=SYSDATE() WHERE deposit_id=?",
+				parameters, conWithF);
+		return "Cash Deposit Deleted Succesfully";
+	}
 }

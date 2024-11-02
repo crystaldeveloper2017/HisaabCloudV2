@@ -2,6 +2,11 @@
   roleName: "AdminFuel"
   actions:
     - showCustomerLedgerWithItemVehicle
+    - showDepositCashToBank
+    - addDepositCashToBank
+    - showCashDepositRegister
+    - deleteCashDepositRegister
+    - showCashLedgerReport
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin
@@ -212,3 +217,7 @@
     - 700189
     - 5
     - 16
+    - 700307
+    - 700165
+    - 700308
+    - 700309
