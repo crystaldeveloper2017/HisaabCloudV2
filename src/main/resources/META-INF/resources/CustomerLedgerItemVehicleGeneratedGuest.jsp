@@ -162,7 +162,7 @@
       "searching": false,      
       "info": true,
       "autoWidth": false,
-      "responsive": true,
+      "responsive": false,
       "pageLength": 50,
       "order": [[ 0, 'asc' ]],
       "zeroRecords": " "
