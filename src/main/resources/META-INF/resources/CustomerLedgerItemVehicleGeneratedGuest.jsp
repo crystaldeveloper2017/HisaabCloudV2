@@ -77,9 +77,6 @@
 			<thead>
 				<tr>                  
 					<th colspan="3"><b>Customer Name:-${customerDetails.customer_name }</b></th>
-					<th colspan="2"><b>Type:- ${customerDetails.customer_type }</b></th>
-					<th colspan="1"><b>From Date:-${fromDate1}</b></th>                    
-					<th colspan="1"><b>To Date:-${toDate1}</b></th> 
 				</tr>
 			</thead> 
 		</table>
