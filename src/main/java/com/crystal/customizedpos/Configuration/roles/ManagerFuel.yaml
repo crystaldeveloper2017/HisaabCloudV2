@@ -119,6 +119,8 @@
     - addPumpTest
     - exportNozzleRegister
     - savePurchaseInvoice
+    - generatePDFFordailySalesReport
+    - exportDailySalesReport
   elements:
     - 700211
     - 700185

@@ -18,6 +18,9 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -11867,6 +11870,47 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 
 		return rs;
 
+	}
+
+	
+	 
+
+	public CustomResultObject exportDailySalesReport(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String Gaandaaa = request.getParameter("txtfromdate").toString();
+
+		String shiftid = request.getParameter("shiftid").toString();
+		String fromDateWithoutSlashes = Gaandaaa.replaceAll("\\/", "");
+		String appenders = fromDateWithoutSlashes + "-" + shiftid + ".pdf";
+
+
+		
+				DestinationPath += appenders;
+
+		outputMap.put("txtfromdate", Gaandaaa);
+		
+
+		try {
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+			
+			new InvoiceHistoryPDFHelper().generatePDFFordailySalesReport(DestinationPath, outputMap, con);
+			outputMap.put(filename_constant, appenders);
+
+			
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
 	}
 
 }
