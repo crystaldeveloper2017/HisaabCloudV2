@@ -1,0 +1,22 @@
+name: Create File Every 10 Minutes
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # This runs the job every 10 minutes
+
+jobs:
+  create-file:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.UBUNTU_PRIVATE_KEY }}
+
+    - name: SSH into Ubuntu machine and create a file
+      run: |
+        ssh -o StrictHostKeyChecking=no -p 22 ubuntu@hisaabcloud.in "
+          TIMESTAMP=\$(date +'%Y-%m-%d_%H-%M-%S')
+          echo 'File created at \$TIMESTAMP' > /home/ubuntu/new_file_\$TIMESTAMP.txt
+        "
