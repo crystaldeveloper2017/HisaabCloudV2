@@ -1,11 +1,11 @@
-name: Create File Daily at 6 AM IST
+name: Database Backup Daily at 6 AM IST
 
 on:
   schedule:
     - cron: '30 0 * * *'  # This runs the job every day at 00:30 UTC (6:00 AM IST)
 
 jobs:
-  create-file:
+  backup-database:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,9 +14,26 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.UBUNTU_PRIVATE_KEY }}
 
-    - name: SSH into Ubuntu machine and create a file
+    - name: SSH into Ubuntu machine and run Go database backup
       run: |
         ssh -o StrictHostKeyChecking=no -p 22 ubuntu@hisaabcloud.in "
+          # Define the backup directory and timestamp
+          BACKUP_DIR='/home/ubuntu/mysqlbackup'
           TIMESTAMP=\$(date +'%Y-%m-%d_%H-%M-%S')
-          echo 'File created at \$TIMESTAMP' > /home/ubuntu/new_file_\$TIMESTAMP.txt
+
+          # Ensure the mysqlbackup directory exists
+          mkdir -p \$BACKUP_DIR
+
+          # Run the Go program to take the backup for all specified databases
+          \$BACKUP_DIR/mysqldump-backup -host=localhost -port=3306 -user=dbuser -password=${{ secrets.DB_PASSWORD }} \
+          -databases=agserp,customizedpos,skpsecuritygate,sme,society_maintenance,ssegpl \
+          -exclude=mst_users
+
+          # Move the compressed backups to the mysqlbackup directory with timestamp
+          mv agserp.7z \$BACKUP_DIR/agserp_\$TIMESTAMP.7z
+          mv customizedpos.7z \$BACKUP_DIR/customizedpos_\$TIMESTAMP.7z
+          mv skpsecuritygate.7z \$BACKUP_DIR/skpsecuritygate_\$TIMESTAMP.7z
+          mv sme.7z \$BACKUP_DIR/sme_\$TIMESTAMP.7z
+          mv society_maintenance.7z \$BACKUP_DIR/society_maintenance_\$TIMESTAMP.7z
+          mv ssegpl.7z \$BACKUP_DIR/ssegpl_\$TIMESTAMP.7z
         "
