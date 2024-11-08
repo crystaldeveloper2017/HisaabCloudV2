@@ -20,6 +20,10 @@ jobs:
     - name: SSH into Ubuntu machine, shutdown Apache Tomcat, restart MySQL, and run Go database backup
       run: |
         ssh -o StrictHostKeyChecking=no -p 22 ubuntu@hisaabcloud.in "
+          # Change to the backup directory at the start
+          BACKUP_DIR='/home/ubuntu/mysqlbackup'
+          cd \$BACKUP_DIR
+
           # Shutdown Apache Tomcat
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Shutdown Apache Tomcat'
           sudo ./apache-tomcat-9.0.85/bin/shutdown.sh
@@ -28,13 +32,12 @@ jobs:
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Restarting MySQL service'
           sudo service mysql restart
 
-          # Define the backup directory and timestamp
-          BACKUP_DIR='/home/ubuntu/mysqlbackup'
-          TIMESTAMP=\$(date +'%Y-%m-%d_%H-%M-%S')
-
-          # Ensure the mysqlbackup directory exists
+          # Ensure the backup directory exists
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Ensuring backup directory exists'
           mkdir -p \$BACKUP_DIR
+
+          # Define timestamp
+          TIMESTAMP=\$(date +'%Y-%m-%d_%H-%M-%S')
 
           # Run the Go program to take the backup for all specified databases
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Running Go backup program'
@@ -42,14 +45,22 @@ jobs:
           -databases=agserp,customizedpos,skpsecuritygate,sme,society_maintenance,ssegpl \
           -exclude=tbl_attachment_mst
 
+          # Check if the dump was successful
+          if [ -f \$BACKUP_DIR/agserp.7z ]; then
+            echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Dump created successfully'
+          else
+            echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Error in creating dump'
+            exit 1
+          fi
+
           # Move the compressed backups to the mysqlbackup directory with timestamp
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Moving backup files to timestamped filenames'
-          mv agserp.7z \$BACKUP_DIR/agserp_\$TIMESTAMP.7z
-          mv customizedpos.7z \$BACKUP_DIR/customizedpos_\$TIMESTAMP.7z
-          mv skpsecuritygate.7z \$BACKUP_DIR/skpsecuritygate_\$TIMESTAMP.7z
-          mv sme.7z \$BACKUP_DIR/sme_\$TIMESTAMP.7z
-          mv society_maintenance.7z \$BACKUP_DIR/society_maintenance_\$TIMESTAMP.7z
-          mv ssegpl.7z \$BACKUP_DIR/ssegpl_\$TIMESTAMP.7z
+          mv \$BACKUP_DIR/agserp.7z \$BACKUP_DIR/agserp_\$TIMESTAMP.7z
+          mv \$BACKUP_DIR/customizedpos.7z \$BACKUP_DIR/customizedpos_\$TIMESTAMP.7z
+          mv \$BACKUP_DIR/skpsecuritygate.7z \$BACKUP_DIR/skpsecuritygate_\$TIMESTAMP.7z
+          mv \$BACKUP_DIR/sme.7z \$BACKUP_DIR/sme_\$TIMESTAMP.7z
+          mv \$BACKUP_DIR/society_maintenance.7z \$BACKUP_DIR/society_maintenance_\$TIMESTAMP.7z
+          mv \$BACKUP_DIR/ssegpl.7z \$BACKUP_DIR/ssegpl_\$TIMESTAMP.7z
 
           # Start Apache Tomcat again after the backup is done
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Starting Apache Tomcat again'
