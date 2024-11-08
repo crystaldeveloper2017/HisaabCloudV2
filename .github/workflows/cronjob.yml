@@ -32,7 +32,7 @@ jobs:
           # Run the Go program to take the backup for all specified databases
           \$BACKUP_DIR/mysqldump-arm64 -host=localhost -port=3306 -user=remotenuuser -password=${{ secrets.DB_PASSWORD }} \
           -databases=agserp,customizedpos,skpsecuritygate,sme,society_maintenance,ssegpl \
-          -exclude=mst_users
+          -exclude=tbl_attachment_mst
 
           # Move the compressed backups to the mysqlbackup directory with timestamp
           mv agserp.7z \$BACKUP_DIR/agserp_\$TIMESTAMP.7z
