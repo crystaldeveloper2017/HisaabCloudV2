@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - CustomizedPOS
+    # Exclude changes to workflow files from triggering the job
+    paths-ignore:
+      - .github/workflows/*  # Ignore changes to the workflow files
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-
-
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.4
       with:
