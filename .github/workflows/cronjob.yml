@@ -1,8 +1,8 @@
-name: Create File Every 10 Minutes
+name: Create File Daily at 6 AM IST
 
 on:
   schedule:
-    - cron: '*/3 * * * *'  # This runs the job every 10 minutes
+    - cron: '30 0 * * *'  # This runs the job every day at 00:30 UTC (6:00 AM IST)
 
 jobs:
   create-file:
