@@ -6,6 +6,7 @@ on:
 jobs:
   backup-database:
     runs-on: ubuntu-latest
+    timeout-minutes: 360  # Increased timeout to 6 hours
 
     steps:
     - name: Set up SSH
@@ -13,13 +14,18 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.UBUNTU_PRIVATE_KEY }}
 
+    - name: Set SSH Keep-Alive Options
+      run: echo -e "Host *\n  ServerAliveInterval 60\n  ServerAliveCountMax 240" >> ~/.ssh/config
+
     - name: SSH into Ubuntu machine, shutdown Apache Tomcat, restart MySQL, and run Go database backup
       run: |
         ssh -o StrictHostKeyChecking=no -p 22 ubuntu@hisaabcloud.in "
           # Shutdown Apache Tomcat
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Shutdown Apache Tomcat'
           sudo ./apache-tomcat-9.0.85/bin/shutdown.sh
 
           # Restart MySQL service to ensure a clean state
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Restarting MySQL service'
           sudo service mysql restart
 
           # Define the backup directory and timestamp
@@ -27,14 +33,17 @@ jobs:
           TIMESTAMP=\$(date +'%Y-%m-%d_%H-%M-%S')
 
           # Ensure the mysqlbackup directory exists
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Ensuring backup directory exists'
           mkdir -p \$BACKUP_DIR
 
           # Run the Go program to take the backup for all specified databases
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Running Go backup program'
           \$BACKUP_DIR/mysqldump-arm64 -host=localhost -port=3306 -user=remotenuuser -password=${{ secrets.DB_PASSWORD }} \
           -databases=agserp,customizedpos,skpsecuritygate,sme,society_maintenance,ssegpl \
           -exclude=tbl_attachment_mst
 
           # Move the compressed backups to the mysqlbackup directory with timestamp
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Moving backup files to timestamped filenames'
           mv agserp.7z \$BACKUP_DIR/agserp_\$TIMESTAMP.7z
           mv customizedpos.7z \$BACKUP_DIR/customizedpos_\$TIMESTAMP.7z
           mv skpsecuritygate.7z \$BACKUP_DIR/skpsecuritygate_\$TIMESTAMP.7z
@@ -43,5 +52,8 @@ jobs:
           mv ssegpl.7z \$BACKUP_DIR/ssegpl_\$TIMESTAMP.7z
 
           # Start Apache Tomcat again after the backup is done
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Starting Apache Tomcat again'
           sudo ./apache-tomcat-9.0.85/bin/startup.sh
+
+          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Backup completed successfully!'
         "
