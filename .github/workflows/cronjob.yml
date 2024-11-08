@@ -1,8 +1,8 @@
-name: Database Backup Daily at 6 AM IST
+name: Database Backup Daily at 10 PM IST
 
 on:
   schedule:
-    - cron: '30 0 * * *'  # This runs the job every day at 00:30 UTC (6:00 AM IST)
+    - cron: '30 16 * * *'  # This runs the job every day at 16:30 UTC (22:00 IST)
 
 jobs:
   backup-database:
@@ -31,7 +31,7 @@ jobs:
           mkdir -p \$BACKUP_DIR
 
           # Run the Go program to take the backup for all specified databases
-          \$BACKUP_DIR/mysqldump-backup -host=localhost -port=3306 -user=remotenuuser -password=${{ secrets.DB_PASSWORD }} \
+          \$BACKUP_DIR/mysqldump-backup -host=localhost -port=3306 -user=dbuser -password=${{ secrets.DB_PASSWORD }} \
           -databases=agserp,customizedpos,skpsecuritygate,sme,society_maintenance,ssegpl \
           -exclude=mst_users
 
