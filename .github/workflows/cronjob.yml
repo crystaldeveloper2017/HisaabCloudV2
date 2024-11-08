@@ -14,9 +14,15 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.UBUNTU_PRIVATE_KEY }}
 
-    - name: SSH into Ubuntu machine and run Go database backup
+    - name: SSH into Ubuntu machine, shutdown Apache Tomcat, restart MySQL, and run Go database backup
       run: |
         ssh -o StrictHostKeyChecking=no -p 22 ubuntu@hisaabcloud.in "
+          # Shutdown Apache Tomcat
+          sudo ./apache-tomcat-9.0.85/bin/shutdown.sh
+
+          # Restart MySQL service to ensure a clean state
+          sudo service mysql restart
+
           # Define the backup directory and timestamp
           BACKUP_DIR='/home/ubuntu/mysqlbackup'
           TIMESTAMP=\$(date +'%Y-%m-%d_%H-%M-%S')
@@ -36,4 +42,7 @@ jobs:
           mv sme.7z \$BACKUP_DIR/sme_\$TIMESTAMP.7z
           mv society_maintenance.7z \$BACKUP_DIR/society_maintenance_\$TIMESTAMP.7z
           mv ssegpl.7z \$BACKUP_DIR/ssegpl_\$TIMESTAMP.7z
+
+          # Start Apache Tomcat again after the backup is done
+          sudo ./apache-tomcat-9.0.85/bin/startup.sh
         "
