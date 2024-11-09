@@ -3578,14 +3578,15 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
-	public CustomResultObject deleteVehicle(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject deleteVehicle(HttpServletRequest request, Connection con) throws SQLException { 
 		CustomResultObject rs = new CustomResultObject();
+		
 		HashMap<String, Object> outputMap = new HashMap<>();
-
 		long vehicleId = Integer.parseInt(request.getParameter("vehicleId"));
+		
 		try {
-			outputMap.put("vehicle_id", vehicleId);
 			rs.setAjaxData(lObjConfigDao.deleteVehicle(vehicleId, con));
+		    
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
@@ -3595,6 +3596,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+
+	
 	public HashMap<String, Object> addReturnService(HttpServletRequest request, Connection con) throws Exception {
 
 		long detailsId = Integer.parseInt(request.getParameter("hdnDetailsId"));
@@ -10643,40 +10646,48 @@ outputMap.put("txttodate",toDate);
 		return rs;
 	}
 
+	
+
 	public CustomResultObject showCheckinRegister(HttpServletRequest request, Connection con)
-			throws SQLException, ClassNotFoundException, ParseException {
+        throws SQLException, ClassNotFoundException, ParseException {
 
-		CustomResultObject rs = new CustomResultObject();
-		HashMap<String, Object> outputMap = new HashMap<>();
+    CustomResultObject rs = new CustomResultObject();
+    HashMap<String, Object> outputMap = new HashMap<>();
 
-		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		outputMap.put("app_id", appId);
+   
+    String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+    outputMap.put("app_id", appId);
+    String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+    String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+    String nozzleId = request.getParameter("nozzle_id") == null ? "" : request.getParameter("nozzle_id");
 
-		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
-		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+  
+    if (fromDate.isEmpty()) {
+        fromDate = lObjConfigDao.getDateFromDB(con);
+    }
+    if (toDate.isEmpty()) {
+        toDate = lObjConfigDao.getDateFromDB(con);
+    }
 
-		// if parameters are blank then set to defaults
-		if (fromDate.equals("")) {
-			fromDate = lObjConfigDao.getDateFromDB(con);
-		}
-		if (toDate.equals("")) {
-			toDate = lObjConfigDao.getDateFromDB(con);
-		}
+   
+    outputMap.put("txtfromdate", fromDate);
+    outputMap.put("txttodate", toDate);
+    outputMap.put("nozzle_id", nozzleId);
 
-		outputMap.put("txtfromdate", fromDate);
-		outputMap.put("txttodate", toDate);
-		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getCheckinRegister(outputMap, con);
+   
+    List<LinkedHashMap<String, Object>> checkinList = lObjConfigDao.getCheckinRegister(outputMap, con);
 
-		outputMap.put("lstCheckinRegister", lst);
+ 
+    outputMap.put("lstCheckinRegister", checkinList);
+    outputMap.put("lstNozzles", lObjConfigDao.getNozzleMaster(outputMap, con));
 
-		outputMap.put("txtfromdate", fromDate);
-		outputMap.put("txttodate", toDate);
+   
+    rs.setViewName("../CheckinRegister.jsp");
+    rs.setReturnObject(outputMap);
 
-		rs.setViewName("../CheckinRegister.jsp");
-		rs.setReturnObject(outputMap);
-		return rs;
+    return rs;
+}
 
-	}
 
 	public CustomResultObject deleteCheckin(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();

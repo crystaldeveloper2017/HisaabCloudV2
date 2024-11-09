@@ -1,37 +1,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script >
-function deleteItem(vehicleId)
-{	
-	var answer = window.confirm("Are you sure you want to delete ?");
-	if (!answer) 
-	{
-		return;    
-	}
-	
-	  
+ 
+ 
+ function deleteVehicle(vehicleId) {
+            var answer = window.confirm("Are you sure you want to delete ?");
+            if (!answer) {
+                return;
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    toastr["success"](xhttp.responseText);
+                    toastr["success"](xhttp.responseText);
+	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
+	    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
+	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
+	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}      
+                    	window.location.reload();
+                }
+            };
+            xhttp.open("GET", "?a=deleteVehicle&vehicleId=" + vehicleId, true);
 
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-
-	    	  toastr["success"](xhttp.responseText);
-		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
-		    	
-		    	window.location.reload();
-	      
-		  
-		}
-	  };
-	  xhttp.open("GET","?a=deleteVehicle&vehicleId="+vehicleId, true);    
-	  xhttp.send();
-}
-
+            xhttp.send();
+        }
 
 
 
@@ -110,7 +102,8 @@ function deleteItem(vehicleId)
             <td>${vehicle.preferred_fuel_type}</td>
 
 						<td><a href="?a=showAddVehicle&vehicleId=${vehicle.vehicle_id}">Edit</a></td>
-						<td><button class="btn btn-danger" onclick="deleteItem('${item.vehicle_id}')">Delete</button></td>
+         <td><button class="btn btn-danger" onclick="deleteVehicle('${vehicle.vehicle_id}')">Delete</button></td>
+
 					</tr>
 				</c:forEach>
 				
@@ -146,31 +139,7 @@ function deleteItem(vehicleId)
   document.getElementById("divTitle").innerHTML="Vehicle Master";
   document.title +=" Vehicle Master ";
   
-  function actualSearch()
-  {
-	  window.location="?a=showItemMaster&searchInput="+txtsearch.value+"&categoryId="+drpcategoryId.value;  
-  }
-  
-  function searchprod(evnt)
-	{
-		if(evnt.which==13)
-			{
-				// do some search stuff
-				actualSearch();					
-			}
-			
-	}
-  
-  function showThisCategory()
-  {
-	  window.location="?a=showItemMaster&searchInput="+txtsearch.value
-	  		  +"&categoryId="+drpcategoryId.value;
-	  
-  }
-  
-  drpcategoryId.value='${param.categoryId}';
-  
-  
+
   
   window.addEventListener('keydown', function (e) {
 		if(event.which==113)

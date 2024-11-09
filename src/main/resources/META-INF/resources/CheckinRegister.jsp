@@ -9,6 +9,8 @@
 <c:set var="txtfromdate" value='${requestScope["outputObject"].get("txtfromdate")}' />
 <c:set var="txttodate" value='${requestScope["outputObject"].get("txttodate")}' />
 <c:set var="lstCheckinRegister" value='${requestScope["outputObject"].get("lstCheckinRegister")}' />
+<c:set var="lstNozzles" value='${requestScope["outputObject"].get("lstNozzles")}' />
+
 
 
 
@@ -18,6 +20,7 @@
  <br>
  <div class="row">
  
+		
 		
 		<div class="col-sm-1" align="center">
 			<label for="txtfromdate">From Date</label>
@@ -40,6 +43,15 @@
 			</div>
 		</div>
 		
+
+			<div class="col-sm-3">
+	
+			<select class="form-control" name="drpfueltype" id="drpfueltype" onchange="ReloadFilters()">
+      <c:forEach items="${lstNozzles}" var="item">
+
+			    <option value="${item.nozzle_id}">${item.nozzle_name}${item.item_name}</option>    
+	   </c:forEach></select>
+		</div>
 		
 		<input  type="hidden" name="customerId" id="customerId" value="">
 		
@@ -66,30 +78,33 @@
               
               
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 480px;">                
+              <div class="card-body table-responsive p-0" style="height: 800px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                 
-                 
+                  <thead>
                     <tr>
-                    <th><b>Nozzle Name</b></th>                  
-                    <th><b>Shift</b></th>
-                    <th><b>Attendant Name</b>
-					<th><b>Accounting Date</b>
-                    <th><b>Check In Time</b>
-                    <th><b>Check Out Time</b></th>
-                    <th><b>Opening Reading</b>
-                    <th><b>Closing Reading</b>
-                    <th><b>Rate</b>
-                    <th><b>Supervisor Name</b></th>
-					<th></th>
 					
+                      <th><b>Nozzle Name</b></th>                  
+                    <th><b>Shift</b></th>
+                    <th><b>Attendant Name</b></th>
+					<th><b>Accounting Date</b></th>
+                    <th><b>Check In Time</b></th>
+                    <th><b>Check Out Time</b></th>
+                    <th><b>Opening Reading</b></th>
+                    <th><b>Closing Reading</b></th>
+                    <th><b>Rate</b></th>
+                    <th><b>Supervisor Name</b></th>
+					<th></th>        
+
+					
+                    </tr>
                   </thead>
                   <tbody>
 				<c:forEach items="${lstCheckinRegister}" var="item">
-					<tr >
+					<tr>
+                  
 					  
-					  
-					  <td>${item.nozzle_name}${item.item_name}</td>
+<td>${item.nozzle_name}${item.item_name}</td>
 					 <td>${item.shift_name} ${item.from_time} ${item.to_time}</td>
 					  <td>${item.attendantName}</td>
 					  <td>${item.accounting_date}</td>
@@ -102,7 +117,6 @@
 					  <td>${item.superVisorName}</td>
 					  
 					  <td><button class="btn btn-danger" onclick="deleteCheckin('${item.trn_nozzle_id}')">Delete</button></td>
-						
 					</tr>
 				</c:forEach>
 				
@@ -120,7 +134,6 @@
    
 
 <script>
-
 
 function deleteCheckin(trn_nozzle_id)
 {
@@ -155,22 +168,25 @@ function deleteCheckin(trn_nozzle_id)
 }
 
 
+
   $(function () {
     
+     
     $('#example1').DataTable({
       "paging": true,      
       "lengthChange": false,
-      "searching": false,      
+      "searching": false,
+      "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 50,
-      "order": [[ 2, 'desc' ]]
+      "pageLength": 100
 
     });
   });
 
 
+  
   txtfromdate.value='${txtfromdate}';
   txttodate.value='${txttodate}';
  customerId.value='${param.customerId}';
@@ -235,7 +251,7 @@ function deleteCheckin(trn_nozzle_id)
   
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showCheckinRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
+  	  		window.location="?a=showCheckinRegister&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value+"&nozzle_id="+drpfueltype.value;
 		  
   }
   
@@ -288,5 +304,8 @@ function deleteCheckin(trn_nozzle_id)
   
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+
+    drpfueltype.value='${param.nozzle_id}';
+
 
 </script> 
