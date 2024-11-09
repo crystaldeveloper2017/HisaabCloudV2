@@ -1190,14 +1190,18 @@ if(hm.get("user_id")!=null)
 		return "Item Deleted Succesfully";
 	}
 
-	public String deleteVehicle(long itemId, Connection conWithF) throws Exception {
+
+
+	public String deleteVehicle(long vehicleId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
-		parameters.add(itemId);
+		parameters.add(vehicleId);
 		insertUpdateDuablDB(
 				"UPDATE mst_vehicle  SET activate_flag=0,updated_date=SYSDATE() WHERE vehicle_id=?",
 				parameters, conWithF);
-		return "Item Deleted Succesfully";
+		return "vehicle Deleted Succesfully";
 	}
+
+	
 
 	public String deletePayment(long paymentId, String userId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -5426,6 +5430,8 @@ if(hm.get("user_id")!=null)
 		return "Category updated Succesfully";
 	}
 
+
+
 	public long addFuel(Connection conWithF, HashMap<String, Object> hm) throws SQLException {
 
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7123,19 +7129,77 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getCheckinRegister(HashMap<String, Object> hm, Connection con)
+	// public List<LinkedHashMap<String, Object>> getCheckinRegister(HashMap<String, Object> hm, Connection con, Object nozzleId)
+	// 				throws ClassNotFoundException, SQLException, ParseException {
+	// 			ArrayList<Object> parameters = new ArrayList<>();
+
+				
+
+	// 			parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
+	// 		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
+	// 			parameters.add(hm.get("app_id"));
+		
+	// 			String query="select *,tum.name attendantName,tum2.name superVisorName" +
+	// " from trn_nozzle_register tnr, shift_master shft,nozzle_master nm , mst_items fm, tbl_user_mst tum"+
+	// " left outer join on tbl_user_mst tum ON tum.user_id = tnr.attendant_id" + 
+	// " left outer join on tbl_user_mst tum2 ON tum2 user_id=tnr.updated_by"+
+	// " left outer join on shift_master shft ON tnr.shift_id = shft.shift_id"+
+	// " left outer join on nozzle_master nm ON nm.nozzle_id = tnr.nozzle_id"+
+	// " left outer join on mst_items fm ON fm.item_id = nm.item_id" + 
+	// " where accounting_date between ? and ?" + 
+	// "and tnr.activate_flag = 1 "  + 
+	// "and tnr.app_id = ?";
+
+
+
+
+	// 						if(hm.get("nozzleId")!=null && !hm.get("nozzleId").equals("-1") && !hm.get("nozzleId").equals(""))
+	// 						{
+
+	// 							parameters.add(hm.get("nozzleId"));
+
+	// 							query += " and nm.nozzle_id = ?";
+								
+	// 						}
+	// 						query += " Order by tnr.accounting_date desc, nm.nozzle_name,shift_name ";
+
+	// 						return getListOfLinkedHashHashMap(parameters, query, con);
+	// 					}
+
+
+						public List<LinkedHashMap<String, Object>> getCheckinRegister(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(getDateASYYYYMMDD(hm.get("txtfromdate").toString()));
 		parameters.add(getDateASYYYYMMDD(hm.get("txttodate").toString()));
 		parameters.add(hm.get("app_id"));
 
-		return getListOfLinkedHashHashMap(parameters,
-				"select *,tum.name attendantName,tum2.name superVisorName from trn_nozzle_register tnr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
+		String query="select *,tum.name attendantName,tum2.name superVisorName from trn_nozzle_register tnr,tbl_user_mst tum,tbl_user_mst tum2,shift_master shft,nozzle_master nm,mst_items fm "
 						+ " where accounting_date between ? and ? and tnr.activate_flag=1 and tnr.app_id=? and tnr.shift_id=shft.shift_id and "
-						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id order by tnr.accounting_date desc,nozzle_name,shift_name  ",
+						+ "tum.user_id=tnr.attendant_id and tum2.user_id=tnr.updated_by and nm.nozzle_id=tnr.nozzle_id and fm.item_id=nm.item_id ";
+
+						if(hm.get("nozzle_id")!=null && !hm.get("nozzle_id").equals("-1") && !hm.get("nozzle_id").equals(""))
+						{
+
+							parameters.add(hm.get("nozzle_id"));
+
+							query += " and nm.nozzle_id = ?";
+							
+						}
+						query += " Order by tnr.accounting_date desc, nm.nozzle_name,shift_name ";	
+
+		return getListOfLinkedHashHashMap(parameters,
+		query,
 				con);
 	}
+						
+					
+
+	
+	
+					
+
+
 
 	public String deleteCheckin(long nozzle_id, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
