@@ -1,7 +1,8 @@
-name: Database Backup Manual Trigger
+name: Database Backup Scheduled Trigger
 
 on:
-  workflow_dispatch:  # Allows the workflow to be triggered manually from GitHub Actions UI
+  schedule:
+    - cron: "30 17 * * *"  # Triggers daily at 17:30 UTC, which is 23:00 IST
 
 jobs:
   backup-database:
