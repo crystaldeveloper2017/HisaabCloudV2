@@ -1,8 +1,9 @@
-name: Database Backup Scheduled Trigger
+name: Database Backup Scheduled and Manual Trigger
 
 on:
   schedule:
     - cron: "30 17 * * *"  # Triggers daily at 17:30 UTC, which is 23:00 IST
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   backup-database:
