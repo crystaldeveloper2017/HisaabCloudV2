@@ -1,9 +1,7 @@
-name: Database Backup Scheduled and Manual Trigger
+name: Database Backup Manual Trigger
 
 on:
-  schedule:
-    - cron: "30 17 * * *"  # Triggers daily at 17:30 UTC, which is 23:00 IST
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:  # Allows manual trigger only
 
 jobs:
   backup-database:
@@ -41,36 +39,4 @@ jobs:
           sudo ./apache-tomcat-9.0.85/bin/shutdown.sh
 
           # Restart MySQL service to ensure a clean state
-          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Restarting MySQL service'
-          sudo service mysql restart
-
-          # Run the Go program to take the backup for all specified databases
-          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Running Go backup program'
-          \$BACKUP_DIR/mysqldump-arm64 -host=localhost -port=3306 -user=remotenuuser -password=${{ secrets.DB_PASSWORD }} \
-          -databases=agserp,customizedpos,skpsecuritygate,sme,society_maintenance,ssegpl \
-          -exclude=tbl_attachment_mst
-
-          # Check if the dump was successful
-          if [ -f \$BACKUP_DIR/agserp.7z ]; then
-            echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Dump created successfully'
-          else
-            echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Error in creating dump'
-            exit 1
-          fi
-
-          # Move the compressed backups to the date-based backup directory with timestamped filenames
-          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Moving backup files to timestamped filenames in date folder'
-          mv \$BACKUP_DIR/agserp.7z \$FULL_BACKUP_DIR/agserp_\$TIMESTAMP.7z
-          mv \$BACKUP_DIR/customizedpos.7z \$FULL_BACKUP_DIR/customizedpos_\$TIMESTAMP.7z
-          mv \$BACKUP_DIR/skpsecuritygate.7z \$FULL_BACKUP_DIR/skpsecuritygate_\$TIMESTAMP.7z
-          mv \$BACKUP_DIR/sme.7z \$FULL_BACKUP_DIR/sme_\$TIMESTAMP.7z
-          mv \$BACKUP_DIR/society_maintenance.7z \$FULL_BACKUP_DIR/society_maintenance_\$TIMESTAMP.7z
-          mv \$BACKUP_DIR/ssegpl.7z \$FULL_BACKUP_DIR/ssegpl_\$TIMESTAMP.7z
-
-          # Start Apache Tomcat again after the backup is done
-          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Starting Apache Tomcat again'
-          cd ..
-          sudo ./apache-tomcat-9.0.85/bin/startup.sh
-
-          echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Backup completed successfully!'
-        "
+          echo \$(date +'%Y-%
