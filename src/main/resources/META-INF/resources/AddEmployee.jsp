@@ -146,7 +146,7 @@ function addEmployee()
     </div>
   </div>
   
-  <div class="col-sm-12">
+  <div class="col-sm-12" id="storedisplayfield">
   	<div class="form-group">
       <label for="MobileNumber">Store*</label>
       
@@ -201,3 +201,13 @@ function addEmployee()
 	document.title +=" Update Employee ";
 	</script>
 </c:if>
+
+<script>
+txtstore.value="${userdetails.store_id}";
+
+
+	if("${userdetails.app_type}"=="SnacksProduction")
+	{
+		storedisplayfield.style.display="none";
+	}
+</script>
