@@ -3186,7 +3186,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		try {
 
 			for (HashMap<String, Object> item : newListRequired) {
-				generateQRForThisString(item.get("vehicle_id").toString(), DestinationPath, 150, 150,
+				generateQRForThisString(item.get("vehicle_id").toString(), DestinationPath+item.get("vehicle_id").toString()+"QR", 150, 150,
 						"QR");
 			}
 
