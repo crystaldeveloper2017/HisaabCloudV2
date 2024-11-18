@@ -1,6 +1,8 @@
 - roleId: 13
   roleName: "AdminFuel"
   actions:
+    - exportDailySalesReport
+    - generatePDFFordailySalesReport
     - showCustomerLedgerWithItemVehicle
     - showDepositCashToBank
     - addDepositCashToBank

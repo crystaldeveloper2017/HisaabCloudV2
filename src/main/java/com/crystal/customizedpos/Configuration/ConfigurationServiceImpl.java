@@ -12023,5 +12023,86 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 		return rs;
 
 	}
+
+
+	public CustomResultObject exportDailySalesReport(HttpServletRequest request, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+				
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolder = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String fromDate = request.getParameter("txtfromdate").toString();
+		String shiftid = request.getParameter("shiftid").toString();
+		String fromDateWithoutSlashes = fromDate.replaceAll("\\/", "");
+		String appenders = fromDateWithoutSlashes + "-" + shiftid + ".pdf";
+
+		outputMap.put("app_id", appId);
+		outputMap.put("shiftid", shiftid);
+
+		DestinationPath += appenders;
+		outputMap.put("txtfromdate", fromDate);
+
+		List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getNozzleSales(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstOld = lObjConfigDao.getNozzleSalesForExport(outputMap, con);
+		outputMap.put("lstNozzleSales", lst);
+
+		List<LinkedHashMap<String, Object>> lstLubeSales = lObjConfigDao.getLubeSales(outputMap, con);
+		outputMap.put("totalLubeSales", getTotalLubeSales(lstLubeSales));
+		outputMap.put("lstLubeSales", lstLubeSales);
+
+		List<LinkedHashMap<String, Object>> lstPayments = lObjConfigDao
+				.getPaymentsForDatesAttendantWiseGroupByPayment(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstPaymentsOld = lObjConfigDao.getPaymentsForDatesAttendantWiseExport(outputMap,
+				con);
+		List<LinkedHashMap<String, Object>> lstCardSwipes = lObjConfigDao.getCardSwipes(outputMap, con);
+		List<LinkedHashMap<String, Object>> lstPaytmSlotwise = lObjConfigDao.getPaytmSlotWise(outputMap, con);
+
+		outputMap.put("lstCardSwipes", lstCardSwipes);
+		outputMap.put("lstPayments", lstPayments);
+		outputMap.put("lstPaytmSlotwise", lstPaytmSlotwise);
+
+		List<LinkedHashMap<String, Object>> lstCreditSales = lObjConfigDao.getCreditSalesForthisDate(outputMap, con);
+		outputMap.put("lstCreditSales", lstCreditSales);
+
+		List<LinkedHashMap<String, Object>> salesEmpWiseList = new ArrayList<>(lstOld);
+		salesEmpWiseList.addAll(lstLubeSales);
+		TreeMap<String, Object> salesEmpWiseMap = getEmployeeWiseTotalSalesAmount(salesEmpWiseList);
+		TreeMap<String, Object> paymentEmpWiseMap = getEmployeeWiseTotalPaymentAmount(lstPaymentsOld);
+
+		String cashAgainstPumpTest = lObjConfigDao.getPumpTestEquivalentCash(fromDate, shiftid,appId, con).get("CashAmount");
+
+		outputMap.put("salesEmpWiseMap", salesEmpWiseMap);
+		outputMap.put("paymentEmpWiseMap", paymentEmpWiseMap);
+		outputMap.put("cashAgainstPumpTest", cashAgainstPumpTest);
+
+		// sales
+		// get petrol Sales
+		// get diesel Sales
+		// get lube sales
+
+		// payment details
+		// get cash details
+		// get paytm details
+		// get card swipe details
+		// get credit parties details
+		// FSM Unadjusted
+
+		try {
+			String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+			new NozzleRegisterPDFHelper().generateNozzleRegisterType1(BufferedImagesFolder, DestinationPath, outputMap, con);
+			outputMap.put(filename_constant, appenders);
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
 	
 }

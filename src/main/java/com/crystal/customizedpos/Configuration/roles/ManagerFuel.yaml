@@ -1,6 +1,8 @@
 - roleId: 14
   roleName: "ManagerFuel"
   actions:
+    - generatePDFFordailySalesReport
+    - exportDailySalesReport
     - exportCustomerLedgerWithItemVehicleAsPDF
     - showCustomerLedgerWithItemVehicle
     - exportFsmLedgerAsPDF

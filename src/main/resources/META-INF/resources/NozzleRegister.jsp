@@ -69,6 +69,7 @@
 				<a title="Download Excel" onclick="downloadExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a> 
  						<a title="Download PDF" onclick="exportNozzleRegister()"><i class="fa fa-file-pdf-o"></i></a>
   						<a title="Download Text"  onclick="downloadText()"><i class="fa fa-file-text-o"></i></a> 
+						<a title="Download PDF" onclick="exportDailySalesReport()"><i class="fa fa-file-pdf-o"></i></a>
 				</div>          
 			</div>
 		</div>
@@ -435,6 +436,15 @@
   else
   {
 	drpshiftid.value=-1;
+  }
+
+
+  function exportDailySalesReport()
+  {
+	window.open("?a=exportDailySalesReport&txtfromdate="+txtfromdate.value+"&shiftid="+drpshiftid.value);	    
+		return;
+	
+	  
   }
 
 

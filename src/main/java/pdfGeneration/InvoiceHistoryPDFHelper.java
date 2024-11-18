@@ -6651,6 +6651,90 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 		
 		
 	}
+
+	public void generatePDFFordailySalesReport(String DestinationPath,HashMap<String, Object> 
+	shoabsndd ,Connection con) throws DocumentException, MalformedURLException, IOException
+
+	{
+
+
+
+
+
+ Document document = new Document (PageSize.A4, 20, 20, 20, 60);
+ PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(DestinationPath));
+
+InvoiceHistoryPDFHelper event = new InvoiceHistoryPDFHelper();
+	 writer.setPageEvent(event);
+		document.open();     
+
+	Font font14Bold = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+	Font font12 = new Font(Font.FontFamily.HELVETICA, 12);
+	Font font10 = new Font(Font.FontFamily.HELVETICA, 10);
+
+
+	Paragraph header = new Paragraph("DAILY SALES REPORT", font14Bold);
+	header.setAlignment(Element.ALIGN_CENTER);
+	document.add(header);
+
+	document.add(new Paragraph("Day: "+ cf.getDayOfWeek(shoabsndd.get("txtfromdate").toString()), font12));
+	document.add(new Paragraph(" ")); 
+
+	document.add(createSalesAccountTable("Diesel Sales Account", font12, font10));
+	document.add(new Paragraph(" ")); 
+	document.add(createSalesAccountTable("Petrol Sales Account", font12, font10));
+	document.add(new Paragraph(" ")); 
+	document.add(createSalesAccountTable("Power Petrol Sales Account", font12, font10));
+
+	document.close();
+}
+
+private static PdfPTable createSalesAccountTable(String accountTitle, Font titleFont, Font dataFont) throws DocumentException {
+	// Create a 5-column table
+	PdfPTable table = new PdfPTable(5);
+	table.setWidthPercentage(100);
+	table.setWidths(new int[]{2, 2, 2, 2, 2});
+
+	// Account title
+	PdfPCell cell = new PdfPCell(new Phrase(accountTitle, titleFont));
+	cell.setColspan(5);
+	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	cell.setBorder(Rectangle.NO_BORDER);
+	table.addCell(cell);
+
+	// Column headers
+	table.addCell(new PdfPCell(new Phrase("Particulars", dataFont)));
+	table.addCell(new PdfPCell(new Phrase("Amount", dataFont)));
+	table.addCell(new PdfPCell(new Phrase("Ltr", dataFont)));
+	table.addCell(new PdfPCell(new Phrase("Rate", dataFont)));
+	table.addCell(new PdfPCell(new Phrase("Bill No.", dataFont)));
+
+
+	addDataRow(table, "Cash Sales", "", "", "", "", dataFont);
+	addDataRow(table, "Debit Sales", "", "", "", "", dataFont);
+	addDataRow(table, "POS Sale", "", "", "", "", dataFont);
+	addDataRow(table, "Comp. Card Sales", "", "", "", "", dataFont);
+	addDataRow(table, "Wallet Sale", "", "", "", "", dataFont);
+
+
+	PdfPCell totalCell = new PdfPCell(new Phrase("TOTAL", dataFont));
+	totalCell.setColspan(2);
+	totalCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+	table.addCell(totalCell);
+	table.addCell(new PdfPCell(new Phrase("", dataFont))); 
+	table.addCell(new PdfPCell(new Phrase("", dataFont))); 
+	table.addCell(new PdfPCell(new Phrase("", dataFont))); 
+
+	return table;
+}
+
+private static void addDataRow(PdfPTable table, String particulars, String amount, String ltr, String rate, String billNo, Font font) {
+	table.addCell(new PdfPCell(new Phrase(particulars, font)));
+	table.addCell(new PdfPCell(new Phrase(amount, font)));
+	table.addCell(new PdfPCell(new Phrase(ltr, font)));
+	table.addCell(new PdfPCell(new Phrase(rate, font)));
+	table.addCell(new PdfPCell(new Phrase(billNo, font)));
+}
 	
 		
 	
