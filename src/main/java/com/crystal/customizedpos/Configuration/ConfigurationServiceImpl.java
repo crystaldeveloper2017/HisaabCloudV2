@@ -11880,4 +11880,148 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 
 	}
 
+	public CustomResultObject showDepositCashToBank(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+		try {
+			String todaysDate = lObjConfigDao.getDateFromDB(con);
+			outputMap.put("todaysDate", todaysDate);
+
+			outputMap.put("ListOfBanks", lObjConfigDao.getBankMaster(outputMap, con));
+
+			rs.setViewName("../DepositCashToBank.jsp");
+			rs.setReturnObject(outputMap);
+
+		} 
+		catch (Exception e)
+		 {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+
+	public CustomResultObject addDepositCashToBank(HttpServletRequest request, Connection con) throws Exception {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+	
+		FileItemFactory itemFactory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFactory);
+	
+		HashMap<String, Object> hm = new HashMap<>();
+		List<FileItem> toUpload = new ArrayList<>();
+	
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+				if (item.isFormField()) {
+					// Add form fields to the hashmap
+					hm.put(item.getFieldName(), item.getString());
+				} else {
+					toUpload.add(item);
+				}
+			}
+		}
+	
+		try {
+			lObjConfigDao.addDepositCashToBank(con, hm); 
+	
+			rs.setReturnObject(outputMap);
+			
+			String callerUrl = (String) hm.get("callerUrl");
+			rs.setAjaxData("<script>window.location='" + callerUrl + "?a=showCashDepositRegister'</script>");
+		} catch (Exception e) {
+			writeErrorToDB(e); 
+			rs.setHasError(true);
+		}
+	
+		return rs;
+	}
+
+	public CustomResultObject showCashDepositRegister(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException, ParseException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+	
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		List<LinkedHashMap<String, Object>> testData = lObjConfigDao.getCollectionData(outputMap, con);
+
+	
+
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+	
+
+		rs.setViewName("../CashDepositRegister.jsp");
+		rs.setReturnObject(outputMap);
+		return rs;
+
+	}
+
+	public CustomResultObject deleteCashDepositRegister(HttpServletRequest request, Connection con) {
+		CustomResultObject rs = new CustomResultObject();
+		long depositid = Integer.parseInt(request.getParameter("depositid"));
+
+		try {
+
+			rs.setAjaxData(lObjConfigDao.deleteCashDepositRegister(depositid, con));
+
+		} catch (Exception e) {
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	public CustomResultObject showCashLedgerReport(HttpServletRequest request, Connection con)
+			throws SQLException, ClassNotFoundException, ParseException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		
+
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String toDate = request.getParameter("txttodate") == null ? "" : request.getParameter("txttodate");
+
+	
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		if (toDate.equals("")) {
+			toDate = lObjConfigDao.getDateFromDB(con);
+		}
+
+		outputMap.put("txtfromdate", fromDate);
+		outputMap.put("txttodate", toDate);
+
+		List<LinkedHashMap<String, Object>> testData = lObjConfigDao.getCollectionData(outputMap, con);
+
+		rs.setViewName("../CashLedgerReport.jsp");
+		rs.setReturnObject(outputMap);
+		return rs;
+
+	}
+	
 }
