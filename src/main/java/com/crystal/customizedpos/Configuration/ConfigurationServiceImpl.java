@@ -98,38 +98,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
-	public CustomResultObject addRemoveRole(HttpServletRequest request, Connection con) throws SQLException {
-		CustomResultObject rs = new CustomResultObject();
-		long userId = Long.parseLong(request.getParameter("userId"));
-		String action = request.getParameter("action");
-		String[] listOfRoles = request.getParameter("listOFRoles").split("~");
-		String app_type = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
-
-		try {
-
-			LinkedHashMap<Long, Role> roleMasterMap = cf.getRoleMasterForThisAppType(app_type);
-
-			if (action.equals("0")) {
-				for (String s : listOfRoles) {
-					lObjConfigDao.removeRoleFromUser(userId, Long.valueOf(s), con);
-				}
-			} else {
-				for (String s : listOfRoles) {
-					if (!lObjConfigDao.checkIfRoleUserAlreadyExist(userId, Long.valueOf(s), con)) {
-						lObjConfigDao.addUserRoleMapping(userId, Long.valueOf(s),
-								roleMasterMap.get(Long.valueOf(s)).getRoleName(), con);
-					}
-				}
-			}
-
-		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
-			rs.setHasError(true);
-		}
-		rs.setAjaxData("Roles Updated Succesfully");
-		return rs;
-	}
-
+	
 	public CustomResultObject getPendingAmountForCustomer(HttpServletRequest request, Connection con)
 			throws SQLException {
 
@@ -1765,29 +1734,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
-	public CustomResultObject showUserRoleMapping(HttpServletRequest request, Connection con) throws SQLException {
-		CustomResultObject rs = new CustomResultObject();
-		HashMap<String, Object> outputMap = new HashMap<>();
-
-		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		outputMap.put("app_id", appId);
-
-		String app_type = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
-		outputMap.put("app_type", app_type);
-
-		try {
-
-			outputMap.put("userList", lObjConfigDao.getEmployeeMaster(outputMap, con));
-			outputMap.put("roleList", apptypes.get(app_type));
-			rs.setViewName("../UserRoleMapping.jsp");
-			rs.setReturnObject(outputMap);
-		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
-			rs.setHasError(true);
-		}
-		return rs;
-	}
-
+	
 	public CustomResultObject getRoleDetailsForthisUser(HttpServletRequest request, Connection con)
 			throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
