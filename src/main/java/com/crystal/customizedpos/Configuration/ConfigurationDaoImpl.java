@@ -4732,6 +4732,18 @@ if(hm.get("user_id")!=null)
 		return count >= 1;
 	}
 
+
+	public boolean checkIfUsernameAlreadyExist(String userName, Connection con) throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(userName);		
+		int count = Integer.parseInt(
+				getMap(parameters, "select count(1) as cnt from tbl_user_mst where username=?", con)
+						.get("cnt").toString());
+		return count >= 1;
+	}
+
+	
+
 	public boolean hasMultipleAttemps(long number, long appId, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(appId);

@@ -2375,6 +2375,34 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject checkIfUsernameAlreadyExist(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		String username = (request.getParameter("username"));
+		try {
+
+			boolean usernameExist=lObjConfigDao.checkIfUsernameAlreadyExist(username, con);
+			String returnSting="";
+
+			if(usernameExist)
+			{
+				returnSting="Username Already Exist";
+			}
+			else
+			{
+				returnSting="Can Proceed with this username";
+			}	
+
+			rs.setAjaxData(returnSting);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	
+
 	public CustomResultObject markAsServed(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		String[] orderDetailIds = request.getParameter("orderDetailsId").split(",");

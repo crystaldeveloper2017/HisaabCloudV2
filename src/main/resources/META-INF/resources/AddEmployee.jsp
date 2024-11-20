@@ -89,10 +89,44 @@ function addEmployee()
 	  txtstore.focus();
 	  	return;
 	  }
+
+
+
+	checkIfUsernameAlreadyExist();
+
 	 
 	 
-	document.getElementById("frm").submit(); 
+	
 }
+
+function checkIfUsernameAlreadyExist()
+{	
+
+	  
+
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+
+	    	  if(xhttp.responseText=="Username Already Exist")
+			  {
+				alert("Username Already exist");
+			  }
+			  else
+			  {
+				document.getElementById("frm").submit(); 
+			  }
+		    	
+	      
+		  
+		}
+	  };
+	  xhttp.open("GET","?a=checkIfUsernameAlreadyExist&username="+username.value, true);    
+	  xhttp.send();
+}
+
 
 
 
