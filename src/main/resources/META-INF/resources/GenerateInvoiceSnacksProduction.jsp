@@ -127,6 +127,7 @@ function saveInvoice()
 	"&appId=${userdetails.app_id}"+
 	"&store_id=${userdetails.store_id}"+
 	"&user_id=${userdetails.user_id}"+	
+	"&returnAction=${param.returnAction}"+	
 	"&itemDetails="+itemString;
 	
 	//alert(reqString);
@@ -140,8 +141,7 @@ function saveInvoice()
 	    if (this.readyState == 4 && this.status == 200) 
 	    {
 	    	var invoiceId=this.responseText.split("~");
-	      	//alert("Invoice Saved Succesfully"+invoiceId[0]);
-	      	
+	      	console.log(invoiceId);
 	      	if(invoiceId.length==1)
 	      		{
 	      			alert('An Error Has Occured. Please Contact Support');

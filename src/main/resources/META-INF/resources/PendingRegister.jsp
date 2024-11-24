@@ -39,7 +39,7 @@
                             <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
                         </td>
                         <td>
-                            <a href="?a=showGenerateInvoice&invoice_id=${pendData.invoice_id}&editInvoice=N&packaging_type=${pendData.packaging_type}">${pendData.city} (${pendData.totalQty})</a>
+                            <a href="?a=showGenerateInvoice&returnAction=showPendingRegister&invoice_id=${pendData.invoice_id}&editInvoice=N&packaging_type=${pendData.packaging_type}">${pendData.city} (${pendData.totalQty})</a>
                         </td>
                     </tr>
                 </c:forEach>

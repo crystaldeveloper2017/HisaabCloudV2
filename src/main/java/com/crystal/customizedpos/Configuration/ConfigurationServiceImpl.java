@@ -2771,6 +2771,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			}
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
+			String appendor = "";
+			
 
 			if (appType.equals("SnacksProduction"))
 			{
@@ -2785,10 +2787,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 					hm.put("curr_status", 0);
 				}
 				lObjConfigDao.saveSnacksInvoice(hm, con);
+				hm.put("returnAction",request.getParameter("returnAction"));
+				appendor = "~?a="+request.getParameter("returnAction");
 			}
 			hm.put("invoice_id", returnMap.get("invoice_id"));
 
-			String appendor = "";
 			if (tableId != null && !tableId.equals("")) {
 				lObjConfigDao.removeOrderFromTable(hm, con);
 				lObjConfigDao.markAllAsServed(hm, con);
