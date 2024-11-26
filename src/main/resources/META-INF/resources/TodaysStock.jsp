@@ -299,7 +299,7 @@ function deleteAttachment(id)
   </div>
    
 
-  <div class="col-10">
+  <div class="col-8">
   	<div class="form-group">	
 	
   		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" onchange="getItemsAndStockForThisDate()" readonly/>
@@ -307,7 +307,15 @@ function deleteAttachment(id)
   </div>
 
 
-
+<div class="col-2">
+  	<div class="form-group" style="margin-bottom:0px"> 	
+	<div class="custom-control custom-switch">
+<input type="checkbox" class="custom-control-input" id="chk14packaging" onchange="getItemsAndStockForThisDate()">
+<label class="custom-control-label" for="chk14packaging">14 Packaging</label>
+</div>
+  		
+  	</div>
+  </div>
 
 
 
@@ -1109,7 +1117,16 @@ function showLedger()
 function getItemsAndStockForThisDate()
 {
 
-  $.get("?a=getItemsAndStockForThisDate&date="+txtinvoicedate.value, function(data, status){
+	var packaging_type="12";
+	if(chk14packaging.checked==true)
+	{
+		packaging_type="14";
+	}
+
+
+$('#tblitems tr').not(':first').remove();
+
+  $.get("?a=getItemsAndStockForThisDate&date="+txtinvoicedate.value+"&packaging_type="+packaging_type, function(data, status){
 
 	var listOfItems=JSON.parse(data);
 
@@ -1194,7 +1211,8 @@ function resetStock()
 	}
 	calculateTotal();
 }
- 
+
+
 
 
 </script>

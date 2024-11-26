@@ -11840,10 +11840,11 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 		try{
 
 		String date = request.getParameter("date");
+		String packaging_type = request.getParameter("packaging_type");
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
 
-		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getItemsAndStockForThisDate(date,appId,conWithF);
+		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getItemsAndStockForThisDate(date,appId,packaging_type,conWithF);
 		
 
 		rs.setAjaxData(mapper.writeValueAsString(listOfItems));

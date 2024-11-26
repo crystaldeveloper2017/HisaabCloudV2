@@ -7752,11 +7752,12 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date, String appId,
+	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date, String appId,String packaging_type,
 			Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(getDateASYYYYMMDD(date));
 		parameters.add(appId);
+		parameters.add(packaging_type);
 
 		return getListOfLinkedHashHashMap(parameters,
 				"select\n" +
@@ -7764,9 +7765,9 @@ if(hm.get("user_id")!=null)
 						"from\n" +
 						"mst_items mi\n" +
 						"left outer join trn_todays_stock_snacks ttss on\n" +
-						"ttss.item_id = mi.item_id and ttss.stock_date =?\n" +
+						"ttss.item_id = mi.item_id and ttss.stock_date =? \n" +
 						"where \n" +
-						" mi.app_id =? and mi.activate_flag=1 order by mi.order_no desc",
+						" mi.app_id =? and mi.activate_flag=1 and packaging_type=? order by mi.order_no desc",
 				conWithF);
 	}
 
