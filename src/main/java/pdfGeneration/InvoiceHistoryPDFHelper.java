@@ -1992,12 +1992,16 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 	        table.addCell(cell);
 	        
 	        
-	 
+			cell = new PdfPCell(new Phrase("*Powered By HisaabCloud.in*", font));
+			cell.setBorder(Rectangle.NO_BORDER);
+			cell.setPadding(5);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(cell);
 	        
 		  document.add(table);
 		 
 	        
-	        
+		  
 		  
 		  document.close();
 		  
