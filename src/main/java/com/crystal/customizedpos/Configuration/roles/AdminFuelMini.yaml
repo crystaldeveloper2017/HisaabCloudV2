@@ -2,6 +2,7 @@
   roleName: "AdminFuelMini"
   actions:
     - getVehicleIdForCustomer
+    - showShortcuts
     - showPrintLabelsScreenVehicle
     - printLabelsVehicle
     - reloadSession

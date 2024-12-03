@@ -2,6 +2,7 @@
   roleName: "AdminSnacks"
   actions:
     - checkIfUsernameAlreadyExist
+    - showShortcuts
     - deleteOrders
     - generateOrderForms
     - saveItemOrdering

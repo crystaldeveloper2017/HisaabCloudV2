@@ -2,6 +2,7 @@
   roleName: "Admin"
   actions:
     - checkIfUsernameAlreadyExist
+    - showShortcuts
     - getItemsForThisCategoryNameByAjax
     - deleteReconcilation
     - addBankReconcilation

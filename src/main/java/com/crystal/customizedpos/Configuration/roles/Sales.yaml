@@ -2,6 +2,7 @@
   roleName: "Sales"
   actions:
     - changePassword
+    - showShortcuts
     - showChangePassword
     - showStockTransfer
     - showDailyPaymentRegisterParameter

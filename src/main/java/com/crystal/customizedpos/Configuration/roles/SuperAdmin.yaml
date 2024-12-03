@@ -2,6 +2,7 @@
   roleName: "SuperAdmin"
   actions:
     - deleteCheckin
+    - showShortcuts
     - showAddVisitor
     - addVisitor
     - deleteVisitor

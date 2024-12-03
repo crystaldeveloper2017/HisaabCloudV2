@@ -2,6 +2,7 @@
   roleName: "AdminFuel"
   actions:
     - exportDailySalesReport
+    - showShortcuts
     - generatePDFFordailySalesReport
     - showCustomerLedgerWithItemVehicle
     - showDepositCashToBank

@@ -2,6 +2,7 @@
   roleName: "SupervisorFuel"
   actions:
     - getVehicleIdForCustomer
+    - showShortcuts
     - acceptPhonePayPayment
     - showHomePage
     - showPhonePePayments

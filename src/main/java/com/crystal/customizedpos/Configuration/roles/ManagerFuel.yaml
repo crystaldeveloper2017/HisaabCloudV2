@@ -2,6 +2,7 @@
   roleName: "ManagerFuel"
   actions:
     - generatePDFFordailySalesReport
+    - showShortcuts
     - exportDailySalesReport
     - exportCustomerLedgerWithItemVehicleAsPDF
     - showCustomerLedgerWithItemVehicle

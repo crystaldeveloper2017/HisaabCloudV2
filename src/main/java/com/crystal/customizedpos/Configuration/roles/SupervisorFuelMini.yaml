@@ -2,6 +2,7 @@
   roleName: "SuperVisorFuelMini"
   actions:
     - getVehicleIdForCustomer
+    - showShortcuts
     - reloadSession
     - deleteCheckin
     - showAddVisitor

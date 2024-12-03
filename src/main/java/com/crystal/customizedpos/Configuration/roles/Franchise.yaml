@@ -2,6 +2,7 @@
   roleName: "Franchise"
   actions:
     - changePassword
+    - showShortcuts
     - showChangePassword
     - showStockTransfer
     - showDailyPaymentRegisterParameter

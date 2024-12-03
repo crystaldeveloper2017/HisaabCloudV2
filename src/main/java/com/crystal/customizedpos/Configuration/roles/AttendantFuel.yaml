@@ -2,6 +2,7 @@
   roleName: "AttendantFuel"
   actions:
     - getVehicleIdForCustomer
+    - showShortcuts
     - acceptPhonePayPayment
     - showPhonePePayments
     - changePassword

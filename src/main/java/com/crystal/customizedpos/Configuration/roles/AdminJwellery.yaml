@@ -2,6 +2,7 @@
   roleName: "AdminJwellery"
   actions:
     - getItemsForThisCategoryNameByAjax
+    - showShortcuts
     - resetPassword
     - changePassword
     - showChangePassword

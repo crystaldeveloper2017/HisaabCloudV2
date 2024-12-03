@@ -2,6 +2,7 @@
   roleName: "RestaurantDemo"
   actions:
     - changePassword
+    - showShortcuts
     - showChangePassword
     - generateDailyInvoiceReport
     - showCheckInScreen

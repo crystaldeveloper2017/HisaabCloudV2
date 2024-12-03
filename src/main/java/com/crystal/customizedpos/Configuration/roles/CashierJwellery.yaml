@@ -2,6 +2,7 @@
   roleName: "Cashier Jwellery"
   actions:    
     - showHomePage
+    - showShortcuts
     - showGenerateInvoice
     - saveInvoiceService
     - showAddExpense

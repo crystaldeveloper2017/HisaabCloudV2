@@ -2,6 +2,7 @@
   roleName: "Manager"
   actions:
     - changePassword
+    - showShortcuts
     - showChangePassword
     - showStockTransfer
     - showDailyPaymentRegisterParameter

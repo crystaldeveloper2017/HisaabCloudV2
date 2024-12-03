@@ -2,6 +2,7 @@
   roleName: "AdminRetail"
   actions:
     - resetPassword
+    - showShortcuts
     - addExpenseNew
     - changePassword
     - showChangePassword

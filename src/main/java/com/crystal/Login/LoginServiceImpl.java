@@ -302,6 +302,8 @@ public class LoginServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	
+
 	public CustomResultObject changePassword(HttpServletRequest request, Connection con) throws FileUploadException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();

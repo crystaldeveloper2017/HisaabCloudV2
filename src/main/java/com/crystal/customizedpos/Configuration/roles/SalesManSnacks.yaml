@@ -2,6 +2,7 @@
   roleName: "SalesManSnacks"
   actions:
     - showHomePage
+    - showShortcuts
     - showPendingRegister
     - showGenerateInvoice
     - saveInvoice

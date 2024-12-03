@@ -2,6 +2,8 @@
   roleName: "Cashier"
   actions:
     - getItemsForThisCategoryNameByAjax
+    - showShortcuts
+    - showShortcuts
     - changePassword
     - showChangePassword
     - getInvoiceDetailsByNoAjax

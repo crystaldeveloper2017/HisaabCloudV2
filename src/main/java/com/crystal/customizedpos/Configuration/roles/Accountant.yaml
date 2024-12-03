@@ -2,6 +2,7 @@
   roleName: "Accountant"
   actions:
     - showChangePassword
+    - showShortcuts
     - showStockTransfer
     - showDailyPaymentRegisterParameter
     - SearchItemsByString
