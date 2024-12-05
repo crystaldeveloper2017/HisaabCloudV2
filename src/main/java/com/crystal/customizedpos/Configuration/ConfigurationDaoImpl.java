@@ -7705,13 +7705,21 @@ if(hm.get("user_id")!=null)
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
 
-	public void saveTodaysStock(String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con)
+	public void saveTodaysStock(int packaging_type,String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con)
 			throws SQLException, ParseException {
 
 		ArrayList<Object> parameters = new ArrayList<>();
 
-		String insertQuery = "delete from trn_todays_stock_snacks where stock_date=?";
+
+		String insertQuery = "DELETE ttss " +
+               "FROM trn_todays_stock_snacks ttss " +
+               "INNER JOIN mst_items mi ON mi.item_id = ttss.item_id " +
+               "WHERE ttss.stock_date = ? " +
+               "AND mi.packaging_type = ? ";
+
+		
 		parameters.add(getDateASYYYYMMDD(stockDate));
+		parameters.add(packaging_type);
 		insertUpdateDuablDB(insertQuery, parameters, con);
 
 		for (HashMap<String, Object> hm : itemListRequired) {

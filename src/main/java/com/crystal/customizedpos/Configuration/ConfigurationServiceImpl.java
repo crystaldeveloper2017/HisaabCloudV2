@@ -11768,7 +11768,10 @@ public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection
 	
 	try {
 
-		lObjConfigDao.saveTodaysStock(stockDate,itemListRequired, con);
+		boolean chk14packaging=request.getParameter("chk14packaging").equals("true")?true:false;
+		int packagingType=chk14packaging==true?14:12;
+
+		lObjConfigDao.saveTodaysStock(packagingType,stockDate,itemListRequired, con);
 		
 		rs.setAjaxData("Saved Stock Successfully");
 
@@ -11788,6 +11791,9 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
+		
+
 		outputMap.put("app_id", appId);
 
 

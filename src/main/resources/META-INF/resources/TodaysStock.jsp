@@ -104,7 +104,7 @@ function saveInvoice()
 	
 	
 	
-	var reqString="stock_date="+txtinvoicedate.value+"&itemDetails="+itemString;
+	var reqString="chk14packaging="+chk14packaging.checked+"&stock_date="+txtinvoicedate.value+"&itemDetails="+itemString;
 	
 	
 		
@@ -310,7 +310,7 @@ function deleteAttachment(id)
 <div class="col-2">
   	<div class="form-group" style="margin-bottom:0px"> 	
 	<div class="custom-control custom-switch">
-<input type="checkbox" class="custom-control-input" id="chk14packaging" onchange="getItemsAndStockForThisDate()">
+<input type="checkbox" class="custom-control-input" name="chk14packaging" id="chk14packaging" onchange="getItemsAndStockForThisDate()">
 <label class="custom-control-label" for="chk14packaging">14 Packaging</label>
 </div>
   		
