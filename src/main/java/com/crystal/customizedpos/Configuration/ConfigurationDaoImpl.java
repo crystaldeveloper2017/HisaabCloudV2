@@ -524,7 +524,7 @@ if(hm.get("user_id")!=null)
 
 
 		int packaging_type=0;
-		if(!itemDetails.get("packaging_type").equals(""))
+		if(itemDetails.get("packaging_type")!=null && !itemDetails.get("packaging_type").equals(""))
 		{
 			packaging_type=Integer.parseInt(itemDetails.get("packaging_type").toString());
 		}
