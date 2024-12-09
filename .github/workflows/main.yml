@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - CustomizedPOS
+      - customizedpos_staging
     # Exclude changes to workflow files from triggering the job
     paths-ignore:
       - .github/workflows/*  # Ignore changes to the workflow files
