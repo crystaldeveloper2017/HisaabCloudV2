@@ -157,8 +157,8 @@ function addCategory()
                   <thead>
                     <tr>
                      
-                     <th><b>Raw Material ID</b></th>
                      <th><b>Raw Material Name</b></th>
+					   <th><b>Bora Per Bag</b></th>
                      
                      <th></th><th></th>
                     </tr>
@@ -166,8 +166,8 @@ function addCategory()
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-						<td>${item.raw_material_id}</td>
-						<td>${item.raw_material_name}</td>						
+						<td>${item.raw_material_name}</td>
+						<td>${item.bora_per_bag}</td>						
 						<td><a href="?a=showAddRawMaterial&rawmaterialId=${item.raw_material_id}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteRawMaterial(${item.raw_material_id})">Delete</button></td>
 					</tr>
 				</c:forEach>
@@ -201,5 +201,8 @@ function addCategory()
   });
   
   document.getElementById("divTitle").innerHTML="Raw Material Master";
+
+      	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
   
 </script>

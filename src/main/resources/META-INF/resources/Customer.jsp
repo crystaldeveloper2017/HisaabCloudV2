@@ -129,7 +129,10 @@ function deleteCustomer(customerId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+			 <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
                      <th><b>Customer Id</b></th>
+			 </c:if> 
                      <th><b>Customer Name</b></th>
                      <th><b>Mobile Number</b></th>
                      <th><b>City</b></th>
@@ -189,6 +192,10 @@ function deleteCustomer(customerId)
   
   document.getElementById("divTitle").innerHTML="Customer Master";
   document.title +=" Customer Master ";
+
+      	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
+
   function actualSearch()
   {
 		  if("${userdetails.app_type}"=='SnacksProduction')

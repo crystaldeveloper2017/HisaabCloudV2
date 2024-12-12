@@ -127,7 +127,7 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		return getMap(parameters,
-				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ",
+				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss ",
 				con);
 	}
 
@@ -7547,31 +7547,37 @@ if(hm.get("user_id")!=null)
 	public long addRawMaterial(Connection con, HashMap<String, Object> hm) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
 
-		String query = "insert into raw_material_master values (default,?,1,?,sysdate(),?)";
+		String query = "insert into raw_material_master values (default,?,1,?,sysdate(),?,?)";
 		parameters.add(hm.get("txtrawmaterialname"));
 		parameters.add(hm.get("user_id"));
 		parameters.add(hm.get("app_id"));
+		parameters.add(hm.get("txtboraperbag"));
+
 
 		return insertUpdateDuablDB(query, parameters,
 				con);
 	}
 
-	public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName, String updatedBy)
+
+	public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName, String updatedBy, String bora_per_bag)
 			throws Exception {
 
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		parameters.add(rawmaterialName);
 		parameters.add(updatedBy);
+		parameters.add(bora_per_bag);
 
 		parameters.add(rawmaterialId);
 
+		
 		insertUpdateDuablDB(
-				"UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
+				"UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=?,bora_per_bag=? WHERE raw_material_id=?",
 				parameters, con);
 		return "Raw Material updated Succesfully";
 
 	}
+	
 
 	public String deleteRawMaterial(long rawmaterialId, String userId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7705,32 +7711,29 @@ if(hm.get("user_id")!=null)
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
 
-	public void saveTodaysStock(int packaging_type,String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con)
-			throws SQLException, ParseException {
+	public void saveTodaysStock(int packaging_type, List<HashMap<String, Object>> itemListRequired, Connection con)
+        throws SQLException, ParseException {
 
-		ArrayList<Object> parameters = new ArrayList<>();
+    ArrayList<Object> parameters = new ArrayList<>();
 
+    // Delete existing stock
+    String deleteQuery = "DELETE ttss " +
+                        "FROM trn_todays_stock_snacks ttss " +
+                        "INNER JOIN mst_items mi ON mi.item_id = ttss.item_id " +
+                        "WHERE mi.packaging_type = ?";
 
-		String insertQuery = "DELETE ttss " +
-               "FROM trn_todays_stock_snacks ttss " +
-               "INNER JOIN mst_items mi ON mi.item_id = ttss.item_id " +
-               "WHERE ttss.stock_date = ? " +
-               "AND mi.packaging_type = ? ";
+    parameters.add(packaging_type);
+    insertUpdateDuablDB(deleteQuery, parameters, con);
 
-		
-		parameters.add(getDateASYYYYMMDD(stockDate));
-		parameters.add(packaging_type);
-		insertUpdateDuablDB(insertQuery, parameters, con);
-
-		for (HashMap<String, Object> hm : itemListRequired) {
-			parameters = new ArrayList<>();
-			parameters.add(hm.get("item_id"));
-			parameters.add(hm.get("qty"));
-			parameters.add(getDateASYYYYMMDD(stockDate));
-			insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
-			insertUpdateDuablDB(insertQuery, parameters, con);
-		}
-	}
+    // Insert new stock items
+    for (HashMap<String, Object> hm : itemListRequired) {
+        parameters = new ArrayList<>();
+        parameters.add(hm.get("item_id"));
+        parameters.add(hm.get("qty"));
+        String insertQuery = "insert into trn_todays_stock_snacks values (default,?,?)";
+        insertUpdateDuablDB(insertQuery, parameters, con);
+    }
+}
 
 	public List<LinkedHashMap<String, Object>> getTodaysStockRegister(String toDate, Connection con)
 			throws SQLException, ClassNotFoundException, ParseException {
@@ -7760,10 +7763,9 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date, String appId,String packaging_type,
+	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate( String appId,String packaging_type,
 			Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		parameters.add(getDateASYYYYMMDD(date));
 		parameters.add(appId);
 		parameters.add(packaging_type);
 
@@ -7773,7 +7775,7 @@ if(hm.get("user_id")!=null)
 						"from\n" +
 						"mst_items mi\n" +
 						"left outer join trn_todays_stock_snacks ttss on\n" +
-						"ttss.item_id = mi.item_id and ttss.stock_date =? \n" +
+						"ttss.item_id = mi.item_id  \n" +
 						"where \n" +
 						" mi.app_id =? and mi.activate_flag=1 and packaging_type=? order by mi.order_no desc",
 				conWithF);
