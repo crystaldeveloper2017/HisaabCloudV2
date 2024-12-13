@@ -829,7 +829,7 @@ function calculateTotal()
 				
 				totalQtyCalculated+=itemQty;
 				
-				var rate=Number(rows[x].childNodes[3].childNodes[0].value);
+				var rate=Number(rows[x].childNodes[2].childNodes[0].value);
 				var grossItemAmount=itemQty*rate;
 				totalDiscountCalculated+=grossItemAmount  -itemTotalAmount;
 				
