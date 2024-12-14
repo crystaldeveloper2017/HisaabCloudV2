@@ -1499,10 +1499,10 @@ if(hm.get("user_id")!=null)
 		return getListOfLinkedHashHashMap(parameters, "select\r\n"
 				+ "	*\r\n"
 				+ "from\r\n"
-				+ "	mst_vehicle mv,mst_customer mc \r\n"
+				+ "	mst_vehicle mv left outer join mst_customer mc on mc.customer_id=mv.customer_id \r\n"
 				+ "where\r\n"
 				+ "	mv.app_id = ?\r\n"
-				+ "	and mv.activate_flag = 1 and mv.customer_id =mc.customer_id ", con);
+				+ "	and mv.activate_flag = 1", con);
 
 	}
 

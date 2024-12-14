@@ -63,6 +63,12 @@ Today's Stock (${HomePageContent.todaysStock})<span class="float-right badge bg-
 </a>
 </li>
 
+<li class="nav-item" onclick="window.location='?a=showLoadingScreen'">
+<a href="#" class="nav-link">
+Load Order <span class="float-right badge bg-success"></span>
+</a>
+</li>
+
 </c:if>
 
 </ul>

@@ -169,10 +169,12 @@
     - showPlanningRegister
     - showCompletedOrders
     - showOrderHistory
+    - showLoadingScreen
   reports:
     - 1
     - 2
   elements:
+    - 700310
     - 23
     - 700217
     - 700188

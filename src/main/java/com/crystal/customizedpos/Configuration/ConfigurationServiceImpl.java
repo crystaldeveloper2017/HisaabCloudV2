@@ -3523,6 +3523,31 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject showLoadingScreen(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String orderId=request.getParameter("order_id");
+		outputMap.put("appId", appId);
+		outputMap.put("app_id", appId);
+		try {
+
+			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(orderId, con));
+			
+
+
+			rs.setViewName("../LoadingScreen.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	
+
 	public CustomResultObject addVehicle(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
