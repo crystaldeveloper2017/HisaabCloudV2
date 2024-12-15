@@ -11650,6 +11650,48 @@ public CustomResultObject showTodaysStock(HttpServletRequest request, Connection
 	return rs;
 }
 
+public CustomResultObject showCurrentRmStock(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+	HashMap<String, Object> outputMap = new HashMap<>();
+
+	try {
+
+		String appType = "";
+		if (request.getSession().getAttribute("userdetails") != null) {
+			appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		}
+		String invoiceNo = request.getParameter("invoice_no");
+		String bookingId = request.getParameter("booking_id");
+		String MobilebookingId = request.getParameter("mobile_booking_id");
+		String vehicleId = request.getParameter("vehicleId");
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+				.get("store_id");
+		
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
+
+		outputMap.putAll(lObjConfigDao.getUserConfigurations(userId, con));
+		outputMap.put("store_id", storeId);
+		outputMap.put("app_id", appId);
+
+	
+	 
+		outputMap.put("RawMaterialsList", lObjConfigDao.getRawMaterialMaster(outputMap,con));
+	
+		
+
+		rs.setViewName("../CurrentRmStock.jsp");
+		rs.setReturnObject(outputMap);
+
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+	return rs;
+}
+
 
 public CustomResultObject generateOrderReport(HttpServletRequest request, Connection con) throws SQLException {
 	CustomResultObject rs = new CustomResultObject();
@@ -11747,6 +11789,35 @@ public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection
 		int packagingType = chk14packaging ? 14 : 12;
 
 		lObjConfigDao.saveTodaysStock(packagingType, itemListRequired, con);
+		rs.setAjaxData("Saved Stock Successfully");
+
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+	return rs;
+}
+
+public CustomResultObject saveRMStock(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+
+	List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
+	String[] itemsList = request.getParameter("itemDetails").split("\\|");
+	for (String item : itemsList) {
+		String[] itemDetails = item.split("~");
+		HashMap<String, Object> itemDetailsMap = new HashMap<>();
+		itemDetailsMap.put("raw_material_id", itemDetails[0]);
+		itemDetailsMap.put("qty", itemDetails[1]);
+		if (itemDetails[1].equals("0")) {
+			continue;
+		}
+		itemListRequired.add(itemDetailsMap);
+	}
+
+	try {
+	
+
+		lObjConfigDao.saveRMStock( itemListRequired, con);
 		rs.setAjaxData("Saved Stock Successfully");
 
 	} catch (Exception e) {
@@ -12063,5 +12134,33 @@ public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection
 
 		return rs;
 	}
+
+	public CustomResultObject getRawMaterialsAndStockForThisDate(HttpServletRequest request, Connection conWithF)
+			throws ClassNotFoundException, SQLException, JsonProcessingException {
+
+		CustomResultObject rs = new CustomResultObject();
+
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		try{
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+
+		List<LinkedHashMap<String, Object>> listOfRawMaterials=lObjConfigDao.getRawMaterialsAndStockForThisDate(appId,conWithF);
+		
+
+		rs.setAjaxData(mapper.writeValueAsString(listOfRawMaterials));
+		}
+		catch(Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}
+
+		return rs;
+
+	}
+
 	
 }

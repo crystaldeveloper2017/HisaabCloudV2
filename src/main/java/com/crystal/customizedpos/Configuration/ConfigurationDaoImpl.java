@@ -131,6 +131,15 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
+	public HashMap<String, String> getRMStock(HashMap<String, Object> hm, Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		return getMap(parameters,
+				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_rm_stock_snacks ttss ",
+				con);
+	}
+
 	public HashMap<String, String> getItems(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7735,6 +7744,28 @@ if(hm.get("user_id")!=null)
     }
 }
 
+public void saveRMStock(List<HashMap<String, Object>> itemListRequired, Connection con)
+        throws SQLException, ParseException {
+
+    ArrayList<Object> parameters = new ArrayList<>();
+
+    // Delete existing stock
+    String deleteQuery = "DELETE ttrss " +
+                        "FROM trn_todays_rm_stock_snacks ttrss " +
+                        "INNER JOIN raw_material_master rmm ON rmm.raw_material_id = ttrss.raw_material_id ";
+
+    insertUpdateDuablDB(deleteQuery, parameters, con);
+
+    // Insert new stock items
+    for (HashMap<String, Object> hm : itemListRequired) {
+        parameters = new ArrayList<>();
+        parameters.add(hm.get("raw_material_id"));
+        parameters.add(hm.get("qty"));
+        String insertQuery = "insert into trn_todays_rm_stock_snacks values (default,?,?)";
+        insertUpdateDuablDB(insertQuery, parameters, con);
+    }
+}
+
 	public List<LinkedHashMap<String, Object>> getTodaysStockRegister(String toDate, Connection con)
 			throws SQLException, ClassNotFoundException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7802,4 +7833,22 @@ if(hm.get("user_id")!=null)
 				parameters, conWithF);
 		return "Cash Deposit Deleted Succesfully";
 	}
+
+	public List<LinkedHashMap<String, Object>> getRawMaterialsAndStockForThisDate( String appId,
+			Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(appId);
+
+		return getListOfLinkedHashHashMap(parameters,
+				"select\n" +
+						"raw_material_name,rmm.raw_material_id ,ttrss.qty\n" +
+						"from\n" +
+						"raw_material_master rmm\n" +
+						"left outer join trn_todays_rm_stock_snacks ttrss on\n" +
+						"ttrss.raw_material_id = rmm.raw_material_id  \n" +
+						"where \n" +
+						" rmm.app_id =? and rmm.activate_flag=1  order by rmm.raw_material_name",
+				conWithF);
+	}
+
 }

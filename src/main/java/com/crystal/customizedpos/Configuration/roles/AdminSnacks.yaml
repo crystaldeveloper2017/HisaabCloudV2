@@ -2,6 +2,7 @@
   roleName: "AdminSnacks"
   actions:
     - checkIfUsernameAlreadyExist
+    - showCurrentRmStock
     - showShortcuts
     - deleteOrders
     - generateOrderForms
@@ -169,6 +170,8 @@
     - showPlanningRegister
     - showCompletedOrders
     - showOrderHistory
+    - getRawMaterialsAndStockForThisDate
+    - saveRMStock
   reports:
     - 1
     - 2
