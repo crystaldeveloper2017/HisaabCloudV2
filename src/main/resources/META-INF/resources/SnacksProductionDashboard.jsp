@@ -59,7 +59,12 @@ Completed Orders <span class="float-right badge bg-success">${HomePageContent.co
 </li>
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showTodaysStock'">
-Today's Stock (${HomePageContent.todaysStock})<span class="float-right badge bg-danger"></span>
+Currecnt Ready Stock (${HomePageContent.todaysStock})<span class="float-right badge bg-danger"></span>
+</a>
+</li>
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=showCurrentRmStock'">
+Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-danger"></span>
 </a>
 </li>
 

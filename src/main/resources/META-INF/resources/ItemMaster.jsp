@@ -105,7 +105,10 @@ function deleteItem(itemId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+				<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
                      <th><b>Item Id</b></th>
+					  </c:if>
                      <th><b>Category Name</b></th>
                      <th><b>Item Name</b></th>
 
@@ -135,7 +138,10 @@ function deleteItem(itemId)
 				<c:forEach items="${message}" var="item">
 					<tr >
 					
+					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
 						<td>${item.item_id}</td>
+						</c:if>
 						<%-- <td><a href="?a=showItemMasterHistory&item_id=${item.item_id}">${item.item_id}</td> --%>
 						<td>${item.category_name}</td>
 						<td>${item.item_name}</td>
@@ -225,5 +231,8 @@ function deleteItem(itemId)
 			window.location='?a=showAddItem';
 		} 
 		});
+
+		    	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
   
 </script>
