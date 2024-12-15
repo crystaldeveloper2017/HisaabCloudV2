@@ -3523,6 +3523,119 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject showChooseVehicleForLoading(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String orderId=request.getParameter("order_id");
+		outputMap.put("appId", appId);
+		outputMap.put("app_id", appId);
+		try {
+
+			outputMap.put("lstOfVehicles", lObjConfigDao.getVehicleMaster(outputMap, con));
+			
+
+
+			rs.setViewName("../ChooseVehicleForLoading.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	public CustomResultObject showChooseOrderForLoading(HttpServletRequest request, Connection con) throws SQLException {
+		
+		CustomResultObject rs = new CustomResultObject();
+		try {
+
+		
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String loadingId=request.getParameter("loading_id");
+		outputMap.put("appId", appId);
+		outputMap.put("app_id", appId);
+
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPlanningRegister(outputMap, con);
+
+			
+			;
+
+			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loadingId,con));
+			outputMap.put("lstPlanningRegister", lst);
+			
+
+
+			rs.setViewName("../ChooseOrderForLoading.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	
+
+	public CustomResultObject showLoadingRegister(HttpServletRequest request,Connection con) throws SQLException
+	{
+		CustomResultObject rs=new CustomResultObject();
+		HashMap<String, Object> outputMap=new HashMap<>();
+		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
+		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
+		
+
+		outputMap.put("app_id", appId);
+
+
+		if (fromDate.equals("")) {
+			fromDate = lObjConfigDao.getDateFromDB(con);
+		}
+		outputMap.put("txtfromdate", fromDate);
+
+		
+		try
+		{
+			String [] colNames= {"stock_id","item_name","qty"}; // change according to dao return
+			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getLoadingRegister(fromDate,con);
+			outputMap.put("lstITodaysStockRegister", lst);
+
+
+			
+			if(!exportFlag.isEmpty())
+			{
+				outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"TodaysStockRegister","TodaysStockRegister");
+			}
+		else
+			{
+				
+				rs.setViewName("../LoadingRegister.jsp");
+				
+			}	
+			
+			
+
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}		
+		rs.setReturnObject(outputMap);
+
+		return rs;
+	}
+
+
+	
+
 	public CustomResultObject showLoadingScreen(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -3598,6 +3711,53 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		}
 		return rs;
 	}
+
+
+	public CustomResultObject startVehicleLoading(HttpServletRequest request, Connection con) throws Exception {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		FileItemFactory itemFacroty = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFacroty);
+		// String webInfPath = cf.getPathForAttachments();
+
+		HashMap<String, Object> hm = new HashMap<>();
+
+		List<FileItem> toUpload = new ArrayList<>();
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+
+				if (item.isFormField()) {
+					hm.put(item.getFieldName(), item.getString());
+				} else {
+					toUpload.add(item);
+				}
+			}
+		}
+
+		
+		try {
+
+		
+		String vehicleId = hm.get("drpvehicleid").equals("") ? "0" : (hm.get("drpvehicleid").toString());
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+
+		lObjConfigDao.startVehicleLoading(vehicleId,userId,con);
+			rs.setReturnObject(outputMap);
+
+			rs.setAjaxData("<script>alert('Updated succesfully');window.location='" + hm.get("callerUrl")
+					+ "?a=showAddExpense&expenseDate=" + hm.get("txtdate") + "'</script>");
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+	
+	
 
 
 	

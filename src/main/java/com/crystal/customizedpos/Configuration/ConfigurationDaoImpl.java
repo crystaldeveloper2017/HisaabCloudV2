@@ -127,7 +127,7 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		return getMap(parameters,
-				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ",
+				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss ",
 				con);
 	}
 
@@ -1109,6 +1109,10 @@ if(hm.get("user_id")!=null)
 		return insertUpdateDuablDB("insert into stock_status values (default,?,?,?,1,0,?)", parameters, conWithF);
 	}
 
+	
+
+	
+
 	public long updateStockMaster(HashMap<String, Object> stockDetails, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(Double.parseDouble(stockDetails.get("qty").toString()));
@@ -1167,6 +1171,17 @@ if(hm.get("user_id")!=null)
 				con);
 
 	}
+
+	public LinkedHashMap<String, String> getLoadingDetails(String loadingId, Connection con)
+			throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();		
+		parameters.add(loadingId);
+		return getMap(parameters, "select * from trn_loading_register tlr,mst_vehicle mv where loading_id=? and mv.vehicle_id=tlr.vehicle_id",
+				con);
+
+	}
+
+	
 
 	public int getMaxAttachmentNoByItemId(long itemId, Connection con) throws SQLException {
 		int count = 0;
@@ -7742,6 +7757,16 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
+	public List<LinkedHashMap<String, Object>> getLoadingRegister(String fromDate, Connection con)
+	throws SQLException, ClassNotFoundException, ParseException {
+ArrayList<Object> parameters = new ArrayList<>();
+parameters.add((getDateASYYYYMMDD(fromDate)));
+
+return getListOfLinkedHashHashMap(parameters,
+		"select *,case when is_loading_complete = '0' then 'In Progress' else 'Completed' end as LoadingStatus from trn_loading_register tlr,mst_vehicle mv  where loading_date =? and mv.vehicle_id=tlr.vehicle_id ",
+		con);
+}
+
 	public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con, String appId,String[] invoiceIds)
 			throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7799,5 +7824,12 @@ if(hm.get("user_id")!=null)
 		insertUpdateDuablDB("UPDATE trn_cash_deposit_to_bank_register SET activate_flag=0,updated_date=SYSDATE() WHERE deposit_id=?",
 				parameters, conWithF);
 		return "Cash Deposit Deleted Succesfully";
+	}
+
+	public long startVehicleLoading(String vehicleId,String userId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(vehicleId);
+		parameters.add(userId);
+		return insertUpdateDuablDB("insert into trn_loading_register values (default,?,curdate(),1,?,sysdate(),0)", parameters, conWithF);
 	}
 }

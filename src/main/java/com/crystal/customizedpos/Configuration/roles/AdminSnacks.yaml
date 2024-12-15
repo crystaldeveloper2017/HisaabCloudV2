@@ -170,6 +170,10 @@
     - showCompletedOrders
     - showOrderHistory
     - showLoadingScreen
+    - showChooseVehicleForLoading
+    - startVehicleLoading
+    - showLoadingRegister
+    - showChooseOrderForLoading
   reports:
     - 1
     - 2
