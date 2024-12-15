@@ -222,22 +222,9 @@
 <script>
     let line1Completed = 0;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeFooter();
-    });
+    
 
-    function initializeFooter() {
-        let totalLoaded = 0; // All items start unloaded.
-        let totalItems = 0;
-
-        document.querySelectorAll('.pending-qty').forEach(el => {
-            totalItems += parseFloat(el.textContent);
-        });
-
-        document.getElementById('total-loaded').textContent = totalLoaded.toFixed(0);
-        document.getElementById('total-items').textContent = totalItems.toFixed(0);
-    }
-
+    
     function updateFooter() {
         let totalLoaded = 0;
         let totalItems = 0;
@@ -277,12 +264,9 @@
                 minusButton.style.display = 'block';
             }
         } else {
-            // Vibrate for 300ms when no more items are pending
             if ("vibrate" in navigator) {
                 navigator.vibrate(300); // Vibrates for 300ms
             }
-
-            //alert("No more items pending to load.");
         }
 
         updateFooter();
@@ -318,16 +302,5 @@
         updateFooter();
     }
 
-    function completeLoading() {
-        const button = document.getElementById('complete-loading');
-
-        line1Completed += 1;
-
-        if (line1Completed < document.querySelectorAll('.pending-qty').length) {
-            button.textContent = `Complete Line ${line1Completed + 1}`;
-        } else {
-            button.textContent = `Complete Loading`;
-            button.disabled = true; // Disable the button when all lines are completed.
-        }
-    }
+    
 </script>
