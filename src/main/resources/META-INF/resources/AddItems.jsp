@@ -581,6 +581,32 @@ if("${userdetails.app_type}"=="SnacksProduction")
 		
 	}
 
+	if("${userdetails.app_type}"=="Beverage")
+	{
+		placeholderdebitin.style.display="none";
+		//placeholdersaleprice.style.display="none"; ^
+		placeholderrawmaterialid.style.display="none";
+		placeholderpacketsinld.style.display="none";
+		placeholderforpackagingtype.style.display="none";
+		placeholderperrawmaterial.style.display="none";
+		placeholderwholesaleprice.style.display="none";
+		placeholderfranchiseprice.style.display="none";
+		placeholderloyalcustomer1.style.display="none";
+		placeholderloyalcustomer2.style.display="none";
+		placeholderloyalcustomer3.style.display="none";
+		placeholderdistributorprice.style.display="none";
+		placeholderb2b.style.display="none";
+		placeholderproductcode.style.display="none";
+		placeholdersgst.style.display="none";
+		placeholdercgst.style.display="none";
+		placeholderhsncode.style.display="none";
+		placeholdercatalogno.style.display="none";
+		placeholderavailableatstores.style.display="none";
+		placeholderuploadimages.style.display="none";
+		placeholderproductdetails.style.display="none";
+				
+	}
+
 	if("${userdetails.app_type}"=="SnacksProduction" && "${itemDetails.item_id}"!="")
 	{
 		placeholderQRCode.style.display="none";
