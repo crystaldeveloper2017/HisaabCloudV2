@@ -35,10 +35,14 @@ public class LoginServiceImpl extends CommonFunctions {
 			HashMap<String, String> loginDetails = lObjLoginDao.validateLoginUSingJDBC(Username, Password, con);
 			if (loginDetails != null && !loginDetails.isEmpty() ) {
 				Long user_id = Long.valueOf(loginDetails.get("user_id").toString());				
-				List<String> roles = lObjLoginDao.getRoles(user_id, con);				
+				
+				List<String> roleIds = lObjLoginDao.getRoleIds(user_id, con);
+				List<String> roleNames=getRolesNamesForIds(roleIds,roles,con);
+
+				
 				request.getSession().setAttribute("username", Username);
 				request.getSession().setAttribute("userdetails", loginDetails);				
-				boolean isAdmin=roles.contains("SuperAdmin") || roles.contains("Admin") || roles.contains("AdminServices") || roles.contains("AdminJwellery") ||roles.contains("AdminFuel")||roles.contains("AdminSnacks");
+				boolean isAdmin=roleNames.contains("SuperAdmin") || roleNames.contains("Admin") || roleNames.contains("AdminServices") || roleNames.contains("AdminJwellery") ||roleNames.contains("AdminFuel")||roleNames.contains("AdminSnacks");
 				request.getSession().setAttribute("adminFlag", isAdmin);			
 				request.getSession().setAttribute("projectName", projectName);				
 				copyImagesFromDBToBufferFolder(request.getServletContext(),con);
