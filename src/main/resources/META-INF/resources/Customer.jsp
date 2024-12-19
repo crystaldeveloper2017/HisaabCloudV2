@@ -50,7 +50,7 @@ function deleteCustomer(customerId)
 
 
 <div class="row">
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+      <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
 
 <div class="col-sm-3" align="center">
 	<div class="input-group input-group-sm" style="width: 200px;">
@@ -70,7 +70,7 @@ function deleteCustomer(customerId)
 
  </c:if>
 
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+      <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
     <div class="col-sm-3" align="left" >
 	<div class="input-group input-group-sm" style="width: 200px;">
   					<select id="drpgroupId" name="drpgroupId" class="form-control float-right" onchange='reloadFilter()' style="margin-right: 15px;" >
@@ -134,7 +134,7 @@ function deleteCustomer(customerId)
                      <th><b>Mobile Number</b></th>
                      <th><b>City</b></th>
                      <th><b>Address</b></th>
-                  <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+                  <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
 
                      <th><b>Customer Type</b></th>
                   </c:if>
@@ -149,7 +149,7 @@ function deleteCustomer(customerId)
             <td>${item.mobileNumber}</td>
             <td>${item.customerCity}</td>
             <td>${item.customerAddress}</td>
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+      <c:if test="${userdetails.app_type ne 'SnacksProduction'and userdetails.app_type ne 'Electric'}">
   
             <td>${item.customerType}</td>
        </c:if>
@@ -191,7 +191,7 @@ function deleteCustomer(customerId)
   document.title +=" Customer Master ";
   function actualSearch()
   {
-		  if("${userdetails.app_type}"=='SnacksProduction')
+		  if("${userdetails.app_type}"=='SnacksProduction' || "${userdetails.app_type}"=='Electric')
 {
 				window.location="?a=showCustomerMaster&searchInput="+txtsearch.value;
 
@@ -219,6 +219,9 @@ else{
 	  
   }
   
+  		  if("${userdetails.app_type}"!='SnacksProduction' || "${userdetails.app_type}"!='Electric')
+
+
   drpcategoryId.value='${param.categoryId}';
   
   
