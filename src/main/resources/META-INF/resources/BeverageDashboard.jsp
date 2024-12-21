@@ -68,12 +68,6 @@ Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-
 </a>
 </li>
 
-<li class="nav-item" onclick="window.location='?a=showLoadingRegister'">
-<a href="#" class="nav-link">
-Loading Register<span class="float-right badge bg-success"></span>
-</a>
-</li>
-
 </c:if>
 
 </ul>
@@ -175,8 +169,8 @@ Loading Register<span class="float-right badge bg-success"></span>
         
         	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>";
 
-        	document.title +=" Snacks Production";
-          
+        	document.title +=" Beverages ";
+        
         </script>
         
         

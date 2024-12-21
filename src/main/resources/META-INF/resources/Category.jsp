@@ -116,7 +116,10 @@ function addCategory()
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+               <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
                      <th><b>Category Id</b></th>
+                      </c:if>
                      <th><b>Category Name</b></th>
                      <th><b>Item Count</b></th>
               <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
@@ -129,7 +132,11 @@ function addCategory()
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
+                  <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
 						<td>${item.categoryId}</td>
+                    </c:if>
+
 						<td>${item.categoryName}</td>
 						<td><a href="?a=showItemMaster&categoryId=${item.categoryId}">${item.cnt}</a></td>
         <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
@@ -170,5 +177,8 @@ function addCategory()
   
   document.getElementById("divTitle").innerHTML="Category Master";
   document.title +=" Category Master ";
+
+    	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
   
 </script>

@@ -105,7 +105,10 @@ function deleteItem(itemId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+				<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
                      <th><b>Item Id</b></th>
+					  </c:if>
                      <th><b>Category Name</b></th>
                      <th><b>Item Name</b></th>
 
@@ -115,14 +118,16 @@ function deleteItem(itemId)
 
 					</c:if>
 					
-					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+					<c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
                      <th><b>Debit In</b></th>
 					 <th><b>Product Code</b></th>
                      <th><b>Selling Price</b></th>
                      <th><b>Available Qty</b></th>
                      <th><b>Order No</b></th>
-                     </c:if>
+               </c:if>
 
+				
+                    
 					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
 					 <th><b>Price</b></th>
 					</c:if>
@@ -135,7 +140,10 @@ function deleteItem(itemId)
 				<c:forEach items="${message}" var="item">
 					<tr >
 					
+					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
 						<td>${item.item_id}</td>
+						</c:if>
 						<%-- <td><a href="?a=showItemMasterHistory&item_id=${item.item_id}">${item.item_id}</td> --%>
 						<td>${item.category_name}</td>
 						<td>${item.item_name}</td>
@@ -145,7 +153,7 @@ function deleteItem(itemId)
 							<td>${item.packaging_type}</td>
 						</c:if>
 						
-						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+						<c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
 						<td>${item.debit_in}</td>					
 						<td>${item.product_code}</td>
 						<td>${item.price}</td>
@@ -225,5 +233,8 @@ function deleteItem(itemId)
 			window.location='?a=showAddItem';
 		} 
 		});
+
+		    	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
   
 </script>

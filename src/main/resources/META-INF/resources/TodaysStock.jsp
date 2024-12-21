@@ -44,7 +44,7 @@
 
 
 <c:set var="itemList" value='${requestScope["outputObject"].get("itemList")}' />
-<c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
+
 <c:set var="invoiceDetails" value='${requestScope["outputObject"].get("invoiceDetails")}' />
 <c:set var="tentativeSerialNo" value='${requestScope["outputObject"].get("tentativeSerialNo")}' />
 <c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
@@ -104,7 +104,7 @@ function saveInvoice()
 	
 	
 	
-	var reqString="chk14packaging="+chk14packaging.checked+"&stock_date="+txtinvoicedate.value+"&itemDetails="+itemString;
+	var reqString="chk14packaging="+chk14packaging.checked+"&itemDetails="+itemString;
 	
 	
 		
@@ -145,8 +145,7 @@ function saveInvoice()
 	      	    }
 	      	btnsave.disabled=false;
 
-	      	document.getElementById("divTitle").innerHTML="Todays Stock";
-	      	document.title +="Todays Stock";
+	      	
 	    	  
 	      
 	    }
@@ -172,8 +171,7 @@ function resetField()
 	txtsearchcustomer.value="";
 	txtsearchcustomer.disabled=false;
 	
-	txtinvoicedate.value="${todaysDate}";
-	txtinvoicedate.disabled=false;
+	
 	txtitem.disabled=false;
 
 
@@ -291,21 +289,7 @@ function deleteAttachment(id)
 
 
 
-  <div class="col-2">
-  	<div class="form-group">	
-	<label for="CustomerName"> Date</label>
-  		
-  	</div>
-  </div>
-   
-
-  <div class="col-8">
-  	<div class="form-group">	
-	
-  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" onchange="getItemsAndStockForThisDate()" readonly/>
-  	</div>
-  </div>
-
+ 
 
 <div class="col-2">
   	<div class="form-group" style="margin-bottom:0px"> 	
@@ -780,12 +764,11 @@ function reshuffleSrNos()
 		}
 }
 
-document.getElementById("divTitle").innerHTML=" TODAY'S STOCK ";
-document.title +=" TODAY'S STOCK ";
+document.getElementById("divTitle").innerHTML=" CURRENT READY STOCK ";
+document.title +=" CURRENT READY STOCK ";
 $("#divBackButton").attr("href", "https://www.w3schools.com/jquery/");
 
 
-$( "#txtinvoicedate" ).datepicker({ dateFormat: 'dd/mm/yy' });
 if('${invoiceDetails.invoice_id}'!='')
 	{
 		
@@ -805,7 +788,6 @@ if('${invoiceDetails.invoice_id}'!='')
 		
 		
 		document.getElementById("hdnSelectedCustomerType").value='${invoiceDetails.customer_type}';
-		txtinvoicedate.value="${invoiceDetails.theInvoiceDate}";
 		totalQty.innerHTML="${invoiceDetails.totalQuantities}";
 		
 		
@@ -1107,7 +1089,7 @@ setDefaultChecks();
 
 function showLedger()
 {
-	window.open('?a=showCustomerLedger&txtfromdate=${todaysDateMinusOneMonth}&txttodate='+txtinvoicedate.value+'&customerId='+hdnSelectedCustomer.value);
+	window.open('?a=showCustomerLedger&customerId='+hdnSelectedCustomer.value);
 }
 
 
@@ -1126,7 +1108,7 @@ function getItemsAndStockForThisDate()
 
 $('#tblitems tr').not(':first').remove();
 
-  $.get("?a=getItemsAndStockForThisDate&date="+txtinvoicedate.value+"&packaging_type="+packaging_type, function(data, status){
+  $.get("?a=getItemsAndStockForThisDate&packaging_type="+packaging_type, function(data, status){
 
 	var listOfItems=JSON.parse(data);
 

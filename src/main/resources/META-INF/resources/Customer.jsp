@@ -50,7 +50,8 @@ function deleteCustomer(customerId)
 
 
 <div class="row">
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
+      <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage' }">
 
 <div class="col-sm-3" align="center">
 	<div class="input-group input-group-sm" style="width: 200px;">
@@ -70,7 +71,8 @@ function deleteCustomer(customerId)
 
  </c:if>
 
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
+      <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
     <div class="col-sm-3" align="left" >
 	<div class="input-group input-group-sm" style="width: 200px;">
   					<select id="drpgroupId" name="drpgroupId" class="form-control float-right" onchange='reloadFilter()' style="margin-right: 15px;" >
@@ -112,16 +114,7 @@ function deleteCustomer(customerId)
 	<input type="button"  style="width:50%" class="btn btn-block btn-primary btn-sm" onclick="window.location='?a=showAddCustomer'" value="Add New Customer" >
 </div>
 
-</div>
-
-
-                    
-              
-              
-              
-                    
-              
-              
+</div>  
               
               
               <!-- /.card-header -->
@@ -129,32 +122,56 @@ function deleteCustomer(customerId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+			 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
+
                      <th><b>Customer Id</b></th>
+			
                      <th><b>Customer Name</b></th>
                      <th><b>Mobile Number</b></th>
                      <th><b>City</b></th>
                      <th><b>Address</b></th>
-                  <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
-
+                
                      <th><b>Customer Type</b></th>
                   </c:if>
-                     <th></th><th></th>
+					  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
+
+ 					<th align="center"> <b>Customer Details</b></th>
+  </c:if>
+	 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
+                     <th></th>
+
+					 <th></th>
+					   </c:if>
                     </tr>
                   </thead>
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-						<td>${item.customerId}</td>
+								 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
+
+			<td>${item.customerId}</td>
             <td>${item.customerName}</td>
             <td>${item.mobileNumber}</td>
             <td>${item.customerCity}</td>
             <td>${item.customerAddress}</td>
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
-  
+
             <td>${item.customerType}</td>
        </c:if>
-						<td><a href="?a=showAddCustomer&customerId=${item.customerId}">Edit</a></td><td><button class="btn btn-danger" onclick="deleteCustomer('${item.customerId}')">Delete</button></td>
-					</tr>
+
+		  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
+			 	<td>${item.customerName} - ${item.mobileNumber} - ${item.customerCity} <br>
+				<button class="btn btn-primary" onclick="window.location='?a=showAddCustomer&customerId=${item.customerId}'" >
+  <i class="fas fa-pencil-alt"></i> 
+</button>
+
+<button class="btn btn-danger" onclick="deleteCustomer('${item.customerId}')" aria-label="Delete Customer">
+    <i class="fas fa-trash"></i>
+  </button>
+				</td>
+
+         
+</c:if>
+		</tr>
 				</c:forEach>
 				
 				
@@ -183,15 +200,20 @@ function deleteCustomer(customerId)
       "autoWidth": false,
       "responsive": true,
       "pageLength": 50,
-      "order": [[ 1, "asc" ]]
+      "order": [[ 1, "asc" ]],
+	  "scrollX": true // Enable horizontal scrolling
     });
   });
   
   document.getElementById("divTitle").innerHTML="Customer Master";
   document.title +=" Customer Master ";
+
+      	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
+
   function actualSearch()
   {
-		  if("${userdetails.app_type}"=='SnacksProduction')
+		  if("${userdetails.app_type}"=='SnacksProduction' || "${userdetails.app_type}"=='Electric' || "${userdetails.app_type}"=='Beverage')
 {
 				window.location="?a=showCustomerMaster&searchInput="+txtsearch.value;
 
@@ -219,8 +241,11 @@ else{
 	  
   }
   
+
+if("${userdetails.app_type}"!='SnacksProduction' || "${userdetails.app_type}"!='Electric')
+{
   drpcategoryId.value='${param.categoryId}';
-  
+}
   
   
   window.addEventListener('keydown', function (e) {
