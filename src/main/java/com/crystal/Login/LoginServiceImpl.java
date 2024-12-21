@@ -36,6 +36,7 @@ public class LoginServiceImpl extends CommonFunctions {
 			if (loginDetails != null && !loginDetails.isEmpty() ) {
 				Long user_id = Long.valueOf(loginDetails.get("user_id").toString());				
 				
+
 				List<String> roleIds = lObjLoginDao.getRoleIds(user_id, con);
 				List<String> roleNames=getRolesNamesForIds(roleIds,roles,con);
 
@@ -135,8 +136,13 @@ public class LoginServiceImpl extends CommonFunctions {
 							rs.setViewName("../PetrolMiniDashboard.jsp");
 						
 							}
-
-							if(appType.equals("SnacksProduction"))
+					if(appType.equals("Electric"))
+							{
+								outputMap.putAll(getRetailDashboardData(request, con,outputMap));
+							rs.setViewName("../ElectricDashboard.jsp");
+						
+							}
+					if(appType.equals("SnacksProduction"))
 							{							
 								if(adminFlag)
 								{

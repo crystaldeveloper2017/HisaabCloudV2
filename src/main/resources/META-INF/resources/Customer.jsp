@@ -50,6 +50,7 @@ function deleteCustomer(customerId)
 
 
 <div class="row">
+
       <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage' }">
 
 <div class="col-sm-3" align="center">
@@ -69,6 +70,7 @@ function deleteCustomer(customerId)
 </div>
 
  </c:if>
+
 
       <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
     <div class="col-sm-3" align="left" >
@@ -127,7 +129,8 @@ function deleteCustomer(customerId)
                      <th><b>Customer Name</b></th>
                      <th><b>Mobile Number</b></th>
                      <th><b>City</b></th>
-                    <th><b>Address</b></th>
+                     <th><b>Address</b></th>
+                
                      <th><b>Customer Type</b></th>
                   </c:if>
 					  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
@@ -151,6 +154,7 @@ function deleteCustomer(customerId)
             <td>${item.mobileNumber}</td>
             <td>${item.customerCity}</td>
             <td>${item.customerAddress}</td>
+
             <td>${item.customerType}</td>
        </c:if>
 
@@ -209,7 +213,7 @@ function deleteCustomer(customerId)
 
   function actualSearch()
   {
-		  if("${userdetails.app_type}"=='SnacksProduction' || "${userdetails.app_type}"=='Beverage')
+		  if("${userdetails.app_type}"=='SnacksProduction' || "${userdetails.app_type}"=='Electric' || "${userdetails.app_type}"=='Beverage')
 {
 				window.location="?a=showCustomerMaster&searchInput="+txtsearch.value;
 
@@ -237,6 +241,11 @@ else{
 	  
   }
   
+
+if("${userdetails.app_type}"!='SnacksProduction' || "${userdetails.app_type}"!='Electric')
+{
+  drpcategoryId.value='${param.categoryId}';
+}
   
   
   window.addEventListener('keydown', function (e) {

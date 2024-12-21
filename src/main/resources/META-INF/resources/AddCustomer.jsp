@@ -165,6 +165,7 @@ function addCustomer()
   </div>
 
 
+
   <div class="col-sm-6" id="placeholderforGSTNo">
   	<div class="form-group">
       <label for="GSTNo">GST No</label>      
@@ -172,7 +173,7 @@ function addCustomer()
     </div>
   </div>
 
-   <div class="col-sm-12">
+   <div class="col-sm-12" id="placeholderforpublicledger">
   	 <div class="form-group">
             <label for="textToCopy">Public Ledger Link</label>
             <div class="input-group">
@@ -242,7 +243,16 @@ function addCustomer()
 		placeholderforGSTNo.style="display:none";
 
 	}
-	
+	if("${userdetails.app_type}"=="Electric")
+	{
+		placeholderforcustomerreference.style="display:none";
+		placeholderformobilenumber.style="display:none";
+		placeholderforcustomertype.style="display:none";
+		placeholderforcustomergroup.style="display:none";
+		placeholderforGSTNo.style="display:none";
+		placeholderforpublicledger.style="display:none";
+
+	}
 
 </script>
 
