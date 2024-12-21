@@ -4139,7 +4139,7 @@ if(hm.get("user_id")!=null)
 		parameters = new ArrayList<>();
 		parameters.add(userId);
 		insertUpdateDuablDB(
-				"INSERT INTO acl_user_role_rlt (rlt_pk, user_id, role_id, activate_flag, created_date, updated_date,role_name) VALUES(default, ?, 1, 1, sysdate(), NULL,'Admin');",
+				"INSERT INTO acl_user_role_rlt (rlt_pk, user_id, role_id, activate_flag, created_date, updated_date) VALUES(default, ?, 1, 1, sysdate(), NULL);",
 				parameters, con);
 
 		return userId;

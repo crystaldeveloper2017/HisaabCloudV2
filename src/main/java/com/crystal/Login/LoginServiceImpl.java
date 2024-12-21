@@ -42,7 +42,7 @@ public class LoginServiceImpl extends CommonFunctions {
 				
 				request.getSession().setAttribute("username", Username);
 				request.getSession().setAttribute("userdetails", loginDetails);				
-				boolean isAdmin=roleNames.contains("SuperAdmin") || roleNames.contains("Admin") || roleNames.contains("AdminServices") || roleNames.contains("AdminJwellery") ||roleNames.contains("AdminFuel")||roleNames.contains("AdminSnacks");
+				boolean isAdmin=roleNames.contains("SuperAdmin") || roleNames.contains("Admin") || roleNames.contains("AdminServices") || roleNames.contains("AdminJwellery") ||roleNames.contains("AdminFuel")||roleNames.contains("AdminSnacks")||roleNames.contains("AdminBeverages");
 				request.getSession().setAttribute("adminFlag", isAdmin);			
 				request.getSession().setAttribute("projectName", projectName);				
 				copyImagesFromDBToBufferFolder(request.getServletContext(),con);
@@ -113,7 +113,7 @@ public class LoginServiceImpl extends CommonFunctions {
 			
 			
 			
-			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery") || appType.equals("RetailMobile") || appType.equals("Battery"))
+			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery") || appType.equals("RetailMobile") || appType.equals("Battery") || appType.equals("Beverage"))
 					{
 						outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
 					
@@ -171,6 +171,13 @@ public class LoginServiceImpl extends CommonFunctions {
 			{
 				outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
 				rs.setViewName("../RestaurantDashboard.jsp");
+		
+			}
+
+			if(appType.equals("Beverage"))
+			{
+				outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
+				rs.setViewName("../BeverageDashboard.jsp");
 		
 			}
 		}
