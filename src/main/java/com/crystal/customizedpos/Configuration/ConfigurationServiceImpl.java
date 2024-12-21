@@ -5329,7 +5329,7 @@ outputMap.put("txttodate",toDate);
 
 		try {
 			if (employeeId == 0) {
-				hm.put("password", "default@123");
+				hm.put("password", "123");
 				employeeId = lObjConfigDao.addEmployee(con, hm);
 				hm.put("user_id", employeeId);
 				lObjConfigDao.addDefaultUserConfigurations(con, hm);

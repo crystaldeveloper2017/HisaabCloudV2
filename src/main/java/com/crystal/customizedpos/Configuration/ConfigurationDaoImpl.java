@@ -4125,7 +4125,7 @@ if(hm.get("user_id")!=null)
 
 		parameters = new ArrayList<>();
 		parameters.add(txtusername);
-		parameters.add(getSHA256String("default@123"));
+		parameters.add(getSHA256String("123"));
 		parameters.add(storeId);
 		parameters.add(appId);
 		long userId = insertUpdateDuablDB(
