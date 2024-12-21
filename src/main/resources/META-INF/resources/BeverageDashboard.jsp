@@ -35,13 +35,19 @@
 <ul class="nav flex-column">
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showGenerateInvoice'">
-New Order <span class="float-right badge bg-primary"></span>
+New Estimate <span class="float-right badge bg-primary"></span>
 </a>
 </li>
 
 <li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showPendingRegister'">
-Pending Orders <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
+<a href="#" class="nav-link" onclick="window.location='?a=showCollectPayment'">
+Collect Payment <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
+</a>
+</li>
+
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=showCustomerLedgerWithItem'">
+Customer Ledger <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
 </a>
 </li>
 

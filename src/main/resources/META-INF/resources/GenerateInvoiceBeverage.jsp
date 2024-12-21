@@ -136,6 +136,8 @@ function saveInvoice()
 	    {
 	    	var invoiceId=this.responseText.split("~");
 	      	alert("Invoice Saved Succesfully"+invoiceId[0]);
+
+			window.location.reload();
 	      	
 	      	if(invoiceId.length==1)
 	      		{
@@ -154,16 +156,6 @@ function saveInvoice()
 	    	}
 	    	//window.location.reload();
 	    	btnsave.disabled=false;
-	      	
-	      	
-	      	
-	      	
-	      	
-	      	
-	      	
-	      	
-	      	
-	      	
 	      	
 	      	
 	      	resetField();
@@ -384,7 +376,7 @@ function deleteAttachment(id)
   
   <div class="col-sm-12">  
 	  <div class="card-body table-sm table-responsive p-0" style="height: 370px;">                
-	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+	                <table id="tblitems"  class="table table-head-fixed  table-bordered dataTable dtr-inline" role="grid" aria-describedby="example1_info">
 	                  <thead>
 	                    <tr align="center" style="font-size:10px">
 	                     
