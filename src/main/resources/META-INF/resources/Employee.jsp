@@ -155,7 +155,10 @@ function resetPassword(employeeId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+			  <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
                      <th><b>Employee Id</b> </th>
+				  </c:if>
 					
 					  <th><b>User Name</b></th>
 					  <th><b>Employee Name</b></th>
@@ -168,7 +171,11 @@ function resetPassword(employeeId)
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
+								  <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+
 						<td>${item.user_id}</td>
+						     <th><b>Employee Id</b> </th>
+				  </c:if>
 						<td>${item.username}</td>
 						<td>${item.name}</td>
 						<td>${item.mobile}</td>
@@ -206,7 +213,8 @@ function resetPassword(employeeId)
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 100
+      "pageLength": 100,
+
 	  
     });
   });
@@ -214,5 +222,8 @@ function resetPassword(employeeId)
   
  document.getElementById("divTitle").innerHTML="Employee Master";
   document.title +=" Employee Master ";
+
+  	 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
   
 </script>

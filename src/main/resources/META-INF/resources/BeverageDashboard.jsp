@@ -169,8 +169,8 @@ Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-
         
         	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>";
 
-        	document.title +=" Snacks Production";
-          
+        	document.title +=" Beverages ";
+        
         </script>
         
         

@@ -1,5 +1,5 @@
-- roleId: 21
-  roleName: "AdminSnacks"
+- roleId: 41
+  roleName: "AdminBeverage"
   actions:
     - checkIfUsernameAlreadyExist
     - showCurrentRmStock

@@ -1,6 +1,22 @@
 <style>
 
 
+.custom-qty-table {
+  width: 100%; /* Ensure it adapts to parent container */
+  max-width: 120px; /* Optional: Set a max width for consistency */
+  margin: 0 auto; /* Center align the table */
+}
+
+.custom-qty-table td {
+  padding: 5px; /* Add spacing for better visual appeal */
+}
+
+.custom-qty-table input {
+  text-align: center;
+  width: 80%; /* Adjust width for a clean look */
+}
+
+
 	th
 	{
 		vertical-align:middle!important;
@@ -68,17 +84,16 @@ function saveInvoice()
 	for (var x= 1; x < rows.length; x++) 
 	{   
 	    // ID, QTY, RATE,CustomRate,Item Name,gst amount
-	    
 	    var arrayReq=rows[x].childNodes[0].childNodes[0].childNodes[0].value.split('~');
 	    var itemId=arrayReq[0];
 	    var productDetailsId=arrayReq[1];
 	    
 	    itemString+=
 	    	itemId+ 
-	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value)+
-	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+
-	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+
-	    "~"+rows[x].childNodes[1].childNodes[0].innerHTML+	    
+	    "~"+Number(rows[x].childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].value)+ // qty
+	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // rate
+	    "~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // custom_rate
+	    "~"+rows[x].childNodes[0].childNodes[0].childNodes[1].childNodes[1].innerHTML+ //item_name 
 	    "|";
 	    
 	    /* var availableQty=Number(rows[x].childNodes[1].childNodes[0].innerHTML.split("(")[1].split(")")[0]);
@@ -92,7 +107,7 @@ function saveInvoice()
 	
 	
 	
-	var reqString="customer_id=0"+
+	var reqString="customer_id="+hdnSelectedCustomer.value+
 	"&gross_amount="+grossAmount.innerHTML+
 	"&item_discount=0"+
 	"&invoice_discount=0"+
@@ -120,7 +135,7 @@ function saveInvoice()
 	    if (this.readyState == 4 && this.status == 200) 
 	    {
 	    	var invoiceId=this.responseText.split("~");
-	      	//alert("Invoice Saved Succesfully"+invoiceId[0]);
+	      	alert("Invoice Saved Succesfully"+invoiceId[0]);
 	      	
 	      	if(invoiceId.length==1)
 	      		{
@@ -129,7 +144,7 @@ function saveInvoice()
 	      			return;
 	      		}
 	      	
-	      	printDirectAsFonts(invoiceId[0],0);
+	      	//printDirectAsFonts(invoiceId[0],0);
 	      	
 	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
 	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
@@ -325,6 +340,29 @@ function deleteAttachment(id)
   	<div class="form-group">	
   		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>
   	</div>
+  </div>
+
+
+   <div class="col-sm-4">
+  	
+
+   <div class="form-group">
+  	
+  	<div class="input-group input-group-sm">
+        <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"    placeholder="Search For Customer" name="txtsearchcustomer"  autocomplete="off"  oninput="checkforMatchCustomer()">
+    </div>
+  	
+  	
+        	      
+      
+            
+      <input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
+   			<input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
+   			<input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
+   			      
+    </div>
+
+   
   </div>
   
   <div class="col-sm-4">
@@ -580,7 +618,6 @@ function checkforMatchCustomer()
 			document.getElementById("hdnSelectedCustomer").value=customerId;			
 			document.getElementById("txtsearchcustomer").disabled=true;			
 			document.getElementById("hdnSelectedCustomerType").value=document.getElementById("txtsearchcustomer").value.split("~")[2];
-			fetchPendingAmountForThisCustomer(customerId);	
 		}
 	else
 		{
@@ -592,30 +629,6 @@ function checkforMatchCustomer()
 }
 
 
-function fetchPendingAmountForThisCustomer(customerId)
-{
-	document.getElementById("closebutton").style.display='none';
-	   document.getElementById("loader").style.display='block';
-	var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() 
-	  {
-	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 		      
-	    	var details=JSON.parse(xhttp.responseText);	    	
-	    	if(details.pendingAmountDetails.PendingAmount!=undefined)
-	    		{
-	    			txtcustomerpendingamount.value=details.pendingAmountDetails.PendingAmount;
-	    		}
-	    	else
-	    		{
-					//alert("no pending amount for this customer");
-	    			//window.location.reload();
-	    		}
-		}
-	  };
-	  xhttp.open("GET","?a=getPendingAmountForCustomer&customerId="+customerId, true);    
-	  xhttp.send();
-}
 
 
 function checkforMatchItem()
@@ -699,8 +712,35 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	cell1.innerHTML = "<div>" +"<input type='hidden' value='"+itemId+"~"+purchaseDetailsId+"'>"+"<a onclick=window.open('?a=showItemHistory&itemId="+itemId+"') href='#'> <span style='font-size:12px'>"+ itemDetails[0] + "</span></a> </div>";
 	    	//cell3.innerHTML = " <input type='text' class='form-control form-control-sm'  id='txtqty"+itemId+"' onkeyup='calculateAmount(this);checkIfEnterisPressed(event,this);' onblur='formatQty(this)' onkeypress='digitsOnlyWithDot(event);' value='1'> <input type='hidden' class='form-control form-control-sm'  readonly id='hdnavailableqty"+itemId+"' value="+itemDetails[10]+">";
 	    	
-	    	cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><input type="number" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div>';
-	    	
+	    	//cell2.innerHTML = '<div class="input-group"><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',0)"><i class="fa fa-minus"></i></button></span><br/><input type="number" style="text-align:center" class="form-control form-control-sm"  id="txtqty'+itemId+'" onkeyup="calculateAmount('+itemId+');checkIfEnterisPressed(event,this);" onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1"> <input type="hidden" class="form-control form-control-sm"  readonly id="hdnavailableqty'+itemId+'" value='+itemDetails[10]+'><span class="input-group-btn"><button class="btn btn-info" type="button" onclick="addremoveQuantity('+itemId+',1)"><i class="fa fa-plus"></i></button></span></div>';
+	    	cell2.innerHTML = 
+  '<table class="custom-qty-table">' +
+    '<tr>' +
+      '<td style="text-align: center;">' +
+        '<button class="btn btn-info" type="button" onclick="addremoveQuantity(' + itemId + ', 0)">' +
+          '<i class="fa fa-minus"></i>' +
+        '</button>' +
+      '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td style="text-align: center;">' +
+        '<input type="number" style="text-align:center; width: 100%;" ' +
+        'class="form-control form-control-sm" id="txtqty' + itemId + '" ' +
+        'onkeyup="calculateAmount(' + itemId + ');checkIfEnterisPressed(event, this);" ' +
+        'onblur="formatQty(this)" onkeypress="digitsOnlyWithDot(event);" value="1">' +
+        '<input type="hidden" class="form-control form-control-sm" readonly ' +
+        'id="hdnavailableqty' + itemId + '" value="' + itemDetails[10] + '">' +
+      '</td>' +
+    '</tr>' +
+    '<tr>' +
+      '<td style="text-align: center;">' +
+        '<button class="btn btn-info" type="button" onclick="addremoveQuantity(' + itemId + ', 1)">' +
+          '<i class="fa fa-plus"></i>' +
+        '</button>' +
+      '</td>' +
+    '</tr>' +
+  '</table>';
+
 	    	//cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="'+itemDetails[1]+'" id="txtrate'+itemId+'">'; // Sana Rate
 	    	cell3.innerHTML = "<input type='number' class='form-control form-control-sm' id='txtcustomrate"+itemId+"'   onkeyup='calculateAmount("+itemId+");checkIfEnterisPressed(event,this)' onkeypress='digitsOnlyWithDot(event)' value="+getPriceForThisCustomer(itemDetails)+">";
 	    	
@@ -725,17 +765,14 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 			
 }
 
-
-
 function calculateAmount(itemId)
 {
 	var customrate=document.getElementById('txtcustomrate'+itemId).value;
 	var qty=document.getElementById('txtqty'+itemId).value;
-	var amount=(Number(customrate) *Number(qty) ).toFixed(2);
+	var amount=(Number(customrate) *Number(qty) ).toFixed(0);
 		 
 	
-	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.childNodes[3].childNodes[0].value= (Number(customrate) *Number(qty) ).toFixed(2);
-	
+	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[3].childNodes[0].value= (Number(customrate) *Number(qty) ).toFixed(0);
 	
 	
 	
@@ -743,6 +780,7 @@ function calculateAmount(itemId)
 	
 	calculateTotal();
 }
+
 
 function checkIfEnterisPressed(evt,txtbox)
 {
@@ -825,11 +863,10 @@ function calculateTotal()
 				var itemTotalAmount=Number(rows[x].childNodes[3].childNodes[0].value);
 				total+=itemTotalAmount;
 				
-				var itemQty=Number(rows[x].childNodes[1].childNodes[0].childNodes[1].value);
-				
+				var itemQty=Number(rows[x].childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].value);
 				totalQtyCalculated+=itemQty;
 				
-				var rate=Number(rows[x].childNodes[2].childNodes[0].value);
+				var rate=Number(rows[x].childNodes[3].childNodes[0].value);
 				var grossItemAmount=itemQty*rate;
 				totalDiscountCalculated+=grossItemAmount  -itemTotalAmount;
 				
@@ -853,6 +890,8 @@ function calculateTotal()
 		
 		//calculateReturnAmount();
 }
+
+
 
 function removethisitem(btn1)
 {
@@ -1121,7 +1160,7 @@ function showThisItemIntoSelection(itemId)
 function getPriceForThisCustomer(itemDetails)
 {
 	
-	return itemDetails[1];	
+	return Math.ceil(itemDetails[1]);	
 }
 
 function quickAddCustomer()
@@ -1162,7 +1201,7 @@ function addremoveQuantity(itemId,addRemoveFlag) // 0 removes and 1 adds
 	
 	if(quantity==1 && addRemoveFlag==0)
 		{
-			qtyElement.parentNode.parentNode.parentNode.remove();
+			qtyElement.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.remove()
 			return;
 		}
 	
@@ -1481,6 +1520,51 @@ function printDirectAsFonts(invoiceNo,pendAmount)
 
 
 
+
+
+ $( function() {
+    var availableTags = [
+      
+    ];
+
+  var options1=document.getElementById("customerList").options;
+	var customerId=0;
+	for(var x=0;x<options1.length;x++)
+		{
+			
+					
+          availableTags.push(options1[x].value);
+					
+					
+				
+		}
+
+    
+
+
+    $( "#txtsearchcustomer" ).autocomplete({
+      source: availableTags,
+      select: function(event, ui) {
+                    
+          setTimeout(function() {
+              checkforMatchCustomer();
+          }, 100);
+
+
+                }
+    });
+
+   
+    
+
+  } );
+
+
+
+  function onfoctext()
+   {
+              $("#txtsearchcustomer").autocomplete("search", "~");
+              }
 
 
 

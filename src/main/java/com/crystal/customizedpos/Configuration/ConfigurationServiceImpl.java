@@ -5329,7 +5329,7 @@ outputMap.put("txttodate",toDate);
 
 		try {
 			if (employeeId == 0) {
-				hm.put("password", "default@123");
+				hm.put("password", "123");
 				employeeId = lObjConfigDao.addEmployee(con, hm);
 				hm.put("user_id", employeeId);
 				lObjConfigDao.addDefaultUserConfigurations(con, hm);
@@ -11162,7 +11162,7 @@ outputMap.put("txttodate",toDate);
 		outputMap.put("app_id", appId);
 		try
 		{
-			String [] colNames= {"raw_material_id","raw_material_name"}; // change according to dao return
+			String [] colNames= {"raw_material_id","raw_material_name","bora_per_bag"}; // change according to dao return
 			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getRawMaterialMaster(outputMap,con);
 			outputMap.put("ListOfRawmaterials", lst);
 
@@ -11238,21 +11238,27 @@ outputMap.put("txttodate",toDate);
 				if (item.isFormField()) 
 				{
 					hm.put(item.getFieldName(), item.getString());
-			    }
+				}
 				else
 				{
 					toUpload.add(item);
-				}
-			}			
+			}
+		}
 		}		
 		String rawmaterialName= hm.get("txtrawmaterialname").toString();
-		
+
 		
 		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String bora_per_bag= hm.get("txtboraperbag").toString();
+
+
+
 		hm.put("txtrawmaterialname", rawmaterialName);
 		hm.put("user_id", userId);
+		hm.put("txtboraperbag", bora_per_bag);
+
 		
-		
+
 		long rawmaterialId=hm.get("hdnRawmaterialId").equals("")?0l:Long.parseLong(hm.get("hdnRawmaterialId").toString()); 
 		try
 		{			
@@ -11265,26 +11271,22 @@ outputMap.put("txttodate",toDate);
 			}
 			else
 			{
-				lObjConfigDao.updateRawMaterial(rawmaterialId, con, rawmaterialName,userId);
+				lObjConfigDao.updateRawMaterial(rawmaterialId, con, rawmaterialName,userId,bora_per_bag);
 			}
 			
 			
 		
 			rs.setReturnObject(outputMap);
 			
-			
-			rs.setAjaxData("<script>window.location='"+hm.get("callerUrl")+"?a=showRawMaterialsMaster'</script>");
-			
-										
-		}
-		catch (Exception e)
-		{
+	
+			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl") + "?a=showRawMaterialsMaster'</script>");
+		} catch (Exception e) {
 			writeErrorToDB(e);
-				rs.setHasError(true);
-		}		
+			rs.setHasError(true);
+		}
+	
 		return rs;
 	}
-	
 	public CustomResultObject deleteRawMaterial(HttpServletRequest request,Connection con)
 	{
 		CustomResultObject rs=new CustomResultObject();
@@ -11577,31 +11579,21 @@ public CustomResultObject showTodaysStock(HttpServletRequest request, Connection
 		String tableId = request.getParameter("table_id");
 		String bookingId = request.getParameter("booking_id");
 		String MobilebookingId = request.getParameter("mobile_booking_id");
-		String txtinvoicedate = request.getParameter("txtinvoicedate");
 		String vehicleId = request.getParameter("vehicleId");
-		
 
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-
 		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 				.get("store_id");
-
 		String invoiceTypeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 				.get("invoice_type");
-
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 		boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
 
 		outputMap.putAll(lObjConfigDao.getUserConfigurations(userId, con));
-
 		outputMap.put("store_id", storeId);
 		outputMap.put("app_id", appId);
 		outputMap.put("table_id", tableId);
 		outputMap.put("invoice_no", invoiceNo);
-		outputMap.put("txtinvoicedate", txtinvoicedate);
-
-
-		
 
 		if (invoiceId != null) {
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(invoiceId, con));
@@ -11611,17 +11603,11 @@ public CustomResultObject showTodaysStock(HttpServletRequest request, Connection
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetailsForTable(tableId, con));
 		}
 
-		
 		if (invoiceId == null) {
-
-			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
-			outputMap.put("todaysDateMinusOneMonth", lObjConfigDao.getDateFromDBMinusOneMonth(con));
 			outputMap.put("tentativeSerialNo",
 					lObjConfigDao.getTentativeSequenceNo(appId, "trn_invoice_register", con));
 		}
 
-		// outputMap.put("itemList",
-		// lObjConfigDao.getItemMasterForGenerateInvoiceForThisStore(outputMap,con));
 		if (!invoiceTypeId.equals("1")) {
 			outputMap.put("itemList", lObjConfigDao.getItemMasterForGenerateInvoice(outputMap, con));
 		}
@@ -11636,9 +11622,7 @@ public CustomResultObject showTodaysStock(HttpServletRequest request, Connection
 			if (categoryName.equals(temp.get("catNameTrimmed"))) {
 				lsttemp.add(temp);
 			} else {
-
 				reqHm.put(categoryName, lsttemp);
-
 				lsttemp = new ArrayList<>();
 				categoryName = temp.get("catNameTrimmed").toString();
 				lsttemp.add(temp);
@@ -11646,22 +11630,17 @@ public CustomResultObject showTodaysStock(HttpServletRequest request, Connection
 		}
 
 		reqHm.put(categoryName, lsttemp);
-
 		outputMap.put("lsitOfCategories", lObjConfigDao.getCategoriesWithAtLeastOneItem(outputMap, con));
 		outputMap.put("lstOfShifts", lObjConfigDao.getShiftMaster(outputMap, con));
-
 		outputMap.put("lstOfSwipeMaster", lObjConfigDao.getSwipeMaster(outputMap, con));
 		outputMap.put("suggestedShiftId", lObjConfigDao.getSuggestedShiftId(outputMap, con));
 		outputMap.put("categoriesWithItem", reqHm);
 
-		if (invoiceTypeId.equals("2")) // means services and we need unique model no and unique no for this app id
-		{
+		if (invoiceTypeId.equals("2")) { // means services and we need unique model no and unique no for this app id
 			outputMap.put("listUniqueModelNo", lObjConfigDao.getUniqueModelNoForThisApp(con, appId));
 		}
 
-
 		rs.setViewName("../TodaysStock.jsp");
-
 		rs.setReturnObject(outputMap);
 
 	} catch (Exception e) {
@@ -11670,6 +11649,49 @@ public CustomResultObject showTodaysStock(HttpServletRequest request, Connection
 	}
 	return rs;
 }
+
+public CustomResultObject showCurrentRmStock(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
+	HashMap<String, Object> outputMap = new HashMap<>();
+
+	try {
+
+		String appType = "";
+		if (request.getSession().getAttribute("userdetails") != null) {
+			appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+		}
+		String invoiceNo = request.getParameter("invoice_no");
+		String bookingId = request.getParameter("booking_id");
+		String MobilebookingId = request.getParameter("mobile_booking_id");
+		String vehicleId = request.getParameter("vehicleId");
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
+				.get("store_id");
+		
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		boolean adminFlag = (boolean) request.getSession().getAttribute("adminFlag");
+
+		outputMap.putAll(lObjConfigDao.getUserConfigurations(userId, con));
+		outputMap.put("store_id", storeId);
+		outputMap.put("app_id", appId);
+
+	
+	 
+		outputMap.put("RawMaterialsList", lObjConfigDao.getRawMaterialMaster(outputMap,con));
+	
+		
+
+		rs.setViewName("../CurrentRmStock.jsp");
+		rs.setReturnObject(outputMap);
+
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+	return rs;
+}
+
 
 public CustomResultObject generateOrderReport(HttpServletRequest request, Connection con) throws SQLException {
 	CustomResultObject rs = new CustomResultObject();
@@ -11749,30 +11771,24 @@ public CustomResultObject generateOrderForms(HttpServletRequest request, Connect
 public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection con) throws SQLException {
 	CustomResultObject rs = new CustomResultObject();
 
-
 	List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
-	String stockDate=request.getParameter("stock_date");
 	String[] itemsList = request.getParameter("itemDetails").split("\\|");
-				for (String item : itemsList) {
-					String[] itemDetails = item.split("~");
-					HashMap<String, Object> itemDetailsMap = new HashMap<>();
-					itemDetailsMap.put("item_id", itemDetails[0]);
-					itemDetailsMap.put("qty", itemDetails[1]);
-					if(itemDetails[1].equals("0"))
-					{continue;}
-					itemListRequired.add(itemDetailsMap);
-					// ID, QTY
-				}
+	for (String item : itemsList) {
+		String[] itemDetails = item.split("~");
+		HashMap<String, Object> itemDetailsMap = new HashMap<>();
+		itemDetailsMap.put("item_id", itemDetails[0]);
+		itemDetailsMap.put("qty", itemDetails[1]);
+		if (itemDetails[1].equals("0")) {
+			continue;
+		}
+		itemListRequired.add(itemDetailsMap);
+	}
 
-
-	
 	try {
+		boolean chk14packaging = request.getParameter("chk14packaging").equals("true") ? true : false;
+		int packagingType = chk14packaging ? 14 : 12;
 
-		boolean chk14packaging=request.getParameter("chk14packaging").equals("true")?true:false;
-		int packagingType=chk14packaging==true?14:12;
-
-		lObjConfigDao.saveTodaysStock(packagingType,stockDate,itemListRequired, con);
-		
+		lObjConfigDao.saveTodaysStock(packagingType, itemListRequired, con);
 		rs.setAjaxData("Saved Stock Successfully");
 
 	} catch (Exception e) {
@@ -11782,58 +11798,88 @@ public CustomResultObject saveTodaysStock(HttpServletRequest request, Connection
 	return rs;
 }
 
-public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Connection con) throws SQLException
-	{
-		CustomResultObject rs=new CustomResultObject();
-		HashMap<String, Object> outputMap=new HashMap<>();
-		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
-		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
-		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
-		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		
-		
+public CustomResultObject saveRMStock(HttpServletRequest request, Connection con) throws SQLException {
+	CustomResultObject rs = new CustomResultObject();
 
-		outputMap.put("app_id", appId);
-
-
-		if (fromDate.equals("")) {
-			fromDate = lObjConfigDao.getDateFromDB(con);
+	List<HashMap<String, Object>> itemListRequired = new ArrayList<>();
+	String[] itemsList = request.getParameter("itemDetails").split("\\|");
+	for (String item : itemsList) {
+		String[] itemDetails = item.split("~");
+		HashMap<String, Object> itemDetailsMap = new HashMap<>();
+		itemDetailsMap.put("raw_material_id", itemDetails[0]);
+		itemDetailsMap.put("qty", itemDetails[1]);
+		if (itemDetails[1].equals("0")) {
+			continue;
 		}
-		outputMap.put("txtfromdate", fromDate);
-
-		
-		try
-		{
-			String [] colNames= {"stock_id","item_name","qty"}; // change according to dao return
-			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getTodaysStockRegister(fromDate,con);
-			outputMap.put("lstITodaysStockRegister", lst);
-
-
-			
-			if(!exportFlag.isEmpty())
-			{
-				outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"TodaysStockRegister","TodaysStockRegister");
-			}
-		else
-			{
-				
-				rs.setViewName("../TodaysStockRegister.jsp");
-				
-			}	
-			
-			
-
-		}
-		catch (Exception e)
-		{
-			writeErrorToDB(e);
-			rs.setHasError(true);
-		}		
-		rs.setReturnObject(outputMap);
-
-		return rs;
+		itemListRequired.add(itemDetailsMap);
 	}
+
+	try {
+	
+
+		lObjConfigDao.saveRMStock( itemListRequired, con);
+		rs.setAjaxData("Saved Stock Successfully");
+
+	} catch (Exception e) {
+		request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+		rs.setHasError(true);
+	}
+	return rs;
+}
+
+
+// public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Connection con) throws SQLException
+// 	{
+// 		CustomResultObject rs=new CustomResultObject();
+// 		HashMap<String, Object> outputMap=new HashMap<>();
+// 		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
+// 		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
+// 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+// 		String fromDate = request.getParameter("txtfromdate") == null ? "" : request.getParameter("txtfromdate");
+// 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		
+		
+
+// 		outputMap.put("app_id", appId);
+
+
+// 		if (fromDate.equals("")) {
+// 			fromDate = lObjConfigDao.getDateFromDB(con);
+// 		}
+// 		outputMap.put("txtfromdate", fromDate);
+
+		
+// 		try
+// 		{
+// 			String [] colNames= {"stock_id","item_name","qty"}; // change according to dao return
+// 			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getTodaysStockRegister(fromDate,con);
+// 			outputMap.put("lstITodaysStockRegister", lst);
+
+
+			
+// 			if(!exportFlag.isEmpty())
+// 			{
+// 				outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"TodaysStockRegister","TodaysStockRegister");
+// 			}
+// 		else
+// 			{
+				
+// 				rs.setViewName("../TodaysStockRegister.jsp");
+				
+// 			}	
+			
+			
+
+// 		}
+// 		catch (Exception e)
+// 		{
+// 			writeErrorToDB(e);
+// 			rs.setHasError(true);
+// 		}		
+// 		rs.setReturnObject(outputMap);
+
+// 		return rs;
+// 	}
 
 
 	public CustomResultObject getItemsAndStockForThisDate(HttpServletRequest request, Connection conWithF)
@@ -11845,12 +11891,11 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 
 		try{
 
-		String date = request.getParameter("date");
 		String packaging_type = request.getParameter("packaging_type");
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 
 
-		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getItemsAndStockForThisDate(date,appId,packaging_type,conWithF);
+		List<LinkedHashMap<String, Object>> listOfItems=lObjConfigDao.getItemsAndStockForThisDate(appId,packaging_type,conWithF);
 		
 
 		rs.setAjaxData(mapper.writeValueAsString(listOfItems));
@@ -12089,5 +12134,33 @@ public CustomResultObject showTodaysStockRegister(HttpServletRequest request,Con
 
 		return rs;
 	}
+
+	public CustomResultObject getRawMaterialsAndStockForThisDate(HttpServletRequest request, Connection conWithF)
+			throws ClassNotFoundException, SQLException, JsonProcessingException {
+
+		CustomResultObject rs = new CustomResultObject();
+
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		try{
+
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+
+
+		List<LinkedHashMap<String, Object>> listOfRawMaterials=lObjConfigDao.getRawMaterialsAndStockForThisDate(appId,conWithF);
+		
+
+		rs.setAjaxData(mapper.writeValueAsString(listOfRawMaterials));
+		}
+		catch(Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}
+
+		return rs;
+
+	}
+
 	
 }

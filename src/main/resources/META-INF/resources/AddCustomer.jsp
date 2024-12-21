@@ -123,7 +123,7 @@ function addCustomer()
     </div>
   </div>
   
-  <div class="col-sm-6">
+  <div class="col-sm-6" id="placeholderforAddress">
   	<div class="form-group">
       <label for="Address">Address</label>
       <input type="text" class="form-control" id="address" value="${customerDetails.address}" name="address" placeholder="Address">
@@ -165,9 +165,10 @@ function addCustomer()
   </div>
 
 
-  <div class="col-sm-6" id="placeholderforgst">
+
+  <div class="col-sm-6" id="placeholderforGSTNo">
   	<div class="form-group">
-      <label for="GST No">GST No</label>      
+      <label for="GSTNo">GST No</label>      
 	  <input type="text" class="form-control" id="txtgstno" value="${customerDetails.gst_no}" name="txtgstno" placeholder="GST No.">     
     </div>
   </div>
@@ -238,6 +239,9 @@ function addCustomer()
 		placeholderforcustomergroup.style="display:none";
 		placeholderforcustomerreference.style="display:none";
 		placeholderformobilenumber.style="display:none";
+		placeholderforAddress.style="display:none";
+		placeholderforGSTNo.style="display:none";
+
 	}
 	if("${userdetails.app_type}"=="Electric")
 	{
@@ -245,7 +249,7 @@ function addCustomer()
 		placeholderformobilenumber.style="display:none";
 		placeholderforcustomertype.style="display:none";
 		placeholderforcustomergroup.style="display:none";
-		placeholderforgst.style="display:none";
+		placeholderforGSTNo.style="display:none";
 		placeholderforpublicledger.style="display:none";
 
 	}
