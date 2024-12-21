@@ -115,14 +115,16 @@ function deleteItem(itemId)
 
 					</c:if>
 					
-					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+					<c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
                      <th><b>Debit In</b></th>
 					 <th><b>Product Code</b></th>
                      <th><b>Selling Price</b></th>
                      <th><b>Available Qty</b></th>
                      <th><b>Order No</b></th>
-                     </c:if>
+               </c:if>
 
+				
+                    
 					<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
 					 <th><b>Price</b></th>
 					</c:if>
@@ -145,7 +147,7 @@ function deleteItem(itemId)
 							<td>${item.packaging_type}</td>
 						</c:if>
 						
-						<c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+						<c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Electric'}">
 						<td>${item.debit_in}</td>					
 						<td>${item.product_code}</td>
 						<td>${item.price}</td>
