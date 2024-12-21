@@ -606,3 +606,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showCashLedgerReport"
   orderNo: 1
+- elementId: 700310
+  elementName: "Vehicle Master"
+  parentElementId: 700218
+  elementUrl: "?a=showVehicleMaster"
+  orderNo: 4

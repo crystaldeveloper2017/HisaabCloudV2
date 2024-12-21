@@ -170,12 +170,18 @@
     - showPlanningRegister
     - showCompletedOrders
     - showOrderHistory
+    - showLoadingScreen
+    - showChooseVehicleForLoading
+    - startVehicleLoading
+    - showLoadingRegister
+    - showChooseOrderForLoading
     - getRawMaterialsAndStockForThisDate
     - saveRMStock
   reports:
     - 1
     - 2
   elements:
+    - 700310
     - 23
     - 700217
     - 700188
