@@ -50,7 +50,7 @@ function deleteCustomer(customerId)
 
 
 <div class="row">
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+      <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage' }">
 
 <div class="col-sm-3" align="center">
 	<div class="input-group input-group-sm" style="width: 200px;">
@@ -70,7 +70,7 @@ function deleteCustomer(customerId)
 
  </c:if>
 
-      <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+      <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
     <div class="col-sm-3" align="left" >
 	<div class="input-group input-group-sm" style="width: 200px;">
   					<select id="drpgroupId" name="drpgroupId" class="form-control float-right" onchange='reloadFilter()' style="margin-right: 15px;" >
@@ -120,7 +120,7 @@ function deleteCustomer(customerId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
-			 <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+			 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
 
                      <th><b>Customer Id</b></th>
 			
@@ -130,11 +130,11 @@ function deleteCustomer(customerId)
                     <th><b>Address</b></th>
                      <th><b>Customer Type</b></th>
                   </c:if>
-					  <c:if test="${userdetails.app_type eq 'SnacksProduction'}">
+					  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
 
  					<th align="center"> <b>Customer Details</b></th>
   </c:if>
-	 <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+	 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
                      <th></th>
 
 					 <th></th>
@@ -144,7 +144,7 @@ function deleteCustomer(customerId)
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-								 <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
+								 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
 
 			<td>${item.customerId}</td>
             <td>${item.customerName}</td>
@@ -154,7 +154,7 @@ function deleteCustomer(customerId)
             <td>${item.customerType}</td>
        </c:if>
 
-		  <c:if test="${userdetails.app_type eq 'SnacksProduction'}">
+		  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
 			 	<td>${item.customerName} - ${item.mobileNumber} - ${item.customerCity} <br>
 				<button class="btn btn-primary" onclick="window.location='?a=showAddCustomer&customerId=${item.customerId}'" >
   <i class="fas fa-pencil-alt"></i> 
@@ -209,7 +209,7 @@ function deleteCustomer(customerId)
 
   function actualSearch()
   {
-		  if("${userdetails.app_type}"=='SnacksProduction')
+		  if("${userdetails.app_type}"=='SnacksProduction' || "${userdetails.app_type}"=='Beverage')
 {
 				window.location="?a=showCustomerMaster&searchInput="+txtsearch.value;
 
