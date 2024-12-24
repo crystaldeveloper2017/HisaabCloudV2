@@ -35,13 +35,19 @@
 <ul class="nav flex-column">
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showGenerateInvoice'">
-New Order <span class="float-right badge bg-primary"></span>
+New Estimate <span class="float-right badge bg-primary"></span>
 </a>
 </li>
 
 <li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showPendingRegister'">
-Pending Orders <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
+<a href="#" class="nav-link" onclick="window.location='?a=showCollectPayment'">
+Collect Payment <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
+</a>
+</li>
+
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=showCustomerLedgerWithItem'">
+Customer Ledger <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
 </a>
 </li>
 
@@ -65,12 +71,6 @@ Currecnt Ready Stock (${HomePageContent.todaysStock})<span class="float-right ba
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showCurrentRmStock'">
 Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-danger"></span>
-</a>
-</li>
-
-<li class="nav-item" onclick="window.location='?a=showLoadingRegister'">
-<a href="#" class="nav-link">
-Loading Register<span class="float-right badge bg-success"></span>
 </a>
 </li>
 
@@ -175,8 +175,8 @@ Loading Register<span class="float-right badge bg-success"></span>
         
         	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>";
 
-        	document.title +=" Snacks Production";
-          
+        	document.title +=" Beverages ";
+        
         </script>
         
         

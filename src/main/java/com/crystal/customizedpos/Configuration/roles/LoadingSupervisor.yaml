@@ -1,0 +1,14 @@
+- roleId: 25
+  roleName: "LoadingSupervisor"
+  actions:
+    - showHomePage
+    - showShortcuts
+    - showPendingRegister
+    - showGenerateInvoice
+    - saveInvoice
+  reports:
+    - 1
+    - 2
+  elements:
+    - 23
+    - 700188

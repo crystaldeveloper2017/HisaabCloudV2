@@ -1,24 +1,15 @@
-- roleId: 21
-  roleName: "AdminSnacks"
+- roleId: 30
+  roleName: "AdminElectric"
   actions:
-    - checkIfUsernameAlreadyExist
-    - showCurrentRmStock
+    - exportDailySalesReport
     - showShortcuts
-    - deleteOrders
-    - generateOrderForms
-    - saveItemOrdering
-    - showItemOrdering
-    - getItemsAndStockForThisDate
-    - generatefryPlanning
-    - showTodaysStockRegister
-    - saveTodaysStock
-    - generateOrderReport
-    - showTodaysStock
-    - generatemakaiPlanning
-    - generateReadingReport
-    - movetoDone
-    - moveToPending
-    - moveToPlanning
+    - generatePDFFordailySalesReport
+    - showCustomerLedgerWithItemVehicle
+    - showDepositCashToBank
+    - addDepositCashToBank
+    - showCashDepositRegister
+    - deleteCashDepositRegister
+    - showCashLedgerReport
     - getVehicleIdForCustomer
     - reloadSession
     - deleteCheckin
@@ -103,7 +94,6 @@
     - showCheckinRegister
     - showReconciliationReport
     - showSalesReport2
-    - showCustomerLedger
     - showExpenseEntry
     - showPendingCustomerCollectionReport
     - showCheckInScreen
@@ -117,7 +107,6 @@
     - showUnclaimedPayments
     - showCollectPaymentSupervisor
     - showHomePage
-    - showUserRoleMapping
     - showItemMaster
     - showUserRoleMapping
     - showInvoiceConfig
@@ -145,9 +134,7 @@
     - savePayment
     - getCashtovaultRegister
     - showReport
-    - showCustomerLedgerWithItem
     - exportCustomerLedgerWithItemAsPDF
-    - showFSMLedger
     - showEmployeePayment
     - saveEmployeePayment
     - getEmployeePaymentRegister
@@ -155,79 +142,60 @@
     - showStoreMaster
     - showAddStore
     - exportFsmLedgerAsPDF
+    - showFSMLedger
     - getRoleDetailsForthisUser
     - showCashToVaultRegister
     - receivedCashtovault
     - addExpenseNew
     - showDailyInvoiceReportParameter
-    - showGenerateQrForVehicle
-    - generateQrForVehicle
-    - showRawMaterialsMaster
-    - showAddRawMaterial
-    - addRawMaterial
-    - deleteRawMaterial
-    - showPendingRegister
-    - showPlanningRegister
-    - showCompletedOrders
-    - showOrderHistory
-    - showLoadingScreen
-    - showChooseVehicleForLoading
-    - startVehicleLoading
-    - showLoadingRegister
-    - showChooseOrderForLoading
-    - getRawMaterialsAndStockForThisDate
-    - saveRMStock
+    - exportCustomerLedgerWithItemVehicleAsPDF
+    - showPrintLabelsScreenVehicle
+    - printLabelsVehicle
+    - showScanVehicleQR
   reports:
     - 1
     - 2
   elements:
-    - 700310
+    - 700211
     - 23
-    - 700217
     - 700188
+    - 700185
+    - 700186
     - 24
     - 700183
     - 700138
     - 700160
+    - 700182
+    - 700181
     - 700178
+    - 700132
     - 700181
     - 700190
     - 700168
     - 700171
     - 21
+    - 7
+    - 700132
+    - 700132
     - 20
+    - 1
+    - 29
     - 8001
+    - 700174
     - 700175
     - 700176
     - 700119
+    - 700137
     - 700130
-    - 28
-    - 700123
     - 700176
-    - 700143
     - 27
+    - 700191
     - 700192
-    - 700184
     - 700197
     - 19
-    - 25
     - 700201
+    - 5
     - 16
-    - 700210
-    - 700212
-    - 21
-    - 700213
-    - 700214
-    - 700215
-    - 700216
-    - 700218
-    - 700303
-    - 700302
-    - 700301
-    - 700219
-    - 700304
-    - 700306
-    - 700305
     - 700307
-
-
+    - 700308
+    - 700309

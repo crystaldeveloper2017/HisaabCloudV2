@@ -127,7 +127,17 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		return getMap(parameters,
-				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss where stock_date =CURDATE() ",
+				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_stock_snacks ttss ",
+
+				con);
+	}
+
+	public HashMap<String, String> getRMStock(HashMap<String, Object> hm, Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		return getMap(parameters,
+				"select CAST(sum(qty) AS UNSIGNED)  todaysStock from trn_todays_rm_stock_snacks ttss ",
 				con);
 	}
 
@@ -1109,6 +1119,10 @@ if(hm.get("user_id")!=null)
 		return insertUpdateDuablDB("insert into stock_status values (default,?,?,?,1,0,?)", parameters, conWithF);
 	}
 
+	
+
+	
+
 	public long updateStockMaster(HashMap<String, Object> stockDetails, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(Double.parseDouble(stockDetails.get("qty").toString()));
@@ -1167,6 +1181,17 @@ if(hm.get("user_id")!=null)
 				con);
 
 	}
+
+	public LinkedHashMap<String, String> getLoadingDetails(String loadingId, Connection con)
+			throws SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();		
+		parameters.add(loadingId);
+		return getMap(parameters, "select * from trn_loading_register tlr,mst_vehicle mv where loading_id=? and mv.vehicle_id=tlr.vehicle_id",
+				con);
+
+	}
+
+	
 
 	public int getMaxAttachmentNoByItemId(long itemId, Connection con) throws SQLException {
 		int count = 0;
@@ -1499,10 +1524,10 @@ if(hm.get("user_id")!=null)
 		return getListOfLinkedHashHashMap(parameters, "select\r\n"
 				+ "	*\r\n"
 				+ "from\r\n"
-				+ "	mst_vehicle mv,mst_customer mc \r\n"
+				+ "	mst_vehicle mv left outer join mst_customer mc on mc.customer_id=mv.customer_id \r\n"
 				+ "where\r\n"
 				+ "	mv.app_id = ?\r\n"
-				+ "	and mv.activate_flag = 1 and mv.customer_id =mc.customer_id ", con);
+				+ "	and mv.activate_flag = 1", con);
 
 	}
 
@@ -4116,7 +4141,7 @@ if(hm.get("user_id")!=null)
 
 		parameters = new ArrayList<>();
 		parameters.add(txtusername);
-		parameters.add(getSHA256String("default@123"));
+		parameters.add(getSHA256String("123"));
 		parameters.add(storeId);
 		parameters.add(appId);
 		long userId = insertUpdateDuablDB(
@@ -4130,7 +4155,7 @@ if(hm.get("user_id")!=null)
 		parameters = new ArrayList<>();
 		parameters.add(userId);
 		insertUpdateDuablDB(
-				"INSERT INTO acl_user_role_rlt (rlt_pk, user_id, role_id, activate_flag, created_date, updated_date,role_name) VALUES(default, ?, 1, 1, sysdate(), NULL,'Admin');",
+				"INSERT INTO acl_user_role_rlt (rlt_pk, user_id, role_id, activate_flag, created_date, updated_date) VALUES(default, ?, 1, 1, sysdate(), NULL);",
 				parameters, con);
 
 		return userId;
@@ -7547,31 +7572,37 @@ if(hm.get("user_id")!=null)
 	public long addRawMaterial(Connection con, HashMap<String, Object> hm) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
 
-		String query = "insert into raw_material_master values (default,?,1,?,sysdate(),?)";
+		String query = "insert into raw_material_master values (default,?,1,?,sysdate(),?,?)";
 		parameters.add(hm.get("txtrawmaterialname"));
 		parameters.add(hm.get("user_id"));
 		parameters.add(hm.get("app_id"));
+		parameters.add(hm.get("txtboraperbag"));
+
 
 		return insertUpdateDuablDB(query, parameters,
 				con);
 	}
 
-	public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName, String updatedBy)
+
+	public String updateRawMaterial(long rawmaterialId, Connection con, String rawmaterialName, String updatedBy, String bora_per_bag)
 			throws Exception {
 
 		ArrayList<Object> parameters = new ArrayList<>();
 
 		parameters.add(rawmaterialName);
 		parameters.add(updatedBy);
+		parameters.add(bora_per_bag);
 
 		parameters.add(rawmaterialId);
 
+		
 		insertUpdateDuablDB(
-				"UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=? WHERE raw_material_id=?",
+				"UPDATE raw_material_master SET raw_material_name=?,updated_date=SYSDATE(),updated_by=?,bora_per_bag=? WHERE raw_material_id=?",
 				parameters, con);
 		return "Raw Material updated Succesfully";
 
 	}
+	
 
 	public String deleteRawMaterial(long rawmaterialId, String userId, Connection conWithF) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7705,32 +7736,51 @@ if(hm.get("user_id")!=null)
 		return insertUpdateDuablDB(insertQuery, parameters, con);
 	}
 
-	public void saveTodaysStock(int packaging_type,String stockDate, List<HashMap<String, Object>> itemListRequired, Connection con)
-			throws SQLException, ParseException {
+	public void saveTodaysStock(int packaging_type, List<HashMap<String, Object>> itemListRequired, Connection con)
+        throws SQLException, ParseException {
 
-		ArrayList<Object> parameters = new ArrayList<>();
+    ArrayList<Object> parameters = new ArrayList<>();
 
+    // Delete existing stock
+    String deleteQuery = "DELETE ttss " +
+                        "FROM trn_todays_stock_snacks ttss " +
+                        "INNER JOIN mst_items mi ON mi.item_id = ttss.item_id " +
+                        "WHERE mi.packaging_type = ?";
 
-		String insertQuery = "DELETE ttss " +
-               "FROM trn_todays_stock_snacks ttss " +
-               "INNER JOIN mst_items mi ON mi.item_id = ttss.item_id " +
-               "WHERE ttss.stock_date = ? " +
-               "AND mi.packaging_type = ? ";
+    parameters.add(packaging_type);
+    insertUpdateDuablDB(deleteQuery, parameters, con);
 
-		
-		parameters.add(getDateASYYYYMMDD(stockDate));
-		parameters.add(packaging_type);
-		insertUpdateDuablDB(insertQuery, parameters, con);
+    // Insert new stock items
+    for (HashMap<String, Object> hm : itemListRequired) {
+        parameters = new ArrayList<>();
+        parameters.add(hm.get("item_id"));
+        parameters.add(hm.get("qty"));
+        String insertQuery = "insert into trn_todays_stock_snacks values (default,?,?)";
+        insertUpdateDuablDB(insertQuery, parameters, con);
+    }
+}
 
-		for (HashMap<String, Object> hm : itemListRequired) {
-			parameters = new ArrayList<>();
-			parameters.add(hm.get("item_id"));
-			parameters.add(hm.get("qty"));
-			parameters.add(getDateASYYYYMMDD(stockDate));
-			insertQuery = "insert into trn_todays_stock_snacks values (default,?,?,?)";
-			insertUpdateDuablDB(insertQuery, parameters, con);
-		}
-	}
+public void saveRMStock(List<HashMap<String, Object>> itemListRequired, Connection con)
+        throws SQLException, ParseException {
+
+    ArrayList<Object> parameters = new ArrayList<>();
+
+    // Delete existing stock
+    String deleteQuery = "DELETE ttrss " +
+                        "FROM trn_todays_rm_stock_snacks ttrss " +
+                        "INNER JOIN raw_material_master rmm ON rmm.raw_material_id = ttrss.raw_material_id ";
+
+    insertUpdateDuablDB(deleteQuery, parameters, con);
+
+    // Insert new stock items
+    for (HashMap<String, Object> hm : itemListRequired) {
+        parameters = new ArrayList<>();
+        parameters.add(hm.get("raw_material_id"));
+        parameters.add(hm.get("qty"));
+        String insertQuery = "insert into trn_todays_rm_stock_snacks values (default,?,?)";
+        insertUpdateDuablDB(insertQuery, parameters, con);
+    }
+}
 
 	public List<LinkedHashMap<String, Object>> getTodaysStockRegister(String toDate, Connection con)
 			throws SQLException, ClassNotFoundException, ParseException {
@@ -7741,6 +7791,16 @@ if(hm.get("user_id")!=null)
 
 				con);
 	}
+
+	public List<LinkedHashMap<String, Object>> getLoadingRegister(String fromDate, Connection con)
+	throws SQLException, ClassNotFoundException, ParseException {
+ArrayList<Object> parameters = new ArrayList<>();
+parameters.add((getDateASYYYYMMDD(fromDate)));
+
+return getListOfLinkedHashHashMap(parameters,
+		"select *,case when is_loading_complete = '0' then 'In Progress' else 'Completed' end as LoadingStatus from trn_loading_register tlr,mst_vehicle mv  where loading_date =? and mv.vehicle_id=tlr.vehicle_id ",
+		con);
+}
 
 	public List<LinkedHashMap<String, Object>> getCustomersListForPlanning(Connection con, String appId,String[] invoiceIds)
 			throws ClassNotFoundException, SQLException {
@@ -7760,10 +7820,9 @@ if(hm.get("user_id")!=null)
 				con);
 	}
 
-	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate(String date, String appId,String packaging_type,
+	public List<LinkedHashMap<String, Object>> getItemsAndStockForThisDate( String appId,String packaging_type,
 			Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
 		ArrayList<Object> parameters = new ArrayList<>();
-		parameters.add(getDateASYYYYMMDD(date));
 		parameters.add(appId);
 		parameters.add(packaging_type);
 
@@ -7773,7 +7832,7 @@ if(hm.get("user_id")!=null)
 						"from\n" +
 						"mst_items mi\n" +
 						"left outer join trn_todays_stock_snacks ttss on\n" +
-						"ttss.item_id = mi.item_id and ttss.stock_date =? \n" +
+						"ttss.item_id = mi.item_id  \n" +
 						"where \n" +
 						" mi.app_id =? and mi.activate_flag=1 and packaging_type=? order by mi.order_no desc",
 				conWithF);
@@ -7800,4 +7859,29 @@ if(hm.get("user_id")!=null)
 				parameters, conWithF);
 		return "Cash Deposit Deleted Succesfully";
 	}
+
+	public long startVehicleLoading(String vehicleId,String userId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(vehicleId);
+		parameters.add(userId);
+		return insertUpdateDuablDB("insert into trn_loading_register values (default,?,curdate(),1,?,sysdate(),0)", parameters, conWithF);
+	}
+
+	public List<LinkedHashMap<String, Object>> getRawMaterialsAndStockForThisDate( String appId,
+			Connection conWithF) throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(appId);
+
+		return getListOfLinkedHashHashMap(parameters,
+				"select\n" +
+						"raw_material_name,rmm.raw_material_id ,ttrss.qty\n" +
+						"from\n" +
+						"raw_material_master rmm\n" +
+						"left outer join trn_todays_rm_stock_snacks ttrss on\n" +
+						"ttrss.raw_material_id = rmm.raw_material_id  \n" +
+						"where \n" +
+						" rmm.app_id =? and rmm.activate_flag=1  order by rmm.raw_material_name",
+				conWithF);
+	}
+
 }

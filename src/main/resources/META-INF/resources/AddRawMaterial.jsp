@@ -90,6 +90,12 @@ function deleteAttachment(id)
   </div>
   
   
+    <div class="col-sm-12" >
+	  	<div class="form-group">
+	      <label for="email">Bora Per Bag</label>
+	      <input type="text" class="form-control" id="txtboraperbag" value="${rawmaterialDetails.bora_per_bag}"  onkeyup="digitsOnly(event)" placeholder="eg.1" name="txtboraperbag">
+	    </div>
+	  </div>
   
   
   
@@ -113,10 +119,10 @@ function deleteAttachment(id)
 <script>
 	
 	
-	<c:if test="${holidayDetails.categoryId eq null}">
+	<c:if test="${rawmaterialDetails.categoryId eq null}">
 		document.getElementById("divTitle").innerHTML="Add Raw Material";
 	</c:if>
-	<c:if test="${holidayDetails.categoryId ne null}">
+	<c:if test="${rawmaterialDetails.categoryId ne null}">
 		document.getElementById("divTitle").innerHTML="Update Raw Material";
 	</c:if>
 	
