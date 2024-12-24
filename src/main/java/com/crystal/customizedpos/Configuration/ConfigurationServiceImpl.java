@@ -60,6 +60,7 @@ import com.crystal.Frameworkpackage.Role;
 import com.crystal.Login.LoginDaoImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -1735,40 +1736,47 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 	}
 
 	
-	public CustomResultObject getRoleDetailsForthisUser(HttpServletRequest request, Connection con)
-			throws SQLException {
-		CustomResultObject rs = new CustomResultObject();
-		long userId = Integer.parseInt(request.getParameter("userId"));
-		HashMap<String, Object> hm = null;
-		try {
-
-			LinkedHashMap<Long, Role> roleMaster = apptypes.get("Master");
-
-			List<LinkedHashMap<String, Object>> lstUserRoleDetails = lObjConfigDao.getUserRoleDetails(userId, con);
-			List<LinkedHashMap<String, Object>> lstUserRoleDetailsNew = new ArrayList<>();
-			for (LinkedHashMap<String, Object> lm : lstUserRoleDetails) {
-				Role realRole = roleMaster.get(Long.valueOf(lm.get("role_id").toString()));
-				lm.put("role_name", realRole.getRoleName());
-				lstUserRoleDetailsNew.add(lm);
-
+	public CustomResultObject getRoleDetailsForthisUser(HttpServletRequest request,Connection con)
+		{
+			CustomResultObject rs=new CustomResultObject();	
+			long userId= Integer.parseInt(request.getParameter("userId"));
+			HashMap<String, Object> hm=new HashMap();
+			try
+			{			
+				List<LinkedHashMap<String, Object>> lstUserRoleDetails=lObjConfigDao.getUserRoleDetails(userId, con);
+				List<LinkedHashMap<String, Object>> lstUserRoleDetailsWithRoleName=new ArrayList<>();
+	
+				for(LinkedHashMap<String, Object> lhmRoleDetails:lstUserRoleDetails)
+				{
+					LinkedHashMap<String, Object> tempLhmRoleDetails=new LinkedHashMap<>();
+					tempLhmRoleDetails.putAll(lhmRoleDetails);
+					Long roleId=Long.valueOf(lhmRoleDetails.get("role_id").toString());
+					tempLhmRoleDetails.put("role_name", roles.get(roleId).getRoleName());
+					lstUserRoleDetailsWithRoleName.add(tempLhmRoleDetails);
+	
+				}
+				
+				
+				hm.put("lstUserRoleDetails", lstUserRoleDetailsWithRoleName);
+				List<String> roles=new ArrayList<>();
+				for(LinkedHashMap<String, Object> roleMap: lstUserRoleDetailsWithRoleName)
+				{
+					roles.add(roleMap.get("role_id").toString());
+				}
+	
+				hm.put("lstElements", getElementsNewLogic(roles,CommonFunctions.elements,CommonFunctions.roles));
+				
+				hm.put("lstElements", getElementsNewLogic(roles,CommonFunctions.elements,CommonFunctions.roles));
+				mapper.registerModule(new JavaTimeModule());
+				rs.setAjaxData(mapper.writeValueAsString(hm));				
 			}
-
-			hm = new HashMap<>();
-			hm.put("lstUserRoleDetails", lstUserRoleDetailsNew);
-			List<String> roles = new ArrayList<>();
-
-			for (LinkedHashMap<String, Object> mappedRole : lstUserRoleDetails) {
-				roles.add(mappedRole.get("role_id").toString());
-			}
-
-			hm.put("lstElements", getElementsNewLogic(roles, CommonFunctions.elements, CommonFunctions.roles));
-			rs.setAjaxData(mapper.writeValueAsString(hm));
-		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
-			rs.setHasError(true);
+			catch (Exception e)
+			{
+				writeErrorToDB(e);
+				rs.setHasError(true);
+			}		
+			return rs;
 		}
-		return rs;
-	}
 
 	public CustomResultObject showAddGroup(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
