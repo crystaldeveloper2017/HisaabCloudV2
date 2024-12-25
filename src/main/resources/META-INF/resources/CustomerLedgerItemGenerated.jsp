@@ -86,11 +86,16 @@
 	<div class="card-body table-responsive p-0">                
 		<table id="testing"class="table table-head-fixed  table-bordered table-striped" role="grid" aria-describedby="example1_info">             
 			<thead>
-				<tr>                  
+				<tr> 
+				 <c:if test="${  userdetails.app_type ne 'Beverage'}">
+                 
 					<th colspan="3"><b>Customer Name:-${customerDetails.customer_name }</b></th>
 					<th colspan="2"><b>Type:- ${customerDetails.customer_type }</b></th>
+
+				
 					<th colspan="1"><b>From Date:-${fromDate1}</b></th>                    
 					<th colspan="1"><b>To Date:-${toDate1}</b></th> 
+					</c:if>
 				</tr>
 			</thead> 
 		</table>
@@ -105,6 +110,8 @@
 			<table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">             
 				<thead>
 					<tr>
+			 <c:if test="${  userdetails.app_type ne 'Beverage'}">
+
 						<th><b>Transaction Date</b></th>
 						<th><b>Transaction Type</b></th>
 						<th><b>Particulars</b></th>
@@ -116,11 +123,19 @@
 						<th><b>Updated Date</b></th>
 						<th><b>Debit</b></th>
 						<th><b>Credit</b></th>
+				</c:if>
+
+				 <c:if test="${ userdetails.app_type eq 'Beverage'}">
+
+ 					<th align="center"> <b>Transaction Details</b></th>
+  </c:if>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${ListLedger}" var="item">
 						<tr >
+				 <c:if test="${  userdetails.app_type ne 'Beverage'}">
+
 							<td>${item.transaction_date}</td>
 							<td>${item.type}</td>
 							<td>${item.item_name}</td>
@@ -132,7 +147,37 @@
 							<td>${item.upd1}</td>
 							<td>${item.debitAmount}</td>
 							<td>${item.creditAmount}</td> 
-						</tr>
+				 </c:if>
+			
+	  		<c:if test="${ userdetails.app_type eq 'Beverage'}">
+			 	<td 
+					<c:if test="${ item.creditDebit eq 'Debit'}">
+						style="background:lightcoral"
+					</c:if>
+
+					<c:if test="${ item.creditDebit eq 'Credit'}">
+						style="background:lightgreen"
+					</c:if>
+
+				>${item.transaction_date} |
+					${item.type} |
+					${item.item_name} |
+					${item.qty} |
+					${item.custom_rate} |
+					(${item.RefId}~${item.invoice_no}) |
+					${item.upd1} |
+				<c:if test="${ item.creditDebit eq 'Debit'}">
+					Rs.-${item.debitAmount}  |
+				</c:if>
+
+				<c:if test="${ item.creditDebit eq 'Credit'}">
+					Rs.${item.creditAmount}  |
+				</c:if>
+					
+					<br/>
+			 </c:if>
+			 
+			 			</tr>
 					</c:forEach>
 				</tbody>
 			</table>
@@ -144,11 +189,11 @@
 			<table id="testing"class="table table-head-fixed  table-bordered table-striped" role="grid" aria-describedby="example1_info">             
 				<thead>
 					<tr>                  
-						<th colspan="3"></th>
-						<th colspan="2">Opening Balance: ${totalDetails.openingAmount} </th>
-						<th colspan="1"><b>Debit Total: ${totalDetails.debitSum}</b></th>                    
-						<th colspan="1"><b>Credit Total: ${totalDetails.creditSum}</b></th>
-						<th colspan="1"><b>Pending Amount: ${totalDetails.totalAmount}</b></th>
+						<th colspan="3">Opening Balance: ${totalDetails.openingAmount} </th>
+						<th colspan="2"><b>Debit Total: ${totalDetails.debitSum}</b></th>                    
+						<th colspan="2"><b>Credit Total: ${totalDetails.creditSum}</b></th>
+				
+						<th colspan="2"><b>Pending Amount: ${totalDetails.totalAmount}</b></th>
 					</tr>
 				<thead>
 			</table>
@@ -173,8 +218,9 @@
       "autoWidth": false,
       "responsive": true,
       "pageLength": 50,
-      "order": [[ 0, 'asc' ]],
-      "zeroRecords": " "
+	  "scrollX": true // Enable horizontal scrolling
+
+
 
     });
   });
@@ -182,6 +228,7 @@
   document.getElementById("divTitle").innerHTML="Customer Ledger Item Report";
   document.title +=" Customer Ledger Report ";
   
+
 
   $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
   $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });

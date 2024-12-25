@@ -51,30 +51,6 @@ Customer Ledger <span class="float-right badge bg-danger">${HomePageContent.pend
 </a>
 </li>
 
-<c:if test="${adminFlag eq true}">
-
-<li class="nav-item" onclick="window.location='?a=showPlanningRegister'">
-<a href="#" class="nav-link">
-Todays Planning <span class="float-right badge bg-success">${HomePageContent.todaysPlanningCount}</span>
-</a>
-</li>
-<li class="nav-item" onclick="window.location='?a=showCompletedOrders'">
-<a href="#" class="nav-link">
-Completed Orders <span class="float-right badge bg-success">${HomePageContent.completedCount}</span>
-</a>
-</li>
-<li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showTodaysStock'">
-Currecnt Ready Stock (${HomePageContent.todaysStock})<span class="float-right badge bg-danger"></span>
-</a>
-</li>
-<li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showCurrentRmStock'">
-Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-danger"></span>
-</a>
-</li>
-
-</c:if>
 
 </ul>
 </div>  
