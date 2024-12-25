@@ -148,10 +148,36 @@
 							<td>${item.debitAmount}</td>
 							<td>${item.creditAmount}</td> 
 				 </c:if>
-	  <c:if test="${ userdetails.app_type eq 'Beverage'}">
-			 	<td>${item.transaction_date} | ${item.type} | ${item.item_name} | ${item.qty} | ${item.custom_rate} | (${item.RefId}~${item.invoice_no}) | ${item.upd1}  | ${item.debitAmount}  | ${item.creditAmount} <br>
+			
+	  		<c:if test="${ userdetails.app_type eq 'Beverage'}">
+			 	<td 
+					<c:if test="${ item.creditDebit eq 'Debit'}">
+						style="background:lightcoral"
+					</c:if>
 
-			 </c:if>			</tr>
+					<c:if test="${ item.creditDebit eq 'Credit'}">
+						style="background:lightgreen"
+					</c:if>
+
+				>${item.transaction_date} |
+					${item.type} |
+					${item.item_name} |
+					${item.qty} |
+					${item.custom_rate} |
+					(${item.RefId}~${item.invoice_no}) |
+					${item.upd1} |
+				<c:if test="${ item.creditDebit eq 'Debit'}">
+					Rs.-${item.debitAmount}  |
+				</c:if>
+
+				<c:if test="${ item.creditDebit eq 'Credit'}">
+					Rs.${item.creditAmount}  |
+				</c:if>
+					
+					<br/>
+			 </c:if>
+			 
+			 			</tr>
 					</c:forEach>
 				</tbody>
 			</table>
@@ -192,7 +218,6 @@
       "autoWidth": false,
       "responsive": true,
       "pageLength": 50,
-      "order": [[ 0, 'asc' ]],
 	  "scrollX": true // Enable horizontal scrolling
 
 
