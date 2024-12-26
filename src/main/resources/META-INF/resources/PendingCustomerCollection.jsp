@@ -69,26 +69,52 @@
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
+		 <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
                      <th><b>Sr No</b></th>
+			  </c:if>
                      <th><b>Customer Name</b></th>
+
+			 <c:if test="${ userdetails.app_type ne 'Beverage'}">	
                      <th><b>Customer Reference</b></th>
+				 </c:if>
+
                      <th><b>Pending Amount</b></th>
                      <th><b>Mobile No</b></th>
+
+		 <c:if test="${ userdetails.app_type ne 'Beverage'}">
                      <th><b>Alternate Mobile No</b></th>
                      <th><b>City</b>
+			 </c:if>	
                     </tr>
                   </thead>
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
 
+				 <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
+
 						<td>${item.No}</td>
+					</c:if>	
             <td>${item.customer_name}</td>
+
+				 <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
+
             <td>${item.customer_reference}</td>
-            <td><a href="#" onclick="showLedger('${item.customer_id}')">${item.PendingAmount} </a></td>
-            <th><b>${item.mobile_number}</b></th
-            ><th><b>${item.alternate_mobile_no}</b></th>
+
+			</c:if>	
+
+            <td><a href="?a=showCustomerLedgerWithItem&customerId=${item.customer_id}&txtfromdate=${todaysDateMinusOneMonth}&txttodaye=${todaysDate}" >${item.PendingAmount} </a></td>
+            <th><b>${item.mobile_number}</b></th>
+
+	 <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
+			<th><b>${item.alternate_mobile_no}</b></th>
 						<td><b>${item.city}</b>
+					</c:if>	
+		
 					</tr>
 				</c:forEach>
 				
