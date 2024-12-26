@@ -172,11 +172,13 @@
     - showOrderHistory
     - getRawMaterialsAndStockForThisDate
     - saveRMStock
+    - generatePendingCustomerCollectionReport
   reports:
     - 1
     - 2
   elements:
     - 23
+    - 1
     - 700217
     - 700188
     - 24
@@ -189,7 +191,6 @@
     - 700168
     - 700171
     - 21
-    - 20
     - 8001
     - 700175
     - 700176
@@ -223,5 +224,6 @@
     - 700306
     - 700305
     - 700307
+    - 28
 
 
