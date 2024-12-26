@@ -2316,7 +2316,7 @@ if(hm.get("user_id")!=null)
 				"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" +
 				"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" +
 				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
-				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n"
+				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id \n"
 				+
 				"where\n" +
 				"tir.app_id = ? and tir.invoice_id=? \n" +
