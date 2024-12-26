@@ -2295,7 +2295,7 @@ if(hm.get("user_id")!=null)
 "mi.raw_material_id = rmm.raw_material_id\n" + 
 "left outer join mst_category mc on\n" + 
 "mc.category_id = mi.parent_category_id\n" + 
-"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id  and ttss.stock_date =CURDATE()\n" + 
+"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id \n" + 
 "where\n" + 
 "tir.app_id = ? and tir.activate_flag=1 and mc.category_name='Fry'\n" + 
 "and sis.curr_status = 1 group by item_name order by item_name,raw_material_name) as M\n" + 
@@ -2387,8 +2387,8 @@ if(hm.get("user_id")!=null)
 				"left outer join snacks_invoice_status sis on sis.invoice_id =tir.invoice_id\n" +
 				"left outer join trn_invoice_details tid on tid.invoice_id =tir.invoice_id\n" +
 				"left outer join mst_items mi on mi.item_id =tid.item_id\n" +
-				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id and ttss.stock_date =CURDATE()\n"
-				+
+				"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id  \n"
+				+  
 				"where\n" +
 				"tir.activate_flag=1 and tir.invoice_id in ("+questionMarks+")\n" +
 				"and sis.curr_status =1 and tir.app_id = ?  \n" +
@@ -2425,7 +2425,7 @@ if(hm.get("user_id")!=null)
 "mi.raw_material_id = rmm.raw_material_id\n" + 
 "left outer join mst_category mc on\n" + 
 "mc.category_id = mi.parent_category_id\n" + 
-"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id  and ttss.stock_date =CURDATE()\n" + 
+"left outer join trn_todays_stock_snacks ttss on ttss.item_id =mi.item_id \n" + 
 "where\n" + 
 "tir.app_id = ? and tir.activate_flag=1 and mc.category_name='Makai'\n" + 
 "and sis.curr_status = 1 group by item_name order by item_name,raw_material_name) as M\n" + 
