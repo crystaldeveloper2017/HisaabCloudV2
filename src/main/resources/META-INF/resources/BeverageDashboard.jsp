@@ -39,9 +39,17 @@ New Estimate <span class="float-right badge bg-primary"></span>
 </a>
 </li>
 
+
+
 <li class="nav-item">
 <a href="#" class="nav-link" onclick="window.location='?a=showCollectPayment'">
 Collect Payment <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
+</a>
+</li>
+
+<li class="nav-item">
+<a href="#" class="nav-link" onclick="window.location='?a=generatePendingCustomerCollectionReport'">
+Customer Collection Report <span class="float-right badge bg-primary"></span>
 </a>
 </li>
 
