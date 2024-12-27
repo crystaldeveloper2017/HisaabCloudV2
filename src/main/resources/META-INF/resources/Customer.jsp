@@ -159,7 +159,10 @@ function deleteCustomer(customerId)
        </c:if>
 
 		  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
-			 	<td>${item.customerName} - ${item.mobileNumber} - ${item.customerCity} <br>
+			 	<td>${item.customerName} - ${item.mobileNumber} - ${item.customerCity} - ${item.customerAddress} 
+
+				</c:if>
+				<br>
 				<button class="btn btn-primary" onclick="window.location='?a=showAddCustomer&customerId=${item.customerId}'" >
   <i class="fas fa-pencil-alt"></i> 
 </button>
@@ -170,7 +173,7 @@ function deleteCustomer(customerId)
 				</td>
 
          
-</c:if>
+
 		</tr>
 				</c:forEach>
 				

@@ -611,3 +611,8 @@ elements:
   parentElementId: 700218
   elementUrl: "?a=showVehicleMaster"
   orderNo: 4
+- elementId: 700311
+  elementName: "Daily Invoice Report"
+  parentElementId: 7
+  elementUrl: "?a=generateDailyInvoiceReport"
+  orderNo: 1

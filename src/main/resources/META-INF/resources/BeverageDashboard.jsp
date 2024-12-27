@@ -26,48 +26,72 @@
 <div class="row">
 
 
-<div class="col-md-12">
 
-<div class="card card-widget widget-user-2 shadow-sm">
+ <div class="col-12 col-sm-6">
+
+     <div class="info-box mb-3 " onclick="window.location='?a=showGenerateInvoice'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				                  <div class="info-box-content">
+								   <span class="info-box-text">1.New Estimate</span>
+								    </div>
+
+              </div>
+              </div>
+
+          
+ <div class="col-12 col-sm-6">
+     <div class="info-box mb-3 " onclick="window.location='?a=showCollectPayment'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">2.Collect Payment</span>
+								    </div>
+
+              </div>
+              </div>    
+
+       
+
+  <div class="col-12 col-sm-6">
+     <div class="info-box mb-3 " onclick="window.location='?a=generatePendingCustomerCollectionReport'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				    <div class="info-box-content">
+								   <span class="info-box-text">3.Customer Collection Report</span>
+								    </div>
+
+              </div>
+              </div>    
+
+    <div class="col-12 col-sm-6">           
+     <div class="info-box mb-3 " onclick="window.location='?a=showCustomerLedgerWithItem'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">4.Customer Ledger</span>
+								    </div>
+
+              </div>
+              </div> 
+
+  <div class="col-12 col-sm-6">
+      <div class="info-box mb-3 " onclick="window.location='?a=generateDailyInvoiceReport'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">5.Daily Invoice Report</span>
+								    </div>
+
+              </div>
+              </div>  
+
+  <div class="col-12 col-sm-6">
+      <div class="info-box mb-3 " onclick="window.location='?a=showStockStatus'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">6.Stock Status</span>
+								    </div>
+
+              </div>
+              </div>  
 
 
-<div class="card-footer p-0">
-<ul class="nav flex-column">
-<li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showGenerateInvoice'">
-New Estimate <span class="float-right badge bg-primary"></span>
-</a>
-</li>
-
-
-
-<li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showCollectPayment'">
-Collect Payment <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
-</a>
-</li>
-
-<li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=generatePendingCustomerCollectionReport'">
-Customer Collection Report <span class="float-right badge bg-primary"></span>
-</a>
-</li>
-
-<li class="nav-item">
-<a href="#" class="nav-link" onclick="window.location='?a=showCustomerLedgerWithItem'">
-Customer Ledger <span class="float-right badge bg-danger">${HomePageContent.pendingCount}</span>
-</a>
-</li>
-
-
-</ul>
-</div>  
-</div>
-
-</div>
-
-
-    
 
     <div class="col-12 col-sm-6">
 
@@ -76,31 +100,6 @@ Customer Ledger <span class="float-right badge bg-danger">${HomePageContent.pend
           
     
 
-
-            
-
-
-              
-
-          
-          
-        
-
-
-
-
-    
-          <div class="clearfix hidden-md-up"></div>
-
-          <!-- /.col -->
-          
-          
-          
-          <!-- /.col -->
-        </div>
-
-
-  
  
  <br>
  
@@ -154,12 +153,10 @@ Customer Ledger <span class="float-right badge bg-danger">${HomePageContent.pend
         	  });
         
         
-        
+        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud (Beverages)</p1>";
+        	document.title +=" Beverages";
       
         
-        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>";
-
-        	document.title +=" Beverages ";
         
         </script>
         

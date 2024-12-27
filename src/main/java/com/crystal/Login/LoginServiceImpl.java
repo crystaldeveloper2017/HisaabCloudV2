@@ -89,21 +89,11 @@ public class LoginServiceImpl extends CommonFunctions {
 			Long app_id=Long.valueOf(((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id"));
 			outputMap.put("app_id", app_id);
 			
-			outputMap.put("nozzleDetails", lObjConfiguration.getNozzles(outputMap, con).get("count(*)"));
 			
-			outputMap.put("dispenserDetails", lObjConfiguration.getDispensers(outputMap, con).get("count(*)"));
-			
-			outputMap.put("customerDetails", lObjConfiguration.getCustomers(outputMap, con).get("count(*)"));
-			
-			outputMap.put("invoiceDetails", lObjConfiguration.getSalesInvoices(outputMap, con).get("count(*)"));
-			
-			outputMap.put("vehicleDetails", lObjConfiguration.getVehicles(outputMap, con).get("count(*)"));
-			
-			outputMap.put("categoryDetails", lObjConfiguration.getCategoryCount(outputMap, con).get("count(*)"));
-			
-			outputMap.put("itemDetails", lObjConfiguration.getItems(outputMap, con).get("count(*)"));
-
 			boolean adminFlag = (Boolean) request.getSession().getAttribute("adminFlag");
+
+
+			
 
 			
 			String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
@@ -111,10 +101,21 @@ public class LoginServiceImpl extends CommonFunctions {
 			
 			
 			String appType=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_type");
+
+
+			if(!appType.equals("Beverage") && !appType.equals("Electric") && !appType.equals("SnacksProduction"))
+			{
+			outputMap.put("nozzleDetails", lObjConfiguration.getNozzles(outputMap, con).get("count(*)"));			
+			outputMap.put("dispenserDetails", lObjConfiguration.getDispensers(outputMap, con).get("count(*)"));			
+			outputMap.put("customerDetails", lObjConfiguration.getCustomers(outputMap, con).get("count(*)"));			
+			outputMap.put("invoiceDetails", lObjConfiguration.getSalesInvoices(outputMap, con).get("count(*)"));			
+			outputMap.put("vehicleDetails", lObjConfiguration.getVehicles(outputMap, con).get("count(*)"));			
+			outputMap.put("categoryDetails", lObjConfiguration.getCategoryCount(outputMap, con).get("count(*)"));			
+			outputMap.put("itemDetails", lObjConfiguration.getItems(outputMap, con).get("count(*)"));
+			}
 			
 			
-			
-			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery") || appType.equals("RetailMobile") || appType.equals("Battery") || appType.equals("Beverage"))
+			if(appType.equals("Retail") || appType.equals("Master") || appType.equals("Jwellery") || appType.equals("RetailMobile") || appType.equals("Battery"))
 					{
 						outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
 					
@@ -182,7 +183,7 @@ public class LoginServiceImpl extends CommonFunctions {
 
 			if(appType.equals("Beverage"))
 			{
-				outputMap.putAll(getRetailDashboardData(request, con,outputMap));					
+								
 				rs.setViewName("../BeverageDashboard.jsp");
 		
 			}

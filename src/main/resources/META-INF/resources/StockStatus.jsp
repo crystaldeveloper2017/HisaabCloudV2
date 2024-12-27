@@ -68,7 +68,8 @@ function configureLowStock(stockId)
            <div class="card-header">    
                 
                 
-                
+            <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
                 <div class="card-tools">
                   <div class="input-group input-group-sm" >                    
                    	<input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showInventoryCounting'" value="Inventory Couting" class="form-control float-right" >                                         
@@ -81,6 +82,8 @@ function configureLowStock(stockId)
                     <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showStockTransfer'" value="Stock Transfer" class="form-control float-right" >                                         
                   </div>
                 </div>
+
+                 </c:if>
                 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" >                    
@@ -154,8 +157,11 @@ function configureLowStock(stockId)
                      <th>Category Name</th>
                      <th>Item Name</th>
                      <th>Available Quantity</th>
+
+                   <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
                      <th>Purchase Price</th>                      
-                 
+                   </c:if>
                       
                     </tr>
                   </thead>
@@ -165,7 +171,11 @@ function configureLowStock(stockId)
 						<td>${item.category_name}</td>						
 						<td>${item.item_name}</td>
 						<td>${item.availableQty}</td>
+                               <c:if test="${ userdetails.app_type ne 'Beverage'}">
+
 						<td>${item.purchasePrice}</td>
+
+               </c:if>
 						
 					
 						
