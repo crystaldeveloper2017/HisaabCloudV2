@@ -63,7 +63,8 @@
   						
                     </div>
 				</div>
-				
+			 <c:if test="${userdetails.app_type ne 'Beverage'}">
+
 				<div class="col-sm-2" align="center">
 					<div class="input-group input-group-sm" style="width: 200px;">
 	  					<select id="drpstoreId" name="drpstoreId"  class="form-control float-right" onchange='ReloadFilters()' style="margin-right: 15px;" >
@@ -118,7 +119,7 @@
                   	</div>
 				</div>
 				
-				
+				  </c:if>
 				<div class="col-sm-2" align="center">
 							<div class="card-tools">
 		                  <div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
@@ -143,12 +144,31 @@
                 <table id="example1" class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
-                     <th><b>Customer Name</b></th><th><b>Total Amount</b></th> <th><b>Invoice No</b></th>
+		 <c:if test="${userdetails.app_type ne 'Beverage'}">
+
+                     <th><b>Customer Name</b></th>
+					 <th><b>Total Amount</b></th> 
+					 <th><b>Invoice No</b></th>
                      <th><b>Invoice Date</b></th>
                      <th><b>Updated Date</b></th>
-                     <th><b>Payment Type</b></th><th><b>Payment Mode</b></th></th><th><b>Created By</b></th><th><b>Store Name</b></th>
+                     <th><b>Payment Type</b></th><th><b>Payment Mode</b></th>
+					 </th><th><b>Created By</b></th>
+				
+
+					 <th><b>Store Name</b></th>
+					
                      <th></th>
                      <th></th>
+
+			</c:if>		
+
+		 <c:if test="${userdetails.app_type eq 'Beverage'}">
+
+		<th align="center"> <b>Invoice Details</b></th>
+
+		</c:if>	
+
+ 
                     </tr>
                   </thead>
                   <tbody>
@@ -162,7 +182,11 @@
 					<tr style="color:red">				
 				</c:if>
 
-						<td>${item.customer_name}</td><td>${item.total_amount}</td>
+		 <c:if test="${userdetails.app_type ne 'Beverage'}">
+
+
+						<td>${item.customer_name}</td>
+						<td>${item.total_amount}</td>
 						
 						<td><a href="?a=showGenerateInvoice&invoice_id=${item.invoice_id}&type=${type}">${item.invoice_no}</a></td>
 						
@@ -171,12 +195,33 @@
 						<td>${item.payment_type}</td>
 						<td>${item.payment_mode}</td>
 						<td>${item.name}</td>
+
 						<td>${item.store_name}</td>
-						<c:if test="${item.isActive eq '1'}">
+
+					</c:if>
+
+					<c:if test="${ userdetails.app_type eq 'Beverage'}">
+			 	<td>${item.customer_name} - ${item.total_amount} - <a href="?a=showGenerateInvoice&invoice_id=${item.invoice_id}&type=${type}">${item.invoice_no}</a>
+ - ${item.FormattedInvoiceDate} - ${item.updatedDate} - ${item.payment_type} - ${item.payment_mode} - ${item.name} 
+
+				</c:if>
+
+				<br>
+				<button class="btn btn-primary" onclick="window.location='?a=showGenerateInvoice&editInvoice=Y&invoice_id=${item.invoice_id}'" >
+  <i class="fas fa-pencil-alt"></i> 
+</button>
+
+<button class="btn btn-danger" onclick="deleteInvoice('${item.invoice_id}')" aria-label="Delete Invoice">
+    <i class="fas fa-trash"></i>
+  </button>
+
+						<c:if test="${item.isActive eq '1' and userdetails.app_type ne 'Beverage'}">
 							<td><button class="btn btn-primary" onclick="editInvoice('${item.invoice_id}')">Edit</button></td>
 
 							<td><button class="btn btn-danger" onclick="deleteInvoice('${item.invoice_id}')">Delete</button></td>
 						</c:if>
+
+
 					</tr>
 				</c:forEach>
 				
@@ -209,24 +254,56 @@
     });
   });
   
+  		 <c:if test="${userdetails.app_type ne 'Beverage'}">
+
   document.getElementById("divTitle").innerHTML="Sales Invoice Report";
   document.title +=" Sales Invoice Report ";
   
+   </c:if>
+
+   	 <c:if test="${userdetails.app_type eq 'Beverage'}">
+
+  document.getElementById("divTitle").innerHTML="Daily Invoice Report";
+  document.title +=" Daily Invoice Report ";
   
+   </c:if>
   
 </script>
 
 
 <script >
-function ReloadFilters()
-{
-	  window.location="?a=generateDailyInvoiceReport&type=${type}&drpstoreId="
+// function ReloadFilters()
+// {
+
+
+// 	  window.location="?a=generateDailyInvoiceReport&type=${type}&drpstoreId="
+// 			  +drpstoreId.value+"&txtfromdate="+txtfromdate.value+"&txttodate="
+// 			  +txttodate.value+"&deleteFlag="+chkdeletedinvoice.checked+"&customerId="+hdnSelectedCustomer.value+"&invoice_no="+txtinvoiceno.value;
+
+
+//  window.location="?a=generateDailyInvoiceReport&&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
+
+// 	  //
+	  
+// }
+
+
+  function ReloadFilters()
+  {
+		  if( "${userdetails.app_type}"=='Beverage')
+  {
+ window.location="?a=generateDailyInvoiceReport&&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
+
+  }
+else{
+               window.location="?a=generateDailyInvoiceReport&type=${type}&drpstoreId="
 			  +drpstoreId.value+"&txtfromdate="+txtfromdate.value+"&txttodate="
 			  +txttodate.value+"&deleteFlag="+chkdeletedinvoice.checked+"&customerId="+hdnSelectedCustomer.value+"&invoice_no="+txtinvoiceno.value;
 
-	  //
-	  
-}
+
+    }
+
+  }
 
 function checkforvalidfromtodate()
 {        	
