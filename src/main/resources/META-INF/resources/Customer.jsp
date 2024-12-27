@@ -137,6 +137,7 @@ function deleteCustomer(customerId)
 
  					<th align="center"> <b>Customer Details</b></th>
   </c:if>
+  
 	 <c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
                      <th></th>
 
@@ -161,7 +162,7 @@ function deleteCustomer(customerId)
 		  <c:if test="${userdetails.app_type eq 'SnacksProduction' or userdetails.app_type eq 'Beverage'}">
 			 	<td>${item.customerName} - ${item.mobileNumber} - ${item.customerCity} - ${item.customerAddress} 
 
-				</c:if>
+				
 				<br>
 				<button class="btn btn-primary" onclick="window.location='?a=showAddCustomer&customerId=${item.customerId}'" >
   <i class="fas fa-pencil-alt"></i> 
@@ -171,7 +172,22 @@ function deleteCustomer(customerId)
     <i class="fas fa-trash"></i>
   </button>
 				</td>
+</c:if>
 
+
+<c:if test="${userdetails.app_type ne 'SnacksProduction' and userdetails.app_type ne 'Beverage'}">
+
+				<td>
+				<br>
+				<button class="btn btn-primary" onclick="window.location='?a=showAddCustomer&customerId=${item.customerId}'" >
+  <i class="fas fa-pencil-alt"></i> 
+</button>
+
+<button class="btn btn-danger" onclick="deleteCustomer('${item.customerId}')" aria-label="Delete Customer">
+    <i class="fas fa-trash"></i>
+  </button>
+				</td>
+</c:if>
          
 
 		</tr>
