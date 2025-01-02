@@ -1268,6 +1268,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		outputMap.put("app_id", appId);
 		try {
 			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
+			outputMap.put("todaysDateMinusOneMonth", lObjConfigDao.getDateFromDBMinusOneMonth(con));
 			outputMap.put("customerMaster", lObjConfigDao.getCustomerMaster(outputMap, con));
 			String appType = ((HashMap<String, String>) request.getSession().getAttribute("userdetails"))
 					.get("app_type");
@@ -5042,10 +5043,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId,
 						"PendingCustomerCollection");
 
-			} else {
+			} else 
+			{
 				outputMap.put("ListOfPendingCollection", lst);
-outputMap.put("txtfromdate",fromDate);
-outputMap.put("txttodate",toDate);
+				outputMap.put("txtfromdate",fromDate);
+				outputMap.put("txttodate",toDate);
 
 
 				rs.setViewName("../PendingCustomerCollection.jsp");
@@ -6217,6 +6219,13 @@ outputMap.put("txttodate",toDate);
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchForSnacks(DestinationPath,
 						BufferedImagesFolderPath,invoiceDetails , con);
 			}
+
+			else if (invoiceFormatName.equals("3InchForBeverage")) {
+				LinkedHashMap<String, Object> invoiceDetails=lObjConfigDao.getInvoiceDetails(invoiceId, con);
+				new InvoiceHistoryPDFHelper().generatePDFForInvoice3InchBeverage(DestinationPath, BufferedImagesFolderPath,
+						lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
+			}
+
 
 			outputMap.put("returnData", appenders);
 		} catch (Exception e) {

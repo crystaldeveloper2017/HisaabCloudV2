@@ -204,16 +204,31 @@
 			 	<td>${item.customer_name} - ${item.total_amount} - <a href="?a=showGenerateInvoice&invoice_id=${item.invoice_id}&type=${type}">${item.invoice_no}</a>
  - ${item.FormattedInvoiceDate} - ${item.updatedDate} - ${item.payment_type} - ${item.payment_mode} - ${item.name} 
 
-				</c:if>
+			
 
 				<br>
-				<button class="btn btn-primary" onclick="window.location='?a=showGenerateInvoice&editInvoice=Y&invoice_id=${item.invoice_id}'" >
-  <i class="fas fa-pencil-alt"></i> 
-</button>
+					<%-- <button class="btn btn-primary" onclick="window.location='?a=showGenerateInvoice&editInvoice=Y&invoice_id=${item.invoice_id}'" >
+	<i class="fas fa-pencil-alt"></i> 
+	</button> --%>
 
-<button class="btn btn-danger" onclick="deleteInvoice('${item.invoice_id}')" aria-label="Delete Invoice">
-    <i class="fas fa-trash"></i>
-  </button>
+
+		<button class="btn btn-primary" onclick='generateInvoice("${item.invoice_id}");'>
+	<i class="fas fa-file-pdf"></i> 
+	</button>
+
+
+
+
+	<button class="btn btn-danger" onclick="deleteInvoice('${item.invoice_id}')" aria-label="Delete Invoice">
+		<i class="fas fa-trash"></i>
+	</button>
+
+	
+
+
+
+  	</c:if>
+
 
 						<c:if test="${item.isActive eq '1' and userdetails.app_type ne 'Beverage'}">
 							<td><button class="btn btn-primary" onclick="editInvoice('${item.invoice_id}')">Edit</button></td>
@@ -440,6 +455,22 @@ function resetCustomer()
 	txtsearchcustomer.value="";
 	hdnSelectedCustomer.value="";
 	ReloadFilters();
+}
+
+
+function generateInvoice(invoiceId)
+{
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generateInvoicePDF&invoiceId="+invoiceId, false);    
+	  xhttp.send();
 }
 	
 
