@@ -2611,7 +2611,7 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 			String totalQtyString=String.format("%.0f",totalQty ) ;
 
 		        
-		        cell = new PdfPCell(new Phrase("Total Qty :  "+totalQtyString.toString(),font ));
+		        cell = new PdfPCell(new Phrase(" Qty :  "+totalQtyString.toString(),font ));
 		        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		        cell.setColspan(2);
@@ -2625,21 +2625,25 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 		        String totalAmount=String.format("%.0f", Double.valueOf(invoiceHistoryDetails.get("total_amount").toString())) ;
 		        
 		        
-		        cell = new PdfPCell(new Phrase("Total Rate : "+String.valueOf(totalAmount+"/-"),new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD) ));	
+		        cell = new PdfPCell(new Phrase(""+String.valueOf(totalAmount+"/-"),new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD) ));	
 		        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		        cell.setColspan(3);
+		        cell.setColspan(4);
 		        table.addCell(cell);
 		        
 		      
-							
-					cell = new PdfPCell(new Phrase(String.valueOf("Paid : 140"),font ));
+				String paidString = String.format("%.0f", Double.parseDouble(invoiceHistoryDetails.get("paid_amount").toString()));
+				cell = new PdfPCell(new Phrase(String.valueOf("Paid :"+paidString),font14 ));
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);				  
 					cell.setColspan(5);
 					table.addCell(cell);
+
+					Double PendingAmount=Double.valueOf(totalAmount)- Double.valueOf(invoiceHistoryDetails.get("paid_amount").toString());
+					String PendingAmountString=String.format("%.0f", PendingAmount) ;
+					
 									
-					cell = new PdfPCell(new Phrase(String.valueOf("Pending : 400"),font ));
+					cell = new PdfPCell(new Phrase(String.valueOf("Pending :"+PendingAmountString),font14 ));
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);				  
 					cell.setColspan(5);
