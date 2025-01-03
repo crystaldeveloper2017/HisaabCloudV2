@@ -2666,7 +2666,7 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 	        
 	        
 	        
-	        cell = new PdfPCell(new Phrase(" Designed and Developed By crystaldevelopers2017@gmail.com",font));	        
+	        cell = new PdfPCell(new Phrase(" Generated Using hisaabcloud.in",font));	        
 	        cell.setBorder(Rectangle.NO_BORDER);
 	        	        
 	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
