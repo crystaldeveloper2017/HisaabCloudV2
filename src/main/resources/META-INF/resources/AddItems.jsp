@@ -638,6 +638,8 @@ if("${userdetails.app_type}"=="SnacksProduction")
 		placeholderavailableatstores.style.display="none";
 		//placeholderuploadimages.style.display="none";
 		placeholderproductdetails.style.display="none";
+		placeholderQRCode.style.display="none";
+		placeholderBarcode.style.display="none";
 				
 	}
 

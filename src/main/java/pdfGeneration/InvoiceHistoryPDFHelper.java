@@ -2439,18 +2439,23 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 		  }
 		 
 	                
+		  if(invoiceHistoryDetails.get("mobile_number")!=null)
+		  {
 	      cell = new PdfPCell(new Phrase("Contact No : "+invoiceHistoryDetails.get("mobile_number").toString(),font));
 	        cell.setBorder(Rectangle.NO_BORDER);
 	        cell.setPadding(0);
 	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 	        table.addCell(cell);
+		}
 
+		if(invoiceHistoryDetails.get("address")!=null)
+		  {
 			cell = new PdfPCell(new Phrase("Address : "+invoiceHistoryDetails.get("address").toString(),font));
 	        cell.setBorder(Rectangle.NO_BORDER);
 	        cell.setPadding(0);
 	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 	        table.addCell(cell);
-
+		  }
 
 	        cell = new PdfPCell(new Phrase("Date : "+invoiceHistoryDetails.get("theInvoiceDate").toString(),font));
 	        cell.setBorder(Rectangle.NO_BORDER);
@@ -2640,6 +2645,34 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 					cell.setColspan(5);
 
 				table.addCell(cell);
+
+				document.add(table);
+
+
+				table = new PdfPTable(1);
+		  table.setWidthPercentage(100);
+	        
+	        cell = new PdfPCell(new Phrase("*********************************",font));	        
+	        cell.setBorder(Rectangle.NO_BORDER);
+	        cell.setPadding(0);	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+	        
+	        cell = new PdfPCell(new Phrase("*Thank you, Visit Again*",font));	        
+	        cell.setBorder(Rectangle.NO_BORDER);
+	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+	        
+	        
+	        
+	        cell = new PdfPCell(new Phrase(" Designed and Developed By crystaldevelopers2017@gmail.com",font));	        
+	        cell.setBorder(Rectangle.NO_BORDER);
+	        	        
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        table.addCell(cell);
+	        
+		  
 								
 					        
 	        
