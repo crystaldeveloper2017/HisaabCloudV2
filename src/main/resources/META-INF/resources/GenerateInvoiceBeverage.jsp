@@ -137,35 +137,10 @@ function saveInvoice()
 	    	var invoiceId=this.responseText.split("~");
 	      	alert("Invoice Saved Succesfully"+invoiceId[0]);
 
+			generateInvoice(invoiceId[1]);
 			window.location.reload();
 	      	
-	      	if(invoiceId.length==1)
-	      		{
-	      			alert('An Error Has Occured. Please Contact Support');
-	      			resetField();
-	      			return;
-	      		}
 	      	
-	      	//printDirectAsFonts(invoiceId[0],0);
-	      	
-	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
-	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
-	    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
-	    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
-	    	  "showMethod": "fadeIn","hideMethod": "fadeOut"
-	    	}
-	    	//window.location.reload();
-	    	btnsave.disabled=false;
-	      	
-	      	
-	      	resetField();
-	      	 if(invoiceId.length==3)
-	      	    {
-	      	    	window.location=invoiceId[2];	
-	      	    }
-	      	btnsave.disabled=false;
-	      	document.getElementById("divTitle").innerHTML="Generate Invoice : "+(Number(invoiceId[0])+1);
-	      	document.title +=" Generate Invoice :  " +(Number(invoiceId[0])+1);
 	    	  
 	      
 	    }
@@ -356,19 +331,32 @@ function deleteAttachment(id)
 
    
   </div>
+
+
+
   
   <div class="col-sm-4">
   	
     
     <div class="input-group">
-    <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
+    <input type="text" class="form-control form-control-sm"    readonly placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" onclick="showMenuItem('All')" oninput=" checkforMatchItem()">
     
   </div>
   </div>
+  <br>
+  <br>
   
   
-  
-  
+    <div class="container" id="itemsMenuPlaceHolder" style="display:none">
+    <div class="row">
+        <c:forEach var="item" items="${itemList}">
+            <div class="col-4 col-md-4 col-lg-3 mb-3">
+                <img height="70px" width="70px" src="BufferedImagesFolder/${item.ImagePath}" alt="${item.item_name}" onclick="getItemDetailsAndAddToTable(${item.item_id},0)" class="img-fluid rounded">
+				${item.item_name}
+            </div>
+        </c:forEach>
+    </div>
+</div>
   
   
   
@@ -382,8 +370,7 @@ function deleteAttachment(id)
 	                     
 	  			<th style="z-index:0">Name</th>
 	  			<th style="z-index:0">Qty</th>	  			
-	  			<th style="z-index:0">Rate</th>
-	  			<th style="z-index:0">Amount</th>	  			
+	  			<th style="z-index:0">Rate / Amount</th>
 	  			
 	  			
 	                    </tr>
@@ -647,6 +634,7 @@ function checkforMatchItem()
 				// code to check if item already exist inselection				
 				getItemDetailsAndAddToTable(itemId,purchaseDetailsId);
 				document.getElementById("txtitem").value="";
+				
 		}
 	else
 		{	
@@ -672,6 +660,8 @@ function checkforMatchItem()
 				}
 			
 		}
+
+		
 	
 }
 
@@ -679,7 +669,7 @@ function checkforMatchItem()
 function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 {
 		      
-	
+	showMenuItem('hide');
 	
 
 		var itemDetails=document.getElementById("hdn"+itemId).value.split("~");
@@ -692,7 +682,7 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	var cell1 = row.insertCell(0);
 	    	var cell2 = row.insertCell(1);
 	    	var cell3 = row.insertCell(2);
-	    	var cell4 = row.insertCell(3);
+	    	//var cell4 = row.insertCell(3);
 
 	    	
 	    	
@@ -735,9 +725,9 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 
 	    	//cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="'+itemDetails[1]+'" id="txtrate'+itemId+'">'; // Sana Rate
 	    	cell3.innerHTML = "<input type='number' class='form-control form-control-sm' id='txtcustomrate"+itemId+"'   onkeyup='calculateAmount("+itemId+");checkIfEnterisPressed(event,this)' onkeypress='digitsOnlyWithDot(event)' value="+getPriceForThisCustomer(itemDetails)+">";
-	    	
+	    	cell3.innerHTML+="<input type='text' class='form-control form-control-sm' value='0' id='txtamount"+itemId+"' onkeyup='calculateQtyFromAmount("+itemId+")'>";
 	    	//cell6.innerHTML = 0;
-	    	cell4.innerHTML = "<input type='text' class='form-control form-control-sm' value='0' id='txtamount"+itemId+"' onkeyup='calculateQtyFromAmount("+itemId+")'>";
+	    	//cell4.innerHTML = "";
 	    	
 	    	
 	    	
@@ -753,7 +743,9 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	$("#txtqty"+itemId).focus(function() { $(this).select(); } );
 	    	$("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
 	    	$("#txtamount"+itemId).focus(function() { $(this).select(); } );
-	    	
+
+
+			
 			
 }
 
@@ -764,7 +756,7 @@ function calculateAmount(itemId)
 	var amount=(Number(customrate) *Number(qty) ).toFixed(0);
 		 
 	
-	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[3].childNodes[0].value= (Number(customrate) *Number(qty) ).toFixed(0);
+	document.getElementById('txtqty'+itemId).parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[2].childNodes[1].value= (Number(customrate) *Number(qty) ).toFixed(0);
 	
 	
 	
@@ -852,7 +844,7 @@ function calculateTotal()
 		var rows=tblitems.rows;
 		for(var x=1;x<rows.length;x++)
 			{
-				var itemTotalAmount=Number(rows[x].childNodes[3].childNodes[0].value);
+				var itemTotalAmount=Number(rows[x].childNodes[2].childNodes[1].value);
 				total+=itemTotalAmount;
 				
 				var itemQty=Number(rows[x].childNodes[1].childNodes[0].childNodes[0].childNodes[1].childNodes[0].childNodes[0].value);
@@ -1560,7 +1552,30 @@ function printDirectAsFonts(invoiceNo,pendAmount)
 
 
 
-
+function showMenuItem(showHide)
+{
+	if(showHide=="All")
+	{
+		if(itemsMenuPlaceHolder.style.display=="none")
+		{
+			showMenuItem("show");
+			return;
+		}
+		else
+		{
+			showMenuItem("hide");
+			return;
+		}		
+	}
+	if(showHide=="show")
+	{
+		itemsMenuPlaceHolder.style="display:block;"
+	}
+	else
+	{
+		itemsMenuPlaceHolder.style="display:none;"
+	}
+}
 
 
 

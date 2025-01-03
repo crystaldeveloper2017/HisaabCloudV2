@@ -4,6 +4,9 @@
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
 <c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
 <c:set var="app_type" value='${requestScope["outputObject"].get("app_type")}' />
+<c:set var="todaysDateMinusOneMonth" value='${requestScope["outputObject"].get("todaysDateMinusOneMonth")}' />
+
+
 
 <br>
 
@@ -40,13 +43,39 @@
 	
   </div>
   
-  <div class="col-sm-12">
+ <c:if test="${userdetails.app_type eq 'Beverage'}">
+
+ <div class="col-sm-12">
+  <div class="form-group"> 
+    <label for="email">Current Balance</label>
+    <!-- Read-only input for the PendingAmount -->
+    <input type="text" 
+           class="form-control form-control-sm" 
+           id="txtpendingamount" 
+           value="${item.PendingAmount}" 
+           readonly>
+    <!-- Link for customer ledger -->
+    <a href="#" onclick="showLedgerForThisCustomer()" 
+
+
+       class="btn btn-link">
+      View Ledger Details
+    </a>
+  </div>
+</div>
+   </c:if>
+
+<c:if test="${userdetails.app_type ne 'Beverage'}">
+     <div class="col-sm-12">
   	<div class="form-group"> 
   	<label for="email">Current Balance</label>     
       <input type="text" class="form-control form-control-sm" id="txtpendingamount" readonly=true >          
     </div>
   </div>
-  
+
+   </c:if>
+
+   
   <div class="col-sm-12">
   	<div class="form-group">
   	
@@ -287,6 +316,12 @@ else
 		document.title +=" Collect Payment From Customer";
 	}
 	
+
+	function showLedgerForThisCustomer()
+	{
+		
+		window.location="?a=showCustomerLedgerWithItem&customerId="+hdnSelectedCustomer.value+"&txtfromdate=${todaysDateMinusOneMonth}&txttodate=${todaysDate}";
+	}
 	
 function resetCustomer()
 {
@@ -296,6 +331,7 @@ function resetCustomer()
 	txtpendingamount.value="";
 }
 
-
+  txtfromdate.value='${txtfromdate}';
+  txttodate.value='${txttodate}';
 
 </script>

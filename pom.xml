@@ -212,6 +212,68 @@
 				</includes>
 			</resource>
 
+			<resource>
+				<directory>src/main/resources/META-INF/resources/</directory>
+				<targetPath>${basedir}/target/Attempt10/</targetPath>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/resources/</directory>
+				<targetPath>${basedir}/target/classes/</targetPath>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/java/com/crystal/customizedpos/Configuration/</directory>
+				<targetPath>${basedir}/target/Attempt10/WEB-INF/classes/com/crystal/customizedpos/Configuration</targetPath>
+				<includes>
+					<include>**/*.yaml</include>
+					<include>**/*.sql</include>
+				</includes>
+			</resource>
+
+
+			<resource>
+				<directory>src/main/java/pdfGeneration</directory>
+				<targetPath>${basedir}/target/Attempt10/WEB-INF/classes/pdfGeneration</targetPath>
+				<includes>
+					<include>**/*.png</include>
+					<include>**/*.jpg</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/java/com/crystal/customizedpos/Configuration/</directory>
+				<targetPath>${basedir}/target/classes/com/crystal/customizedpos/Configuration</targetPath>
+				<includes>
+					<include>**/*.yaml</include>
+					<include>**/*.sql</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/java/pdfGeneration</directory>
+				<targetPath>${basedir}/target/classes/pdfGeneration</targetPath>
+				<includes>
+					<include>**/*.png</include>
+					<include>**/*.jpg</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/java/pdfGeneration</directory>
+				<targetPath>${basedir}/target/classes/pdfGeneration</targetPath>
+				<includes>
+					<include>**/*.png</include>
+					<include>**/*.jpg</include>
+				</includes>
+			</resource>
+
 
 		</resources>
 
