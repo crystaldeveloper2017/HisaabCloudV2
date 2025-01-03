@@ -509,6 +509,13 @@ function deleteAttachment(id)
 	if(shrikhand.value=="")	{shrikhand.value="0";}
 	if(sgst.value=="")	{sgst.value="0";}
 	if(cgst.value=="")	{cgst.value="0";}
+//    if(qrCodeImageName.value=="")	{qrCodeImageName.value="0";}
+//    if(barcodeCodeImageName.value=="")	{barcodeCodeImageName.value="0";}
+
+
+
+	
+
 	
 	
 	
@@ -629,8 +636,10 @@ if("${userdetails.app_type}"=="SnacksProduction")
 		placeholderhsncode.style.display="none";
 		placeholdercatalogno.style.display="none";
 		placeholderavailableatstores.style.display="none";
-		placeholderuploadimages.style.display="none";
+		//placeholderuploadimages.style.display="none";
 		placeholderproductdetails.style.display="none";
+		placeholderQRCode.style.display="none";
+		placeholderBarcode.style.display="none";
 				
 	}
 
