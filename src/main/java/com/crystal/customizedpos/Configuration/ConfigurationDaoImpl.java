@@ -7901,4 +7901,66 @@ return getListOfLinkedHashHashMap(parameters,
 				conWithF);
 	}
 
+	
+			public List<LinkedHashMap<String, Object>> getReplacementRegister(Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		return getListOfLinkedHashHashMap(parameters,
+				"select * from trn_replacement_register where activate_flag=1  ",
+				con);
+		}
+
+		public LinkedHashMap<String, String> getReplacementDetails(HashMap<String, Object> hm, Connection con) throws SQLException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("replacement_id"));
+			
+			
+			return getMap(parameters,
+					"select * from trn_replacement_register where replacement_id=?",
+					con);
+		}
+
+
+		public long addReplacement(Connection con, HashMap<String, Object> hm) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			
+			
+			String query="insert into trn_replacement_register values (default,?,?,?,sysdate(),1)";
+			parameters.add(hm.get("rltinvoiceid"));
+			parameters.add(hm.get("txtinvoiceno"));
+			parameters.add(hm.get("user_id"));
+			
+			
+			return insertUpdateDuablDB(query, parameters,
+					con);
+		}
+
+		
+	 
+		public String updateReplacement(long replacementId, Connection conWithF, HashMap<String, Object> hm) throws Exception {
+
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("txtinvoiceno"));
+			
+	
+			parameters.add(replacementId);
+	
+			insertUpdateDuablDB(
+					"UPDATE trn_replacement_register  SET invoice_no=?,updated_date=SYSDATE() WHERE replacement_id=?",
+					parameters, conWithF);
+			return "Employee Updated Succesfully";
+	
+		}
+
+		public String deleteReplacement(long replacementId,String userId, Connection conWithF) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			
+			parameters.add(userId);
+			parameters.add(replacementId);
+			insertUpdateDuablDB("UPDATE trn_replacement_register  SET activate_flag=0,updated_date=SYSDATE(),updated_by=? WHERE replacement_id=?",
+					parameters, conWithF);
+			return "Holiday updated Succesfully";
+		}
+	
+
 }

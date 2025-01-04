@@ -3,6 +3,10 @@
   actions:
     - getItemsForThisCategoryNameByAjax
     - exportDailySalesReport
+    - showAddReplacement
+    - addReplacement
+    - showReplacementRegister
+    - deleteReplacement
     - showShortcuts
     - generatePDFFordailySalesReport
     - showCustomerLedgerWithItemVehicle
@@ -200,3 +204,7 @@
     - 700307
     - 700308
     - 700309
+    - 700313
+    - 700165
+    - 700314
+    - 26

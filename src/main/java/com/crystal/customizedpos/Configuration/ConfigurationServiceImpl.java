@@ -12372,5 +12372,239 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 
 	}
 
+
+	public CustomResultObject showStockStatusBeverage(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		String categoryId = request.getParameter("categoryId");
+		outputMap.put("categoryId", categoryId);
+
+		String storeId = request.getParameter("storeId");
+		outputMap.put("storeId", storeId);
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+		try {
+
+			String[] colNames = { "stock_id", "store_name", "item_name", "qty_available" };
+
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getStockStatus(outputMap, con);
+			// LinkedHashMap<String, Object> totalDetails =
+			// gettotalDetailsStockEvaluation(lst);
+
+			if (!exportFlag.isEmpty()) {
+				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId, "StockStatusBeverage");
+			} else {
+				outputMap.put("ListStock", lst);
+				outputMap.put("ListOfCategories", lObjConfigDao.getCategories(outputMap, con));
+				outputMap.put("listOfStore", lObjConfigDao.getStoreMaster(outputMap, con));
+				// outputMap.put("totalDetails", totalDetails);
+
+				rs.setViewName("../StockStatusBeverage.jsp");
+				rs.setReturnObject(outputMap);
+			}
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		rs.setReturnObject(outputMap);
+		return rs;
+	}
+
+	public CustomResultObject showAddStockBeverage(HttpServletRequest request, Connection con) throws SQLException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String stockType = request.getParameter("type");
+		String storeId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("store_id");
+		String stockModificationId = request.getParameter("stockModificationId");
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		outputMap.put("app_id", appId);
+		outputMap.put("stockType", stockType);
+
+		try {
+
+			if (stockModificationId != null) {
+				outputMap.put("stockModificationDetails",
+						lObjConfigDao.getStockModificationDetailsAddRemove(stockModificationId, con));
+			}
+
+			outputMap.put("storeId", storeId);
+			outputMap.put("itemList", lObjConfigDao.getItemMaster(outputMap, con));
+			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
+			outputMap.put("addStockList", lObjConfigDao.getInventoryCountingListForThisStore(outputMap, con));
+			rs.setViewName("../AddStock.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+
+	}
+
+	public CustomResultObject showReplacementRegister(HttpServletRequest request,Connection con)
+	{
+		CustomResultObject rs=new CustomResultObject();
+		HashMap<String, Object> outputMap=new HashMap<>();
+		String exportFlag= request.getParameter("exportFlag")==null?"":request.getParameter("exportFlag");
+		String DestinationPath=request.getServletContext().getRealPath("BufferedImagesFolder")+delimiter;
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		try
+		{
+			String [] colNames= {"replacement_id","rlt_invoice_id","invoice_no"}; // change according to dao return
+			List<LinkedHashMap<String, Object>> lst=lObjConfigDao.getReplacementRegister(con);
+			outputMap.put("ListOfReplacements", lst);
+
+			
+			if(!exportFlag.isEmpty())
+			{
+				outputMap = getCommonFileGenerator(colNames,lst,exportFlag,DestinationPath,userId,"ReplacementRegister","ReplacementRegister");
+			}
+		else
+			{
+				
+				rs.setViewName("../ReplacementRegister.jsp");
+				
+			}	
+			
+			
+
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+			rs.setHasError(true);
+		}		
+		rs.setReturnObject(outputMap);
+
+		return rs;
+	}
+
+	public CustomResultObject showAddReplacement(HttpServletRequest request,Connection connections)
+	{
+		CustomResultObject rs=new CustomResultObject();			
+		HashMap<String, Object> outputMap=new HashMap<>();
+		
+		long replacementId=request.getParameter("replacementId")==null?0L:Long.parseLong(request.getParameter("replacementId"));
+		outputMap.put("replacement_id", replacementId);
+		
+		try
+		{	
+			if(replacementId!=0) {outputMap.put("replacementDetails", lObjConfigDao.getReplacementDetails(outputMap ,connections));} 
+			rs.setViewName("../AddReplacement.jsp");	
+			rs.setReturnObject(outputMap);		
+		}
+		catch (Exception e)
+		{
+				writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+
+
+	public CustomResultObject addReplacement(HttpServletRequest request,Connection con) throws Exception
+	{
+		CustomResultObject rs=new CustomResultObject();	
+		HashMap<String, Object> outputMap=new HashMap<>();	
+				
+		FileItemFactory itemFacroty=new DiskFileItemFactory();
+		ServletFileUpload upload=new ServletFileUpload(itemFacroty);		
+		//String webInfPath = cf.getPathForAttachments();
+		
+		HashMap<String,Object> hm=new HashMap<>();
+		
+		
+		
+		
+		List<FileItem> toUpload=new ArrayList<>();
+		if(ServletFileUpload.isMultipartContent(request))
+		{
+			List<FileItem> items=upload.parseRequest(request);
+			for(FileItem item:items)
+			{		
+				
+				if (item.isFormField()) 
+				{
+					hm.put(item.getFieldName(), item.getString());
+			    }
+				else
+				{
+					toUpload.add(item);
+				}
+			}			
+		}	
+		//String rltinvoiceid= hm.get("rltinvoiceid").toString();
+
+		String invoiceNo= hm.get("txtinvoiceno").toString();
+		
+		
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		hm.put("rltinvoiceid", "123");
+
+		hm.put("txtinvoiceno", invoiceNo);
+		hm.put("user_id", userId);
+		
+		
+		long replacementId=hm.get("hdnReplacementId").equals("")?0l:Long.parseLong(hm.get("hdnReplacementId").toString()); 
+		try
+		{			
+									
+			
+			
+			if(replacementId==0)
+			{
+				replacementId=lObjConfigDao.addReplacement(con, hm);
+			}
+			// else
+			// {
+			// 	lObjConfigDao.updateReplacement(replacementId, con, invoiceNo,userId);
+			// }
+			
+			
+		
+			rs.setReturnObject(outputMap);
+			
+			
+			rs.setAjaxData("<script>window.location='"+hm.get("callerUrl")+"?a=showReplacementRegister'</script>");
+			
+										
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+	
+
+	public CustomResultObject deleteReplacement(HttpServletRequest request,Connection con)
+	{
+		CustomResultObject rs=new CustomResultObject();
+		long replacementId= Integer.parseInt(request.getParameter("replacementId"));		
+		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		try
+		{	
+			
+			rs.setAjaxData(lObjConfigDao.deleteReplacement(replacementId,userId,con));
+			
+			
+		}
+		catch (Exception e)
+		{
+			writeErrorToDB(e);
+				rs.setHasError(true);
+		}		
+		return rs;
+	}
+	
+	
+
 	
 }

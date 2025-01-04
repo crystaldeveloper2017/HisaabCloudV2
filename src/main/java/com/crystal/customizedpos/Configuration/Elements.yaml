@@ -616,3 +616,18 @@ elements:
   parentElementId: 7
   elementUrl: "?a=generateDailyInvoiceReport"
   orderNo: 1
+- elementId: 700312
+  elementName: "Stock Status Beverage"
+  parentElementId: 2
+  elementUrl: "?a=showStockStatusBeverage"
+  orderNo: 1
+- elementId: 700313
+  elementName: "Add Replacement"
+  parentElementId: 700165
+  elementUrl: "?a=showAddReplacement"
+  orderNo: 1
+- elementId: 700314
+  elementName: "Replacement Register"
+  parentElementId: 26
+  elementUrl: "?a=showReplacementRegister"
+  orderNo: 1
