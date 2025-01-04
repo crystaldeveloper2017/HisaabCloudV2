@@ -1006,6 +1006,10 @@ if(hm.get("user_id")!=null)
 			hm.put("details_id", detailsId);
 			hm.put("unique_no", item.get("unique_no"));
 			hm.put("warranty", item.get("warranty"));
+			hm.put("invoice_id", invoiceId);
+			hm.put("item_id", item.get("item_id"));
+			
+			
 
 			if (hm.get("app_type").equals("Electric")) {
 				insertUpdateCustomParameterized(
