@@ -41,6 +41,8 @@
 
 
 <c:set var="invoiceDetails" value='${requestScope["outputObject"].get("invoiceDetails")}' />
+<c:set var="lsitOfCategories" value='${requestScope["outputObject"].get("lsitOfCategories")}' />
+
 
 
 
@@ -225,6 +227,16 @@ function saveInvoice()
 			    <input type="hidden" id="hdn${item.item_id}" value="${item.item_name}~${item.price}~${item.wholesale_price}~${item.franchise_rate}~${item.loyalcustomerrate3}~${item.loyalcustomerrate2}~${item.loyalcustomerrate1}~${item.distributor_rate}~${item.b2b_rate}~${item.shrikhand}~${item.qty_available}~${item.sgst}~${item.cgst}~${item.category_name}">			    
 	   </c:forEach>	   	   	
 </datalist>
+
+	<datalist id="categoryList">
+<c:forEach items="${lsitOfCategories}" var="item">
+			    <option id="${item.category_id}"> ${item.category_name}</option>
+			    <input type="hidden" id="hdn${item.category_id}" value="${item.category_name}">			    
+	   </c:forEach>	   	   	
+</datalist>
+
+
+
 			
 			
 			<div class="col-2">
@@ -252,7 +264,7 @@ function saveInvoice()
     </div>
   </div>
 
-  <div class="col-4">
+  <div class="col-2">
 	<div class="form-group">
 	
 	
@@ -300,11 +312,23 @@ function saveInvoice()
     
   </div>
   
-   <div class="col-sm-4" id="divsearchforitems">
+   <div class="col-sm-2" id="divsearchforitems">
   	<label for="email">Select Item</label>
     
     <div class="input-group">
     <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">
+    
+    
+    
+    
+  </div>
+  </div>
+
+   <div class="col-sm-2" id="divsearchforcategory">
+  	<label for="email">Select Category</label>
+    
+    <div class="input-group">
+    <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="categoryList" id="txtcategory" name="txtcategory" oninput="checkforMatchCategory()">
     
     
     
@@ -809,8 +833,7 @@ if("${param.invoice_id}"!="")
     	var cell3 = row.insertCell(2);
 		var cell4 = row.insertCell(3);
 		var cell5 = row.insertCell(4);
-		var cell6 = row.insertCell(5);
-		var cell7 = row.insertCell(6);
+	
     	
     	
     	
@@ -823,11 +846,9 @@ if("${param.invoice_id}"!="")
     	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
 		totalQty+=Number('${item.qty}');
     	cell3.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="'+itemTotal+'">';
-		cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.battery_no}" id="txtbatteryno${item.item_id}">';
-    	cell5.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.vehicle_name}" id="txtvehiclename${item.item_id}">';
-    	cell6.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.vehicle_no}" id="txtvehicleno${item.item_id}">';    	
-    	cell7.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.warranty}" id="txtwarranty${item.item_id}">';  
-
+		cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.unique_no}" id="txtbatteryno${item.item_id}">';
+    	cell5.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.warrantyelectric}" id="txtvehiclename${item.item_id}">';
+    	
 		
     	
     	
@@ -894,6 +915,81 @@ function quickAddCustomer()
 	  };
 	  xhttp.open("GET","?a=saveCustomerServiceAjax&appId=${userdetails.app_id}"+"&customerName="+customerName.value+"&mobileNumber="+mobileNumber.value+"&customerType="+customerType.value, true);    
 	  xhttp.send();
+}
+
+
+	function checkforMatchCategory()
+	{		
+		var searchString= document.getElementById("txtcategory").value;	
+		var options1=document.getElementById("categoryList").options;
+		
+		var itemId=0;
+		var purchaseDetailsId=0; 
+		for(var x=0;x<options1.length;x++)
+			{
+				if(searchString==options1[x].value)
+					{
+					itemId=options1[x].id;
+					purchaseDetailsId=options1[x].innerHTML.split('~')[2];				
+						break;
+					}
+			}
+		if(itemId!=0)
+			{
+				
+				getItemsForThisCategoryNameByAjax(searchString);
+					// code to check if item already exist inselection				
+				return;
+				document.getElementById("txtitem").value="";
+			}
+		else
+			{	
+				var count=0;
+				var ReqString="";
+				for(var x=0;x<options1.length;x++)
+					{
+					var prodCode = options1[x].value.substring(
+							options1[x].value.indexOf("(") + 1, 
+							options1[x].value.lastIndexOf(")")
+						);
+						if(prodCode==(searchString.toLowerCase()))
+							{
+								count++;
+								ReqString=options1[x].value;
+							}
+					}
+				
+				if(count==1)
+					{
+						document.getElementById("txtitem").value=ReqString;
+						checkforMatchItem();
+					}
+				
+			}
+		
+	}
+
+	function getItemsForThisCategoryNameByAjax(categoryName)
+{
+	
+		  const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+		    //console.log(this.responseText);
+		    var items=JSON.parse(this.responseText);
+		    //console.log(items[0]);
+		    //console.log(JSON.parse(items));
+		    var reqString="";
+		    for(m=0;m<items.length;m++)
+		    	{
+					getItemDetailsAndAddToTable(items[m].item_id,0);
+		    	}
+		    //alert(reqString);
+		    document.getElementById('someIdGoesHere').innerHTML=reqString; 
+		  }
+		  xhttp.open("GET", "?a=getItemsForThisCategoryNameByAjax&category_name="+categoryName);
+		  xhttp.send();
+			
+	
 }
 
 
