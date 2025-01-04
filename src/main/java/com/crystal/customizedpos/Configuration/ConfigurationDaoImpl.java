@@ -1859,7 +1859,7 @@ if(hm.get("user_id")!=null)
 			parameters.add("%" + hm1.get("battery_no") + "%");
 		}
 
-		query += "group by tid.invoice_id order by invoice_date,rifd.invoice_id asc ";
+		query += "group by tid.invoice_id order by invoice_no desc ,invoice_date desc ,rifd.invoice_id asc ";
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
