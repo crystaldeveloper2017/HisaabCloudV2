@@ -1003,6 +1003,21 @@ if(hm.get("user_id")!=null)
 
 			}
 
+			hm.put("details_id", detailsId);
+			hm.put("unique_no", item.get("unique_no"));
+			hm.put("warranty", item.get("warranty"));
+			hm.put("invoice_id", invoiceId);
+			hm.put("item_id", item.get("item_id"));
+			
+			
+
+			if (hm.get("app_type").equals("Electric")) {
+				insertUpdateCustomParameterized(
+						"insert into rlt_invoice_electric_details values (default,:invoice_id,:details_id,:unique_no,:warranty,sysdate(),:app_id)",
+						hm, conWithF);
+
+			}
+
 			if (item.get("RSPH") != null) {
 
 				parameters.add(detailsId);
@@ -1793,7 +1808,7 @@ if(hm.get("user_id")!=null)
 				+ " left outer join mst_customer cust on inv.customer_id=cust.customer_id and inv.app_id=cust.app_id  "
 				+ "left outer join tbl_user_mst usertbl on inv.updated_by = usertbl.user_id "
 				+ " left outer join trn_payment_register paymnt on inv.invoice_id =paymnt.ref_id and paymnt.activate_flag=1 and paymnt.payment_for='invoice' and paymnt.app_id = inv.app_id "
-				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id left outer join trn_invoice_details tid on tid.invoice_id=inv.invoice_id left outer join rlt_invoice_battery_details ribd on ribd.details_id=tid.details_id "
+				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id left outer join trn_invoice_details tid on tid.invoice_id=inv.invoice_id left outer join rlt_invoice_electric_details ribd on ribd.details_id=tid.details_id "
 				+ "where date(invoice_date) between ? and ?  and inv.app_id=?   "
 				+ "and usertbl.app_id=inv.app_id and store1.app_id=inv.app_id and inv.activate_flag=1 ";
 
@@ -1855,7 +1870,7 @@ if(hm.get("user_id")!=null)
 
 		if (hm1.get("battery_no") != null && !hm1.get("battery_no").equals("")) {
 
-			query += " and ribd.battery_no like ? ";
+			query += " and ribd.unique_no like ? ";
 			parameters.add("%" + hm1.get("battery_no") + "%");
 		}
 
@@ -2449,13 +2464,14 @@ if(hm.get("user_id")!=null)
 				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
 				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
 				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
+				+ " left outer join rlt_invoice_electric_details ried on ried.invoice_id=invoice.invoice_id \r\n"
 				+ "where invoice.invoice_id=? order by dtls.details_id", con);
 
 		parameters = new ArrayList<>();
 		parameters.add(invoiceId);
 
 		itemDetailsMap.put("listOfItems",
-				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,"
+				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,ried.*,ried.warranty as warrantyelectric,"
 						+ "(select case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from tbl_attachment_mst tam2 "
 						+ "where tam2.file_id=item.item_id and tam2.type='Image' limit 1 ) ImagePath,"
 						+ " sum(coalesce(qty_to_return,0)) ReturnedQty,dtls.details_id theDetailsId \r\n"
@@ -2464,7 +2480,8 @@ if(hm.get("user_id")!=null)
 						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
 						+ " left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
 						+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
-						+ "where\r\n" + "invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
+						+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
+						+ "where\r\n" + "dtls.invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
 		return itemDetailsMap;
 
 	}

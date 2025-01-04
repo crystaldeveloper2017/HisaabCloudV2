@@ -1,6 +1,7 @@
 - roleId: 30
   roleName: "AdminElectric"
   actions:
+    - getItemsForThisCategoryNameByAjax
     - exportDailySalesReport
     - showShortcuts
     - generatePDFFordailySalesReport

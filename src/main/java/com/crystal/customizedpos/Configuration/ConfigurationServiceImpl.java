@@ -2708,6 +2708,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 							itemDetailsMap.put("warranty", itemDetails[16]);
 						}
 
+						if (appType.equals("Electric")) {
+							itemDetailsMap.put("unique_no", itemDetails[13]);
+							itemDetailsMap.put("warranty", itemDetails[14]);
+						}
+
 					}
 					itemDetailsMap.put("debit_in", lObjConfigDao.getDebitInForItem(itemDetails[0], con));
 					itemListRequired.add(itemDetailsMap);
