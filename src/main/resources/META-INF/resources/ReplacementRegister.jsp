@@ -153,10 +153,19 @@ function addCategory()
                     <tr>
                      
                      <th><b>Replacement ID</b></th>
-					 <th><b>Rlt Invoice ID</b></th>
+					 <th><b>Customer Name</b></th>
+					 
+					 <th><b>Invoice Date</b></th>
+					 
+					 <th><b>Category Name</b></th>
+					 
+					 <th><b>Item Name</b></th>
 
-                     <th><b>Invoice No</b></th>
-                     
+					 <th><b>Original No</b></th>
+
+					 <th><b>Replacement No</b></th>
+					 <th><b>Updated Date</b></th>
+					 
                      
                     </tr>
                   </thead>
@@ -164,8 +173,14 @@ function addCategory()
 				<c:forEach items="${message}" var="item">
 					<tr >
 						<td>${item.replacement_id}</td>
-						<td>${item.rlt_invoice_id}</td>						
-						<td>${item.invoice_no}</td>
+						<td>${item.customer_name}</td>						
+						<td>${item.invoice_date}</td>
+						<td>${item.category_name}</td>
+						<td>${item.item_name}</td>
+						<td>${item.unique_no}</td>
+						<td>${item.replacementNo}</td>
+						<td>${item.updated_date}</td>
+
 					<td><button class="btn btn-danger" onclick="deleteReplacement(${item.replacement_id})">Delete</button></td>
 					</tr>
 				</c:forEach>

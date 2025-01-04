@@ -12542,29 +12542,25 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 		//String rltinvoiceid= hm.get("rltinvoiceid").toString();
 
 		String invoiceNo= hm.get("txtinvoiceno").toString();
+		String rltInvoiceElectricPk= hm.get("hdnrltinvoiceelectricpk").toString();
+		
 		
 		
 		String userId=((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		hm.put("rltinvoiceid", "123");
+		hm.put("rltinvoiceid", rltInvoiceElectricPk);
 
 		hm.put("txtinvoiceno", invoiceNo);
 		hm.put("user_id", userId);
 		
 		
-		long replacementId=hm.get("hdnReplacementId").equals("")?0l:Long.parseLong(hm.get("hdnReplacementId").toString()); 
 		try
 		{			
 									
 			
 			
-			if(replacementId==0)
-			{
-				replacementId=lObjConfigDao.addReplacement(con, hm);
-			}
-			// else
-			// {
-			// 	lObjConfigDao.updateReplacement(replacementId, con, invoiceNo,userId);
-			// }
+			
+				lObjConfigDao.addReplacement(con, hm);
+			
 			
 			
 		

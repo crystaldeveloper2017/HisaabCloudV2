@@ -7906,7 +7906,26 @@ return getListOfLinkedHashHashMap(parameters,
 			throws SQLException, ClassNotFoundException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		return getListOfLinkedHashHashMap(parameters,
-				"select * from trn_replacement_register where activate_flag=1  ",
+				"select\r\n" + //
+										"\ttrr.updated_date,trr.replacement_id,mc2.customer_name,tir.invoice_date ,mc.category_name ,mi.item_name ,ried.unique_no ,trr.unique_no replacementNo\r\n" + //
+										"from\r\n" + //
+										"\ttrn_replacement_register trr ,\r\n" + //
+										"\trlt_invoice_electric_details ried,\r\n" + //
+										"\ttrn_invoice_details tid ,\r\n" + //
+										"\ttrn_invoice_register tir ,\r\n" + //
+										"\tmst_items mi ,\r\n" + //
+										"\tmst_category mc ,\r\n" + //
+										"\tmst_customer mc2 \r\n" + //
+										"where\r\n" + //
+										"\ttrr.rlt_invoice_id = ried .rlt_invoice_electric_pk\r\n" + //
+										"\tand tid.details_id =ried .details_id\r\n" + //
+										"\tand tir.invoice_id =tid.invoice_id \r\n" + //
+										"\tand mi.item_id =tid.item_id \r\n" + //
+										"\tand mi.parent_category_id =mc.category_id \r\n" + //
+										"\tand mc2.customer_id =tir.customer_id \r\n" + //
+										";\r\n" + //
+										"\r\n" + //
+										"  ",
 				con);
 		}
 

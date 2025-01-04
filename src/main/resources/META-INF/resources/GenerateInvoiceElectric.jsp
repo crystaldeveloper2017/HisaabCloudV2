@@ -847,7 +847,7 @@ if("${param.invoice_id}"!="")
 		totalQty+=Number('${item.qty}');
     	cell3.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="'+itemTotal+'">';
 		cell4.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.unique_no}" id="txtbatteryno${item.item_id}">';
-    	cell5.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.warrantyelectric}" id="txtvehiclename${item.item_id}">';
+    	cell5.innerHTML = '<input type="text" readonly class="form-control form-control-sm" value="${item.warrantyelectric}" id="txtvehiclename${item.item_id}"> <button type="button" name="buttonReplace" onclick="redirecToAddReplacement(${item.rlt_invoice_electric_pk})" class="btn btn-primary">Replace </button>';
     	
 		
     	
@@ -992,8 +992,13 @@ function quickAddCustomer()
 	
 }
 
-
-
+function redirecToAddReplacement(rltpk)
+{
+	window.location="?a=showAddReplacement&rltInvoiceElectricPk="+rltpk;
+}
+document.getElementsByName('buttonReplace').forEach(button => {
+    button.disabled = false;
+});
 $('[data-widget="pushmenu"]').PushMenu("collapse");
 </script>
 

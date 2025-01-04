@@ -85,7 +85,7 @@ function deleteAttachment(id)
   	<div class="form-group">
       <label for="email">Unique No</label>
       <input type="text" class="form-control" id="txtinvoiceno" value="${replacementDetails.invoice_no}"  placeholder="eg.  123" name="txtinvoiceno">
-      <input type="hidden" name="hdnReplacementId" value="${param.holiday_id}" id="hdnReplacementId">
+      <input type="hidden" name="hdnrltinvoiceelectricpk" value="${param.rltInvoiceElectricPk}" id="hdnrltinvoiceelectricpk">
     </div>
   </div>
   
