@@ -1003,6 +1003,17 @@ if(hm.get("user_id")!=null)
 
 			}
 
+			hm.put("details_id", detailsId);
+			hm.put("unique_no", item.get("unique_no"));
+			hm.put("warranty", item.get("warranty"));
+
+			if (hm.get("app_type").equals("Electric")) {
+				insertUpdateCustomParameterized(
+						"insert into rlt_invoice_electric_details values (default,:invoice_id,:item_id,:unique_no,:warranty,sysdate(),:app_id)",
+						hm, conWithF);
+
+			}
+
 			if (item.get("RSPH") != null) {
 
 				parameters.add(detailsId);

@@ -91,9 +91,7 @@ function saveInvoice()
 		"~0~0~0~0~0~0~0"+ // Item Name
 		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
 		"~"+rows[x].childNodes[3].childNodes[0].value+ // Battery No
-		"~"+rows[x].childNodes[4].childNodes[0].value+ // Vehicle Name
-		"~"+rows[x].childNodes[5].childNodes[0].value+ // Vehicle No
-		"~"+rows[x].childNodes[6].childNodes[0].value+ // Warranty		
+		"~"+rows[x].childNodes[4].childNodes[0].value+ // Vehicle Name	
 	    "|";       
 	}
 	
@@ -327,7 +325,7 @@ function saveInvoice()
 	  			<th style="z-index:0">Item Name</th>
 	  			<th style="z-index:0">Item Qty</th>
 				<th style="z-index:0">Amount</th>
-	  			<th style="z-index:0">Battery No</th>
+	  			<th style="z-index:0">Unique No</th>
 				<%-- <th style="z-index:0">Vehicle Name</th> --%>
 				<%-- <th style="z-index:0">Vehicle No</th> --%>
 				<th style="z-index:0">Warranty (Months)</th>
