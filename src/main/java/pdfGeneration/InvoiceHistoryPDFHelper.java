@@ -2632,14 +2632,16 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 		        table.addCell(cell);
 		        
 		      
-				String paidString = String.format("%.0f", Double.parseDouble(invoiceHistoryDetails.get("paid_amount").toString()));
+				String paidAmount=invoiceHistoryDetails.get("paid_amount")==null?"0":invoiceHistoryDetails.get("paid_amount").toString();
+
+				String paidString = String.format("%.0f", Double.parseDouble(paidAmount));
 				cell = new PdfPCell(new Phrase(String.valueOf("Paid :"+paidString),font14 ));
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);				  
 					cell.setColspan(5);
 					table.addCell(cell);
 
-					Double PendingAmount=Double.valueOf(totalAmount)- Double.valueOf(invoiceHistoryDetails.get("paid_amount").toString());
+					Double PendingAmount=Double.valueOf(totalAmount)- Double.valueOf(paidAmount);
 					String PendingAmountString=String.format("%.0f", PendingAmount) ;
 					
 									
