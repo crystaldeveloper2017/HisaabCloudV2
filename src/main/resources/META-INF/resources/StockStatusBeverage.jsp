@@ -1,17 +1,14 @@
 
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="ListStock" value='${requestScope["outputObject"].get("ListStock")}' />
-<c:set var="ListOfCategories" value='${requestScope["outputObject"].get("ListOfCategories")}' />
-<c:set var="listOfStore" value='${requestScope["outputObject"].get("listOfStore")}' />
+<c:set var="message" value='${requestScope["outputObject"].get("ListStock")}' />
 
-<c:set var="totalDetails" value='${requestScope["outputObject"].get("totalDetails")}' />
 
 
 
 
 <script >
-function deleteStock(stockId)
+function deleteStockStatusBeverage(stockId)
 {
 	
 	var answer = window.confirm("Are you sure you want to delete ?");
@@ -20,24 +17,24 @@ function deleteStock(stockId)
 		return;    
 	}
 	
-	  document.getElementById("closebutton").style.display='none';
-	   document.getElementById("loader").style.display='block';
-	$('#myModal').modal({backdrop: 'static', keyboard: false});;
+	  
 
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() 
 	  {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) 
 	    { 		      
-	      document.getElementById("responseText").innerHTML=xhttp.responseText;
-		  document.getElementById("closebutton").style.display='block';
-		  document.getElementById("loader").style.display='none';
-		  $('#myModal').modal({backdrop: 'static', keyboard: false});;
-	      
+	      toastr["success"](xhttp.responseText);
+		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
+		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
+		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
+		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"}
+		    	
+	      window.location.reload();
 		  
-		}
+	   	}
 	  };
-	  xhttp.open("GET","?a=deleteStock&stockid="+stockId, true);    
+	  xhttp.open("GET","?a=deleteStockStatusBeverage&stockId="+stockId, true);    
 	  xhttp.send();
 }
 
@@ -67,25 +64,10 @@ function configureLowStock(stockId)
 
            <div class="card-header">    
                 
+         
                 
-            <c:if test="${ userdetails.app_type ne 'Beverage'}">
+                <div class="card-tools">
 
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" >                    
-                   	<input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showInventoryCounting'" value="Inventory Couting" class="form-control float-right" >                                         
-                  </div>
-                </div>
-                
-                
-                <div class="card-tools">
-                  <div class="input-group input-group-sm" >                    
-                    <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showStockTransfer'" value="Stock Transfer" class="form-control float-right" >                                         
-                  </div>
-                </div>
-
-                 </c:if>
-                
-                <div class="card-tools">
                   <div class="input-group input-group-sm" >                    
                     <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockBeverage&type=Add'" value="Add Stock Beverage" class="form-control float-right" >                                         
                   </div>
@@ -107,40 +89,7 @@ function configureLowStock(stockId)
                   </div>
                 </div>
                 
-                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 200px;">
-  					<select id="drpcategoryId" name="drpcategoryId" class="form-control float-right" onchange='ReloadFilters()' style="margin-right: 15px;" >
-  						
-  						<option value='-1'>--Select--</option>
-  						
-  						<c:forEach items="${ListOfCategories}" var="item">
-							<option value='${item.category_id}'> ${item.category_name}</option>
-						</c:forEach>  							
-  					</select>
-                  </div>
-              </div>
-              
-			              <c:if test="${adminFlag eq true}">
-							 <div class="card-tools">
-				                  <div class="input-group input-group-sm" style="width: 200px;">
-				  					<select id="drpstoreId" name="drpstoreId" class="form-control float-right" onchange='ReloadFilters()' style="margin-right: 15px;" >
-				  						
-				  						<option value='-1'>--Select--</option>  						
-				  						<c:forEach items="${listOfStore}" var="store">
-											<option value='${store.storeId}'> ${store.storeName}</option>
-										</c:forEach>  							
-				  					</select>
-				                  </div>
-				              </div>
-            			  </c:if>
-              
-              
-                
-                
-                
-                
-                
-
+             
                 
               </div>
               
@@ -154,28 +103,29 @@ function configureLowStock(stockId)
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
-                     <th>Category Name</th>
+                     <th>Stock Id</th>
                      <th>Item Name</th>
-                     <th>Available Quantity</th>
+                     <th>Stock Date</th>
+                     <th>Stock Type</th>                      
+                     <th>Qty</th> 
+                    <th> Remarks</th>                      
+                     
 
-                   <c:if test="${ userdetails.app_type ne 'Beverage'}">
-
-                     <th>Purchase Price</th>                      
-                   </c:if>
-                      
                     </tr>
                   </thead>
                   <tbody>
-				<c:forEach items="${ListStock}" var="item">		
+				<c:forEach items="${message}" var="item">		
 				
-						<td>${item.category_name}</td>						
-						<td>${item.item_name}</td>
-						<td>${item.availableQty}</td>
-                               <c:if test="${ userdetails.app_type ne 'Beverage'}">
+						<td>${item.stock_id}</td>
+          <td> ${item.item_name} ${item.product_code}</td>
+						<td>${item.stock_date}</td>
+						<td>${item.stock_type}</td>
+            <td>${item.qty}</td>
+            <td>${item.remarks}</td>
 
-						<td>${item.purchasePrice}</td>
 
-               </c:if>
+				<td><button class="btn btn-danger" onclick="deleteStockStatusBeverage('${item.stock_id}')">Delete</button></td>
+
 						
 					
 						
@@ -191,15 +141,6 @@ function configureLowStock(stockId)
             </div>
             
             
-            
-       <%--      <div class="d-flex justify-content-end">
-            	<div class="p-2">Total Evaluation At Average Cost : <b>${totalDetails.TotalEvaluationAtAverageCost}</b></div>
-            </div>
-            
-            <div class="d-flex justify-content-end">
-            	<div class="p-2">Total Evaluation At Price : <b>${totalDetails.TotalEvaluationAtPrice}</b></div>
-            </div> --%>
-
             
             
             
@@ -230,8 +171,5 @@ function configureLowStock(stockId)
 	  window.location="?a=showStockStatus&categoryId="+drpcategoryId.value+"&storeId="+drpstoreId.value;
 	  
   }
-  
-  drpcategoryId.value="${param.categoryId}";
-  drpstoreId.value="${param.storeId}";
-  
+ 
 </script>

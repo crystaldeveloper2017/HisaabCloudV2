@@ -12380,28 +12380,21 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 		String exportFlag = request.getParameter("exportFlag") == null ? "" : request.getParameter("exportFlag");
 		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
-		String categoryId = request.getParameter("categoryId");
-		outputMap.put("categoryId", categoryId);
-
-		String storeId = request.getParameter("storeId");
-		outputMap.put("storeId", storeId);
+		
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		outputMap.put("app_id", appId);
 		try {
 
-			String[] colNames = { "stock_id", "store_name", "item_name", "qty_available" };
+			String[] colNames = { "stock_id", "item_name", "stock_date", "stock_type","qty","remarks" };
 
-			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getStockStatus(outputMap, con);
-			// LinkedHashMap<String, Object> totalDetails =
-			// gettotalDetailsStockEvaluation(lst);
+			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getStockStatusBeverage(outputMap, con);
 
+			
 			if (!exportFlag.isEmpty()) {
 				outputMap = getCommonFileGenerator(colNames, lst, exportFlag, DestinationPath, userId, "StockStatusBeverage");
 			} else {
 				outputMap.put("ListStock", lst);
-				outputMap.put("ListOfCategories", lObjConfigDao.getCategories(outputMap, con));
-				outputMap.put("listOfStore", lObjConfigDao.getStoreMaster(outputMap, con));
-				// outputMap.put("totalDetails", totalDetails);
+				
 
 				rs.setViewName("../StockStatusBeverage.jsp");
 				rs.setReturnObject(outputMap);
@@ -12436,10 +12429,67 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 			outputMap.put("itemList", lObjConfigDao.getItemMaster(outputMap, con));
 			outputMap.put("todaysDate", lObjConfigDao.getDateFromDB(con));
 			outputMap.put("addStockList", lObjConfigDao.getInventoryCountingListForThisStore(outputMap, con));
-			rs.setViewName("../AddStock.jsp");
+			rs.setViewName("../AddStockBeverage.jsp");
 			rs.setReturnObject(outputMap);
 
 		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+
+	}
+
+
+	public CustomResultObject addStockStatusBeverage(HttpServletRequest request, Connection con)
+			throws FileUploadException, SQLException {
+
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		FileItemFactory itemFacroty = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFacroty);
+		// String webInfPath = cf.getPathForAttachments();
+
+		String appId = request.getParameter("app_id");
+
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("app_id", appId);
+		List<FileItem> toUpload = new ArrayList<>();
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+
+				if (item.isFormField()) {
+					hm.put(item.getFieldName(), item.getString());
+				} else {
+					toUpload.add(item);
+				}
+			}
+		}
+
+		try {
+			
+
+			
+
+			 lObjConfigDao.addStockStatusBeverage(con, hm);
+			
+			
+
+			rs.setReturnObject(outputMap);
+
+			rs.setAjaxData(
+					"<script>alert('Stock Added Succesfully');window.location='?a=showStockStatusBeverage'</script>");
+
+		}
+		catch (CustomerMobileAlreadyExist e)
+		 {
+			rs.setReturnObject(outputMap);
+			rs.setAjaxData("<script>alert('" + e.getMessage() + "');window.history.back();</script>");
+		} 
+		catch (Exception e) 
+		{
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
 			rs.setHasError(true);
 		}
@@ -12601,6 +12651,19 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 	}
 	
 	
+	public CustomResultObject deleteStockStatusBeverage(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		long stockId = Long.parseLong(request.getParameter("stockId"));
+		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
-	
+		try {
+
+			rs.setAjaxData(lObjConfigDao.deleteStockStatusBeverage(stockId, userId, con));
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
 }

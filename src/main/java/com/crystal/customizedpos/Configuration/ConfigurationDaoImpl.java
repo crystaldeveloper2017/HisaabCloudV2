@@ -7980,6 +7980,40 @@ return getListOfLinkedHashHashMap(parameters,
 					parameters, conWithF);
 			return "Holiday updated Succesfully";
 		}
+
+		public long addStockStatusBeverage(Connection conWithF, HashMap<String, Object> hm) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+
+
+			parameters.add(hm.get("hdnselecteditem"));
+			parameters.add(getDateASYYYYMMDD(hm.get("txtdate").toString()));
+			parameters.add(hm.get("txtstocktype"));
+			parameters.add(hm.get("txtqty"));
+			parameters.add(hm.get("txtremarks"));
+			parameters.add(hm.get("user_id"));
+			parameters.add(hm.get("app_id"));
+			String insertQuery = "insert into trn_beverage_stock_details values (default,?,?,?,?,?,?,sysdate(),1,?)";
+			return insertUpdateDuablDB(insertQuery, parameters, conWithF);
+		}
 	
+
+		public List<LinkedHashMap<String, Object>> getStockStatusBeverage(HashMap<String, Object> hm, Connection con)
+		throws SQLException, ClassNotFoundException {
+	ArrayList<Object> parameters = new ArrayList<>();
+	parameters.add(hm.get("app_id"));
+	return getListOfLinkedHashHashMap(parameters,
+			"select * from trn_beverage_stock_details tbsd , mst_items mi  where mi.item_id=tbsd.item_id and tbsd.activate_flag=1  and tbsd.app_id=?",
+			con);
+}
+
+		public String deleteStockStatusBeverage(long stockId, String userId, Connection conWithF) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(userId);
+			parameters.add(stockId);
+			insertUpdateDuablDB(
+					"UPDATE trn_beverage_stock_details SET activate_flag=0,updated_by=?,updated_date=sysdate() WHERE stock_id=?",
+					parameters, conWithF);
+			return "Stock Deleted Succesfully";
+		}
 
 }

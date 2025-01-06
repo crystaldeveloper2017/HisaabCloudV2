@@ -176,6 +176,8 @@
     - showAddStock
     - showStockStatusBeverage
     - showAddStockBeverage
+    - addStockStatusBeverage
+    - deleteStockStatusBeverage
   reports:
     - 1
     - 2
