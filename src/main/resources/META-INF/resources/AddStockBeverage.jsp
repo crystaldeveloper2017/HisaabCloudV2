@@ -41,6 +41,7 @@
   	    
       <input type="text" class="form-control form-control-sm" id="txtitem"   placeholder="Search For Item" name="txtitem"  list='itemList' oninput="checkforMatchItem()">
 	  <input type="hidden" name="hdnselecteditem" id="hdnselecteditem" value="">
+	  <input type="hidden" name="hdnstocktype" id="hdnstocktype" value="${param.type}">
       <span class="input-group-append">
                     <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
                   </span>  
@@ -49,13 +50,7 @@
   </div>
 
 
-   <div class="col-sm-12">
-  	<div class="form-group"> 
-  	<label for="email">Stock Type</label>     
-    <input type="txtstocktype" class="form-control form-control-sm" id="txtstocktype" name="txtstocktype" >          
-                
-    </div>
-  </div>
+   
 
   
      <div class="col-sm-12">
@@ -141,6 +136,7 @@ function checkforMatchItem()
 	if(itemId!=0)
 		{	
 			hdnselecteditem.value=itemId;
+			txtitem.readOnly=true;
 		}
 	
 }
@@ -275,10 +271,8 @@ else
 	
 function resetCustomer()
 {
-	txtsearchcustomer.disabled=false;
-	txtsearchcustomer.value="";
-	hdnSelectedCustomer.value=0;
-	txtpendingamount.value="";
+	txtitem.value="";
+	txtitem.readOnly=false;
 }
 
   

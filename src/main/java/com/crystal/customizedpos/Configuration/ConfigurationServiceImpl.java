@@ -2786,6 +2786,10 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
 			String appendor = "";
+
+
+			
+
 			
 
 			if (appType.equals("SnacksProduction"))

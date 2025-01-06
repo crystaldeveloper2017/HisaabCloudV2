@@ -244,11 +244,11 @@ function savePayment()
 			return;
 	}
 	
-	if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value && '${app_type}'!='PetrolPump')
-	{
-		alert('Only Todays Entry is allowed');			
-		return;
-	}
+	// if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value && '${app_type}'!='PetrolPump')
+	// {
+	// 	alert('Only Todays Entry is allowed');			
+	// 	return;
+	// }
 		
 	btnsavepayment.disabled=true;
 	

@@ -1018,6 +1018,18 @@ if(hm.get("user_id")!=null)
 
 			}
 
+			if (hm.get("app_type").equals("Beverage")) 
+			{				
+				//parameters.add(hm.get("hdnselecteditem"));
+				hm.put("hdnselecteditem",hm.get("item_id"));
+				hm.put("txtdate",hm.get("invoice_date"));			
+				hm.put("txtqty",item.get("qty"));		
+				hm.put("txtremarks","Debit Against Invoice No : "+invoiceNo);			
+				hm.put("type","Debit");
+				hm.put("details_id",detailsId);
+				addStockStatusBeverage(conWithF, hm);
+			}
+
 			if (item.get("RSPH") != null) {
 
 				parameters.add(detailsId);
@@ -7983,20 +7995,19 @@ return getListOfLinkedHashHashMap(parameters,
 
 		public long addStockStatusBeverage(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 			ArrayList<Object> parameters = new ArrayList<>();
-
-
 			parameters.add(hm.get("hdnselecteditem"));
 			parameters.add(getDateASYYYYMMDD(hm.get("txtdate").toString()));
-			parameters.add(hm.get("txtstocktype"));
+			parameters.add((hm.get("hdnstocktype").toString()));
 			parameters.add(hm.get("txtqty"));
 			parameters.add(hm.get("txtremarks"));
 			parameters.add(hm.get("user_id"));
 			parameters.add(hm.get("app_id"));
-			String insertQuery = "insert into trn_beverage_stock_details values (default,?,?,?,?,?,?,sysdate(),1,?)";
+			
+			String insertQuery = "insert into trn_beverage_stock_details values (default,?,?,?,?,?,?,sysdate(),1,?,NULL)";
 			return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 		}
-	
 
+		
 		public List<LinkedHashMap<String, Object>> getStockStatusBeverage(HashMap<String, Object> hm, Connection con)
 		throws SQLException, ClassNotFoundException {
 	ArrayList<Object> parameters = new ArrayList<>();

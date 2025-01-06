@@ -75,7 +75,7 @@ function configureLowStock(stockId)
                 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" >                    
-                    <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockBeverage&type=Remove'" value="Damaged Stock" class="form-control float-right" >                                         
+                    <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockBeverage&type=Damage'" value="Damaged Stock" class="form-control float-right" >                                         
                   </div>
                 </div>
                 
