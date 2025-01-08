@@ -3,5 +3,5 @@
     "java.compile.nullAnalysis.mode": "automatic",    
     "git.detectSubmodules": true,
     "editor.inlayHints.enabled": "off",    
-    "debug.autoExpandLazyVariables":true
+    "debug.autoExpandLazyVariables":"on"
 }

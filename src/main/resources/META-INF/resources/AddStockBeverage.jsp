@@ -50,7 +50,7 @@
   </div>
 
 
-   
+
 
   
      <div class="col-sm-12">
@@ -258,8 +258,8 @@ if('${param.type}'=="debit")
 	}
 else
 	{
-		document.getElementById("divTitle").innerHTML="Stock Status Beverage";
-		document.title +=" Stock Status Beverage";
+		document.getElementById("divTitle").innerHTML="${param.type} Stock Direct";
+		document.title +=" Add Stock Direct";
 	}
 	
 
