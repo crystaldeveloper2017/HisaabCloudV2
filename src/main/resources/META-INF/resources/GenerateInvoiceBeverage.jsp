@@ -737,12 +737,12 @@ function getItemDetailsAndAddToTable(itemId,purchaseDetailsId)
 	    	
 	    	
 	    	calculateAmount(itemId);
-	    	document.getElementById("txtqty"+itemId).select();
-	    	document.getElementById("txtqty"+itemId).focus();
+	    	// document.getElementById("txtqty"+itemId).select();
+	    	// document.getElementById("txtqty"+itemId).focus();
 	    	
-	    	$("#txtqty"+itemId).focus(function() { $(this).select(); } );
-	    	$("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
-	    	$("#txtamount"+itemId).focus(function() { $(this).select(); } );
+	    	// $("#txtqty"+itemId).focus(function() { $(this).select(); } );
+	    	// $("#txtcustomrate"+itemId).focus(function() { $(this).select(); } );
+	    	// $("#txtamount"+itemId).focus(function() { $(this).select(); } );
 
 
 			

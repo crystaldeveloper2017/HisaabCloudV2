@@ -174,12 +174,18 @@
     - saveRMStock
     - generatePendingCustomerCollectionReport
     - showAddStock
+    - showStockRegisterBeverage
+    - showAddStockBeverage
+    - addStockStatusBeverage
+    - deleteStockStatusBeverage
+    - showStockStatusDirect
   reports:
     - 1
     - 2
   elements:
     - 23
     - 700311
+    - 700312
     - 1
     - 700217
     - 700188
@@ -206,7 +212,6 @@
     - 700192
     - 700184
     - 700197
-    - 19
     - 25
     - 700201
     - 16

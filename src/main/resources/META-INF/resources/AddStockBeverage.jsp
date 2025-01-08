@@ -2,7 +2,7 @@
  
 
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
-<c:set var="customerMaster" value='${requestScope["outputObject"].get("customerMaster")}' />
+<c:set var="itemList" value='${requestScope["outputObject"].get("itemList")}' />
 <c:set var="app_type" value='${requestScope["outputObject"].get("app_type")}' />
 <c:set var="todaysDateMinusOneMonth" value='${requestScope["outputObject"].get("todaysDateMinusOneMonth")}' />
 
@@ -12,129 +12,68 @@
 
 <div class="container" style="padding:20px;background-color:white">
 
-<datalist id="customerList">
-<c:forEach items="${customerMaster}" var="customer">
-			    <option id="${customer.customerId}">${customer.customerName}~(${customer.mobileNumber})~(${customer.customerType})</option>			    
-	   </c:forEach>	 	   	   	
+ <datalist id="itemList">
+<c:forEach items="${itemList}" var="item">
+			    <option id="${item.item_id}">${item.item_name}~${item.product_code}</option>			    
+	   </c:forEach></select>	   	   	
 </datalist>
 
+
+<div class="container" style="padding:20px;background-color:white"> 
+
+<form id="frm" action="?a=addStockStatusBeverage" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+<input type="hidden" name="app_id" value="${userdetails.app_id}">
+<input type="hidden" name="user_id" value="${userdetails.user_id}">
+<input type="hidden" name="callerUrl" id="callerUrl" value="">
 
 
 <div class="col-sm-12">
   	<div class="form-group">
-  	<label for="email">Date</label>	
+  	<label for="email">Stock Date</label>	
   		<input type="text" id="txtdate" name="txtdate" class="form-control  form-control-sm" value="${todaysDate}" placeholder="Date" readonly/>
   	</div>
   </div>
 
 <div class="col-sm-12">
   	<div class="form-group"> 
-  	<label for="email">Customer Name</label> 
+  	<label for="email">Item Name</label> 
   	  	<div class="input-group input-group-sm">
   	    
-      <input type="text" class="form-control form-control-sm" id="txtsearchcustomer"   placeholder="Search For Customer" name="txtsearchcustomer"  list='customerList' oninput="checkforMatchCustomer()">
+      <input type="text" class="form-control form-control-sm" id="txtitem"   placeholder="Search For Item" name="txtitem"  list='itemList' oninput="checkforMatchItem()">
+	  <input type="hidden" name="hdnselecteditem" id="hdnselecteditem" value="">
+	  <input type="hidden" name="hdnstocktype" id="hdnstocktype" value="${param.type}">
       <span class="input-group-append">
                     <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
                   </span>  
                   </div>    
-      <input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value="">
-	  <input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">      
-    </div>
-	
+     
   </div>
+
+
+
+
   
- <c:if test="${userdetails.app_type eq 'Beverage'}">
-
- <div class="col-sm-12">
-  <div class="form-group"> 
-    <label for="email">Current Balance</label>
-    <!-- Read-only input for the PendingAmount -->
-    <input type="text" 
-           class="form-control form-control-sm" 
-           id="txtpendingamount" 
-           value="${item.PendingAmount}" 
-           readonly>
-    <!-- Link for customer ledger -->
-    <a href="#" onclick="showLedgerForThisCustomer()" 
-
-
-       class="btn btn-link">
-      View Ledger Details
-    </a>
-  </div>
-</div>
-   </c:if>
-
-<c:if test="${userdetails.app_type ne 'Beverage'}">
      <div class="col-sm-12">
   	<div class="form-group"> 
-  	<label for="email">Current Balance</label>     
-      <input type="text" class="form-control form-control-sm" id="txtpendingamount" readonly=true >          
-    </div>
-  </div>
-
-   </c:if>
-
-   
-  <div class="col-sm-12">
-  	<div class="form-group">
-  	
-  	<c:if test="${param.type eq 'debit'}">
-  		<label for="email">Debit Amount</label>
-  	</c:if>
-  	
-  	<c:if test="${param.type ne 'debit'}">
-  		<label for="email">Credit Amount</label>
-  	</c:if>
-  	     
-      <input type="tel" class="form-control form-control-sm" id="txtpayamount" >          
-    </div>
-  </div>
-  
-  
-  
-  <c:if test="${param.type eq 'debit'}">  		
-	    <select class='form-control form-control-sm' id="drppaymentmode" style="display:none">
-	    </select>
-  </c:if>
-  
-  
-  
-  
-  
-  <c:if test="${param.type ne 'debit'}">  		
-	  <div class="col-sm-12">
-	  	<div class="form-group"> 
-	  	<label for="email">Payment Mode</label>
-	  	
-	  	 <select class='form-control form-control-sm' id="drppaymentmode">
-						  				<option value="Cash">Cash</option>		  				
-						  				<option value="Paytm">Paytm</option>
-						  				<option value="Amazon">Amazon</option>
-						  				<option value="Google Pay">Google Pay</option>
-						  				<option value="Phone Pay">Phone Pay</option>
-						  				<option value="Card">Card</option>						  				
-						  				<option value="Kasar">Kasar</option>
-										<option value="Cheque">Cheque</option>					  									  				
-				  					</select>
-	  	     
-	                
-	    </div>
-	  </div>  
-  </c:if>
-  
-  
-    <div class="col-sm-12">
-  	<div class="form-group"> 
-  	<label for="email">Remarks</label>     
-                   <input type="txtremarks" class="form-control form-control-sm" id="txtremarks" >          
+  	<label for="email">Qty</label>     
+    <input type="txtqty" class="form-control form-control-sm" id="txtqty" name="txtqty" >          
                 
     </div>
   </div>
 
-  	 	
+
+   <div class="col-sm-12">
+  	<div class="form-group"> 
+  	<label for="email">Remarks</label>     
+    <input type="txtremarks" class="form-control form-control-sm" id="txtremarks" name="txtremarks" >          
+                
+    </div>
+  </div>
+
+
+
   	 		  
-	   	<button class="btn btn-success" type="button" id="btnsavepayment" onclick='savePayment()'>Save</button>   
+	   	<button class="btn btn-success" type="button" id="btnsave" onclick='addStockStatusBeverage()'>Save</button>   
 	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
 
 
@@ -168,7 +107,7 @@ function searchForCustomer(searchString)
 	    		reqString+="<option id="+cusomerList[x].customer_id+">"+cusomerList[x].customer_name+"-"+cusomerList[x].mobile_number+"-"+cusomerList[x].customer_type+"</option>";
 	    	}
 	    	
-	    	document.getElementById('customerList').innerHTML=reqString;
+	    	document.getElementById('itemList').innerHTML=reqString;
 		}
 	  };
 	  xhttp.open("GET","?a=searchForCustomer&searchString="+searchString, true);    
@@ -178,34 +117,32 @@ function searchForCustomer(searchString)
 	
 }
 
-function checkforMatchCustomer()
+function checkforMatchItem()
 {
-	var searchString= document.getElementById("txtsearchcustomer").value;
-	if(searchString.length<3){return;}
-	var options1=document.getElementById("customerList").options;
-	var customerId=0;
+	var searchString= document.getElementById("txtitem").value;	
+	var options1=document.getElementById("itemList").options;
+	
+	
+	var itemId=0;
 	for(var x=0;x<options1.length;x++)
 		{
 			if(searchString==options1[x].value)
 				{
-					customerId=options1[x].id;
+				itemId=options1[x].id;
+				
 					break;
 				}
 		}
-	if(customerId!=0)
-		{
-			document.getElementById("hdnSelectedCustomer").value=customerId;			
-			document.getElementById("txtsearchcustomer").disabled=true;			
-			document.getElementById("hdnSelectedCustomerType").value=document.getElementById("txtsearchcustomer").value.split("-")[2];
-			getPendingAmountForThisCustomer(customerId);			
+	if(itemId!=0)
+		{	
+			hdnselecteditem.value=itemId;
+			txtitem.readOnly=true;
 		}
-	else
-		{
-			//searchForCustomer(searchString);
-		}
-	
 	
 }
+
+
+
 
 function getPendingAmountForThisCustomer(customerId)
 {
@@ -244,11 +181,11 @@ function savePayment()
 			return;
 	}
 	
-	// if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value && '${app_type}'!='PetrolPump')
-	// {
-	// 	alert('Only Todays Entry is allowed');			
-	// 	return;
-	// }
+	if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value && '${app_type}'!='PetrolPump')
+	{
+		alert('Only Todays Entry is allowed');			
+		return;
+	}
 		
 	btnsavepayment.disabled=true;
 	
@@ -298,6 +235,15 @@ function savePayment()
 }
 
 
+function addStockStatusBeverage()
+{	
+	
+	
+	
+	document.getElementById("frm").submit(); 
+}
+
+
 function showCustomer()
 {
 	window.location='?a=showSalesRegister&customerId='+hdnSelectedCustomer.value;
@@ -312,8 +258,8 @@ if('${param.type}'=="debit")
 	}
 else
 	{
-		document.getElementById("divTitle").innerHTML="Collect Payment From Customer";
-		document.title +=" Collect Payment From Customer";
+		document.getElementById("divTitle").innerHTML="${param.type} Stock Direct";
+		document.title +=" Add Stock Direct";
 	}
 	
 
@@ -325,13 +271,9 @@ else
 	
 function resetCustomer()
 {
-	txtsearchcustomer.disabled=false;
-	txtsearchcustomer.value="";
-	hdnSelectedCustomer.value=0;
-	txtpendingamount.value="";
+	txtitem.value="";
+	txtitem.readOnly=false;
 }
 
-  txtfromdate.value='${txtfromdate}';
-  txttodate.value='${txttodate}';
-
+  
 </script>

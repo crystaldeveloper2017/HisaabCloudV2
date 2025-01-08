@@ -1003,6 +1003,33 @@ if(hm.get("user_id")!=null)
 
 			}
 
+			hm.put("details_id", detailsId);
+			hm.put("unique_no", item.get("unique_no"));
+			hm.put("warranty", item.get("warranty"));
+			hm.put("invoice_id", invoiceId);
+			hm.put("item_id", item.get("item_id"));
+			
+			
+
+			if (hm.get("app_type").equals("Electric")) {
+				insertUpdateCustomParameterized(
+						"insert into rlt_invoice_electric_details values (default,:invoice_id,:details_id,:unique_no,:warranty,sysdate(),:app_id)",
+						hm, conWithF);
+
+			}
+
+			if (hm.get("app_type").equals("Beverage")) 
+			{				
+				//parameters.add(hm.get("hdnselecteditem"));
+				hm.put("hdnselecteditem",hm.get("item_id"));
+				hm.put("txtdate",hm.get("invoice_date"));			
+				hm.put("txtqty",item.get("qty"));		
+				hm.put("txtremarks","Debit Against Invoice No : "+invoiceNo);			
+				hm.put("hdnstocktype","Debit");
+				hm.put("details_id",detailsId);
+				addStockStatusBeverage(conWithF, hm);
+			}
+
 			if (item.get("RSPH") != null) {
 
 				parameters.add(detailsId);
@@ -1793,7 +1820,7 @@ if(hm.get("user_id")!=null)
 				+ " left outer join mst_customer cust on inv.customer_id=cust.customer_id and inv.app_id=cust.app_id  "
 				+ "left outer join tbl_user_mst usertbl on inv.updated_by = usertbl.user_id "
 				+ " left outer join trn_payment_register paymnt on inv.invoice_id =paymnt.ref_id and paymnt.activate_flag=1 and paymnt.payment_for='invoice' and paymnt.app_id = inv.app_id "
-				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id left outer join trn_invoice_details tid on tid.invoice_id=inv.invoice_id left outer join rlt_invoice_battery_details ribd on ribd.details_id=tid.details_id "
+				+ " inner join mst_store store1 on inv.store_id=store1.store_id left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id = inv.invoice_id left outer join trn_invoice_details tid on tid.invoice_id=inv.invoice_id left outer join rlt_invoice_electric_details ribd on ribd.details_id=tid.details_id "
 				+ "where date(invoice_date) between ? and ?  and inv.app_id=?   "
 				+ "and usertbl.app_id=inv.app_id and store1.app_id=inv.app_id and inv.activate_flag=1 ";
 
@@ -1855,11 +1882,11 @@ if(hm.get("user_id")!=null)
 
 		if (hm1.get("battery_no") != null && !hm1.get("battery_no").equals("")) {
 
-			query += " and ribd.battery_no like ? ";
+			query += " and ribd.unique_no like ? ";
 			parameters.add("%" + hm1.get("battery_no") + "%");
 		}
 
-		query += "group by tid.invoice_id order by invoice_date,rifd.invoice_id asc ";
+		query += "group by tid.invoice_id order by invoice_no desc ,invoice_date desc ,rifd.invoice_id asc ";
 		return getListOfLinkedHashHashMap(parameters, query, con);
 
 	}
@@ -2449,13 +2476,14 @@ if(hm.get("user_id")!=null)
 				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
 				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
 				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
+				+ " left outer join rlt_invoice_electric_details ried on ried.invoice_id=invoice.invoice_id \r\n"
 				+ "where invoice.invoice_id=? order by dtls.details_id", con);
 
 		parameters = new ArrayList<>();
 		parameters.add(invoiceId);
 
 		itemDetailsMap.put("listOfItems",
-				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,"
+				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,ried.*,ried.warranty as warrantyelectric,"
 						+ "(select case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from tbl_attachment_mst tam2 "
 						+ "where tam2.file_id=item.item_id and tam2.type='Image' limit 1 ) ImagePath,"
 						+ " sum(coalesce(qty_to_return,0)) ReturnedQty,dtls.details_id theDetailsId \r\n"
@@ -2464,7 +2492,8 @@ if(hm.get("user_id")!=null)
 						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
 						+ " left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
 						+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
-						+ "where\r\n" + "invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
+						+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
+						+ "where\r\n" + "dtls.invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
 		return itemDetailsMap;
 
 	}
@@ -7883,5 +7912,166 @@ return getListOfLinkedHashHashMap(parameters,
 						" rmm.app_id =? and rmm.activate_flag=1  order by rmm.raw_material_name",
 				conWithF);
 	}
+
+	
+			public List<LinkedHashMap<String, Object>> getReplacementRegister(Connection con)
+			throws SQLException, ClassNotFoundException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		return getListOfLinkedHashHashMap(parameters,
+				"select\r\n" + //
+										"\ttrr.updated_date,trr.replacement_id,mc2.customer_name,tir.invoice_date ,mc.category_name ,mi.item_name ,ried.unique_no ,trr.unique_no replacementNo\r\n" + //
+										"from\r\n" + //
+										"\ttrn_replacement_register trr ,\r\n" + //
+										"\trlt_invoice_electric_details ried,\r\n" + //
+										"\ttrn_invoice_details tid ,\r\n" + //
+										"\ttrn_invoice_register tir ,\r\n" + //
+										"\tmst_items mi ,\r\n" + //
+										"\tmst_category mc ,\r\n" + //
+										"\tmst_customer mc2 \r\n" + //
+										"where\r\n" + //
+										"\ttrr.rlt_invoice_id = ried .rlt_invoice_electric_pk\r\n" + //
+										"\tand tid.details_id =ried .details_id\r\n" + //
+										"\tand tir.invoice_id =tid.invoice_id \r\n" + //
+										"\tand mi.item_id =tid.item_id \r\n" + //
+										"\tand mi.parent_category_id =mc.category_id \r\n" + //
+										"\tand mc2.customer_id =tir.customer_id \r\n" + //
+										";\r\n" + //
+										"\r\n" + //
+										"  ",
+				con);
+		}
+
+		public LinkedHashMap<String, String> getReplacementDetails(HashMap<String, Object> hm, Connection con) throws SQLException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("replacement_id"));
+			
+			
+			return getMap(parameters,
+					"select * from trn_replacement_register where replacement_id=?",
+					con);
+		}
+
+
+		public long addReplacement(Connection con, HashMap<String, Object> hm) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			
+			
+			String query="insert into trn_replacement_register values (default,?,?,?,sysdate(),1)";
+			parameters.add(hm.get("rltinvoiceid"));
+			parameters.add(hm.get("txtinvoiceno"));
+			parameters.add(hm.get("user_id"));
+			
+			
+			return insertUpdateDuablDB(query, parameters,
+					con);
+		}
+
+		
+	 
+		public String updateReplacement(long replacementId, Connection conWithF, HashMap<String, Object> hm) throws Exception {
+
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("txtinvoiceno"));
+			
+	
+			parameters.add(replacementId);
+	
+			insertUpdateDuablDB(
+					"UPDATE trn_replacement_register  SET invoice_no=?,updated_date=SYSDATE() WHERE replacement_id=?",
+					parameters, conWithF);
+			return "Employee Updated Succesfully";
+	
+		}
+
+		public String deleteReplacement(long replacementId,String userId, Connection conWithF) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			
+			parameters.add(userId);
+			parameters.add(replacementId);
+			insertUpdateDuablDB("UPDATE trn_replacement_register  SET activate_flag=0,updated_date=SYSDATE(),updated_by=? WHERE replacement_id=?",
+					parameters, conWithF);
+			return "Holiday updated Succesfully";
+		}
+
+		public long addStockStatusBeverage(Connection conWithF, HashMap<String, Object> hm) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("hdnselecteditem"));
+			parameters.add(getDateASYYYYMMDD(hm.get("txtdate").toString()));			
+			parameters.add((hm.get("hdnstocktype").toString()));
+
+			if(hm.get("hdnstocktype").toString().equals("Damage") || hm.get("hdnstocktype").toString().equals("Debit"))
+			{
+				parameters.add("-"+hm.get("txtqty"));
+			}
+			else
+			{
+				parameters.add(hm.get("txtqty"));
+			}
+			
+			parameters.add(hm.get("txtremarks"));
+			parameters.add(hm.get("user_id"));
+			parameters.add(hm.get("app_id"));
+
+
+			
+			
+			String insertQuery = "insert into trn_stock_direct_details values (default,?,?,?,?,?,?,sysdate(),1,?,NULL)";
+			return insertUpdateDuablDB(insertQuery, parameters, conWithF);
+		}
+
+		
+	
+
+public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDate,String toDate,HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		parameters.add((getDateASYYYYMMDD(fromDate)));
+			parameters.add((getDateASYYYYMMDD(toDate)));
+
+		return getListOfLinkedHashHashMap(parameters,
+				"select *, date_format(stock_date,'%d/%m/%Y' ) as stock_date from trn_stock_direct_details tsdd,mst_items mi where mi.item_id=tsdd.item_id and tsdd.activate_flag=1 and tsdd.app_id=? and date(tsdd.stock_date) between ? and ?",
+				con);
+	}
+
+
+
+
+		public String deleteStockStatusBeverage(long stockId, String userId, Connection conWithF) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(userId);
+			parameters.add(stockId);
+			insertUpdateDuablDB(
+					"UPDATE trn_stock_direct_details SET activate_flag=0,updated_by=?,updated_date=sysdate() WHERE stock_id=?",
+					parameters, conWithF);
+			return "Stock Deleted Succesfully";
+		}
+
+		public List<LinkedHashMap<String, Object>> getStockStatusDirect(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		
+
+		return getListOfLinkedHashHashMap(parameters,
+				"select\r\n" + //
+										"\tmi.item_name ,\r\n" + //
+										"\tmc.category_name ,\r\n" + //
+										"\tsum(qty) qty_available\r\n" + //
+										"from\r\n" + //
+										"\ttrn_stock_direct_details tsdd,\r\n" + //
+										"\tmst_items mi,\r\n" + //
+										"\tmst_category mc \r\n" + //
+										"where\r\n" + //
+										"\r\n" + //
+										"\ttsdd.item_id = mi.item_id\r\n" + //
+										"\tand mi.parent_category_id =mc.category_id \r\n" + //
+										"\tand tsdd.activate_flag = 1\r\n" + //
+										"\tand tsdd.app_id =?\r\n" + //
+										"\t",
+				con);
+	}
+
+
 
 }
