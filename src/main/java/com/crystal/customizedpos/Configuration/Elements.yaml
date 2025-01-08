@@ -619,7 +619,7 @@ elements:
 - elementId: 700312
   elementName: "Stock Status Beverage"
   parentElementId: 2
-  elementUrl: "?a=showStockStatusBeverage"
+  elementUrl: "?a=showStockRegisterBeverage"
   orderNo: 1
 - elementId: 700313
   elementName: "Add Replacement"

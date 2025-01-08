@@ -2,7 +2,6 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "automatic",    
     "git.detectSubmodules": true,
-    "editor.inlayHints.enabled": "off",
-    "debug.variables.autoExpand": true
-
+    "editor.inlayHints.enabled": "off",    
+    "debug.autoExpandLazyVariables":"on"
 }

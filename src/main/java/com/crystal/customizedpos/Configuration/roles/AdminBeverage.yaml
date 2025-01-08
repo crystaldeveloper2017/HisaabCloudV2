@@ -174,8 +174,11 @@
     - saveRMStock
     - generatePendingCustomerCollectionReport
     - showAddStock
-    - showStockStatusBeverage
+    - showStockRegisterBeverage
     - showAddStockBeverage
+    - addStockStatusBeverage
+    - deleteStockStatusBeverage
+    - showStockStatusDirect
   reports:
     - 1
     - 2

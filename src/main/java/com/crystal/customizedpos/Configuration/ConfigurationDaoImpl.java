@@ -1018,6 +1018,18 @@ if(hm.get("user_id")!=null)
 
 			}
 
+			if (hm.get("app_type").equals("Beverage")) 
+			{				
+				//parameters.add(hm.get("hdnselecteditem"));
+				hm.put("hdnselecteditem",hm.get("item_id"));
+				hm.put("txtdate",hm.get("invoice_date"));			
+				hm.put("txtqty",item.get("qty"));		
+				hm.put("txtremarks","Debit Against Invoice No : "+invoiceNo);			
+				hm.put("hdnstocktype","Debit");
+				hm.put("details_id",detailsId);
+				addStockStatusBeverage(conWithF, hm);
+			}
+
 			if (item.get("RSPH") != null) {
 
 				parameters.add(detailsId);
@@ -7980,6 +7992,86 @@ return getListOfLinkedHashHashMap(parameters,
 					parameters, conWithF);
 			return "Holiday updated Succesfully";
 		}
+
+		public long addStockStatusBeverage(Connection conWithF, HashMap<String, Object> hm) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(hm.get("hdnselecteditem"));
+			parameters.add(getDateASYYYYMMDD(hm.get("txtdate").toString()));			
+			parameters.add((hm.get("hdnstocktype").toString()));
+
+			if(hm.get("hdnstocktype").toString().equals("Damage") || hm.get("hdnstocktype").toString().equals("Debit"))
+			{
+				parameters.add("-"+hm.get("txtqty"));
+			}
+			else
+			{
+				parameters.add(hm.get("txtqty"));
+			}
+			
+			parameters.add(hm.get("txtremarks"));
+			parameters.add(hm.get("user_id"));
+			parameters.add(hm.get("app_id"));
+
+
+			
+			
+			String insertQuery = "insert into trn_stock_direct_details values (default,?,?,?,?,?,?,sysdate(),1,?,NULL)";
+			return insertUpdateDuablDB(insertQuery, parameters, conWithF);
+		}
+
+		
 	
+
+public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDate,String toDate,HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		parameters.add((getDateASYYYYMMDD(fromDate)));
+			parameters.add((getDateASYYYYMMDD(toDate)));
+
+		return getListOfLinkedHashHashMap(parameters,
+				"select *, date_format(stock_date,'%d/%m/%Y' ) as stock_date from trn_stock_direct_details tsdd,mst_items mi where mi.item_id=tsdd.item_id and tsdd.activate_flag=1 and tsdd.app_id=? and date(tsdd.stock_date) between ? and ?",
+				con);
+	}
+
+
+
+
+		public String deleteStockStatusBeverage(long stockId, String userId, Connection conWithF) throws Exception {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(userId);
+			parameters.add(stockId);
+			insertUpdateDuablDB(
+					"UPDATE trn_stock_direct_details SET activate_flag=0,updated_by=?,updated_date=sysdate() WHERE stock_id=?",
+					parameters, conWithF);
+			return "Stock Deleted Succesfully";
+		}
+
+		public List<LinkedHashMap<String, Object>> getStockStatusDirect(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException, ParseException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(hm.get("app_id"));
+		
+
+		return getListOfLinkedHashHashMap(parameters,
+				"select\r\n" + //
+										"\tmi.item_name ,\r\n" + //
+										"\tmc.category_name ,\r\n" + //
+										"\tsum(qty) qty_available\r\n" + //
+										"from\r\n" + //
+										"\ttrn_stock_direct_details tsdd,\r\n" + //
+										"\tmst_items mi,\r\n" + //
+										"\tmst_category mc \r\n" + //
+										"where\r\n" + //
+										"\r\n" + //
+										"\ttsdd.item_id = mi.item_id\r\n" + //
+										"\tand mi.parent_category_id =mc.category_id \r\n" + //
+										"\tand tsdd.activate_flag = 1\r\n" + //
+										"\tand tsdd.app_id =?\r\n" + //
+										"\t",
+				con);
+	}
+
+
 
 }

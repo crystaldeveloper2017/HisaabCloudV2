@@ -1,29 +1,120 @@
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-           
-           
-           
+ 
 
-
-<c:set var="itemList" value='${requestScope["outputObject"].get("itemList")}' />
-<c:set var="addStockList" value='${requestScope["outputObject"].get("addStockList")}' />
 <c:set var="todaysDate" value='${requestScope["outputObject"].get("todaysDate")}' />
-<c:set var="stockModificationDetails" value='${requestScope["outputObject"].get("stockModificationDetails")}' />
+<c:set var="itemList" value='${requestScope["outputObject"].get("itemList")}' />
+<c:set var="app_type" value='${requestScope["outputObject"].get("app_type")}' />
+<c:set var="todaysDateMinusOneMonth" value='${requestScope["outputObject"].get("todaysDateMinusOneMonth")}' />
+
+
+
+<br>
+
+<div class="container" style="padding:20px;background-color:white">
+
+ <datalist id="itemList">
+<c:forEach items="${itemList}" var="item">
+			    <option id="${item.item_id}">${item.item_name}~${item.product_code}</option>			    
+	   </c:forEach></select>	   	   	
+</datalist>
+
+
+<div class="container" style="padding:20px;background-color:white"> 
+
+<form id="frm" action="?a=addStockStatusBeverage" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+<input type="hidden" name="app_id" value="${userdetails.app_id}">
+<input type="hidden" name="user_id" value="${userdetails.user_id}">
+<input type="hidden" name="callerUrl" id="callerUrl" value="">
+
+
+<div class="col-sm-12">
+  	<div class="form-group">
+  	<label for="email">Stock Date</label>	
+  		<input type="text" id="txtdate" name="txtdate" class="form-control  form-control-sm" value="${todaysDate}" placeholder="Date" readonly/>
+  	</div>
+  </div>
+
+<div class="col-sm-12">
+  	<div class="form-group"> 
+  	<label for="email">Item Name</label> 
+  	  	<div class="input-group input-group-sm">
+  	    
+      <input type="text" class="form-control form-control-sm" id="txtitem"   placeholder="Search For Item" name="txtitem"  list='itemList' oninput="checkforMatchItem()">
+	  <input type="hidden" name="hdnselecteditem" id="hdnselecteditem" value="">
+	  <input type="hidden" name="hdnstocktype" id="hdnstocktype" value="${param.type}">
+      <span class="input-group-append">
+                    <button type="button" class="btn btn-danger btn-flat" onclick="resetCustomer()">Reset</button>
+                  </span>  
+                  </div>    
+     
+  </div>
 
 
 
 
+  
+     <div class="col-sm-12">
+  	<div class="form-group"> 
+  	<label for="email">Qty</label>     
+    <input type="txtqty" class="form-control form-control-sm" id="txtqty" name="txtqty" >          
+                
+    </div>
+  </div>
 
 
-</head>
+   <div class="col-sm-12">
+  	<div class="form-group"> 
+  	<label for="email">Remarks</label>     
+    <input type="txtremarks" class="form-control form-control-sm" id="txtremarks" name="txtremarks" >          
+                
+    </div>
+  </div>
+
+
+
+  	 		  
+	   	<button class="btn btn-success" type="button" id="btnsave" onclick='addStockStatusBeverage()'>Save</button>   
+	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
+
+
 
 
 <script >
+	
+	
+</script>
 
 
 
-function removethisitem(btn1)
-{
-	btn1.parentElement.parentElement.remove();	 
+<script >
+function searchForCustomer(searchString)
+{	
+	console.log(5);
+	if(searchString.length<3){return;}
+
+	document.getElementById("closebutton").style.display='none';
+	   document.getElementById("loader").style.display='block';
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	var cusomerList=JSON.parse(xhttp.responseText);
+	    	var reqString="";
+	    	for(var x=0;x<cusomerList.length;x++)
+	    	{
+	    		//console.log(cusomerList[x]);
+	    		reqString+="<option id="+cusomerList[x].customer_id+">"+cusomerList[x].customer_name+"-"+cusomerList[x].mobile_number+"-"+cusomerList[x].customer_type+"</option>";
+	    	}
+	    	
+	    	document.getElementById('itemList').innerHTML=reqString;
+		}
+	  };
+	  xhttp.open("GET","?a=searchForCustomer&searchString="+searchString, true);    
+	  xhttp.send();
+	
+	 
+	
 }
 
 function checkforMatchItem()
@@ -43,24 +134,9 @@ function checkforMatchItem()
 				}
 		}
 	if(itemId!=0)
-		{			
-				
-				
-				var total=0;
-				var rows=tblitems.rows;
-				for(var x=1;x<rows.length;x++)
-					{							
-						if(itemId==rows[x].childNodes[0].innerHTML)
-							{
-								alert('item already exist in selection');
-								document.getElementById("txtitem").value="";
-								return;
-							}
-					}
-				
-				// code to check if item already exist inselection				
-			getItemDetailsAndAddToTable(itemId,searchString);
-				document.getElementById("txtitem").value="";
+		{	
+			hdnselecteditem.value=itemId;
+			txtitem.readOnly=true;
 		}
 	
 }
@@ -68,251 +144,136 @@ function checkforMatchItem()
 
 
 
-function getItemDetailsAndAddToTable(itemId,itemName)
+function getPendingAmountForThisCustomer(customerId)
 {
-	
 	document.getElementById("closebutton").style.display='none';
-	document.getElementById("loader").style.display='block';
-	
+	   document.getElementById("loader").style.display='block';
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() 
 	  {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) 
-	    { 	
-		    	
-	    	//alert(xhttp.responseText);
-	    	var itemDetails=JSON.parse(xhttp.responseText);
-	    	console.log(itemDetails);
-	    	var table = document.getElementById("tblitems");	    	
-	    	var row = table.insertRow(-1);
-	    	var cell0 = row.insertCell(0);
-	    	var cell1 = row.insertCell(1);
-	    	var cell2 = row.insertCell(2);
-	    	var cell3 = row.insertCell(3);
-	    	var cell4 = row.insertCell(4);
-	    	var cell5 = row.insertCell(5);
-	    	
-	    	var cell6 = row.insertCell(6);
-	    	
-	    	var arritemName=itemName.split('~');
-	    	
-	    	
-	    	cell0.innerHTML = itemId;
-	    	cell1.innerHTML = arritemName[1];
-	    	cell2.innerHTML = arritemName[0];
-	    	cell3.innerHTML = " <input type='text' class='form-control input-sm' id='txtqty' readonly  onkeypress='digitsOnlyWithDot(event)' value="+itemDetails.stockAvailable+">";   	
-	    	cell4.innerHTML = '<input  type="text" class="form-control"  onkeyup="digitsOnlyWithDot(event)">';
-	    	cell5.innerHTML = '<input  type="text" class="form-control" >';
-	    	
-	    	
-	    	cell6.innerHTML = '<button type="button" class="btn btn-danger"  onclick=removethisitem(this) id="btn11" style="cursor:pointer">Delete</button>';
-	    	
+	    { 		      
+	    	var responseData=JSON.parse(xhttp.responseText);	   
+			var details=responseData.reqData;
+ 	
+	    	if(details.pendingAmountDetails.PendingAmount!=undefined)
+	    		{
+	    			txtpendingamount.value=details.pendingAmountDetails.PendingAmount;
+	    		}
+	    	else
+	    		{
+	    			alert("no pending amount for this customer");
+	    			//window.location.reload();
+	    		}
 		}
 	  };
-	  xhttp.open("GET","?a=getItemDetailsByAjax&itemId="+itemId+"&sourceStoreId=${userdetails.store_id}", true);    
-	  xhttp.send();	
-	    
-		
-	  
-			
+	  xhttp.open("GET","?a=getPendingAmountForCustomer&customerId="+customerId, true);    
+	  xhttp.send();
 }
 
 
-function printLabels()
+function savePayment()
 {
 	
-	var rows=tblitems.rows;
-	
-	var requiredDetails=[];
-	 
-	
-	var arr = [];
-	var itemString="";
-	var confirmMessage="";
-	var proceedFlag=true;
-	for (var x= 1; x < rows.length; x++) 
-	{   
-	    // ID, differenceQty
-	    var id=rows[x].childNodes[0].innerHTML;
-	    var qty=rows[x].childNodes[4].childNodes[0].value;
-	    var currentQty=rows[x].childNodes[3].childNodes[1].value;
-	    var remarks=rows[x].childNodes[5].childNodes[0].value;
-	    itemString+=id+"~"+qty+"~"+currentQty+"~"+remarks+"|";
+	if(txtpayamount.value=='')
+	{
+			alert('Amount is Mandatory field');			
+			return;
 	}
 	
+	if('${param.type}'!='debit' && '${todaysDate}'!=txtdate.value && '${app_type}'!='PetrolPump')
+	{
+		alert('Only Todays Entry is allowed');			
+		return;
+	}
+		
+	btnsavepayment.disabled=true;
 	
-	 var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) 
-	    {
-	    	window.location="?a=showStockStatus";
-	    }
-	  };
-	  xhttp.open("POST", "?a=addStock", true);
-	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");	  
-	  xhttp.send("itemDetails="+itemString+"&action=${param.type}"+"&outerremarks="+remarksouter.value+"&app_id=${userdetails.app_id}"+"&user_id=${userdetails.user_id}"); 
+	document.getElementById("closebutton").style.display='none';
+	   document.getElementById("loader").style.display='block';
+	//$('#myModal').modal({backdrop: 'static', keyboard: false});;
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() 
+		  {
+		    if (xhttp.readyState == 4 && xhttp.status == 200) 
+		    { 		
+		    	var details=JSON.parse(xhttp.responseText);
+		    	//$("#myModal").modal('hide');
+		    	
+		    		toastr["success"]("Record Updated Successfully");
+		    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
+		    	  "positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "1000",
+		    	  "hideDuration": "500","timeOut": "500","extendedTimeOut": "500","showEasing": "swing","hideEasing": "linear",
+		    	  "showMethod": "fadeIn","hideMethod": "fadeOut"} 
+		    	  	
+		    	txtsearchcustomer.value="";
+		    	txtsearchcustomer.disabled=false;		    	
+		    	txtpendingamount.value="";
+		    	txtpayamount.value="";
+		    	txtremarks.value="";
+		    	drppaymentmode.value="Cash";
+		    	btnsavepayment.disabled=false;
+			}
+		  };
+		  
+		  xhttp.open("GET","?a=savePayment&app_id=${userdetails.app_id}&user_id=${userdetails.user_id}&store_id=${userdetails.store_id}&customerId="+hdnSelectedCustomer.value+"&payAmount="+txtpayamount.value+
+				  "&paymentMode="+drppaymentmode.value+
+				  "&txtdate="+txtdate.value+
+				  
+				  "&remarks="+txtremarks.value, true);    
+		  xhttp.send();
+		
 }
 
 
-
-</script>
-
-
-
-<br>
-
-
-
-<div class="container" style="padding:20px;background-color:white">
-
-<form id="frm"  method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-<div class="row">
-
-
-<div class="col-sm-6">
-  	<div class="form-group">      
-  		<input type="text" class="form-control"    placeholder="Search for Items" list="itemList" id="txtitem" name="txtitem" oninput="checkforMatchItem()">          
-    </div>
-  </div>
-  
-  <div class="col-sm-6">
-  	<div class="form-group">      
-  		<input type="text" id="txtinvoicedate" name="txtinvoicedate" class="form-control form-control-sm" value="${todaysDate}" placeholder="Invoice Date" readonly/>          
-    </div>
-  </div>
-  
-  <datalist id="itemList">
-<c:forEach items="${itemList}" var="item">
-			    <option id="${item.item_id}">${item.item_name}~${item.product_code}</option>			    
-	   </c:forEach></select>	   	   	
-</datalist>
-
-
-<div class="col-sm-12">  
-	  <div class="card-body table-responsive p-0" style="height: 370px;">                
-	                <table id="tblitems"  class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-	                  <thead>
-	                    <tr align="center">
-	                     <th style="z-index:0">Item Id</th>
-	                     <th style="z-index:0">Product Code</th>
-	  			<th style="z-index:0">Item Name</th>
-	  			<th style="z-index:0">Current Stock</th>
-	  			<th style="z-index:0">${param.type } Qty</th>
-	  			<th style="z-index:0">Remarks</th>	  			  				  				  			  				  				  			
-	  			<th></th>
-	                    </tr>
-	                  </thead>
-	                </table>
-	   </div>	
-  </div>
-  
-  <div class="col-sm-12" align="center">
-  	<div class="form-group">  	      
-  		<input type="text" class="form-control" id="remarksouter" value=""  placeholder="eg. Remarks" name="remarksouter">				          
-    </div>
-  </div>
-  
-  
-
-  
-  <div class="col-sm-12" align="center">
-  	<div class="form-group">  	      
-  		<button class="btn btn-success" type="button" onclick='printLabels()'>Save</button>
-		<button class="btn btn-danger" id="btncancel" type="reset" onclick='window.location="?a=showStockModifications"'>Cancel</button>		          
-    </div>
-  </div>
-  
-  
-  
-  
-  
-  
-   <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="height: 580px;">                
-                <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                    <tr>
-                     	<th><b>Store Name</b></th><th><b>Item name</b></th> <th><b>Qty</b></th><th><b>Invoice No</b></th><th><b>Updated date</b></th><th><b>Type</b></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-				<c:forEach items="${addStockList}" var="item">
-					<tr >
-						<td>${item.store_name}</td><td>${item.item_name}</td><td>${item.qty}</td><td>${item.invoice_no}</td><td>${item.FormattedUpdatedDate}</td><td>${item.type}</td>
-					</tr>
-				</c:forEach>
-				
-				
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-  
-  
-		
-	 
-</div>
-
-</form>
-
-<script >
+function addStockStatusBeverage()
+{	
 	
 	
+	
+	document.getElementById("frm").submit(); 
+}
 
-		document.getElementById("divTitle").innerHTML="${param.type} Stock";
-		document.title +=" ${param.type} Stock ";
-		
-		$( "#txtinvoicedate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-		
-		
-		if('${stockModificationDetails.get(0)}'!='')
-			{
-			var m=0;
-			txtinvoicedate.value='${stockModificationDetails.get(0).transactionDateFormatted}';
-			
-			//alert('${stockModificationDetails.get(0)}');
-			
-			<c:forEach items="${stockModificationDetails}" var="item">			
-			m++;			
-			var table = document.getElementById("tblitems");	    	
-	    	var row = table.insertRow(-1);	    	
-	    	var cell0 = row.insertCell(0);
-	    	var cell1 = row.insertCell(1);
-	    	var cell2 = row.insertCell(2);
-	    	var cell3 = row.insertCell(3);
-	    	var cell4 = row.insertCell(4);
-	    	var cell5 = row.insertCell(5);
-	    	
-	    	
-	    	
-	    	cell0.innerHTML = '${item.item_id}';
-	    	cell1.innerHTML = '${item.product_code}';
-	    	cell2.innerHTML = '${item.item_name}';	    	   	
-	    	cell3.innerHTML = '${item.current_stock}';
-	    	cell4.innerHTML = '${item.qty}';
-	    	cell5.innerHTML = '${item.remarksinner}';
-	    	
-	    	
-			
-		    		//alert('${item.item_id}'+'-${item.item_name}'+'-${item.qty}'+'-${item.rate}'+'-${item.custom_rate}');			    
-			</c:forEach>
-				
-			
-			remarksouter.value='${stockModificationDetails.get(0).remarksouter}';
-			
-			$("#frm :input").prop('disabled', true);		
-			$("[name=returnButtons]").prop('disabled', false);
-			btncancel.disabled=false;
-			
-			}
-		
-		
-		
 
+function showCustomer()
+{
+	window.location='?a=showSalesRegister&customerId='+hdnSelectedCustomer.value;
+}
+
+$( "#txtdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
+
+if('${param.type}'=="debit")
+	{
+		document.getElementById("divTitle").innerHTML="Debit Entry";
+		document.title +=" Debitt Entry ";
+	}
+else
+	{
+		document.getElementById("divTitle").innerHTML="${param.type} Stock Direct";
+		document.title +=" Add Stock Direct";
+	}
+	
+
+	function showLedgerForThisCustomer()
+	{
+		
+		window.location="?a=showCustomerLedgerWithItem&customerId="+hdnSelectedCustomer.value+"&txtfromdate=${todaysDateMinusOneMonth}&txttodate=${todaysDate}";
+	}
+	
+function resetCustomer()
+{
+	txtitem.value="";
+	txtitem.readOnly=false;
+}
+
+  
 </script>
-
-
-
