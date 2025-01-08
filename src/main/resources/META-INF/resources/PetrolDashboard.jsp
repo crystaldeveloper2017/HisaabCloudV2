@@ -170,7 +170,25 @@
 
 
         
+<div class="col-12 col-sm-6">
+      <div class="info-box mb-3 " onclick="window.location='?a=showStockRegisterDirect'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">12.Stock Register (Direct)</span>
+								    </div>
 
+              </div>
+              </div>  
+
+  <div class="col-12 col-sm-6">
+      <div class="info-box mb-3 " onclick="window.location='?a=showStockStatusDirect'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">13.Stock Status (Direct)</span>
+								    </div>
+
+              </div>
+              </div>  
 
 
 

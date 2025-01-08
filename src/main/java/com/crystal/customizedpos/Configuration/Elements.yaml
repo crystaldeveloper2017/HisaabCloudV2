@@ -617,9 +617,9 @@ elements:
   elementUrl: "?a=generateDailyInvoiceReport"
   orderNo: 1
 - elementId: 700312
-  elementName: "Stock Status Beverage"
+  elementName: "Stock Status Direct"
   parentElementId: 2
-  elementUrl: "?a=showStockRegisterBeverage"
+  elementUrl: "?a=showStockRegisterDirect"
   orderNo: 1
 - elementId: 700313
   elementName: "Add Replacement"

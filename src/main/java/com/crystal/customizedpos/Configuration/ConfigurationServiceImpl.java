@@ -12377,7 +12377,7 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 	}
 
 
-	public CustomResultObject showStockRegisterBeverage(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showStockRegisterDirect(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
@@ -12425,7 +12425,7 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 				outputMap.put("txttodate",toDate);
 
 
-				rs.setViewName("../StockStatusBeverage.jsp");
+				rs.setViewName("../StockStatusDirectNew.jsp");
 				rs.setReturnObject(outputMap);
 			}
 		} catch (Exception e) {
@@ -12436,7 +12436,7 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 		return rs;
 	}
 
-	public CustomResultObject showAddStockBeverage(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject showAddStockDirect(HttpServletRequest request, Connection con) throws SQLException {
 
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -12470,7 +12470,7 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 	}
 
 
-	public CustomResultObject addStockStatusBeverage(HttpServletRequest request, Connection con)
+	public CustomResultObject addStockStatusDirect(HttpServletRequest request, Connection con)
 			throws Exception {
 
 		CustomResultObject rs = new CustomResultObject();
@@ -12502,14 +12502,14 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 
 			
 
-			 lObjConfigDao.addStockStatusBeverage(con, hm);
+			 lObjConfigDao.addStockStatusDirect(con, hm);
 			
 			
 
 			rs.setReturnObject(outputMap);
 
 			rs.setAjaxData(
-					"<script>alert('Stock Added Succesfully');window.location='?a=showStockRegisterBeverage'</script>");
+					"<script>alert('Stock Added Succesfully');window.location='?a=showStockRegisterDirect'</script>");
 
 		}
 		catch (CustomerMobileAlreadyExist e)
@@ -12676,14 +12676,14 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 	}
 	
 	
-	public CustomResultObject deleteStockStatusBeverage(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject deleteStockStatusDirect(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		long stockId = Long.parseLong(request.getParameter("stockId"));
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
 		try {
 
-			rs.setAjaxData(lObjConfigDao.deleteStockStatusBeverage(stockId, userId, con));
+			rs.setAjaxData(lObjConfigDao.deleteStockStatusDirect(stockId, userId, con));
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));

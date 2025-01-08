@@ -49,13 +49,13 @@
 
         <div class="card-tools">
             <div class="input-group input-group-sm" >                    
-                      <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockBeverage&type=Add'" value="Add Stock Direct" class="form-control float-right" >                                         
+                      <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockDirect&type=Add'" value="Add Stock Direct" class="form-control float-right" >                                         
                       </div>
                     </div>
 
     <div class="card-tools">
                       <div class="input-group input-group-sm" >                    
-                        <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockBeverage&type=Damage'" value="Damaged Stock" class="form-control float-right" >                                         
+                        <input type="button"  class="btn btn-primary btn-sm" style="margin-right:11px;" onclick="window.location='?a=showAddStockDirect&type=Damage'" value="Damaged Stock" class="form-control float-right" >                                         
                       </div>
                     </div>
     
@@ -112,7 +112,11 @@
 
 
 
-				<td><button class="btn btn-danger" onclick="deleteStockStatusBeverage('${item.stock_id}')">Delete</button></td>
+				<td>
+          <c:if test="${item.stock_type ne 'Debit'}">
+            <button class="btn btn-danger" onclick="deleteStockStatusDirect('${item.stock_id}')">Delete</button>
+          </c:if>
+        </td>
 
 						
 	 
@@ -183,12 +187,12 @@
   
    function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showStockRegisterBeverage&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
+  	  		window.location="?a=showStockRegisterDirect&txtfromdate="+txtfromdate.value+"&txttodate="+txttodate.value;
 		  
   }
 
 
-    function deleteStockStatusBeverage(stockId)
+    function deleteStockStatusDirect(stockId)
     {
       
       var answer = window.confirm("Are you sure you want to delete ?");
@@ -214,7 +218,7 @@
           
           }
         };
-        xhttp.open("GET","?a=deleteStockStatusBeverage&stockId="+stockId, true);    
+        xhttp.open("GET","?a=deleteStockStatusDirect&stockId="+stockId, true);    
         xhttp.send();
     }
 

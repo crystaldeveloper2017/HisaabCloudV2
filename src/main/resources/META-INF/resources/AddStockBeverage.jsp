@@ -21,7 +21,7 @@
 
 <div class="container" style="padding:20px;background-color:white"> 
 
-<form id="frm" action="?a=addStockStatusBeverage" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+<form id="frm" action="?a=addStockStatusDirect" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 <input type="hidden" name="app_id" value="${userdetails.app_id}">
 <input type="hidden" name="user_id" value="${userdetails.user_id}">
 <input type="hidden" name="callerUrl" id="callerUrl" value="">
@@ -73,7 +73,7 @@
 
 
   	 		  
-	   	<button class="btn btn-success" type="button" id="btnsave" onclick='addStockStatusBeverage()'>Save</button>   
+	   	<button class="btn btn-success" type="button" id="btnsave" onclick='addStockStatusDirect()'>Save</button>   
 	   <button class="btn btn-danger" type="reset" onclick='window.location="?a=showHomePage"'>Cancel</button>
 
 
@@ -235,7 +235,7 @@ function savePayment()
 }
 
 
-function addStockStatusBeverage()
+function addStockStatusDirect()
 {	
 	
 	
