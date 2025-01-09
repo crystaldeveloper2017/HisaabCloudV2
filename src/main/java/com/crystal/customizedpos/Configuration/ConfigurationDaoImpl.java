@@ -1018,7 +1018,7 @@ if(hm.get("user_id")!=null)
 
 			}
 
-			if (hm.get("app_type").equals("Beverage")) 
+			if (hm.get("app_type").equals("Beverage") || hm.get("app_type").equals("PetrolPump")) 
 			{				
 				//parameters.add(hm.get("hdnselecteditem"));
 				hm.put("hdnselecteditem",hm.get("item_id"));
@@ -1027,7 +1027,7 @@ if(hm.get("user_id")!=null)
 				hm.put("txtremarks","Debit Against Invoice No : "+invoiceNo);			
 				hm.put("hdnstocktype","Debit");
 				hm.put("details_id",detailsId);
-				addStockStatusBeverage(conWithF, hm);
+				addStockStatusDirect(conWithF, hm);
 			}
 
 			if (item.get("RSPH") != null) {
@@ -4019,8 +4019,17 @@ if(hm.get("user_id")!=null)
 				conWithF);
 		parameters.clear();
 
-		// update stock_status
-		// reverse stock_register entry
+		
+		parameters.add(invoiceId);
+		insertUpdate("update \r\n" + //
+						"\ttrn_stock_direct_details tsdd,\r\n" + //
+						"\ttrn_invoice_register tir,\r\n" + //
+						"\ttrn_invoice_details tid\r\n" + //
+						"\tset tsdd.activate_flag=0\t \r\n" + //
+						"where\r\n" + //
+						"\ttir.invoice_id = ? and tir.invoice_id =tid.invoice_id and tid.details_id =tsdd.details_id ;", parameters,
+				conWithF);
+		parameters.clear();
 
 		return userId;
 	}
@@ -7993,7 +8002,7 @@ return getListOfLinkedHashHashMap(parameters,
 			return "Holiday updated Succesfully";
 		}
 
-		public long addStockStatusBeverage(Connection conWithF, HashMap<String, Object> hm) throws Exception {
+		public long addStockStatusDirect(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(hm.get("hdnselecteditem"));
 			parameters.add(getDateASYYYYMMDD(hm.get("txtdate").toString()));			
@@ -8011,11 +8020,12 @@ return getListOfLinkedHashHashMap(parameters,
 			parameters.add(hm.get("txtremarks"));
 			parameters.add(hm.get("user_id"));
 			parameters.add(hm.get("app_id"));
+			parameters.add(hm.get("details_id"));
 
 
 			
 			
-			String insertQuery = "insert into trn_stock_direct_details values (default,?,?,?,?,?,?,sysdate(),1,?,NULL)";
+			String insertQuery = "insert into trn_stock_direct_details values (default,?,?,?,?,?,?,sysdate(),1,?,?)";
 			return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 		}
 
@@ -8037,7 +8047,7 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 
 
 
-		public String deleteStockStatusBeverage(long stockId, String userId, Connection conWithF) throws Exception {
+		public String deleteStockStatusDirect(long stockId, String userId, Connection conWithF) throws Exception {
 			ArrayList<Object> parameters = new ArrayList<>();
 			parameters.add(userId);
 			parameters.add(stockId);

@@ -1,6 +1,11 @@
 - roleId: 14
   roleName: "ManagerFuel"
   actions:
+    - showStockStatusDirect
+    - deleteStockStatusDirect
+    - addStockStatusDirect
+    - showAddStockDirect
+    - showStockRegisterDirect
     - generatePDFFordailySalesReport
     - showShortcuts
     - exportDailySalesReport
