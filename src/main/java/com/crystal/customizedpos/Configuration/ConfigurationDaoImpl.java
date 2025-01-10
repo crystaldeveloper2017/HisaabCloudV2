@@ -1079,9 +1079,9 @@ if(hm.get("user_id")!=null)
 		return generatedPK;
 	}
 
-	public String addPaymentFromCustomer(HashMap<String, Object> hm, Connection conWithF) throws Exception {
+	public long addPaymentFromCustomer(HashMap<String, Object> hm, Connection conWithF) throws Exception {
 		if (hm.get("payment_type").equals("Pending")) {
-			return "Payment Not added";
+			return 0;
 		}
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("customer_id"));
@@ -1098,10 +1098,10 @@ if(hm.get("user_id")!=null)
 		parameters.add(hm.get("remarks"));
 		parameters.add(hm.get("app_id"));
 		parameters.add(hm.get("user_id"));
-		insertUpdateDuablDB("insert into trn_payment_register values (default,?,?,?,?,?,?,?,?,?,?,sysdate(),1)",
+		return insertUpdateDuablDB("insert into trn_payment_register values (default,?,?,?,?,?,?,?,?,?,?,sysdate(),1)",
 				parameters,
 				conWithF);
-		return "Payment Added";
+		
 
 	}
 

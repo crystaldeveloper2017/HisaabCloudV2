@@ -7119,7 +7119,7 @@ public void generatePDFForPayment3Inch(String DestinationPath,String BufferedIma
 	
 	Font font = new Font(base, 12, Font.NORMAL); 
 	
-	int fixedSize=320;
+	int fixedSize=15;
 	Rectangle pagesize = new Rectangle(250, fixedSize*17);
 	Document document = new Document(pagesize,2,16,0,2);
 
@@ -7135,7 +7135,7 @@ public void generatePDFForPayment3Inch(String DestinationPath,String BufferedIma
 	  PdfPTable table = new PdfPTable(1);
 	  table.setWidthPercentage(100);
 		PdfPCell cell;        
-		cell = new PdfPCell(new Phrase("Payment : "+invoiceHistoryDetails.get("payment_id").toString(),font14));	        
+		cell = new PdfPCell(new Phrase("Payment Receipt: "+invoiceHistoryDetails.get("payment_id").toString(),font14));	        
 		cell.setBorder(Rectangle.NO_BORDER);	        
 		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(cell);	       

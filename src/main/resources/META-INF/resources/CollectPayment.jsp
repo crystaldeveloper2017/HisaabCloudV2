@@ -270,6 +270,11 @@ function savePayment()
 		    if (xhttp.readyState == 4 && xhttp.status == 200) 
 		    { 		
 		    	var details=JSON.parse(xhttp.responseText);
+				var respstring=details.returnMessage;
+				if (respstring.includes("Payment Added")) 
+				{				
+					generatepdf(respstring.split("~")[1]);
+				}
 		    	//$("#myModal").modal('hide');
 		    	
 		    		toastr["success"]("Record Updated Successfully");
@@ -331,7 +336,23 @@ function resetCustomer()
 	txtpendingamount.value="";
 }
 
-  txtfromdate.value='${txtfromdate}';
-  txttodate.value='${txttodate}';
+
+function generatepdf(paymentId)
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generatePaymentPDF&paymentId="+paymentId, false);    
+	  xhttp.send();
+}
+
+  
 
 </script>

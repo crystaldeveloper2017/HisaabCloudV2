@@ -218,8 +218,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		try {
 			hm.put("invoice_date", date);
-			String retMessage = lObjConfigDao.addPaymentFromCustomer(hm, con);
-			hm.put("returnMessage", retMessage);
+			long paymentId = lObjConfigDao.addPaymentFromCustomer(hm, con);
+			hm.put("returnMessage", "Payment Added ~ "+paymentId);
 			rs.setAjaxData(mapper.writeValueAsString(hm));
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
