@@ -335,6 +335,48 @@ function saveInvoice()
     
   </div>
   </div>
+
+
+      <div class="col-2">
+	<div class="form-group">
+	
+	
+	
+		  <label for="email">Qty</label>
+	
+	<div class="input-group input-group-sm">
+				<input type="text" class="form-control form-control-sm" id="txtselectionqty"    placeholder="1" name="txtselectionqty">
+				
+				<span class="input-group-append">
+				  <button type="button" class="btn btn-primary btn-flat" onclick="getItemsForThisCategoryNameByAjax()">Add Item</button>
+				</span>
+				
+				
+  </div>
+	
+	
+				
+	
+		  
+	<input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
+			 <input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
+			 <input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
+				   
+  </div>
+</div>
+
+   <div class="col-sm-1" id="divsearchforcategory">
+  	
+    
+    <div class="input-group">
+    
+	
+    
+    
+    
+    
+  </div>
+  </div>
  
   </div>
   
@@ -883,7 +925,7 @@ function generateInvoice(invoiceId)
 	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
 		}
 	  };
-	  xhttp.open("GET","?a=generateInvoicePDFBattery&invoiceId="+invoiceId, false);    
+	  xhttp.open("GET","?a=generateInvoicePDF&invoiceId="+invoiceId, false);    
 	  xhttp.send();
 }
 
@@ -936,8 +978,9 @@ function quickAddCustomer()
 			}
 		if(itemId!=0)
 			{
-				
-				getItemsForThisCategoryNameByAjax(searchString);
+				txtcategory.value=searchString;
+				txtcategory.disabled=true;
+				//getItemsForThisCategoryNameByAjax(searchString);
 					// code to check if item already exist inselection				
 				return;
 				document.getElementById("txtitem").value="";
@@ -969,8 +1012,11 @@ function quickAddCustomer()
 		
 	}
 
-	function getItemsForThisCategoryNameByAjax(categoryName)
+	function getItemsForThisCategoryNameByAjax()
 {
+
+	var categoryName=txtcategory.value;
+	var qty=txtselectionqty.value;
 	
 		  const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
@@ -979,12 +1025,16 @@ function quickAddCustomer()
 		    //console.log(items[0]);
 		    //console.log(JSON.parse(items));
 		    var reqString="";
+			var numqty=Number(qty);
+			for(var k=0;k<numqty;k++)
+			{
 		    for(m=0;m<items.length;m++)
 		    	{
 					getItemDetailsAndAddToTable(items[m].item_id,0);
 		    	}
+			}
 		    //alert(reqString);
-		    document.getElementById('someIdGoesHere').innerHTML=reqString; 
+		    //document.getElementById('someIdGoesHere').innerHTML=reqString; 
 		  }
 		  xhttp.open("GET", "?a=getItemsForThisCategoryNameByAjax&category_name="+categoryName);
 		  xhttp.send();
@@ -1000,6 +1050,9 @@ document.getElementsByName('buttonReplace').forEach(button => {
     button.disabled = false;
 });
 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
+
+
 </script>
 
 
