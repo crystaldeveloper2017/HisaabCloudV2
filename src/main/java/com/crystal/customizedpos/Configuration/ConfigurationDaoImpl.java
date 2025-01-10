@@ -8073,5 +8073,22 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 	}
 
 
+	public LinkedHashMap<String, String> getPaymentDetails(String payment_id, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(payment_id);
+		return getMap(parameters, "select\r\n" + //
+						"\tcustomer_name ,tpr.amount ,tpr.payment_mode ,tpr.ref_id,tpr.payment_for ,mc.mobile_number,tpr.payment_id,tpr.updated_by ,tpr.updated_date ,ms.store_id ,ms.store_name,ms.address_line_1,ms.address_line_2 ,ms.city,ms.pincode \r\n" + //
+						"from\r\n" + //
+						"\ttrn_payment_register tpr,\r\n" + //
+						"\tmst_customer mc ,\r\n" + //
+						"\ttbl_user_mst tum, \r\n" + //
+						"\tmst_store ms  \r\n" + //
+						"where\r\n" + //
+						"\tpayment_id = ? and mc.customer_id =tpr.customer_id and tpr.updated_by = tum.user_id and ms.store_id =tpr.store_id ", con);
+
+	}
+
+
 
 }

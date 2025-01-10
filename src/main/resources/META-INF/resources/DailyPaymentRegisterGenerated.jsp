@@ -36,21 +36,31 @@
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr>
-                     <th><b>Customer Name</b></th><th><b>Payment Mode</b></th><th>Payment For</th> <th><b>Payment Date</b></th><th><b>Amount</b></th>
+                     <th><b>Customer Name</b></th>
+                     <th><b>Payment Mode</b></th>
+                     <th><b>Payment For</b></th> 
+                     <th><b>Payment Date</b></th>
+                     <th><b>Amount</b></th>
                      <th><b>Updated By</b></th>
                      <th><b>Updated Date</b></th>
                      <th><b></b></th>
+                     <th></th>
                     </tr>
                   </thead>
                   <tbody>
 				<c:forEach items="${message}" var="item">
 					<tr >
-						<td>${item.customer_name}</td><td>${item.payment_mode}</td> <td>${item.payment_for}</td><td>${item.FormattedPaymentDate}</td>
+						<td>${item.customer_name}</td>
+            <td>${item.payment_mode}</td>
+             <td>${item.payment_for}</td>
+             <td>${item.FormattedPaymentDate}</td>
 						<td>${item.amount}</td>
 						<td>${item.name}</td>
 						<td>${item.FormattedUpdatedDate}</td>
 						
 						<td><button class="btn btn-danger" onclick="deletePayment('${item.payment_id}')">Delete</button></td>
+        	<td><button class="btn btn-primary" onclick="generatepdf('${item.payment_id}')">Generate Pdf</button></td>
+
 					</tr>
 				</c:forEach>
 				
@@ -120,4 +130,22 @@ function deletePayment(paymentId)
 	  xhttp.open("GET","?a=deletePayment&user_id=${userdetails.user_id}&paymentId="+paymentId, true);    
 	  xhttp.send();
 }
+
+
+function generatepdf(paymentId)
+{
+	
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() 
+	  {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) 
+	    { 		      
+	    	//alert(xhttp.responseText);
+	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
+		}
+	  };
+	  xhttp.open("GET","?a=generatePaymentPDF&paymentId="+paymentId, false);    
+	  xhttp.send();
+}
+
 </script>

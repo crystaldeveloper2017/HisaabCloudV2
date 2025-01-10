@@ -3,6 +3,8 @@
   actions:
     - checkIfUsernameAlreadyExist
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - getItemsForThisCategoryNameByAjax
     - deleteReconcilation
     - addBankReconcilation

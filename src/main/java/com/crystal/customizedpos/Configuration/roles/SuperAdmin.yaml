@@ -2,6 +2,8 @@
   roleName: "SuperAdmin"
   actions:
     - deleteCheckin
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - showAddVisitor
     - addVisitor

@@ -6083,7 +6083,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
-	public CustomResultObject generateInvoicePDF(HttpServletRequest request, Connection con) throws SQLException {
+	public CustomResultObject generateInvoicePDF(HttpServletRequest request, Connection con) throws SQLException 
+	{
 		CustomResultObject rs = new CustomResultObject();
 
 		String invoiceId = request.getParameter("invoiceId");
@@ -12735,5 +12736,68 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 		rs.setReturnObject(outputMap);
 		return rs;
 	}
+
+	public CustomResultObject generatePaymentPDF(HttpServletRequest request, Connection con) throws SQLException 
+	{
+		CustomResultObject rs = new CustomResultObject();
+
+		String paymentId = request.getParameter("paymentId");
+
+		String appenders = "Payment" + paymentId + ".pdf";
+
+		try {
+
+			HashMap<String, Object> returnObject= generatePaymentPDFService(request, con);			
+			rs.setAjaxData(returnObject.get("returnData").toString());
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+
+		return rs;
+	}
+
+	public HashMap<String, Object> generatePaymentPDFService(HttpServletRequest request, Connection con)
+			throws SQLException 
+			
+	{
+
+		HashMap<String, Object> outputMap = new HashMap<>();
+
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+		String BufferedImagesFolderPath = request.getServletContext().getRealPath("BufferedImagesFolder") + delimiter;
+
+		String paymentId = request.getParameter("paymentId");
+
+		String appenders = "Payment" + paymentId + ".pdf";
+		DestinationPath += appenders;
+
+		String userId = request.getParameter("userId");
+		if (userId == null || userId.equals("")) 
+		{
+			userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
+		}
+
+		outputMap.put("user_id", userId);
+
+		try {
+
+			new InvoiceHistoryPDFHelper().generatePDFForPayment3Inch(DestinationPath, BufferedImagesFolderPath,
+						lObjConfigDao.getPaymentDetails(paymentId, con), con);
+				
+				
+
+
+			outputMap.put("returnData", appenders);
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			e.printStackTrace();
+
+		}
+
+		return outputMap;
+	}
+
+
 
 }
