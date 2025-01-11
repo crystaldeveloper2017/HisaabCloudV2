@@ -45,15 +45,21 @@
         <span>Total: <span id="total-loaded">0</span> / <span id="total-items">0</span></span>
     </div>
     <div class="footer-divider"></div>
+    
+    <!-- Arrow button placed between total quantities and complete line button -->
+    <div class="footer-middle">
+        <button id="top-arrow-button" class="top-arrow-button" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i> <!-- Font Awesome up arrow icon -->
+        </button>
+    </div>
+    
     <div class="footer-right">
         <button id="complete-line" class="complete-loading-button" onclick="completeLine()">
             Complete Line
         </button>
-        <button id="complete-loading" class="complete-loading-button" onclick="completeLoading()">
-            Complete Loading
-        </button>
     </div>
 </div>
+
 
 <script>
 let orderId = "${param.order_id}";

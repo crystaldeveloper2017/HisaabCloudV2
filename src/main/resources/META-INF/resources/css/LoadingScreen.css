@@ -42,6 +42,16 @@ html, body {
     color: white;
 }
 
+.custom-button.white {
+    background-color: #eef5f0; /* Bootstrap's success green */
+    color: black;
+}
+
+.custom-button.pink {
+    background-color: #ff69b4; /* Pink color */
+    color: white;
+}
+
 .badge-container {
     position: absolute;
     top: 0;

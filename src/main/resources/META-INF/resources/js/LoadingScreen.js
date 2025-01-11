@@ -24,23 +24,59 @@ function updateQuantities(button, maxQty) {
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
 
+    pendingQty -= 1;
+    pendingQtyElement.textContent = pendingQty.toFixed(0);
+
+    console.log(pendingQty);
+    if (pendingQty === 0) {
+        button.classList.remove('pink');
+        button.classList.remove('white');
+
+        button.classList.add('green');
+    }
+
+    if (pendingQty < 0) {
+
+        button.classList.remove('green');
+        button.classList.remove('white');
+
+        button.classList.add('pink');
+    }
+
     if (pendingQty > 0) {
-        pendingQty -= 1;
+
+        
+        button.classList.remove('green');
+        button.classList.remove('pink');
+
+        button.classList.add('white');
+    }
+
+
+    if (pendingQty > 0) {
+        // If there are still pending quantities, allow adding one to loaded quantities
         loadedQty += 1;
 
-        pendingQtyElement.textContent = pendingQty.toFixed(0);
         loadedQtyElement.textContent = loadedQty.toFixed(0);
 
-        if (pendingQty === 0) {
-            button.classList.add('green');
-        }
+       
 
         if (loadedQty > 0) {
             minusButton.style.display = 'block';
         }
     } else {
+        // Vibrate and still allow adding more items even after pending qty is 0
         if ("vibrate" in navigator) {
             navigator.vibrate(300); // Vibrates for 300ms
+        }
+
+        // Add one more to loadedQty even if pendingQty is 0
+        loadedQty += 1;
+        loadedQtyElement.textContent = loadedQty.toFixed(0);
+
+        // Allow minus button to show since there's now a loaded quantity
+        if (loadedQty > 0) {
+            minusButton.style.display = 'block';
         }
     }
 
@@ -55,6 +91,11 @@ function decrementQuantities(minusButton) {
 
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
+
+
+
+
+
 
     if (loadedQty > 0) {
         loadedQty -= 1;
@@ -72,6 +113,33 @@ function decrementQuantities(minusButton) {
         }
     } else {
         alert("No loaded items to unload.");
+    }
+
+
+    console.log(pendingQty);    
+
+    if (pendingQty === 0) {
+        button.classList.remove('pink');
+        button.classList.remove('white');
+
+        button.classList.add('green');
+    }
+
+    if (pendingQty < 0) {
+
+        button.classList.remove('green');
+        button.classList.remove('white');
+
+        button.classList.add('pink');
+    }
+
+    if (pendingQty > 0) {
+
+        
+        button.classList.remove('green');
+        button.classList.remove('pink');
+
+        button.classList.add('white');
     }
 
     updateFooter();
@@ -125,4 +193,10 @@ function completeLine() {
     alert("Line Completed!");
 }
 
-
+// New function to scroll to the top when the arrow button is clicked
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
