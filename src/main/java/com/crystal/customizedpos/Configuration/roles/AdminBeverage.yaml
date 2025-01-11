@@ -2,6 +2,8 @@
   roleName: "AdminBeverage"
   actions:
     - checkIfUsernameAlreadyExist
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showCurrentRmStock
     - showShortcuts
     - deleteOrders

@@ -2,6 +2,8 @@
   roleName: "Sales"
   actions:
     - changePassword
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - showChangePassword
     - showStockTransfer

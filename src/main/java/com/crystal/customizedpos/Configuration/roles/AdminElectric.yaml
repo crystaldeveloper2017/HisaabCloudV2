@@ -3,6 +3,8 @@
   actions:
     - getItemsForThisCategoryNameByAjax
     - exportDailySalesReport
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showAddReplacement
     - addReplacement
     - showReplacementRegister

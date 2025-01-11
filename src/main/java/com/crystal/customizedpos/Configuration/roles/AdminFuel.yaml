@@ -3,6 +3,8 @@
   actions:
     - exportDailySalesReport
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - generatePDFFordailySalesReport
     - showCustomerLedgerWithItemVehicle
     - showDepositCashToBank

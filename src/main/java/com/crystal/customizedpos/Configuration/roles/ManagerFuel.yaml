@@ -3,6 +3,8 @@
   actions:
     - generatePDFFordailySalesReport
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - exportDailySalesReport
     - exportCustomerLedgerWithItemVehicleAsPDF
     - showCustomerLedgerWithItemVehicle

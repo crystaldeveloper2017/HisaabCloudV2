@@ -3,6 +3,8 @@
   actions:
     - getVehicleIdForCustomer
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - acceptPhonePayPayment
     - showHomePage
     - showPhonePePayments
