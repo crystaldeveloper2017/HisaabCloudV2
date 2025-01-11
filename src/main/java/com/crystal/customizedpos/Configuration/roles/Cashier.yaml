@@ -3,6 +3,8 @@
   actions:
     - getItemsForThisCategoryNameByAjax
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - changePassword
     - showChangePassword

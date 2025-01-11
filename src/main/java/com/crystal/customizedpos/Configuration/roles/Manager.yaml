@@ -3,6 +3,8 @@
   actions:
     - changePassword
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showChangePassword
     - showStockTransfer
     - showDailyPaymentRegisterParameter

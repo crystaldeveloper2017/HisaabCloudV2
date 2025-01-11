@@ -3,6 +3,8 @@
   actions:
     - checkIfUsernameAlreadyExist
     - showCurrentRmStock
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - deleteOrders
     - generateOrderForms

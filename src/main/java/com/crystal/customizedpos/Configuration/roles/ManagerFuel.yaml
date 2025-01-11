@@ -8,6 +8,8 @@
     - showStockRegisterDirect
     - generatePDFFordailySalesReport
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - exportDailySalesReport
     - exportCustomerLedgerWithItemVehicleAsPDF
     - showCustomerLedgerWithItemVehicle

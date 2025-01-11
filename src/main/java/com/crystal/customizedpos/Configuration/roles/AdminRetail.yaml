@@ -2,6 +2,8 @@
   roleName: "AdminRetail"
   actions:
     - resetPassword
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - addExpenseNew
     - changePassword

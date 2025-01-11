@@ -2,6 +2,8 @@
   roleName: "AdminFuelMini"
   actions:
     - getVehicleIdForCustomer
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - showPrintLabelsScreenVehicle
     - printLabelsVehicle

@@ -3,6 +3,8 @@
   actions:    
     - showHomePage
     - showShortcuts
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showGenerateInvoice
     - saveInvoiceService
     - showAddExpense
