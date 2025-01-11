@@ -92,6 +92,7 @@ function saveInvoice()
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
 		"~0~0~0~0~0~0~0"+ // Item Name
 		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
+		"~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // Amount
 		"~"+rows[x].childNodes[3].childNodes[0].value+ // Battery No
 		"~"+rows[x].childNodes[4].childNodes[0].value+ // Vehicle Name	
 	    "|";       
@@ -122,12 +123,16 @@ function saveInvoice()
 	
 	
 	
+	
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) 
 	    {
 	    	var invoiceId=this.responseText.split("~");
-	      	//alert("Invoice Saved Succesfully"+invoiceId[0]);
+	      	alert("Invoice Saved Succesfully"+invoiceId[0]);
+			generateInvoice(invoiceId[1]);
+
+
 	      	
 	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
 	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
@@ -358,9 +363,6 @@ function saveInvoice()
 				
 	
 		  
-	<input  type="hidden" name="hdnSelectedCustomer" id="hdnSelectedCustomer" value=""> 
-			 <input  type="hidden" name="hdnSelectedCustomerType" id="hdnSelectedCustomerType" value="">
-			 <input  type="hidden" name="hdnPreviousInvoiceId" id="hdnPreviousInvoiceId" value="">
 				   
   </div>
 </div>
@@ -1033,6 +1035,13 @@ function quickAddCustomer()
 					getItemDetailsAndAddToTable(items[m].item_id,0);
 		    	}
 			}
+
+			
+			txtcategory.value="";
+			txtcategory.disabled=false;
+
+			txtselectionqty.value="";
+			txtselectionqty.disabled=false;
 		    //alert(reqString);
 		    //document.getElementById('someIdGoesHere').innerHTML=reqString; 
 		  }

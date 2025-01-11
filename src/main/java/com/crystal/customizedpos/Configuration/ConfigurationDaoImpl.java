@@ -2472,7 +2472,7 @@ if(hm.get("user_id")!=null)
 				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,\r\n"
 				+ "date_format(invoice_date,'%d/%m/%Y') theInvoiceDate,\r\n" + "sum(qty) totalQuantities,\r\n"
 				+ "paym.amount as paid_amount,date_format(invoice.updated_date,'%d/%m/%Y %h:%i%p') theUpdatedDate"
-				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage \r\n" + " from\r\n"
+				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage,ried.warranty electricwarranty \r\n" + " from\r\n"
 				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
 				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
 				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
@@ -2494,6 +2494,68 @@ if(hm.get("user_id")!=null)
 						+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
 						+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
 						+ "where\r\n" + "dtls.invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
+		return itemDetailsMap;
+
+	}
+
+	public LinkedHashMap<String, Object> getInvoiceElectric(String invoiceId, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		LinkedHashMap<String, Object> itemDetailsMap = new LinkedHashMap<>();
+		itemDetailsMap = getMapReturnObject(parameters, "select \r\n" + "*,\r\n"
+				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,\r\n"
+				+ "date_format(invoice_date,'%d/%m/%Y') theInvoiceDate,\r\n" + "sum(qty) totalQuantities,\r\n"
+				+ "paym.amount as paid_amount,date_format(invoice.updated_date,'%d/%m/%Y %h:%i%p') theUpdatedDate"
+				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage,ried.warranty electricwarranty \r\n" + " from\r\n"
+				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
+				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
+				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
+				+ " left outer join rlt_invoice_electric_details ried on ried.invoice_id=invoice.invoice_id \r\n"
+				+ "where invoice.invoice_id=? order by dtls.details_id", con);
+
+		parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+
+		itemDetailsMap.put("listOfItems",
+				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,ried.*,ried.warranty as warrantyelectric,"
+						+ "(select case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from tbl_attachment_mst tam2 "
+						+ "where tam2.file_id=item.item_id and tam2.type='Image' limit 1 ) ImagePath,"
+						+ " sum(coalesce(qty_to_return,0)) ReturnedQty,dtls.details_id theDetailsId \r\n"
+						+ "from mst_items item  inner join trn_invoice_details dtls on item.item_id=dtls.item_id "
+						+ "inner join mst_category cat on cat.category_id=item.parent_category_id \r\n"
+						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
+						+ " left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
+						+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
+						+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
+						+ "where\r\n" + "dtls.invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
+
+		List<LinkedHashMap<String, Object>> lst=getListOfLinkedHashHashMap(parameters, "select item.item_name,sum(dtls.custom_rate) setSumCustomRate,sum(dtls.qty) setQty,sum(custom_rate*qty) setSumAmount "								
+		+ "from mst_items item  inner join trn_invoice_details dtls on item.item_id=dtls.item_id "
+		+ "inner join mst_category cat on cat.category_id=item.parent_category_id \r\n"
+		+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
+		+ " left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
+		+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
+		+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
+		+ "where item.item_name like '%Set%' and \r\n" + "dtls.invoice_id = ? group by item_name"  , con);
+
+		itemDetailsMap.put("listOfSet",lst);
+
+		
+								HashMap<String, LinkedHashMap<String, Object>> resultMap = new HashMap<>();
+
+								for (LinkedHashMap<String, Object> item : lst) {
+									// Assuming the name of the item is in the "item_name" key
+									String itemName = (String) item.get("item_name");  // Replace "item_name" with the actual key for the item name
+						
+									if (itemName != null) {
+										resultMap.put(itemName, item);
+									}
+								}
+		
+		itemDetailsMap.put("resultMap",resultMap);
+
+
 		return itemDetailsMap;
 
 	}

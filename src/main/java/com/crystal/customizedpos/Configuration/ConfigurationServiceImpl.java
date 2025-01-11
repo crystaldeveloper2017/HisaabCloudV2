@@ -2709,8 +2709,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						}
 
 						if (appType.equals("Electric")) {
-							itemDetailsMap.put("unique_no", itemDetails[13]);
-							itemDetailsMap.put("warranty", itemDetails[14]);
+							itemDetailsMap.put("unique_no", itemDetails[14]);
+							itemDetailsMap.put("warranty", itemDetails[15]);
 						}
 
 					}
@@ -6203,6 +6203,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			String invoiceFormatName = lObjConfigDao.getInvoiceFormatName(outputMap, con).get("format_name");
 
+
+			if (invoiceFormatName.equals("A4FullPageFormatElectric")) {
+				new InvoiceHistoryPDFHelper().generatePDFForInvoiceElectric(DestinationPath, BufferedImagesFolderPath,
+						lObjConfigDao.getInvoiceElectric(invoiceId, con), con);
+			}
 			if (invoiceFormatName.equals("A4FullPageFormat")) {
 				new InvoiceHistoryPDFHelper().generatePDFForInvoice(DestinationPath, BufferedImagesFolderPath,
 						lObjConfigDao.getInvoiceDetails(invoiceId, con), con);
