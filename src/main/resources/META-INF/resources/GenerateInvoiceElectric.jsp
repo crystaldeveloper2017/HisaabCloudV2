@@ -62,6 +62,11 @@ function saveInvoice()
 {	
 	
 	
+	if(hdnSelectedCustomer.value=="") 
+		{
+			alert("please select customer");
+			return;
+		}
 
 	
 	if((txtpaymenttype.value=="Pending" || txtpaymenttype.value =="Partial") && hdnSelectedCustomer.value =="") 
@@ -95,6 +100,7 @@ function saveInvoice()
 		"~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // Amount
 		"~"+rows[x].childNodes[3].childNodes[0].value+ // Battery No
 		"~"+rows[x].childNodes[4].childNodes[0].value+ // Vehicle Name	
+		"~0~0"+ // Item Name
 	    "|";       
 	}
 	

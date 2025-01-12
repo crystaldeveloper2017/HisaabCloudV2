@@ -918,9 +918,10 @@ if(hm.get("user_id")!=null)
 
 		parameters.add(hm.get("total_sgst"));
 		parameters.add(hm.get("total_cgst"));
+		parameters.add(hm.get("total_igst"));
 
 		long invoiceId = insertUpdateDuablDB(
-				"insert into trn_invoice_register values (default,?,?,?,?,?,?,?,?,sysdate(),1,?,?,?,?,?,?,?,?,?)",
+				"insert into trn_invoice_register values (default,?,?,?,?,?,?,?,?,sysdate(),1,?,?,?,?,?,?,?,?,?,?)",
 				parameters,
 				conWithF);
 		hm.put("invoice_id", invoiceId);
@@ -982,10 +983,13 @@ if(hm.get("user_id")!=null)
 			parameters.add(item.get("cgst_amount"));
 			parameters.add(item.get("itemAmount"));
 
+			parameters.add(item.get("igst_percentage"));
+			parameters.add(item.get("igst_amount"));
+
 			long detailsId = insertUpdateDuablDB("insert into trn_invoice_details"
 					+ "(details_id, invoice_id, item_id, qty, rate, custom_rate, updated_by,"
-					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount) "
-					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?)", parameters,
+					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount,igst_percentage,igst_amount) "
+					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?,?,?)", parameters,
 					conWithF);
 
 			parameters.clear();

@@ -2681,39 +2681,39 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				for (String item : itemsList) {
 					String[] itemDetails = item.split("~", -1);
 					HashMap<String, Object> itemDetailsMap = new HashMap<>();
-					itemDetailsMap.put("item_id", itemDetails[0]);
-					itemDetailsMap.put("qty", itemDetails[1]);
-					itemDetailsMap.put("rate", itemDetails[2]);
-					itemDetailsMap.put("custom_rate", itemDetails[3]);
-					itemDetailsMap.put("item_name", itemDetails[4]);
-					if (itemDetails.length >= 6) {
-						itemDetailsMap.put("sgst_amount", itemDetails[5]);
-						itemDetailsMap.put("sgst_percentage", itemDetails[6]);
-						itemDetailsMap.put("cgst_amount", itemDetails[7]);
-						itemDetailsMap.put("cgst_percentage", itemDetails[8]);
+					
 
-						itemDetailsMap.put("gst_amount", itemDetails[9]);
-						itemDetailsMap.put("weight", itemDetails[10]);
-						itemDetailsMap.put("size", itemDetails[11]);
-						String purchaseDetailsId = itemDetails[12].trim().equals("") ? "0" : itemDetails[12].trim();
-						String itemAmount = itemDetails[13].trim().equals("") ? "0" : itemDetails[13].trim();
+					itemDetailsMap.put("item_id", itemDetails != null && itemDetails.length > 0 ? itemDetails[0] : null);
+					itemDetailsMap.put("qty", itemDetails != null && itemDetails.length > 1 ? itemDetails[1] : null);
+					itemDetailsMap.put("rate", itemDetails != null && itemDetails.length > 2 ? itemDetails[2] : null);
+					itemDetailsMap.put("custom_rate", itemDetails != null && itemDetails.length > 3 ? itemDetails[3] : null);
+					itemDetailsMap.put("item_name", itemDetails != null && itemDetails.length > 4 ? itemDetails[4] : null);
 
-						itemDetailsMap.put("purchaseDetailsId", purchaseDetailsId);
-						itemDetailsMap.put("itemAmount", itemAmount);
+					itemDetailsMap.put("sgst_amount", itemDetails != null && itemDetails.length > 5 ? itemDetails[5] : null);
+					itemDetailsMap.put("sgst_percentage", itemDetails != null && itemDetails.length > 6 ? itemDetails[6] : null);
+					itemDetailsMap.put("cgst_amount", itemDetails != null && itemDetails.length > 7 ? itemDetails[7] : null);
+					itemDetailsMap.put("cgst_percentage", itemDetails != null && itemDetails.length > 8 ? itemDetails[8] : null);
 
-						if (appType.equals("Battery")) {
-							itemDetailsMap.put("battery_no", itemDetails[13]);
-							itemDetailsMap.put("vehicle_name", itemDetails[14]);
-							itemDetailsMap.put("vehicle_no", itemDetails[15]);
-							itemDetailsMap.put("warranty", itemDetails[16]);
-						}
+					itemDetailsMap.put("gst_amount", itemDetails != null && itemDetails.length > 9 ? itemDetails[9] : null);
+					itemDetailsMap.put("weight", itemDetails != null && itemDetails.length > 10 ? itemDetails[10] : null);
+					itemDetailsMap.put("size", itemDetails != null && itemDetails.length > 11 ? itemDetails[11] : null);
 
-						if (appType.equals("Electric")) {
-							itemDetailsMap.put("unique_no", itemDetails[14]);
-							itemDetailsMap.put("warranty", itemDetails[15]);
-						}
+					String purchaseDetailsId = itemDetails != null && itemDetails.length > 12 && !itemDetails[12].trim().isEmpty() 
+					? itemDetails[12].trim() : "0";
+					String itemAmount = itemDetails != null && itemDetails.length > 13 && !itemDetails[13].trim().isEmpty() 
+					? itemDetails[13].trim() : "0";
 
-					}
+					itemDetailsMap.put("purchaseDetailsId", purchaseDetailsId);
+					itemDetailsMap.put("itemAmount", itemAmount);
+					
+					itemDetailsMap.put("unique_no", (itemDetails != null && itemDetails.length > 14) ? itemDetails[14] : null);
+					itemDetailsMap.put("warranty", (itemDetails != null && itemDetails.length > 15) ? itemDetails[15] : null);
+
+					itemDetailsMap.put("igst_amount", (itemDetails != null && itemDetails.length > 16) ? itemDetails[16] : null);
+					itemDetailsMap.put("igst_percentage", (itemDetails != null && itemDetails.length > 17) ? itemDetails[17] : null);
+						
+
+					
 					itemDetailsMap.put("debit_in", lObjConfigDao.getDebitInForItem(itemDetails[0], con));
 					itemListRequired.add(itemDetailsMap);
 					// ID, QTY, RATE,CustomRate
@@ -2782,6 +2782,68 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			if (!appType.equals("Battery") && !appType.equals("SnacksProduction") &&  !isValidateTotalWithGrossMinusDiscounts(hm)) {
 				throw new Exception("Invalid Total Amount Received Vs Calculated");
+			}
+
+			if (appType.equals("Electric") ) 
+			{				
+				// check if customer is within gujarat or out of gujarat
+
+				List<HashMap<String, Object>> existingItemList= (List<HashMap<String, Object>>) hm.get("itemDetails");
+				List<HashMap<String, Object>> newItemList= new ArrayList<>();
+
+				LinkedHashMap<String, String> custDetails=lObjConfigDao.getCustomerDetails(Long.valueOf(customer_id), con);
+				custDetails.put("state_name", "Gujarat");
+
+				if(custDetails.get("state_name").equals("Gujarat"))
+				{
+					double totalSgst=0l;
+					double totalCgst=0l;
+					// set the sgst and cgst as 2.5% each
+					for(HashMap<String,Object> tempItem:existingItemList)
+					{						
+						HashMap<String,Object> newItem=new HashMap<>();
+						newItem.putAll(tempItem);
+						newItem.put("sgst_percentage", "2.5");
+						String itemAmount= tempItem.get("itemAmount").toString();
+						double sgstamount=Double.valueOf(itemAmount) * 2.5 /100;
+						newItem.put("cgst_percentage", "2.5");
+						double cgstamount=Double.valueOf(itemAmount) * 2.5 /100;
+						newItem.put("sgst_amount", sgstamount);
+						newItem.put("cgst_amount", cgstamount);
+
+						totalSgst+=sgstamount;
+						totalCgst+=cgstamount;
+
+						newItemList.add(newItem);
+					}
+					hm.put("total_sgst", totalSgst);
+					hm.put("total_cgst", totalCgst);
+
+					hm.put("total_gst", totalCgst+totalSgst);
+					hm.put("total_amount", totalCgst+totalSgst+Double.valueOf(hm.get("total_amount").toString()));
+
+				}
+				else
+				{
+					double totalIgst=0l;
+					for(HashMap<String,Object> tempItem:existingItemList)
+					{						
+						HashMap<String,Object> newItem=new HashMap<>();
+						newItem.putAll(tempItem);
+						newItem.put("igst_percenrtage", "2.5");
+						String itemAmount= tempItem.get("item_amount").toString();
+						double igstamount=Double.valueOf(itemAmount) * 2.5 /100;												
+						newItem.put("igst_amount", igstamount);	
+						totalIgst+=igstamount;					
+						newItemList.add(newItem);
+					}
+					hm.put("total_igst", totalIgst);
+					hm.put("total_gst", totalIgst);
+					hm.put("total_amount", totalIgst+Double.valueOf(hm.get("total_amount").toString()));
+				}
+
+
+				hm.put("itemDetails",newItemList);
 			}
 
 			HashMap<String, Object> returnMap = lObjConfigDao.saveInvoice(hm, con);
