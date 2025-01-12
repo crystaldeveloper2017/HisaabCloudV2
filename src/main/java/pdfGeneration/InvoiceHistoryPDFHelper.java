@@ -1620,7 +1620,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  int m=15-prodDetails.size();
 		  for(int x=0;x<m;x++)
 		  {
-			  for(int i=0;i<7;i++)
+			  for(int i=0;i<6;i++)
 			  {
 				  cell = new PdfPCell(new Phrase(String.valueOf(" "),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1629,7 +1629,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  
-				  if(i!=6){cell.setBorderWidthRight(0);}
+				  if(i!=5){cell.setBorderWidthRight(0);}
 				  table.addCell(cell);
 			  }
 		  }
@@ -1639,8 +1639,22 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setColspan(5);
 		  table.addCell(cell);
-		  
+
 		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("gross_amount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setColspan(1);
+		  table.addCell(cell);
+
+		  cell = new PdfPCell(new Phrase("GST",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		  cell.setColspan(5);
+		  table.addCell(cell);
+
+
+		  
+		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_gst").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  cell.setColspan(1);
