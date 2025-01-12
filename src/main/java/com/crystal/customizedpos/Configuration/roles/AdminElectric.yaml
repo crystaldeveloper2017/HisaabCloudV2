@@ -159,11 +159,14 @@
     - showPrintLabelsScreenVehicle
     - printLabelsVehicle
     - showScanVehicleQR
+    - showCustomerLedgerWithItem
+    - getInvoiceIdByInvoiceNo
   reports:
     - 1
     - 2
   elements:
     - 700211
+    - 700184
     - 23
     - 700188
     - 700185
@@ -207,9 +210,7 @@
     - 700308
     - 700309
     - 700313
-    - 700165
     - 700314
-    - 26
     - 700311
     - 23
     - 6

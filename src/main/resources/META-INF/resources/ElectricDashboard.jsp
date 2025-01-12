@@ -25,12 +25,12 @@
 
 
 <div class="row">
-          <div class="col-12 col-sm-6 col-md-3" onclick="window.location='?a=showGenerateInvoice'">
-            <div class="info-box">
+             <div class="col-12 col-sm-6" >
+            <div class="info-box" onclick="window.location='?a=showGenerateInvoice'">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Generate Sales Invoice</span>
+                <span class="info-box-text">1.Generate Sales Invoice</span>
                 
               </div>
               <!-- /.info-box-content -->
@@ -39,19 +39,57 @@
           </div>
           
            
-          
+                    
+ <div class="col-12 col-sm-6">
+     <div class="info-box mb-3 " onclick="window.location='?a=showCollectPayment'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">2.Collect Payment</span>
+								    </div>
+
+              </div>
+              </div>    
+
+       
+
+  <div class="col-12 col-sm-6">
+     <div class="info-box mb-3 " onclick="window.location='?a=generatePendingCustomerCollectionReport'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				    <div class="info-box-content">
+								   <span class="info-box-text">3.Customer Collection Report</span>
+								    </div>
+
+              </div>
+              </div> 
         
           
           
+          <div class="col-12 col-sm-6">           
+     <div class="info-box mb-3 " onclick="window.location='?a=showCustomerLedgerWithItem'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">4.Customer Ledger</span>
+								    </div>
+
+              </div>
+              </div> 
           
           
-          
-          <!-- /.col -->
+       
+
+    <div class="col-12 col-sm-6">
+      <div class="info-box mb-3 " onclick="window.location='?a=generateDailyInvoiceReport'">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-pencil-square-o"></i></span>
+				  <div class="info-box-content">
+								   <span class="info-box-text">5.Daily Invoice Report</span>
+								    </div>
+
+              </div>
+              </div>  
+
+    <!-- /.col -->
         </div>
 
-
-  
- 
  <br>
  
 
@@ -185,37 +223,51 @@
 				</div>
 		
 		
-		<div class="col-sm-12">
-		<div class="card" >
-              
-              <div class="card-body table-responsive p-0">
-                <table class="table table-striped table-valign-middle">
-                  <thead>
-                  <tr>
-                  <th>From Date</th>
-                    <th>To Date</th>
-                    
-                                                                                                   
-                  </tr>
-                  </thead>
-                  <tbody>
-                  
-                  
-                  	<tr>
-                    <td><input type="text" id="txtfromdate" onchange="reloadData()" name="txtfromdate" readonly class="datepicker form-control form-control-sm" placeholder="From Date"/></td>
-                    <td><input type="text" id="txttodate" onchange="reloadData()" name="txttodate" readonly class="datepicker form-control form-control-sm"  placeholder="To Date"/></td>
-                        
-                                        
-                  </tr>	
-                  
-                  
-                  
-                                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-		</div>
+		
+          
+		<div class="col-sm-4">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">Search for Unique No</h3>
+
+							<div class="card-tools">
+								<button type="button" class="btn btn-tool" data-card-widget="collapse">
+									<i class="fas fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-tool" data-card-widget="remove">
+									<i class="fas fa-times"></i>
+								</button>
+							</div>
+						</div>
+						<div class="card-body table-responsive p-0">
+							<table class="table table-striped table-valign-middle">
+								
+								<tbody>
+
+
+									<tr>
+										<td> <div class="input-group">	  					
+				    <input type="number" class="form-control form-control-sm" placeholder="Search for Unique No"  id="txtbatteryno" onkeypress="checkIfEnterIsPressed(event)" name="txtbatteryno">
+				    <div class="input-group-append">
+				      <button class="btn btn-secondary btn-sm" type="button" onclick="searchUniqueNo()">
+				        <i class="fa fa-search fa-sm"></i>
+				      </button>
+				    </div>
+				  </div></td>
+									</tr>
+
+
+
+
+
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+
+
+				</div>
 		
 		
 		
@@ -788,15 +840,7 @@
 
 
 <script type="text/javascript">
-        $( function() 
-        		{
-            $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-            $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-            
-                       
-            
-          } );
-        
+
    
 
         function searchInvoice()
@@ -827,6 +871,39 @@
 	
 	
 }
+
+function searchUniqueNo()
+{
+
+  
+
+    window.location="?a=generateDailyInvoiceReport&txtfromdate=23/01/1992&battery_no="+txtbatteryno.value;
+    return;
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() 
+{
+if (xhttp.readyState == 4 && xhttp.status == 200) 
+{ 		      
+	if(xhttp.responseText=="No Invoice Found")
+		{
+			alert(xhttp.responseText);
+		}
+	else
+		{
+			window.location="?a=showGenerateInvoice&editInvoice=Y&invoice_id="+xhttp.responseText;
+		}
+  
+  
+}
+};
+xhttp.open("GET","?a=getInvoiceIdBySearchCriter&invoiceNo="+txtsearchinvoiceno.value, true);    
+xhttp.send();
+
+
+
+}
+
         
         function reloadData()
         {
@@ -843,18 +920,7 @@
         }
       }
         
-        if('${param.fromDate}'!='')
-        	{
-		        txtfromdate.value='${param.fromDate}';
-		        txttodate.value='${param.toDate}';
-        	}
-        else
-        	{
-        	
-        	txtfromdate.value='${HomePageContent.get("todaysDate")}';
-        	txttodate.value='${HomePageContent.get("todaysDate")}';
-	        
-        	}
+       
         
          
         	
