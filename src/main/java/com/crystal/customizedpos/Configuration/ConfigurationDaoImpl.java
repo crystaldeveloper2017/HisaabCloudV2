@@ -1401,8 +1401,9 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
 		String query = "select customer_id customerId,customer_name customerName, mobile_number mobileNumber, "
-				+ " city customerCity, address customerAddress, customer_type customerType "
+				+ " city customerCity, address customerAddress, customer_type customerType,state_name customerstate "
 				+ " from mst_customer customer left outer join customer_group group1 on group1.group_id=customer.group_id and group1.app_id=customer.app_id"
+				+ " left outer join cmn_state_mst csm on csm.state_id=customer.state_id "
 				+ " where customer.activate_flag = 1 and   customer.app_id=? ";
 
 		if (hm.get("searchInput") != null && !hm.get("searchInput").equals("")) {
@@ -1478,12 +1479,13 @@ if(hm.get("user_id")!=null)
 		parameters.add(hm.get("alternate_mobile_no"));
 		parameters.add(hm.get("customer_reference"));
 		parameters.add(hm.get("txtgstno"));
+		parameters.add(hm.get("state"));
 
 		parameters.add(Long.valueOf(customerId));
 		insertUpdateDuablDB(
 				"UPDATE mst_customer  SET"
 						+ " customer_name=?, mobile_number = ?, city=?, address= ?, customer_type=?,updated_date=SYSDATE(),"
-						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?	 WHERE customer_id=?",
+						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?, state=?	 WHERE customer_id=?",
 				parameters, conWithF);
 		return "Customer Updated Succesfully";
 
@@ -1501,7 +1503,8 @@ if(hm.get("user_id")!=null)
 		parameters.add(hm.get("app_id"));
 		parameters.add(hm.get("customer_reference"));
 		parameters.add(hm.get("txtgstno"));
-		String insertQuery = "insert into mst_customer values (default,?,?,?,?,?,1,sysdate(),null,null,?,?,?,?,?)";
+		parameters.add(hm.get("state"));
+		String insertQuery = "insert into mst_customer values (default,?,?,?,?,?,1,sysdate(),null,null,?,?,?,?,?,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
 
@@ -8160,6 +8163,17 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 						"\tpayment_id = ? and mc.customer_id =tpr.customer_id and tpr.updated_by = tum.user_id and ms.store_id =tpr.store_id ", con);
 
 	}
+
+		public List<LinkedHashMap<String, Object>> getStatesList(Connection con) throws SQLException, ClassNotFoundException 
+		{
+			
+			
+			ArrayList<Object> parameters = new ArrayList<>();
+			String query="select state_id stateId,state_name stateName from cmn_state_mst";
+			return getListOfLinkedHashHashMap(parameters, query, con);		
+			
+		}
+		
 
 
 

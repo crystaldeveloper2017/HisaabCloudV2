@@ -3931,7 +3931,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 		try {
 			String[] colNames = { "customerId", "customerName", "mobileNumber", "customerCity", "customerAddress",
-					"customerType" };
+					"customerType","state" };
 
 			List<LinkedHashMap<String, Object>> lst = null;
 
@@ -3943,6 +3943,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			} else {
 				outputMap.put("groupList", lObjConfigDao.getCustomerGroup(appId, con));
 				outputMap.put("ListOfCustomers", lst);
+				outputMap.put("ListOfStates", lObjConfigDao.getStatesList(con));
+
 				rs.setViewName("../Customer.jsp");
 				rs.setReturnObject(outputMap);
 			}
@@ -4154,6 +4156,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			outputMap.put("DistinctCityNames", lObjConfigDao.getDistinctCityNames(appId, con));
 			outputMap.put("groupList", lObjConfigDao.getCustomerGroup(appId, con));
 			outputMap.put("ciphertext",cf.getAESEncryptedString(String.valueOf(customerId) , "PasswordGoesHere@786"));
+			outputMap.put("ListOfStates", lObjConfigDao.getStatesList(con));
+
 
 			rs.setViewName("../AddCustomer.jsp");
 			rs.setReturnObject(outputMap);

@@ -8,6 +8,8 @@
 <c:set var="groupList" value='${requestScope["outputObject"].get("groupList")}' />
 <c:set var="DistinctCityNames" value='${requestScope["outputObject"].get("DistinctCityNames")}' />
 <c:set var="ciphertext" value='${requestScope["outputObject"].get("ciphertext")}' />
+<c:set var="states" value='${requestScope["outputObject"].get("ListOfStates")}' />
+
 
 
 
@@ -187,6 +189,22 @@ function addCustomer()
         </div>
   </div>
   
+  <div class="col-sm-3">
+  	<div class="form-group">
+      <label id="lblstate">State</label> 
+       <select id="state" name="state" class='form-control'>
+	      <option value="-1" selected> ------Select--------</option>
+		
+		<c:forEach items="${states}" var="cat">
+			    <option value="${cat.stateId}">${cat.stateName}</option>			    
+	    </c:forEach>
+		</select>	
+      
+    </div>
+  </div>
+
+ 
+  
   
   <div class="col-sm-12" align="center">
   	<div class="form-group">
@@ -228,6 +246,8 @@ function addCustomer()
 	<c:if test="${customerDetails.customer_id ne null}">
 		document.getElementById("divTitle").innerHTML="Update Customer";
 		document.title +=" Update Customer ";
+	   state.value="${customerDetails.state_id}";
+
 	</c:if>
 	
 	var arr=window.location.toString().split("/");
