@@ -1469,10 +1469,10 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		
 		
 		
-		table = new PdfPTable(7);
+		table = new PdfPTable(6);
 		table.setWidthPercentage(100);
 		
-		table.setWidths(new int[]{5,45,15,5,10,10,10});
+		table.setWidths(new int[]{5,55,15,5,10,10});
 
 		
 		
@@ -1508,10 +1508,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		  table.addCell(cell);
 		  
-		  cell = new PdfPCell(new Phrase("Warranty (Months)",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
-		  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  table.addCell(cell);
+		  
 		  
 		  
 		  cell = new PdfPCell(new Phrase("Amount",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
@@ -1561,16 +1558,22 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				cell.setBorderWidthRight(0);
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
+
+				  String warrantyString=prod.get("warrantyelectric").toString().equals("")?"":" (Warranty : "+prod.get("warrantyelectric").toString()+" Months)";
+
+				  String itemString=prod.get("item_name").toString()+" : "+prod.get("unique_no")+warrantyString;
 				  
-				  cell = new PdfPCell(new Phrase(prod.get("item_name").toString()+" : "+prod.get("unique_no"),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
+				  cell = new PdfPCell(new Phrase(itemString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
 				  cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);
 				  cell.setBorderWidthRight(0);
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
+
+				  String hsncode=prod.get("item_name").toString().contains("Set")?"998315":"";
 				  
-				  cell = new PdfPCell(new Phrase("998315",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
+				  cell = new PdfPCell(new Phrase(hsncode,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);
@@ -1579,6 +1582,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  table.addCell(cell);
 				  
 				  
+				  qty=prod.get("item_name").toString().contains("Set")?qty:"";
 				  
 				  cell = new PdfPCell(new Phrase(qty,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1589,8 +1593,9 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  table.addCell(cell);
 				  
 				  
-				  
-				  cell = new PdfPCell(new Phrase(prod.get("custom_rate").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
+				  String customrate=prod.get("item_name").toString().contains("Set")?prod.get("custom_rate").toString():"";
+
+				  cell = new PdfPCell(new Phrase(customrate,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);
@@ -1598,16 +1603,14 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
 				  
-				  cell = new PdfPCell(new Phrase(prod.get("warrantyelectric").toString() ,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
-				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				  cell.setBorderWidthBottom(0);
-				  cell.setBorderWidthTop(0);
-				  cell.setBorderWidthRight(0);
-				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				  table.addCell(cell);
 				  
+				  
+
 				  double itemAmount=Double.valueOf(amount);
-				  cell = new PdfPCell(new Phrase(String.valueOf(itemAmount) ,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+				  String itemAmountString=prod.get("item_name").toString().contains("Set")?String.valueOf(itemAmount):"";
+
+
+				  cell = new PdfPCell(new Phrase(itemAmountString,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 				  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);			        
@@ -1634,7 +1637,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell = new PdfPCell(new Phrase("Gross Amount",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  cell.setColspan(6);
+		  cell.setColspan(5);
 		  table.addCell(cell);
 		  
 		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("gross_amount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
@@ -1649,7 +1652,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			   
 				cell = new PdfPCell(new Phrase("Discount",new Font (Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));     
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setColspan(5);
+				cell.setColspan(4);
 				table.addCell(cell);
 				
 			  cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));			        	
@@ -1673,7 +1676,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			   
 				cell = new PdfPCell(new Phrase("Item Discount",new Font (Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));     
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setColspan(5);
+				cell.setColspan(4);
 				table.addCell(cell);
 				
 			  cell = new PdfPCell(new Phrase("",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
@@ -1702,7 +1705,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell = new PdfPCell(new Phrase("Payable Amount",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
 		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  cell.setColspan(6);
+		  cell.setColspan(5);
 		  table.addCell(cell);
 		  
 		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_amount").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
@@ -1718,7 +1721,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell = new PdfPCell(new Phrase(amtInWords,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD) ));			        	
 		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  cell.setColspan(7);
+		  cell.setColspan(6);
 		  table.addCell(cell);
 
 		  if(!invoiceHistoryDetails.get("remarks").toString().equals(""))
@@ -1726,7 +1729,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			cell = new PdfPCell(new Phrase("Remarks: "+invoiceHistoryDetails.get("remarks").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell.setColspan(7);
+			cell.setColspan(6);
 			table.addCell(cell);
 		  }
 
