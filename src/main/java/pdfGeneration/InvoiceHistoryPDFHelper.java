@@ -966,7 +966,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
 				  
-				  cell = new PdfPCell(new Phrase("998315",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
+				  cell = new PdfPCell(new Phrase("87116020",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);
@@ -1571,7 +1571,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
 
-				  String hsncode=prod.get("item_name").toString().contains("Set")?"998315":"";
+				  String hsncode=prod.get("item_name").toString().contains("Set")?"87116020":"";
 				  
 				  cell = new PdfPCell(new Phrase(hsncode,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1764,11 +1764,13 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			 cell.setColspan(2);
 			 table.addCell(cell);
 		   
-			 cell = new PdfPCell(new Phrase("Company's PAN "+" ADXPJ3256D",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
+			 cell = new PdfPCell(new Phrase(" ",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.UNDERLINE)));        
 			 cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+			 cell.setBorderWidthBottom(0);
 			 table.addCell(cell);
 			 
-			 cell = new PdfPCell(new Phrase("Bank Name:- "+"AU Small Finance Bank",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
+			 
+			 cell = new PdfPCell(new Phrase("Bank Name:- "+"ICICI BANK ",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
 			 cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			 table.addCell(cell);
 			 
@@ -1783,16 +1785,16 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 			 table.addCell(cell);        
 			 
 			 
-				 cell = new PdfPCell(new Phrase("A/c. No.: "+"2302215248532847",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
+				 cell = new PdfPCell(new Phrase("A/c. No.: "+"365405500250",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
 				 cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				 table.addCell(cell);
 			 
    
-			 cell = new PdfPCell(new Phrase("IFSC Code : "+"AUBL0002152",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
+			 cell = new PdfPCell(new Phrase("IFSC Code : "+"ICIC0003654",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
 			 cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			 table.addCell(cell);
 			 
-			 cell = new PdfPCell(new Phrase("for Crystal Developers ",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
+			 cell = new PdfPCell(new Phrase("for Eagle Motors ",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL)));        
 			 cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			 table.addCell(cell);
 			 
