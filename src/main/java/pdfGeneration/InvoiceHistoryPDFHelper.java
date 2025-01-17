@@ -1583,6 +1583,8 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  
 				  
 				  qty=prod.get("item_name").toString().contains("Set")?qty:"";
+
+				  qty=String.format("%.0f", Double.valueOf(qty));
 				  
 				  cell = new PdfPCell(new Phrase(qty,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1646,19 +1648,67 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 		  cell.setColspan(1);
 		  table.addCell(cell);
 
-		  cell = new PdfPCell(new Phrase("GST",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
-		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  cell.setColspan(5);
-		  table.addCell(cell);
+
+		  if(invoiceHistoryDetails.get("customerstatename")!=null && invoiceHistoryDetails.get("customerstatename").equals("Gujarat"))
+		  {
+			cell = new PdfPCell(new Phrase("Total SGST",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(5);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_sgst").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(1);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("Total CGST",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(5);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_cgst").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(1);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("Total GST",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(5);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_gst").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(1);
+			table.addCell(cell);
+		  }
+		  else
+		  {
+			cell = new PdfPCell(new Phrase("Total IGST",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(5);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_igst").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setColspan(1);
+			table.addCell(cell);
+
+			
+		  }
+
+
 
 
 		  
-		  cell = new PdfPCell(new Phrase(invoiceHistoryDetails.get("total_gst").toString(),new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));			        	
-		  cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-		  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-		  cell.setColspan(1);
-		  table.addCell(cell);
+	
 		 
 
 		  if(!invoiceHistoryDetails.get("invoice_discount").toString().equals("0.00") && !invoiceHistoryDetails.get("invoice_discount").toString().equals("0.00"))
@@ -1753,6 +1803,9 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 
 		  document.add(table);
 		   
+
+		  document.add(new Paragraph("\n"));
+		  document.add(new Paragraph("\n"));
 		   
 		   table = new PdfPTable(2);
 		   table.setWidthPercentage(100);    
@@ -2504,7 +2557,8 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 			        table.addCell(cell);
 			        
 			        totalQty+=Double.parseDouble(prod.get("qty").toString());
-			        Double reqQty=Double.parseDouble(prod.get("qty").toString());			        String reqQtyString=String.format("%.0f", reqQty);			        
+			        Double reqQty=Double.parseDouble(prod.get("qty").toString());			        
+					String reqQtyString=String.format("%.0f", reqQty);			        
 			        cell = new PdfPCell(new Phrase(reqQtyString,font ));
 			        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);

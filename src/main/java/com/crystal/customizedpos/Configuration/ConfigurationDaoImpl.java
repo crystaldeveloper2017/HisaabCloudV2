@@ -1605,7 +1605,7 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(Long.valueOf(customerId));
 		return getMap(parameters,
-				"select * from mst_customer where customer_id=?",
+				"select *,csm.state_name customerstatename from mst_customer mc left outer join cmn_state_mst csm on csm.state_id=mc.state_id where customer_id=?",
 				con);
 	}
 
@@ -2511,13 +2511,14 @@ if(hm.get("user_id")!=null)
 		parameters.add(invoiceId);
 		LinkedHashMap<String, Object> itemDetailsMap = new LinkedHashMap<>();
 		itemDetailsMap = getMapReturnObject(parameters, "select \r\n" + "*,\r\n"
-				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,\r\n"
+				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,csm.state_name customerstatename, \r\n"
 				+ "date_format(invoice_date,'%d/%m/%Y') theInvoiceDate,\r\n" + "sum(qty) totalQuantities,\r\n"
 				+ "paym.amount as paid_amount,date_format(invoice.updated_date,'%d/%m/%Y %h:%i%p') theUpdatedDate"
 				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage,ried.warranty electricwarranty \r\n" + " from\r\n"
 				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
 				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
 				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
+				+ " left outer join cmn_state_mst csm on csm.state_id=cust.state_id \r\n"
 				+ " left outer join rlt_invoice_electric_details ried on ried.invoice_id=invoice.invoice_id \r\n"
 				+ "where invoice.invoice_id=? order by dtls.details_id", con);
 
@@ -8178,6 +8179,14 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 			String query="select state_id stateId,state_name stateName from cmn_state_mst";
 			return getListOfLinkedHashHashMap(parameters, query, con);		
 			
+		}
+
+		public LinkedHashMap<String, String> getLoadingDetails(long loadingId, Connection con) throws SQLException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(Long.valueOf(loadingId));
+			return getMap(parameters,
+					"select * from trn_loading_register tlr,mst_vehicle mv  where loading_id=? and mv.vehicle_id =tlr.vehicle_id ",
+					con);
 		}
 		
 

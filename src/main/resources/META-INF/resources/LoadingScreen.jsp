@@ -2,6 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="invoiceDetails" value="${requestScope['outputObject'].get('invoiceDetails')}" />
+<c:set var="loadingDetails" value="${requestScope['outputObject'].get('loadingDetails')}" />
+<c:set var="orderDetails" value="${requestScope['outputObject'].get('orderDetails')}" />
+
+
+
 
 <link rel="stylesheet" href="css/LoadingScreen.css" />
 
@@ -55,7 +60,7 @@
     
     <div class="footer-right">
         <button id="complete-line" class="complete-loading-button" onclick="completeLine()">
-            Complete Line
+            Complete Line ${param.line_no}
         </button>
     </div>
 </div>
@@ -64,6 +69,9 @@
 <script>
 let orderId = "${param.order_id}";
 let loadingId = "${param.loading_id}";
+
+document.getElementById("divTitle").innerHTML="${loadingDetails.vehicle_number} ${orderDetails.customercityname} Line No : ${param.line_no}";
+
 </script>
 
 <script src="js/LoadingScreen.js"></script>

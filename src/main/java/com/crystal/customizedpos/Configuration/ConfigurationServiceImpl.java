@@ -2792,9 +2792,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				List<HashMap<String, Object>> newItemList= new ArrayList<>();
 
 				LinkedHashMap<String, String> custDetails=lObjConfigDao.getCustomerDetails(Long.valueOf(customer_id), con);
-				custDetails.put("state_name", "Gujarat");
 
-				if(custDetails.get("state_name").equals("Gujarat"))
+				if(custDetails.get("customerstatename")!=null && custDetails.get("customerstatename").equals("Gujarat"))
 				{
 					double totalSgst=0l;
 					double totalCgst=0l;
@@ -2831,7 +2830,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						HashMap<String,Object> newItem=new HashMap<>();
 						newItem.putAll(tempItem);
 						newItem.put("igst_percenrtage", "2.5");
-						String itemAmount= tempItem.get("item_amount").toString();
+						String itemAmount= tempItem.get("itemAmount").toString();
 						double igstamount=Double.valueOf(itemAmount) * 2.5 /100;												
 						newItem.put("igst_amount", igstamount);	
 						totalIgst+=igstamount;					
@@ -3721,11 +3720,18 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		String orderId=request.getParameter("order_id");
+		String loading_id=request.getParameter("loading_id");
 		outputMap.put("appId", appId);
 		outputMap.put("app_id", appId);
 		try {
 
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(orderId, con));
+			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loading_id, con));
+			outputMap.put("orderDetails", lObjConfigDao.getInvoiceDetails((orderId), con));
+			
+
+			
+			
 			
 
 
@@ -3823,11 +3829,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String vehicleId = hm.get("drpvehicleid").equals("") ? "0" : (hm.get("drpvehicleid").toString());
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
-		lObjConfigDao.startVehicleLoading(vehicleId,userId,con);
+		long loadingid=lObjConfigDao.startVehicleLoading(vehicleId,userId,con);
 			rs.setReturnObject(outputMap);
 
 			rs.setAjaxData("<script>alert('Updated succesfully');window.location='" + hm.get("callerUrl")
-					+ "?a=showAddExpense&expenseDate=" + hm.get("txtdate") + "'</script>");
+					+ "?a=showChooseOrderForLoading&loading_id=" + loadingid + "'</script>");
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
