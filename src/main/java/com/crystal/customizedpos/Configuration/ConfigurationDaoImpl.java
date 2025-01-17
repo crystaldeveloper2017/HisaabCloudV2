@@ -8147,6 +8147,8 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 										"\tand mi.parent_category_id =mc.category_id \r\n" + //
 										"\tand tsdd.activate_flag = 1\r\n" + //
 										"\tand tsdd.app_id =?\r\n" + //
+										"and category_name not like '%fuel%'\r\n" + //
+										"\tgroup by item_name" +
 										"\t",
 				con);
 	}

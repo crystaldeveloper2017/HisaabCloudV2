@@ -193,10 +193,7 @@ function completeLine() {
     alert("Line Completed!");
 }
 
-// New function to scroll to the top when the arrow button is clicked
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+function completeLine()
+{
+    alert("complete line code goes here");
 }

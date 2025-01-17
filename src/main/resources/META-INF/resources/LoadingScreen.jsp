@@ -48,7 +48,7 @@
     
     <!-- Arrow button placed between total quantities and complete line button -->
     <div class="footer-middle">
-        <button id="top-arrow-button" class="top-arrow-button" onclick="scrollToTop()">
+        <button id="top-arrow-button" class="top-arrow-button" onclick="completeLine()">
             <i class="fas fa-arrow-up"></i> <!-- Font Awesome up arrow icon -->
         </button>
     </div>
