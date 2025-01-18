@@ -20,6 +20,7 @@ function updateQuantities(button, maxQty) {
     const pendingQtyElement = button.querySelector('.pending-qty');
     const loadedQtyElement = button.querySelector('.loaded-qty');
     const minusButton = button.closest('.custom-button-container').querySelector('.minus-button');
+    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.loaded-qty-button');
 
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
@@ -27,57 +28,39 @@ function updateQuantities(button, maxQty) {
     pendingQty -= 1;
     pendingQtyElement.textContent = pendingQty.toFixed(0);
 
-    console.log(pendingQty);
+    // Update button class
     if (pendingQty === 0) {
-        button.classList.remove('pink');
-        button.classList.remove('white');
-
+        button.classList.remove('pink', 'white');
         button.classList.add('green');
-    }
-
-    if (pendingQty < 0) {
-
-        button.classList.remove('green');
-        button.classList.remove('white');
-
+    } else if (pendingQty < 0) {
+        button.classList.remove('green', 'white');
         button.classList.add('pink');
-    }
-
-    if (pendingQty > 0) {
-
-        
-        button.classList.remove('green');
-        button.classList.remove('pink');
-
+    } else {
+        button.classList.remove('green', 'pink');
         button.classList.add('white');
     }
 
-
-    if (pendingQty > 0) {
-        // If there are still pending quantities, allow adding one to loaded quantities
+    // Update loaded quantity
+    if (pendingQty >= 0) {
         loadedQty += 1;
-
         loadedQtyElement.textContent = loadedQty.toFixed(0);
-
-       
-
-        if (loadedQty > 0) {
-            minusButton.style.display = 'block';
-        }
     } else {
-        // Vibrate and still allow adding more items even after pending qty is 0
+        // Allow adding more even if pendingQty is 0
         if ("vibrate" in navigator) {
-            navigator.vibrate(300); // Vibrates for 300ms
+            navigator.vibrate(300);
         }
-
-        // Add one more to loadedQty even if pendingQty is 0
         loadedQty += 1;
         loadedQtyElement.textContent = loadedQty.toFixed(0);
+    }
 
-        // Allow minus button to show since there's now a loaded quantity
-        if (loadedQty > 0) {
-            minusButton.style.display = 'block';
-        }
+    // Show the loaded qty button when it's greater than 0
+    loadedQtyButton.textContent = loadedQty > 0 ? loadedQty : '0';
+    if (loadedQty > 0) {
+        minusButton.style.display = 'block';
+        loadedQtyButton.style.display='block';
+    } else {
+        minusButton.style.display = 'none';
+        loadedQtyButton.style.display='none';
     }
 
     updateFooter();
@@ -88,62 +71,49 @@ function decrementQuantities(minusButton) {
     const button = buttonContainer.querySelector('.custom-button');
     const pendingQtyElement = button.querySelector('.pending-qty');
     const loadedQtyElement = button.querySelector('.loaded-qty');
+    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.loaded-qty-button');
 
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
 
-
-
-
-
-
+    // Ensure there's at least one loaded quantity to decrement
     if (loadedQty > 0) {
+        // Decrement loaded quantity and increment pending quantity
         loadedQty -= 1;
         pendingQty += 1;
 
+        // Update the quantities in the UI
         pendingQtyElement.textContent = pendingQty.toFixed(0);
         loadedQtyElement.textContent = loadedQty.toFixed(0);
 
-        if (pendingQty > 0) {
-            button.classList.remove('green');
-        }
+        // Show the loaded qty button with the updated value
+        loadedQtyButton.textContent = loadedQty.toFixed(0);
 
+        // If no more loaded items, hide the minus button
         if (loadedQty === 0) {
             minusButton.style.display = 'none';
+            loadedQtyButton.style.display = 'none';
         }
+        
+        // Update button colors and class based on the updated pendingQty
+        if (pendingQty === 0) {
+            button.classList.remove('pink', 'white');
+            button.classList.add('green');
+        } else if (pendingQty < 0) {
+            button.classList.remove('green', 'white');
+            button.classList.add('pink');
+        } else {
+            button.classList.remove('green', 'pink');
+            button.classList.add('white');
+        }
+
+        // Update the footer
+        updateFooter();
     } else {
         alert("No loaded items to unload.");
     }
-
-
-    console.log(pendingQty);    
-
-    if (pendingQty === 0) {
-        button.classList.remove('pink');
-        button.classList.remove('white');
-
-        button.classList.add('green');
-    }
-
-    if (pendingQty < 0) {
-
-        button.classList.remove('green');
-        button.classList.remove('white');
-
-        button.classList.add('pink');
-    }
-
-    if (pendingQty > 0) {
-
-        
-        button.classList.remove('green');
-        button.classList.remove('pink');
-
-        button.classList.add('white');
-    }
-
-    updateFooter();
 }
+
 
 function completeLoading() {
     // Placeholder for any additional logic when completing loading
@@ -168,8 +138,8 @@ function completeLine() {
             pending_qty: pendingQty,
             loaded_qty: loadedQty,
             ordered_qty: orderedQty,
-            order_id: orderId,
-            laoding_id: loadingId
+            order_id: orderId,      // Use the pre-defined orderId
+            laoding_id: loadingId   // Use the pre-defined loadingId
         });
     });
 
@@ -191,9 +161,4 @@ function completeLine() {
 
     // Placeholder alert for now
     alert("Line Completed!");
-}
-
-function completeLine()
-{
-    alert("complete line code goes here");
 }

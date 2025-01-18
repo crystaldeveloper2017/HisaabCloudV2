@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row">
             <c:forEach items="${invoiceDetails.listOfItems}" var="item">
-                <div class="col-6 mb-2">
+                <div class="col-6 mb-2" style="padding-right:0px;padding-left:0px;">
                     <div class="custom-button-container">
                         <button class="custom-button" 
                                 onclick="updateQuantities(this, ${item.qty})">
@@ -38,6 +38,10 @@
                         <button class="minus-button" onclick="decrementQuantities(this)" style="display: none;">
                             - 
                         </button>
+
+                        <button class="loaded-qty-button"  style="display: none;">
+                            0
+                        </button>
                     </div>
                 </div>
             </c:forEach>
@@ -53,7 +57,7 @@
     
     <!-- Arrow button placed between total quantities and complete line button -->
     <div class="footer-middle">
-        <button id="top-arrow-button" class="top-arrow-button" onclick="completeLine()">
+        <button id="top-arrow-button" class="top-arrow-button" onclick="showmodalpopup()">
             <i class="fas fa-arrow-up"></i> <!-- Font Awesome up arrow icon -->
         </button>
     </div>
