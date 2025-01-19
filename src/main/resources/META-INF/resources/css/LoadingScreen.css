@@ -103,7 +103,7 @@ html, body {
     transition: background-color 0.3s ease;
 }
 
-.loaded-qty-button {
+.currentlineqty {
     position: absolute;
     bottom: 0px;
     right: 3px;
@@ -112,6 +112,7 @@ html, body {
     background-color: #e2d7d8; /* Bootstrap's danger red */
     color: black;
     border: none;
+
     font-size: 20px;
     font-weight: bold;
     display: flex;
@@ -178,11 +179,7 @@ html, body {
         height: 120px;
     }
 
-    .minus-button {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-    }
+    
 
     .footer {
         font-size: 16px;

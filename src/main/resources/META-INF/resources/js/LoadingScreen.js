@@ -20,7 +20,7 @@ function updateQuantities(button, maxQty) {
     const pendingQtyElement = button.querySelector('.pending-qty');
     const loadedQtyElement = button.querySelector('.loaded-qty');
     const minusButton = button.closest('.custom-button-container').querySelector('.minus-button');
-    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.loaded-qty-button');
+    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.currentlineqty');
 
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
@@ -28,7 +28,6 @@ function updateQuantities(button, maxQty) {
     pendingQty -= 1;
     pendingQtyElement.textContent = pendingQty.toFixed(0);
 
-    // Update button class
     if (pendingQty === 0) {
         button.classList.remove('pink', 'white');
         button.classList.add('green');
@@ -40,12 +39,10 @@ function updateQuantities(button, maxQty) {
         button.classList.add('white');
     }
 
-    // Update loaded quantity
     if (pendingQty >= 0) {
         loadedQty += 1;
         loadedQtyElement.textContent = loadedQty.toFixed(0);
     } else {
-        // Allow adding more even if pendingQty is 0
         if ("vibrate" in navigator) {
             navigator.vibrate(300);
         }
@@ -53,14 +50,13 @@ function updateQuantities(button, maxQty) {
         loadedQtyElement.textContent = loadedQty.toFixed(0);
     }
 
-    // Show the loaded qty button when it's greater than 0
     loadedQtyButton.textContent = loadedQty > 0 ? loadedQty : '0';
     if (loadedQty > 0) {
         minusButton.style.display = 'block';
-        loadedQtyButton.style.display='block';
+        loadedQtyButton.style.display = 'block';
     } else {
         minusButton.style.display = 'none';
-        loadedQtyButton.style.display='none';
+        loadedQtyButton.style.display = 'none';
     }
 
     updateFooter();
@@ -71,31 +67,25 @@ function decrementQuantities(minusButton) {
     const button = buttonContainer.querySelector('.custom-button');
     const pendingQtyElement = button.querySelector('.pending-qty');
     const loadedQtyElement = button.querySelector('.loaded-qty');
-    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.loaded-qty-button');
+    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.currentlineqty');
 
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
 
-    // Ensure there's at least one loaded quantity to decrement
     if (loadedQty > 0) {
-        // Decrement loaded quantity and increment pending quantity
         loadedQty -= 1;
         pendingQty += 1;
 
-        // Update the quantities in the UI
         pendingQtyElement.textContent = pendingQty.toFixed(0);
         loadedQtyElement.textContent = loadedQty.toFixed(0);
 
-        // Show the loaded qty button with the updated value
         loadedQtyButton.textContent = loadedQty.toFixed(0);
 
-        // If no more loaded items, hide the minus button
         if (loadedQty === 0) {
             minusButton.style.display = 'none';
             loadedQtyButton.style.display = 'none';
         }
-        
-        // Update button colors and class based on the updated pendingQty
+
         if (pendingQty === 0) {
             button.classList.remove('pink', 'white');
             button.classList.add('green');
@@ -107,58 +97,63 @@ function decrementQuantities(minusButton) {
             button.classList.add('white');
         }
 
-        // Update the footer
         updateFooter();
     } else {
         alert("No loaded items to unload.");
     }
 }
 
-
 function completeLoading() {
-    // Placeholder for any additional logic when completing loading
     alert("Loading Completed!");
 }
 
 function completeLine() {
-    // Create an array to store item details
+    let currentLineLoadedQty = 0;
     let itemsData = [];
 
-    // Loop through each button that represents an item
-    document.querySelectorAll('.custom-button').forEach(button => {
-        // Get the item ID from the hidden input field within the button
+    document.querySelectorAll('.custom-button-container').forEach(container => {
+        let button = container.querySelector('.custom-button');
         let itemId = button.querySelector('input[type="hidden"]').value;
         let pendingQty = parseFloat(button.querySelector('.pending-qty').textContent);
         let loadedQty = parseFloat(button.querySelector('.loaded-qty').textContent);
-        let orderedQty = parseFloat(button.querySelector('.badge-container .badge .badge-value').textContent); // Adjust if needed
+        let orderedQty = parseFloat(button.querySelector('.badge .badge-value').textContent);
+        let currentLineQty = parseFloat(container.querySelector('.currentlineqty').textContent);
 
-        // Store the item data in an array
+        currentLineLoadedQty += currentLineQty;
+
         itemsData.push({
             item_id: itemId,
             pending_qty: pendingQty,
             loaded_qty: loadedQty,
             ordered_qty: orderedQty,
-            order_id: orderId,      // Use the pre-defined orderId
-            laoding_id: loadingId   // Use the pre-defined loadingId
+            current_line_qty: currentLineQty,
+            order_id: orderId,
+            loading_id: loadingId
         });
     });
 
-    // Output the item details to the console for debugging (can be replaced with actual processing logic)
-    console.log("Completed Line. Items:", itemsData);
+    console.log("Current Line Loaded Qty:", currentLineLoadedQty);
+    console.log("Items Data:", itemsData);
 
-    // Example of sending the data to the backend (if needed)
-    // fetch('/api/complete-line', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ items: itemsData })
-    // }).then(response => response.json())
-    //   .then(data => {
-    //     alert("Line Completed Successfully!");
-    //   })
-    //   .catch(error => console.error("Error completing line:", error));
+    fetch('/api/complete-line', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            line_no: "${param.line_no}",
+            total_loaded_qty: currentLineLoadedQty,
+            items: itemsData,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert("Line Completed Successfully!");
+        })
+        .catch(error => {
+            console.error("Error completing line:", error);
+            alert("Error completing the line. Please try again.");
+        });
 
-    // Placeholder alert for now
-    alert("Line Completed!");
+    alert(`Line Completed! Total Loaded Qty: ${currentLineLoadedQty}`);
 }

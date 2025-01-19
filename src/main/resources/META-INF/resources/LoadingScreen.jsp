@@ -39,7 +39,7 @@
                             - 
                         </button>
 
-                        <button class="loaded-qty-button"  style="display: none;">
+                        <button class="currentlineqty"  style="display: none;">
                             0
                         </button>
                     </div>
