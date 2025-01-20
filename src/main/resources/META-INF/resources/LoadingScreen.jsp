@@ -6,6 +6,9 @@
 <c:set var="orderDetails" value="${requestScope['outputObject'].get('orderDetails')}" />
 <c:set var="loadingItemDetailsJson" value="${requestScope['outputObject'].get('loadingItemDetailsJson')}" />
 
+<c:set var="line_no" value="${requestScope['outputObject'].get('line_no')}" />
+<c:set var="order_id" value="${requestScope['outputObject'].get('order_id')}" />
+<c:set var="loading_id" value="${requestScope['outputObject'].get('loading_id')}" />
 
 
 
@@ -59,7 +62,7 @@
     
     <!-- Arrow button placed between total quantities and complete line button -->
     <div class="footer-middle">
-        <button id="top-arrow-button" class="top-arrow-button" onclick="showmodalpopup()">
+        <button id="top-arrow-button" class="top-arrow-button" onclick="showModalPopup()">
             <i class="fas fa-arrow-up"></i> <!-- Font Awesome up arrow icon -->
         </button>
     </div>

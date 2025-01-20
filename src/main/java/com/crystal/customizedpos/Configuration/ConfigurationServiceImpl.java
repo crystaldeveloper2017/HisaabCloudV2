@@ -3680,6 +3680,41 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+
+	
+	public CustomResultObject resumeLoading(HttpServletRequest request, Connection con) throws SQLException {
+		
+		CustomResultObject rs = new CustomResultObject();
+		try {
+
+		
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String loadingId=request.getParameter("loading_id");
+		outputMap.put("appId", appId);
+		outputMap.put("app_id", appId);
+
+		
+			
+			
+			
+			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loadingId,con));
+			
+
+
+			rs.setViewName("../ChooseOrderForLoading.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	
+
 	public CustomResultObject showChooseOrderForLoading(HttpServletRequest request, Connection con) throws SQLException {
 		
 		CustomResultObject rs = new CustomResultObject();
@@ -3695,8 +3730,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPlanningRegister(outputMap, con);
 
 			
-			;
-
+			
+			
 			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loadingId,con));
 			outputMap.put("lstPlanningRegister", lst);
 			
@@ -3774,16 +3809,29 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String orderId=request.getParameter("order_id");
+		String order_id=request.getParameter("order_id");
 		String loading_id=request.getParameter("loading_id");
+		String line_no=request.getParameter("loading_id");
 		outputMap.put("appId", appId);
 		outputMap.put("app_id", appId);
 		try {
+			if(order_id==null)
+			{
+				List<LinkedHashMap<String, Object>> lstLoadingItems= lObjConfigDao.getLoadingItemDetails(loading_id, con);
+				order_id=lstLoadingItems.get(lstLoadingItems.size()-1).get("order_id").toString();
+				line_no=lstLoadingItems.get(lstLoadingItems.size()-1).get("line_no").toString();;
+			}
 
-			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(orderId, con));
+			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(order_id, con));
 			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loading_id, con));
 			outputMap.put("loadingItemDetailsJson", mapper.writeValueAsString(lObjConfigDao.getLoadingItemDetails(loading_id, con)));
-			outputMap.put("orderDetails", lObjConfigDao.getInvoiceDetails((orderId), con));
+			outputMap.put("orderDetails", lObjConfigDao.getInvoiceDetails((order_id), con));
+			
+			outputMap.put("line_no", line_no);
+			outputMap.put("order_id", order_id);
+			outputMap.put("loading_id", loading_id);
+			
+			
 			
 
 			

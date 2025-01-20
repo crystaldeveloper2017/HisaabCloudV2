@@ -8229,7 +8229,7 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 		public List<LinkedHashMap<String, Object>> getLoadingItemDetails(String loadingId, Connection con) throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(loadingId);
-		return getListOfLinkedHashHashMap(parameters, " select * from trn_loading_details tld where loading_id = ?",con);
+		return getListOfLinkedHashHashMap(parameters, " select * from trn_loading_details tld where loading_id = ? order by line_no asc",con);
 	}
 
 	public String getInProgressLoadingCount(Connection con) throws SQLException, ClassNotFoundException 

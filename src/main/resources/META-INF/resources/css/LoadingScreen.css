@@ -189,3 +189,25 @@ html, body {
         display: none; /* Hide divider on smaller screens */
     }
 }
+.modal-button {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+@media (max-width: 768px) {
+    .modal-button {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+}
