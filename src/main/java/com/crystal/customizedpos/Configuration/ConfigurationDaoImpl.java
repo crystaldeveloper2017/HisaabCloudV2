@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.crystal.Frameworkpackage.CommonFunctions;
 import com.crystal.Frameworkpackage.Query;
@@ -2911,6 +2912,39 @@ if(hm.get("user_id")!=null)
 		String insertQuery = "insert into tbl_user_mst values (default,?,?,sysdate(),null,1,?,?,?,?,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
+
+	public int saveLoadingDetails(Connection con, List<Map<String, Object>> items, String lineNo, String loadingId) throws Exception {
+    int rowsInserted = 0;
+
+    try {
+        // Iterate through the list of items
+        for (Map<String, Object> item : items) {
+            ArrayList<Object> parameters = new ArrayList<>();
+            parameters.add(loadingId); // loading_id
+            parameters.add(lineNo); // line_no
+            parameters.add(item.get("order_id")); // order_id
+            parameters.add(item.get("item_id")); // item_id
+            parameters.add(item.get("pending_qty")); // pending_qty
+            parameters.add(item.get("loaded_qty")); // loaded_qty
+            parameters.add(item.get("current_line_qty")); // current_line_qty
+
+            // Insert query for trn_loading_details
+            String insertQuery = "INSERT INTO trn_loading_details " +
+                                 "(loading_id, line_no, order_id, item_id, pending_qty, loaded_qty, current_line_qty) " +
+                                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            // Insert and count affected rows
+            rowsInserted += insertUpdateDuablDB(insertQuery, parameters, con);
+        }
+    } catch (Exception e) {
+        throw new Exception("Error saving loading details: " + e.getMessage(), e);
+    }
+
+    return rowsInserted;
+}
+
+
+
 
 	public long addDefaultUserConfigurations(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();

@@ -132,10 +132,9 @@ function completeLine() {
         });
     });
 
-    console.log("Current Line Loaded Qty:", currentLineLoadedQty);
     console.log("Items Data:", itemsData);
 
-    fetch('/api/complete-line', {
+    fetch('?a=completeLine', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -59,6 +59,7 @@ import com.crystal.Frameworkpackage.CustomResultObject;
 import com.crystal.Frameworkpackage.Role;
 import com.crystal.Login.LoginDaoImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.itextpdf.text.Document;
@@ -2469,6 +2470,39 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject completeLine(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+	
+		try {
+			// Parse JSON from the request (as done earlier)
+			StringBuilder sb = new StringBuilder();
+			BufferedReader reader = request.getReader();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+			String jsonData = sb.toString();
+	
+			ObjectMapper objectMapper = new ObjectMapper();
+			HashMap<String, Object> requestData = objectMapper.readValue(jsonData, new TypeReference<HashMap<String, Object>>() {});
+	
+			// Extract data
+			String lineNo = (String) requestData.get("line_no");
+			String loadingId = (String) requestData.get("loading_id");
+			List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items");
+	
+			lObjConfigDao.saveLoadingDetails(con, items, lineNo, loadingId);
+	
+			rs.setHasError(false);
+	
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+	
+		return rs;
+	}
+	
 	
 
 	public CustomResultObject deleteOrders(HttpServletRequest request, Connection con) throws SQLException {
