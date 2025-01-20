@@ -87,14 +87,32 @@ html, body {
 
 .minus-button {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    width: 40px;
+    bottom: 0px;
+    left: 0px;
+    width: 50%;
     height: 40px;
     background-color: #dc3545; /* Bootstrap's danger red */
     color: white;
     border: none;
-    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.currentlineqty {
+    position: absolute;
+    bottom: 0px;
+    right: 3px;
+    width: 50%;
+    height: 40px;
+    background-color: #e2d7d8; /* Bootstrap's danger red */
+    color: black;
+    border: none;
+
     font-size: 20px;
     font-weight: bold;
     display: flex;
@@ -161,11 +179,7 @@ html, body {
         height: 120px;
     }
 
-    .minus-button {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
-    }
+    
 
     .footer {
         font-size: 16px;
@@ -173,5 +187,27 @@ html, body {
 
     .footer-divider {
         display: none; /* Hide divider on smaller screens */
+    }
+}
+.modal-button {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+@media (max-width: 768px) {
+    .modal-button {
+        font-size: 12px;
+        padding: 8px 16px;
     }
 }

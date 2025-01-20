@@ -59,6 +59,7 @@ import com.crystal.Frameworkpackage.CustomResultObject;
 import com.crystal.Frameworkpackage.Role;
 import com.crystal.Login.LoginDaoImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.itextpdf.text.Document;
@@ -2469,6 +2470,37 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject completeLine(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+	
+		try {
+			// Parse JSON from the request (as done earlier)
+			StringBuilder sb = new StringBuilder();
+			BufferedReader reader = request.getReader();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+			String jsonData = sb.toString();
+	
+			ObjectMapper objectMapper = new ObjectMapper();
+			HashMap<String, Object> requestData = objectMapper.readValue(jsonData, new TypeReference<HashMap<String, Object>>() {});
+	
+			
+			List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items");
+	
+			lObjConfigDao.saveLoadingDetails(con, items);
+			rs.setAjaxData("Line Saved Succesfully");
+			rs.setHasError(false);
+	
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+	
+		return rs;
+	}
+	
 	
 
 	public CustomResultObject deleteOrders(HttpServletRequest request, Connection con) throws SQLException {
@@ -2792,9 +2824,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				List<HashMap<String, Object>> newItemList= new ArrayList<>();
 
 				LinkedHashMap<String, String> custDetails=lObjConfigDao.getCustomerDetails(Long.valueOf(customer_id), con);
-				custDetails.put("state_name", "Gujarat");
 
-				if(custDetails.get("state_name").equals("Gujarat"))
+				if(custDetails.get("customerstatename")!=null && custDetails.get("customerstatename").equals("Gujarat"))
 				{
 					double totalSgst=0l;
 					double totalCgst=0l;
@@ -2831,7 +2862,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 						HashMap<String,Object> newItem=new HashMap<>();
 						newItem.putAll(tempItem);
 						newItem.put("igst_percenrtage", "2.5");
-						String itemAmount= tempItem.get("item_amount").toString();
+						String itemAmount= tempItem.get("itemAmount").toString();
 						double igstamount=Double.valueOf(itemAmount) * 2.5 /100;												
 						newItem.put("igst_amount", igstamount);	
 						totalIgst+=igstamount;					
@@ -3603,6 +3634,29 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject checkIfNewLoadOrExisting(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();		
+		try {
+			String inProgressLoadingCount=lObjConfigDao.getInProgressLoadingCount(con);
+			if(inProgressLoadingCount.equals("0"))
+			{
+				outputMap.put("locationpath","showChooseVehicleForLoading");				
+			}
+			else
+			{
+				outputMap.put("locationpath","showLoadingRegister");								
+			}		
+			rs.setViewName("../Intermediate.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
 	public CustomResultObject showChooseVehicleForLoading(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -3626,6 +3680,41 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+
+	
+	public CustomResultObject resumeLoading(HttpServletRequest request, Connection con) throws SQLException {
+		
+		CustomResultObject rs = new CustomResultObject();
+		try {
+
+		
+		HashMap<String, Object> outputMap = new HashMap<>();
+		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
+		String loadingId=request.getParameter("loading_id");
+		outputMap.put("appId", appId);
+		outputMap.put("app_id", appId);
+
+		
+			
+			
+			
+			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loadingId,con));
+			
+
+
+			rs.setViewName("../ChooseOrderForLoading.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	
+
 	public CustomResultObject showChooseOrderForLoading(HttpServletRequest request, Connection con) throws SQLException {
 		
 		CustomResultObject rs = new CustomResultObject();
@@ -3641,8 +3730,8 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			List<LinkedHashMap<String, Object>> lst = lObjConfigDao.getPlanningRegister(outputMap, con);
 
 			
-			;
-
+			
+			
 			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loadingId,con));
 			outputMap.put("lstPlanningRegister", lst);
 			
@@ -3720,12 +3809,33 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
-		String orderId=request.getParameter("order_id");
+		String order_id=request.getParameter("order_id");
+		String loading_id=request.getParameter("loading_id");
+		String line_no=request.getParameter("loading_id");
 		outputMap.put("appId", appId);
 		outputMap.put("app_id", appId);
 		try {
+			if(order_id==null)
+			{
+				List<LinkedHashMap<String, Object>> lstLoadingItems= lObjConfigDao.getLoadingItemDetails(loading_id, con);
+				order_id=lstLoadingItems.get(lstLoadingItems.size()-1).get("order_id").toString();
+				line_no=lstLoadingItems.get(lstLoadingItems.size()-1).get("line_no").toString();;
+			}
 
-			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(orderId, con));
+			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(order_id, con));
+			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loading_id, con));
+			outputMap.put("loadingItemDetailsJson", mapper.writeValueAsString(lObjConfigDao.getLoadingItemDetails(loading_id, con)));
+			outputMap.put("orderDetails", lObjConfigDao.getInvoiceDetails((order_id), con));
+			
+			outputMap.put("line_no", line_no);
+			outputMap.put("order_id", order_id);
+			outputMap.put("loading_id", loading_id);
+			
+			
+			
+
+			
+			
 			
 
 
@@ -3823,11 +3933,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String vehicleId = hm.get("drpvehicleid").equals("") ? "0" : (hm.get("drpvehicleid").toString());
 		String userId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("user_id");
 
-		lObjConfigDao.startVehicleLoading(vehicleId,userId,con);
+		long loadingid=lObjConfigDao.startVehicleLoading(vehicleId,userId,con);
 			rs.setReturnObject(outputMap);
 
 			rs.setAjaxData("<script>alert('Updated succesfully');window.location='" + hm.get("callerUrl")
-					+ "?a=showAddExpense&expenseDate=" + hm.get("txtdate") + "'</script>");
+					+ "?a=showChooseOrderForLoading&loading_id=" + loadingid + "'</script>");
 
 		} catch (Exception e) {
 			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));

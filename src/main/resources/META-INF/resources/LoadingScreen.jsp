@@ -2,6 +2,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="invoiceDetails" value="${requestScope['outputObject'].get('invoiceDetails')}" />
+<c:set var="loadingDetails" value="${requestScope['outputObject'].get('loadingDetails')}" />
+<c:set var="orderDetails" value="${requestScope['outputObject'].get('orderDetails')}" />
+<c:set var="loadingItemDetailsJson" value="${requestScope['outputObject'].get('loadingItemDetailsJson')}" />
+
+<c:set var="line_no" value="${requestScope['outputObject'].get('line_no')}" />
+<c:set var="order_id" value="${requestScope['outputObject'].get('order_id')}" />
+<c:set var="loading_id" value="${requestScope['outputObject'].get('loading_id')}" />
+
+
+
 
 <link rel="stylesheet" href="css/LoadingScreen.css" />
 
@@ -10,7 +20,7 @@
     <div class="container">
         <div class="row">
             <c:forEach items="${invoiceDetails.listOfItems}" var="item">
-                <div class="col-6 mb-2">
+                <div class="col-6 mb-2" style="padding-right:0px;padding-left:0px;">
                     <div class="custom-button-container">
                         <button class="custom-button" 
                                 onclick="updateQuantities(this, ${item.qty})">
@@ -33,6 +43,10 @@
                         <button class="minus-button" onclick="decrementQuantities(this)" style="display: none;">
                             - 
                         </button>
+
+                        <button class="currentlineqty"  style="display: none;">
+                            0
+                        </button>
                     </div>
                 </div>
             </c:forEach>
@@ -48,22 +62,32 @@
     
     <!-- Arrow button placed between total quantities and complete line button -->
     <div class="footer-middle">
-        <button id="top-arrow-button" class="top-arrow-button" onclick="scrollToTop()">
+        <button id="top-arrow-button" class="top-arrow-button" onclick="showModalPopup()">
             <i class="fas fa-arrow-up"></i> <!-- Font Awesome up arrow icon -->
         </button>
     </div>
     
     <div class="footer-right">
         <button id="complete-line" class="complete-loading-button" onclick="completeLine()">
-            Complete Line
+            Complete Line ${param.line_no}
         </button>
     </div>
 </div>
 
 
+<input type="hidden" id="hdnlineno" value="${param.line_no}" />
+<input type="hidden" id="hdnorderid" value="${param.order_id}" />
+<input type="hidden" id="hdnloadingid" value="${param.loading_id}" />
+<input type="hidden" id="hdnloadingItems" value='${requestScope["outputObject"].get("loadingItemDetailsJson")}' />
+
+
+
 <script>
 let orderId = "${param.order_id}";
 let loadingId = "${param.loading_id}";
+
+document.getElementById("divTitle").innerHTML="${loadingDetails.vehicle_number} ${orderDetails.customercityname} Line No : ${param.line_no}";
+
 </script>
 
 <script src="js/LoadingScreen.js"></script>

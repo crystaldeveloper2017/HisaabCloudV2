@@ -81,7 +81,7 @@
 
 					  <td>
 					  <c:if test="${item.LoadingStatus == 'In Progress'}">
-    						    <button class="btn btn-primary" onclick="window.location='?a=showChooseOrderForLoading&loading_id=${item.loading_id}'">Load</button>
+    						    <button class="btn btn-primary" onclick="window.location='?a=showLoadingScreen&loading_id=${item.loading_id}'">Resume Loading</button>
 					  </c:if>
 					  </td>
 					 
