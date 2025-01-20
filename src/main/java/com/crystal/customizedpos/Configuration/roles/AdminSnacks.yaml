@@ -1,6 +1,7 @@
 - roleId: 21
   roleName: "AdminSnacks"
   actions:
+    - checkIfNewLoadOrExisting
     - completeLine
     - checkIfUsernameAlreadyExist
     - showCurrentRmStock

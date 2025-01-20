@@ -3634,6 +3634,29 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	public CustomResultObject checkIfNewLoadOrExisting(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();		
+		try {
+			String inProgressLoadingCount=lObjConfigDao.getInProgressLoadingCount(con);
+			if(inProgressLoadingCount.equals("0"))
+			{
+				outputMap.put("locationpath","showChooseVehicleForLoading");				
+			}
+			else
+			{
+				outputMap.put("locationpath","showLoadingRegister");								
+			}		
+			rs.setViewName("../Intermediate.jsp");
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
 	public CustomResultObject showChooseVehicleForLoading(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
@@ -3759,7 +3782,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(orderId, con));
 			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loading_id, con));
-			outputMap.put("loadingItemDetails", lObjConfigDao.getLoadingItemDetails(loading_id, con));
+			outputMap.put("loadingItemDetailsJson", mapper.writeValueAsString(lObjConfigDao.getLoadingItemDetails(loading_id, con)));
 			outputMap.put("orderDetails", lObjConfigDao.getInvoiceDetails((orderId), con));
 			
 

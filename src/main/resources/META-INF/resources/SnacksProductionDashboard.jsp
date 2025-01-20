@@ -68,7 +68,7 @@ Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-
 </a>
 </li>
 
-<li class="nav-item" onclick="window.location='?a=showChooseVehicleForLoading'">
+<li class="nav-item" onclick="window.location='?a=checkIfNewLoadOrExisting'">
 <a href="#" class="nav-link">
 Loading<span class="float-right badge bg-success"></span>
 </a>

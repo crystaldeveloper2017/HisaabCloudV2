@@ -34,6 +34,9 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 		return getMap(parameters, "select count(*) from nozzle_master where activate_flag=1 and app_id=?", con);
 	}
+	
+	
+
 
 	public HashMap<String, String> getDispensers(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
@@ -8227,6 +8230,12 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(loadingId);
 		return getListOfLinkedHashHashMap(parameters, " select * from trn_loading_details tld where loading_id = ?",con);
+	}
+
+	public String getInProgressLoadingCount(Connection con) throws SQLException, ClassNotFoundException 
+	{
+		ArrayList<Object> parameters = new ArrayList<>();		
+		return getMap(parameters, "select count(*) cnt from trn_loading_register where is_loading_complete=0 ", con).get("cnt");
 	}
 		
 

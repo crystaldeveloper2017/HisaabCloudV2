@@ -4,7 +4,7 @@
 <c:set var="invoiceDetails" value="${requestScope['outputObject'].get('invoiceDetails')}" />
 <c:set var="loadingDetails" value="${requestScope['outputObject'].get('loadingDetails')}" />
 <c:set var="orderDetails" value="${requestScope['outputObject'].get('orderDetails')}" />
-<c:set var="loadingItemDetails" value="${requestScope['outputObject'].get('loadingItemDetails')}" />
+<c:set var="loadingItemDetailsJson" value="${requestScope['outputObject'].get('loadingItemDetailsJson')}" />
 
 
 
@@ -75,6 +75,7 @@
 <input type="hidden" id="hdnlineno" value="${param.line_no}" />
 <input type="hidden" id="hdnorderid" value="${param.order_id}" />
 <input type="hidden" id="hdnloadingid" value="${param.loading_id}" />
+<input type="hidden" id="hdnloadingItems" value='${requestScope["outputObject"].get("loadingItemDetailsJson")}' />
 
 
 
