@@ -2913,15 +2913,16 @@ if(hm.get("user_id")!=null)
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
 
-	public int saveLoadingDetails(Connection con, List<Map<String, Object>> items, String lineNo, String loadingId) throws Exception {
-    int rowsInserted = 0;
-
-    try {
+	public void saveLoadingDetails(Connection con, List<Map<String, Object>> items) throws Exception 
+	{    
+	
+    try 
+	{
         // Iterate through the list of items
         for (Map<String, Object> item : items) {
             ArrayList<Object> parameters = new ArrayList<>();
-            parameters.add(loadingId); // loading_id
-            parameters.add(lineNo); // line_no
+            parameters.add(item.get("loading_id")); // loading_id
+            parameters.add(item.get("line_no")); // line_no
             parameters.add(item.get("order_id")); // order_id
             parameters.add(item.get("item_id")); // item_id
             parameters.add(item.get("pending_qty")); // pending_qty
@@ -2933,14 +2934,13 @@ if(hm.get("user_id")!=null)
                                  "(loading_id, line_no, order_id, item_id, pending_qty, loaded_qty, current_line_qty) " +
                                  "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            // Insert and count affected rows
-            rowsInserted += insertUpdateDuablDB(insertQuery, parameters, con);
-        }
-    } catch (Exception e) {
+            
+            insertUpdateDuablDB(insertQuery, parameters, con);			
+        }		
+    } catch (Exception e) 
+	{
         throw new Exception("Error saving loading details: " + e.getMessage(), e);
-    }
-
-    return rowsInserted;
+    }    
 }
 
 
@@ -8222,6 +8222,12 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 					"select * from trn_loading_register tlr,mst_vehicle mv  where loading_id=? and mv.vehicle_id =tlr.vehicle_id ",
 					con);
 		}
+
+		public List<LinkedHashMap<String, Object>> getLoadingItemDetails(String loadingId, Connection con) throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(loadingId);
+		return getListOfLinkedHashHashMap(parameters, " select * from trn_loading_details tld where loading_id = ?",con);
+	}
 		
 
 

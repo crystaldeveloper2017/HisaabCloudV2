@@ -2486,13 +2486,11 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 			ObjectMapper objectMapper = new ObjectMapper();
 			HashMap<String, Object> requestData = objectMapper.readValue(jsonData, new TypeReference<HashMap<String, Object>>() {});
 	
-			// Extract data
-			String lineNo = (String) requestData.get("line_no");
-			String loadingId = (String) requestData.get("loading_id");
+			
 			List<Map<String, Object>> items = (List<Map<String, Object>>) requestData.get("items");
 	
-			lObjConfigDao.saveLoadingDetails(con, items, lineNo, loadingId);
-	
+			lObjConfigDao.saveLoadingDetails(con, items);
+			rs.setAjaxData("Line Saved Succesfully");
 			rs.setHasError(false);
 	
 		} catch (Exception e) {
@@ -3761,6 +3759,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(orderId, con));
 			outputMap.put("loadingDetails", lObjConfigDao.getLoadingDetails(loading_id, con));
+			outputMap.put("loadingItemDetails", lObjConfigDao.getLoadingItemDetails(loading_id, con));
 			outputMap.put("orderDetails", lObjConfigDao.getInvoiceDetails((orderId), con));
 			
 

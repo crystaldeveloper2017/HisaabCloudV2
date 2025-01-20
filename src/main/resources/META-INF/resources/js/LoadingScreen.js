@@ -111,48 +111,55 @@ function completeLine() {
     let currentLineLoadedQty = 0;
     let itemsData = [];
 
+    // Retrieve values from hidden fields
+    let lineNo = document.getElementById("hdnlineno").value;
+    let orderId = document.getElementById("hdnorderid").value;
+    let loadingId = document.getElementById("hdnloadingid").value;
+
+
     document.querySelectorAll('.custom-button-container').forEach(container => {
         let button = container.querySelector('.custom-button');
         let itemId = button.querySelector('input[type="hidden"]').value;
         let pendingQty = parseFloat(button.querySelector('.pending-qty').textContent);
         let loadedQty = parseFloat(button.querySelector('.loaded-qty').textContent);
-        let orderedQty = parseFloat(button.querySelector('.badge .badge-value').textContent);
         let currentLineQty = parseFloat(container.querySelector('.currentlineqty').textContent);
 
         currentLineLoadedQty += currentLineQty;
 
         itemsData.push({
+            loading_id: loadingId,
+            line_no: lineNo,
+            order_id: orderId,
             item_id: itemId,
             pending_qty: pendingQty,
             loaded_qty: loadedQty,
-            ordered_qty: orderedQty,
-            current_line_qty: currentLineQty,
-            order_id: orderId,
-            loading_id: loadingId
+            current_line_qty: currentLineQty
         });
     });
 
     console.log("Items Data:", itemsData);
 
-    fetch('?a=completeLine', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            line_no: "${param.line_no}",
-            total_loaded_qty: currentLineLoadedQty,
-            items: itemsData,
-        }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert("Line Completed Successfully!");
-        })
-        .catch(error => {
-            console.error("Error completing line:", error);
-            alert("Error completing the line. Please try again.");
-        });
+    // Create XMLHttpRequest
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "?a=completeLine", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
 
-    alert(`Line Completed! Total Loaded Qty: ${currentLineLoadedQty}`);
+    // Handle response
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {  // Request is complete
+            if (xhr.status === 200) {  // Successful response
+                alert(xhr.responseText);  // Show server response in alert
+                var lineNoint=Number(lineNo);
+                lineNoint++;
+                window.location="?a=showLoadingScreen&loading_id="+loadingId+"&order_id="+orderId+"&line_no="+lineNoint;
+            } else {
+                alert("Error completing the line. Please try again.");
+            }
+        }
+    };
+
+    // Send data
+    xhr.send(JSON.stringify({        
+        items: itemsData
+    }));
 }
