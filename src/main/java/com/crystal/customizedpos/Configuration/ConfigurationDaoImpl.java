@@ -4043,6 +4043,14 @@ if(hm.get("user_id")!=null)
 				conWithF);
 		return "Routine Deleted Succesfully";
 	}
+	public String completeLoading(String loadingId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(loadingId);
+		insertUpdateDuablDB("update trn_loading_register set is_loading_complete=1,updated_date=sysdate() where loading_id=?", parameters,
+				conWithF);
+		return "Loading Completed Successfully";
+	}
+	
 
 	public LinkedHashMap<String, String> getRoutinepDetails(long routineId, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();

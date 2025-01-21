@@ -162,14 +162,14 @@ function showModalPopup() {
 
     // Create buttons
     const button1 = document.createElement('button');
-    button1.textContent = 'Option 1';
+    button1.textContent = 'Complete Loading';
     button1.className = 'modal-button';
-    button1.onclick = () => handleModalAction('Option 1');
+    button1.onclick = () => CompleteLoading();
 
     const button2 = document.createElement('button');
-    button2.textContent = 'Option 2';
+    button2.textContent = 'Choose Another Order';
     button2.className = 'modal-button';
-    button2.onclick = () => handleModalAction('Option 2');
+    button2.onclick = () => chooseAnotherOrderForLoading();
 
     const button3 = document.createElement('button');
     button3.textContent = 'Close';
@@ -183,6 +183,25 @@ function showModalPopup() {
     modalContainer.appendChild(button3);
     modalOverlay.appendChild(modalContainer);
     document.body.appendChild(modalOverlay);
+}
+
+function CompleteLoading()
+{
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "?a=completeLoading&loading_id="+hdnloadingid.value, true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send();
+}
+
+function chooseAnotherOrderForLoading()
+{
+    alert('Chose another order Logic In progress');
+   //window.location="show"
 }
 
 // Handle button actions

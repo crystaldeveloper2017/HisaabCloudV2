@@ -168,8 +168,7 @@
   
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showTodaysStockRegister&txtfromdate="+txtfromdate.value;
-		  
+  	window.location="?a=showLoadingRegister&txtfromdate="+txtfromdate.value;  
   }
   
   

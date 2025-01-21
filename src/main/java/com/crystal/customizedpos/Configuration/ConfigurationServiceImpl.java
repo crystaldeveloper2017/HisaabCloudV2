@@ -2500,6 +2500,25 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 	
 		return rs;
 	}
+
+	public CustomResultObject completeLoading(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		
+		try {
+			String loading_id=request.getParameter("loading_id");	
+			lObjConfigDao.completeLoading( loading_id,con);
+			rs.setAjaxData("Loading Completed Successfully");
+			rs.setHasError(false);
+	
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+	
+		return rs;
+	}
+
+	
 	
 	
 
