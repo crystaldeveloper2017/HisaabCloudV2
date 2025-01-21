@@ -1576,13 +1576,17 @@ if(hm.get("user_id")!=null)
 
 		parameters.add(hm.get("app_id"));
 
-		return getListOfLinkedHashHashMap(parameters, "select\r\n"
-				+ "	*\r\n"
-				+ "from\r\n"
-				+ "	mst_vehicle mv left outer join mst_customer mc on mc.customer_id=mv.customer_id \r\n"
-				+ "where\r\n"
-				+ "	mv.app_id = ?\r\n"
-				+ "	and mv.activate_flag = 1", con);
+		return getListOfLinkedHashHashMap(parameters, "\r\n" + //
+						" select\r\n" + //
+						"\t*\r\n" + //
+						"from\r\n" + //
+						"\tmst_vehicle mv \r\n" + //
+						"\t\tleft outer join mst_customer mc on mc.customer_id=mv.customer_id\r\n" + //
+						"\t\tleft outer join trn_loading_register tlr on tlr.vehicle_id =mv.vehicle_id\r\n" + //
+						"where\r\n" + //
+						"\tmv.app_id = ?\r\n" + //
+						"\tand mv.activate_flag = 1\r\n" + //
+						"\tand (tlr.is_loading_complete =1 or tlr.is_loading_complete is null)", con);
 
 	}
 
