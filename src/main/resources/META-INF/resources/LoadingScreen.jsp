@@ -69,24 +69,24 @@
     
     <div class="footer-right">
         <button id="complete-line" class="complete-loading-button" onclick="completeLine()">
-            Complete Line ${param.line_no}
+            Complete Line ${line_no}
         </button>
     </div>
 </div>
 
 
-<input type="hidden" id="hdnlineno" value="${param.line_no}" />
-<input type="hidden" id="hdnorderid" value="${param.order_id}" />
-<input type="hidden" id="hdnloadingid" value="${param.loading_id}" />
+<input type="hidden" id="hdnlineno" value="${line_no}" />
+<input type="hidden" id="hdnorderid" value="${order_id}" />
+<input type="hidden" id="hdnloadingid" value="${loading_id}" />
 <input type="hidden" id="hdnloadingItems" value='${requestScope["outputObject"].get("loadingItemDetailsJson")}' />
 
 
 
 <script>
-let orderId = "${param.order_id}";
-let loadingId = "${param.loading_id}";
+let orderId = "${order_id}";
+let loadingId = "${loading_id}";
 
-document.getElementById("divTitle").innerHTML="${loadingDetails.vehicle_number} ${orderDetails.customercityname} Line No : ${param.line_no}";
+document.getElementById("divTitle").innerHTML="${loadingDetails.vehicle_number} ${orderDetails.customercityname} Line No : ${line_no}";
 
 </script>
 

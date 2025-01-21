@@ -46,6 +46,16 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="col-sm-2" align="center">
+			<div class="card-tools">
+				<div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
+					<div class="icon-bar" style="font-size:22px;color:firebrick">
+						<button class="btn btn-primary" onclick="window.location='?a=showChooseVehicleForLoading'">New Loading</button>
+					</div>           
+				</div>
+			</div>
+		</div>
 	</div>
 	<br>
               
