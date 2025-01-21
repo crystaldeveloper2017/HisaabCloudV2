@@ -1584,7 +1584,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  
 				  qty=prod.get("item_name").toString().contains("Set")?qty:"";
 
-				  qty=String.format("%.0f", Double.valueOf(qty));
+				  qty=!qty.equals("")?String.format("%.0f", Double.valueOf(qty)):"";
 				  
 				  cell = new PdfPCell(new Phrase(qty,new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));	
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
