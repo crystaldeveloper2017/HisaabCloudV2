@@ -18,37 +18,23 @@ function prefillLoadedQuantities() {
                 let loadedQtyElement = buttonContainer.querySelector('.loaded-qty');
                 let minusButton = buttonContainer.querySelector('.minus-button');
                 let currentLineQtyButton = buttonContainer.querySelector('.currentlineqty');
-                let buttonBox = buttonContainer.querySelector('.custom-button'); // The button box for color changes
+                let buttonBox = buttonContainer.querySelector('.custom-button');
 
                 let pendingQty = parseFloat(pendingQtyElement.textContent) - item.loaded_qty;
                 let loadedQty = item.loaded_qty;
 
                 pendingQtyElement.textContent = pendingQty >= 0 ? pendingQty : 0;
                 loadedQtyElement.textContent = loadedQty;
-                currentLineQtyButton.textContent = loadedQty;
+                currentLineQtyButton.textContent = '0'; // Reset for new line session
 
-                if (loadedQty > 0) {
-                    minusButton.style.display = 'block';
-                    currentLineQtyButton.style.display = 'block';
-                }
+                
 
-                // Update button color based on pending quantity
-                if (pendingQty === 0) {
-                    buttonBox.classList.remove('white', 'pink');
-                    buttonBox.classList.add('green');
-                } else if (pendingQty < 0) {
-                    buttonBox.classList.remove('white', 'green');
-                    buttonBox.classList.add('pink');
-                } else {
-                    buttonBox.classList.remove('green', 'pink');
-                    buttonBox.classList.add('white');
-                }
+                updateButtonColor(buttonBox, pendingQty);
             }
         });
         updateFooter();
     }
 }
-
 
 function updateFooter() {
     let totalLoaded = 0;
@@ -65,39 +51,32 @@ function updateFooter() {
     document.getElementById('total-loaded').textContent = totalLoaded.toFixed(0);
     document.getElementById('total-items').textContent = totalItems.toFixed(0);
 }
+
 function updateQuantities(button, maxQty) {
     const pendingQtyElement = button.querySelector('.pending-qty');
     const loadedQtyElement = button.querySelector('.loaded-qty');
     const minusButton = button.closest('.custom-button-container').querySelector('.minus-button');
-    const loadedQtyButton = button.closest('.custom-button-container').querySelector('.currentlineqty');
+    const currentLineQtyButton = button.closest('.custom-button-container').querySelector('.currentlineqty');
     const buttonContainer = button.closest('.custom-button');
 
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
+    let currentLineQty = parseFloat(currentLineQtyButton.textContent);
 
     pendingQty -= 1;
-    pendingQtyElement.textContent = pendingQty.toFixed(0);
     loadedQty += 1;
-    loadedQtyElement.textContent = loadedQty.toFixed(0);
+    currentLineQty += 1; // Increment from 0, independent of loadedQty
 
-    loadedQtyButton.textContent = loadedQty;
+    pendingQtyElement.textContent = pendingQty.toFixed(0);
+    loadedQtyElement.textContent = loadedQty.toFixed(0);
+    currentLineQtyButton.textContent = currentLineQty.toFixed(0);
+
     if (loadedQty > 0) {
         minusButton.style.display = 'block';
-        loadedQtyButton.style.display = 'block';
+        currentLineQtyButton.style.display = 'block';
     }
 
-    // Update button color based on pending quantity
-    if (pendingQty === 0) {
-        buttonContainer.classList.remove('white', 'pink');
-        buttonContainer.classList.add('green');
-    } else if (pendingQty < 0) {
-        buttonContainer.classList.remove('white', 'green');
-        buttonContainer.classList.add('pink');
-    } else {
-        buttonContainer.classList.remove('green', 'pink');
-        buttonContainer.classList.add('white');
-    }
-
+    updateButtonColor(buttonContainer, pendingQty);
     updateFooter();
 }
 
@@ -106,36 +85,27 @@ function decrementQuantities(minusButton) {
     const button = buttonContainer.querySelector('.custom-button');
     const pendingQtyElement = button.querySelector('.pending-qty');
     const loadedQtyElement = button.querySelector('.loaded-qty');
-    const loadedQtyButton = buttonContainer.querySelector('.currentlineqty');
-    const buttonBox = button.closest('.custom-button');
-
+    const currentLineQtyButton = buttonContainer.querySelector('.currentlineqty');
+    
     let pendingQty = parseFloat(pendingQtyElement.textContent);
     let loadedQty = parseFloat(loadedQtyElement.textContent);
+    let currentLineQty = parseFloat(currentLineQtyButton.textContent);
 
-    if (loadedQty > 0) {
+    if (loadedQty > 0 && currentLineQty > 0) {
         loadedQty -= 1;
         pendingQty += 1;
+        currentLineQty -= 1;
 
         pendingQtyElement.textContent = pendingQty.toFixed(0);
         loadedQtyElement.textContent = loadedQty.toFixed(0);
-        loadedQtyButton.textContent = loadedQty;
+        currentLineQtyButton.textContent = currentLineQty.toFixed(0);
 
-        if (loadedQty === 0) {
+        if (currentLineQty === 0) {
             minusButton.style.display = 'none';
-            loadedQtyButton.style.display = 'none';
+            currentLineQtyButton.style.display = 'none';
         }
 
-        // Update button color based on pending quantity
-        if (pendingQty === 0) {
-            buttonBox.classList.remove('white', 'pink');
-            buttonBox.classList.add('green');
-        } else if (pendingQty < 0) {
-            buttonBox.classList.remove('white', 'green');
-            buttonBox.classList.add('pink');
-        } else {
-            buttonBox.classList.remove('green', 'pink');
-            buttonBox.classList.add('white');
-        }
+        updateButtonColor(button, pendingQty);
     } else {
         alert("No loaded items to unload.");
     }
@@ -143,47 +113,19 @@ function decrementQuantities(minusButton) {
     updateFooter();
 }
 
-function completeLine() {
-    let itemsData = [];
-    let lineNo = document.getElementById("hdnlineno").value;
-    let orderId = document.getElementById("hdnorderid").value;
-    let loadingId = document.getElementById("hdnloadingid").value;
-
-    document.querySelectorAll('.custom-button-container').forEach(container => {
-        let button = container.querySelector('.custom-button');
-        let itemId = button.querySelector('input[type="hidden"]').value;
-        let pendingQty = parseFloat(button.querySelector('.pending-qty').textContent);
-        let loadedQty = parseFloat(button.querySelector('.loaded-qty').textContent);
-        let currentLineQty = parseFloat(container.querySelector('.currentlineqty').textContent);
-
-        itemsData.push({
-            loading_id: loadingId,
-            line_no: lineNo,
-            order_id: orderId,
-            item_id: itemId,
-            pending_qty: pendingQty,
-            loaded_qty: loadedQty,
-            current_line_qty: currentLineQty
-        });
-    });
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "?a=completeLine", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            alert(xhr.responseText);
-            if (xhr.status === 200) {
-                window.location = `?a=showLoadingScreen&loading_id=${loadingId}&order_id=${orderId}&line_no=${parseInt(lineNo) + 1}`;
-            } else {
-                alert("Error completing the line. Please try again.");
-            }
-        }
-    };
-    
-    xhr.send(JSON.stringify({ items: itemsData }));
+function updateButtonColor(button, pendingQty) {
+    if (pendingQty === 0) {
+        button.classList.remove('white', 'pink');
+        button.classList.add('green');
+    } else if (pendingQty < 0) {
+        button.classList.remove('white', 'green');
+        button.classList.add('pink');
+    } else {
+        button.classList.remove('green', 'pink');
+        button.classList.add('white');
+    }
 }
+
 
 function showModalPopup() {
     // Create modal overlay
@@ -255,4 +197,46 @@ function closeModal() {
     if (modalOverlay) {
         modalOverlay.remove();
     }
+}
+
+function completeLine() {
+    let itemsData = [];
+    let lineNo = document.getElementById("hdnlineno").value;
+    let orderId = document.getElementById("hdnorderid").value;
+    let loadingId = document.getElementById("hdnloadingid").value;
+
+    document.querySelectorAll('.custom-button-container').forEach(container => {
+        let button = container.querySelector('.custom-button');
+        let itemId = button.querySelector('input[type="hidden"]').value;
+        let pendingQty = parseFloat(button.querySelector('.pending-qty').textContent);
+        let loadedQty = parseFloat(button.querySelector('.loaded-qty').textContent);
+        let currentLineQty = parseFloat(container.querySelector('.currentlineqty').textContent);
+
+        itemsData.push({
+            loading_id: loadingId,
+            line_no: lineNo,
+            order_id: orderId,
+            item_id: itemId,
+            pending_qty: pendingQty,
+            loaded_qty: loadedQty,
+            current_line_qty: currentLineQty
+        });
+    });
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "?a=completeLine", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            alert(xhr.responseText);
+            if (xhr.status === 200) {
+                window.location = `?a=showLoadingScreen&loading_id=${loadingId}&order_id=${orderId}&line_no=${parseInt(lineNo) + 1}`;
+            } else {
+                alert("Error completing the line. Please try again.");
+            }
+        }
+    };
+    
+    xhr.send(JSON.stringify({ items: itemsData }));
 }
