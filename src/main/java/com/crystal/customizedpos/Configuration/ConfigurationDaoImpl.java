@@ -1569,6 +1569,23 @@ if(hm.get("user_id")!=null)
 
 	}
 
+	public List<LinkedHashMap<String, Object>> getVehiclesThatAreNotUnderLoading(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException {
+
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(hm.get("app_id"));
+
+		return getListOfLinkedHashHashMap(parameters, "select\r\n"
+				+ "	*\r\n"
+				+ "from\r\n"
+				+ "	mst_vehicle mv left outer join mst_customer mc on mc.customer_id=mv.customer_id \r\n"
+				+ "where\r\n"
+				+ "	mv.app_id = ?\r\n"
+				+ "	and mv.activate_flag = 1", con);
+
+	}
+
 	public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException {
 
@@ -8229,7 +8246,17 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 		public List<LinkedHashMap<String, Object>> getLoadingItemDetails(String loadingId, Connection con) throws ClassNotFoundException, SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(loadingId);
-		return getListOfLinkedHashHashMap(parameters, " select * from trn_loading_details tld where loading_id = ? order by line_no asc",con);
+		parameters.add(loadingId);
+
+		String query="SELECT *\n" + //
+						"FROM trn_loading_details tld\n" + //
+						"WHERE loading_id = ?\n" + //
+						"  AND line_no = (\n" + //
+						"      SELECT MAX(line_no)\n" + //
+						"      FROM trn_loading_details\n" + //
+						"      WHERE loading_id = ?\n" + //
+						"  )";
+		return getListOfLinkedHashHashMap(parameters,query ,con);
 	}
 
 	public String getInProgressLoadingCount(Connection con) throws SQLException, ClassNotFoundException 

@@ -3666,7 +3666,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		outputMap.put("app_id", appId);
 		try {
 
-			outputMap.put("lstOfVehicles", lObjConfigDao.getVehicleMaster(outputMap, con));
+			outputMap.put("lstOfVehicles", lObjConfigDao.getVehiclesThatAreNotUnderLoading(outputMap, con));
 			
 
 
@@ -3811,7 +3811,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		String appId = ((HashMap<String, String>) request.getSession().getAttribute("userdetails")).get("app_id");
 		String order_id=request.getParameter("order_id");
 		String loading_id=request.getParameter("loading_id");
-		String line_no=request.getParameter("loading_id");
+		String line_no=request.getParameter("line_no");
 		outputMap.put("appId", appId);
 		outputMap.put("app_id", appId);
 		try {
@@ -3820,6 +3820,9 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 				List<LinkedHashMap<String, Object>> lstLoadingItems= lObjConfigDao.getLoadingItemDetails(loading_id, con);
 				order_id=lstLoadingItems.get(lstLoadingItems.size()-1).get("order_id").toString();
 				line_no=lstLoadingItems.get(lstLoadingItems.size()-1).get("line_no").toString();;
+				int lineNoInt= Integer.parseInt(line_no);
+				lineNoInt++;
+				line_no=String.valueOf(lineNoInt);
 			}
 
 			outputMap.put("invoiceDetails", lObjConfigDao.getInvoiceDetails(order_id, con));
