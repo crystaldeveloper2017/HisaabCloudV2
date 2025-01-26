@@ -28,14 +28,14 @@
                                 <fmt:formatNumber type="number" pattern="###0" value="${item.qty}" /> - ${item.item_name} <input type="hidden" value="${item.item_id}"> 
                             </div>
                             <div class="badge-container">
-                                <div class="badge left-badge">
-                                    <span class="badge-label">Pending Qty</span>
+                                <div class="badgecustom left-badge">
+                                    <span class="badge-label">Baki :</span>
                                     <span class="badge-value pending-qty">
                                         <fmt:formatNumber type="number" pattern="###0" value="${item.qty}" />
                                     </span>
                                 </div>
-                                <div class="badge right-badge">
-                                    <span class="badge-label">Loaded Qty</span>
+                                <div class="badgecustom right-badge">
+                                    <span class="badge-label">Load :</span>
                                     <span class="badge-value loaded-qty">0</span>
                                 </div>
                             </div>
