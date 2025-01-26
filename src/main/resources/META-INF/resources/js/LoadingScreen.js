@@ -15,15 +15,14 @@ function prefillLoadedQuantities() {
 
             if (buttonContainer) {
                 let pendingQtyElement = buttonContainer.querySelector('.pending-qty');
-                let loadedQtyElement = buttonContainer.querySelector('.loaded-qty');
-                let minusButton = buttonContainer.querySelector('.minus-button');
+                let loadedQtyElement = buttonContainer.querySelector('.loaded-qty');                
                 let currentLineQtyButton = buttonContainer.querySelector('.currentlineqty');
                 let buttonBox = buttonContainer.querySelector('.custom-button');
 
                 let pendingQty = parseFloat(pendingQtyElement.textContent) - item.loaded_qty;
                 let loadedQty = item.loaded_qty;
 
-                pendingQtyElement.textContent = pendingQty >= 0 ? pendingQty : 0;
+                pendingQtyElement.textContent = pendingQty;
                 loadedQtyElement.textContent = loadedQty;
                 currentLineQtyButton.textContent = '0'; // Reset for new line session
 
@@ -40,13 +39,22 @@ function updateFooter() {
     let totalLoaded = 0;
     let totalItems = 0;
 
+    
+    document.querySelectorAll('.custom-button').forEach(button => {
+        let buttonText = button.querySelector('.button-content').textContent.trim();
+        
+        // Extract the quantity before the '-' separator
+        let qty = buttonText.split('-')[0].trim(); 
+        totalItems+=Number(qty);
+        console.log(`Item Qty: ${qty}`);
+    });
+
+
     document.querySelectorAll('.loaded-qty').forEach(el => {
         totalLoaded += parseFloat(el.textContent);
     });
 
-    document.querySelectorAll('.pending-qty').forEach(el => {
-        totalItems += parseFloat(el.textContent);
-    });
+   
 
     document.getElementById('total-loaded').textContent = totalLoaded.toFixed(0);
     document.getElementById('total-items').textContent = totalItems.toFixed(0);

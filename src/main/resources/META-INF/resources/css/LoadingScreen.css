@@ -18,6 +18,7 @@ html, body {
 
 .custom-button-container {
     position: relative;
+    margin:3px;
 }
 
 .custom-button {
@@ -27,8 +28,8 @@ html, body {
     position: relative;
     background-color: white;
     color: black;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    border: 1px solid black;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,7 +44,7 @@ html, body {
 }
 
 .custom-button.white {
-    background-color: #eef5f0; /* Bootstrap's success green */
+    background-color: white; /* Bootstrap's success green */
     color: black;
 }
 
@@ -58,80 +59,67 @@ html, body {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0 5px;
+    
 }
 
-.badge {
-    background-color: white;
+.badgecustom {
+    
     color: black;
-    width: 60px;
-    height: 40px;
+    width: 100%;    
     text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
+    border: 1px solid #0c0a0a;    
+    display: flex;    
     justify-content: center;
-    align-items: center;
+    align-items: center;    
+}
+
+.badge-label {    
     font-size: 12px;
 }
 
-.badge-label {
-    font-weight: bold;
-    font-size: 10px;
-}
-
 .badge-value {
-    font-size: 14px;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 .minus-button {
+    background: inherit;
     position: absolute;
     bottom: 0px;
     left: 0px;
-    width: 50%;
-    height: 40px;
-    background-color: #dc3545; /* Bootstrap's danger red */
-    color: white;
-    border: none;
+    width: 50%;        
+    color: black;    
     font-size: 20px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    cursor: pointer;    
 }
 
 .currentlineqty {
     position: absolute;
     bottom: 0px;
-    right: 3px;
-    width: 50%;
-    height: 40px;
-    background-color: #e2d7d8; /* Bootstrap's danger red */
-    color: black;
-    border: none;
-
+    right: 0px;
+    width: 50%;    
+    background: inherit;
+    
+    color: black;    
     font-size: 20px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    cursor: pointer;    
 }
 
-.minus-button:hover {
-    background-color: #bd2130; /* Darker red */
-}
 
 .footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #f8f9fa; /* Bootstrap's light gray */
+    background-color: white; /* Bootstrap's light gray */
     color: black;
     text-align: center;
     font-size: 18px;
