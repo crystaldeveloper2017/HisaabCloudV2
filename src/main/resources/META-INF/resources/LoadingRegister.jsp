@@ -95,12 +95,17 @@
 					  <td>${item.LoadingStatus} </td> --%>
 
 					 <br>
-					  <c:if test="${item.LoadingStatus == 'In Progress'}">
-
+					  <c:if test="${item.LoadingStatus == 'In Progress' && item.cntlines != '0'}">
 						<button class="btn btn-primary btn-sm" onclick="window.location='?a=showLoadingScreen&loading_id=${item.loading_id}'" >
-		<i class="fas fa"></i> Resume
-		</button>
-	  </c:if>
+							<i class="fas fa"></i> Resume 
+						</button>
+	  				  </c:if>
+
+					  <c:if test="${item.LoadingStatus == 'In Progress' && item.cntlines == '0'}">
+						<button class="btn btn-primary btn-sm" onclick="window.location='?a=showChooseOrderForLoading&loading_id=${item.loading_id}'" >
+							<i class="fas fa"></i> Resume 
+						</button>
+	  				  </c:if>
 					  </td>
 					 
 

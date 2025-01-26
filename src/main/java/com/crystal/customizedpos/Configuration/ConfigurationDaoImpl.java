@@ -7972,7 +7972,7 @@ ArrayList<Object> parameters = new ArrayList<>();
 parameters.add((getDateASYYYYMMDD(fromDate)));
 
 return getListOfLinkedHashHashMap(parameters,
-		"select *,case when is_loading_complete = '0' then 'In Progress' else 'Completed' end as LoadingStatus from trn_loading_register tlr,mst_vehicle mv  where loading_date =? and mv.vehicle_id=tlr.vehicle_id ",
+		"select *,count(tld.loading_details_id) cntlines,case when is_loading_complete = '0' then 'In Progress' else 'Completed' end as LoadingStatus from mst_vehicle mv,trn_loading_register tlr left outer join trn_loading_details tld on tld.loading_id=tlr.loading_id where loading_date =? and mv.vehicle_id=tlr.vehicle_id group by tlr.loading_id",
 		con);
 }
 

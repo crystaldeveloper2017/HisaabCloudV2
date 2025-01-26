@@ -125,6 +125,7 @@ function updateButtonColor(button, pendingQty) {
     if (pendingQty === 0) {
         button.classList.remove('white', 'pink');
         button.classList.add('green');
+        navigator.vibrate(500);
     } else if (pendingQty < 0) {
         button.classList.remove('white', 'green');
         button.classList.add('pink');

@@ -3958,7 +3958,7 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		long loadingid=lObjConfigDao.startVehicleLoading(vehicleId,userId,con);
 			rs.setReturnObject(outputMap);
 
-			rs.setAjaxData("<script>alert('Updated succesfully');window.location='" + hm.get("callerUrl")
+			rs.setAjaxData("<script>window.location='" + hm.get("callerUrl")
 					+ "?a=showChooseOrderForLoading&loading_id=" + loadingid + "'</script>");
 
 		} catch (Exception e) {

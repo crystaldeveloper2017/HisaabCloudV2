@@ -90,7 +90,7 @@ function deleteAttachment(id)
 
 		<select class="form-control" name="drpvehicleid" id="drpvehicleid">
                     <c:forEach items="${lstOfVehicles}" var="item">
-                        <option value="${item.vehicle_id}">${item.vehicle_name} ${item.vehicle_id}</option>             
+                        <option value="${item.vehicle_id}">${item.vehicle_name} ${item.vehicle_number}</option>             
                     </c:forEach>
                 </select>
 
