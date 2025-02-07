@@ -62,6 +62,11 @@ function saveInvoice()
 {	
 	
 	
+	if(hdnSelectedCustomer.value=="") 
+		{
+			alert("please select customer");
+			return;
+		}
 
 	
 	if((txtpaymenttype.value=="Pending" || txtpaymenttype.value =="Partial") && hdnSelectedCustomer.value =="") 
@@ -92,8 +97,10 @@ function saveInvoice()
 	    "~"+rows[x].childNodes[0].childNodes[1].innerHTML+ // Item Name
 		"~0~0~0~0~0~0~0"+ // Item Name
 		"~"+rows[x].childNodes[0].childNodes[0].value.split('~')[1]+ // Purchase Detail Id
+		"~"+Number(rows[x].childNodes[2].childNodes[0].value)+ // Amount
 		"~"+rows[x].childNodes[3].childNodes[0].value+ // Battery No
 		"~"+rows[x].childNodes[4].childNodes[0].value+ // Vehicle Name	
+		"~0~0"+ // Item Name
 	    "|";       
 	}
 	
@@ -122,12 +129,16 @@ function saveInvoice()
 	
 	
 	
+	
 	var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) 
 	    {
 	    	var invoiceId=this.responseText.split("~");
-	      	//alert("Invoice Saved Succesfully"+invoiceId[0]);
+	      	alert("Invoice Saved Succesfully"+invoiceId[0]);
+			generateInvoice(invoiceId[1]);
+
+
 	      	
 	      	toastr["success"]("Invoice Saved Succesfully "+invoiceId[0]);
 	    	toastr.options = {"closeButton": false,"debug": false,"newestOnTop": false,"progressBar": false,
@@ -329,6 +340,45 @@ function saveInvoice()
     
     <div class="input-group">
     <input type="text" class="form-control form-control-sm"    placeholder="Search for Items" list="categoryList" id="txtcategory" name="txtcategory" oninput="checkforMatchCategory()">
+    
+    
+    
+    
+  </div>
+  </div>
+
+
+      <div class="col-2">
+	<div class="form-group">
+	
+	
+	
+		  <label for="email">Qty</label>
+	
+	<div class="input-group input-group-sm">
+				<input type="text" class="form-control form-control-sm" id="txtselectionqty"    placeholder="1" name="txtselectionqty">
+				
+				<span class="input-group-append">
+				  <button type="button" class="btn btn-primary btn-flat" onclick="getItemsForThisCategoryNameByAjax()">Add Item</button>
+				</span>
+				
+				
+  </div>
+	
+	
+				
+	
+		  
+				   
+  </div>
+</div>
+
+   <div class="col-sm-1" id="divsearchforcategory">
+  	
+    
+    <div class="input-group">
+    
+	
     
     
     
@@ -883,7 +933,7 @@ function generateInvoice(invoiceId)
 	    	window.open("BufferedImagesFolder/"+xhttp.responseText);		  
 		}
 	  };
-	  xhttp.open("GET","?a=generateInvoicePDFBattery&invoiceId="+invoiceId, false);    
+	  xhttp.open("GET","?a=generateInvoicePDF&invoiceId="+invoiceId, false);    
 	  xhttp.send();
 }
 
@@ -936,8 +986,9 @@ function quickAddCustomer()
 			}
 		if(itemId!=0)
 			{
-				
-				getItemsForThisCategoryNameByAjax(searchString);
+				txtcategory.value=searchString;
+				txtcategory.disabled=true;
+				//getItemsForThisCategoryNameByAjax(searchString);
 					// code to check if item already exist inselection				
 				return;
 				document.getElementById("txtitem").value="";
@@ -969,8 +1020,11 @@ function quickAddCustomer()
 		
 	}
 
-	function getItemsForThisCategoryNameByAjax(categoryName)
+	function getItemsForThisCategoryNameByAjax()
 {
+
+	var categoryName=txtcategory.value;
+	var qty=txtselectionqty.value;
 	
 		  const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
@@ -979,12 +1033,23 @@ function quickAddCustomer()
 		    //console.log(items[0]);
 		    //console.log(JSON.parse(items));
 		    var reqString="";
+			var numqty=Number(qty);
+			for(var k=0;k<numqty;k++)
+			{
 		    for(m=0;m<items.length;m++)
 		    	{
 					getItemDetailsAndAddToTable(items[m].item_id,0);
 		    	}
+			}
+
+			
+			txtcategory.value="";
+			txtcategory.disabled=false;
+
+			txtselectionqty.value="";
+			txtselectionqty.disabled=false;
 		    //alert(reqString);
-		    document.getElementById('someIdGoesHere').innerHTML=reqString; 
+		    //document.getElementById('someIdGoesHere').innerHTML=reqString; 
 		  }
 		  xhttp.open("GET", "?a=getItemsForThisCategoryNameByAjax&category_name="+categoryName);
 		  xhttp.send();
@@ -1000,6 +1065,9 @@ document.getElementsByName('buttonReplace').forEach(button => {
     button.disabled = false;
 });
 $('[data-widget="pushmenu"]').PushMenu("collapse");
+
+
+
 </script>
 
 

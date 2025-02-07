@@ -24,7 +24,7 @@
                             <input type="checkbox" name="namecheckboxes" class="row-checkbox" value="" id="${pendData.invoice_id}">
                         </td>
                         <td>
-                            <a href="?a=showLoadingScreen&loading_id=${param.loading_id}&order_id=${pendData.invoice_id}">${pendData.city} (${pendData.totalQty}) </a>
+                            <a href="?a=showLoadingScreen&loading_id=${param.loading_id}&order_id=${pendData.invoice_id}&line_no=1">${pendData.city} (${pendData.totalQty}) </a>
                         </td>
                     </tr>
                 </c:forEach>

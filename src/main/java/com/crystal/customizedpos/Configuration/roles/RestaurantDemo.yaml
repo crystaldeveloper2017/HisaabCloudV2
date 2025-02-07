@@ -13,6 +13,8 @@
     - showCategoryMasterNew
     - showCategoryWiseReportParameter
     - showItemMaster
+    - generatePaymentPDF
+    - generatePaymentPDFService
   elements:
     - 700180
     - 700197

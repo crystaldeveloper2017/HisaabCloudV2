@@ -46,6 +46,16 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="col-sm-2" align="center">
+			<div class="card-tools">
+				<div class="input-group input-group-sm" align="center" style="width: 200px;display:inherit">
+					<div class="icon-bar" style="font-size:22px;color:firebrick">
+						<button class="btn btn-primary" onclick="window.location='?a=showChooseVehicleForLoading'">New Loading</button>
+					</div>           
+				</div>
+			</div>
+		</div>
 	</div>
 	<br>
               
@@ -57,32 +67,45 @@
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0" style="height: 800px;">                
                 <table id="example1"class="table table-head-fixed  table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                
+                 <thead>
                  
                     <tr>
-                    <th><b>Loading Date</b></th>
+
+			<th align="center"> <b>Loading Details</b></th>
+
+                    <%-- <th><b>Loading Date</b></th>
                     <th><b>Vehicle</b></th>    
 					<th><b>Order Cities</b></th> 
 					<th><b>Status</b></th> 
 					<th></th> 
-                 
+                  --%>
                     </tr>
-                  </thead>
+                   </thead>
                   <tbody>
 				<c:forEach items="${lstITodaysStockRegister}" var="item">
 					<tr >
-                  
-					  
-					  
+
+
+	   <td>${item.loading_date} - ${item.vehicle_name} - ${item.vehicle_number} - ${item.order} -  ${item.LoadingStatus} 
+	  
+<%-- 					  
 					  <td>${item.loading_date}</td>
 					 <td>${item.vehicle_name} -  ${item.vehicle_number}</td>
 					  <td>${item.order} </td>
-					  <td>${item.LoadingStatus} </td>
+					  <td>${item.LoadingStatus} </td> --%>
 
-					  <td>
-					  <c:if test="${item.LoadingStatus == 'In Progress'}">
-    						    <button class="btn btn-primary" onclick="window.location='?a=showChooseOrderForLoading&loading_id=${item.loading_id}'">Load</button>
-					  </c:if>
+					 <br>
+					  <c:if test="${item.LoadingStatus == 'In Progress' && item.cntlines != '0'}">
+						<button class="btn btn-primary btn-sm" onclick="window.location='?a=showLoadingScreen&loading_id=${item.loading_id}'" >
+							<i class="fas fa"></i> Resume 
+						</button>
+	  				  </c:if>
+
+					  <c:if test="${item.LoadingStatus == 'In Progress' && item.cntlines == '0'}">
+						<button class="btn btn-primary btn-sm" onclick="window.location='?a=showChooseOrderForLoading&loading_id=${item.loading_id}'" >
+							<i class="fas fa"></i> Resume 
+						</button>
+	  				  </c:if>
 					  </td>
 					 
 
@@ -110,21 +133,21 @@
 
 
 
-  $(function () {
+   $(function () {
     
     $('#example1').DataTable({
       "paging": true,      
       "lengthChange": false,
-      "searching": false,      
+      "searching": false,
+      "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "pageLength": 100,
-      "order": [[ 2, 'desc' ]]
-
+      "pageLength": 50,
+      "order": [[ 1, "asc" ]],
     });
   });
-
+  
 
   txtfromdate.value='${txtfromdate}';
 
@@ -158,8 +181,7 @@
   
   function ReloadFilters()
   {	 	  
-  	  		window.location="?a=showTodaysStockRegister&txtfromdate="+txtfromdate.value;
-		  
+  	window.location="?a=showLoadingRegister&txtfromdate="+txtfromdate.value;  
   }
   
   

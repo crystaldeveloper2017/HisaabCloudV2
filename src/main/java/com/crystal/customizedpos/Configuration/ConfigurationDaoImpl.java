@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.crystal.Frameworkpackage.CommonFunctions;
 import com.crystal.Frameworkpackage.Query;
@@ -33,6 +34,9 @@ public class ConfigurationDaoImpl extends CommonFunctions {
 
 		return getMap(parameters, "select count(*) from nozzle_master where activate_flag=1 and app_id=?", con);
 	}
+	
+	
+
 
 	public HashMap<String, String> getDispensers(HashMap<String, Object> hm, Connection con)
 			throws SQLException, ClassNotFoundException {
@@ -918,9 +922,10 @@ if(hm.get("user_id")!=null)
 
 		parameters.add(hm.get("total_sgst"));
 		parameters.add(hm.get("total_cgst"));
+		parameters.add(hm.get("total_igst"));
 
 		long invoiceId = insertUpdateDuablDB(
-				"insert into trn_invoice_register values (default,?,?,?,?,?,?,?,?,sysdate(),1,?,?,?,?,?,?,?,?,?)",
+				"insert into trn_invoice_register values (default,?,?,?,?,?,?,?,?,sysdate(),1,?,?,?,?,?,?,?,?,?,?)",
 				parameters,
 				conWithF);
 		hm.put("invoice_id", invoiceId);
@@ -982,10 +987,13 @@ if(hm.get("user_id")!=null)
 			parameters.add(item.get("cgst_amount"));
 			parameters.add(item.get("itemAmount"));
 
+			parameters.add(item.get("igst_percentage"));
+			parameters.add(item.get("igst_amount"));
+
 			long detailsId = insertUpdateDuablDB("insert into trn_invoice_details"
 					+ "(details_id, invoice_id, item_id, qty, rate, custom_rate, updated_by,"
-					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount) "
-					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?)", parameters,
+					+ " updated_date, app_id, gst_amount,weight,size,purchase_details_id,sgst_percentage,sgst_amount,cgst_percentage,cgst_amount,item_amount,igst_percentage,igst_amount) "
+					+ " values (default,?,?,?,?,?,?,sysdate(),?,?,?,?,?,?,?,?,?,?,?,?)", parameters,
 					conWithF);
 
 			parameters.clear();
@@ -1079,9 +1087,9 @@ if(hm.get("user_id")!=null)
 		return generatedPK;
 	}
 
-	public String addPaymentFromCustomer(HashMap<String, Object> hm, Connection conWithF) throws Exception {
+	public long addPaymentFromCustomer(HashMap<String, Object> hm, Connection conWithF) throws Exception {
 		if (hm.get("payment_type").equals("Pending")) {
-			return "Payment Not added";
+			return 0;
 		}
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("customer_id"));
@@ -1098,10 +1106,10 @@ if(hm.get("user_id")!=null)
 		parameters.add(hm.get("remarks"));
 		parameters.add(hm.get("app_id"));
 		parameters.add(hm.get("user_id"));
-		insertUpdateDuablDB("insert into trn_payment_register values (default,?,?,?,?,?,?,?,?,?,?,sysdate(),1)",
+		return insertUpdateDuablDB("insert into trn_payment_register values (default,?,?,?,?,?,?,?,?,?,?,sysdate(),1)",
 				parameters,
 				conWithF);
-		return "Payment Added";
+		
 
 	}
 
@@ -1401,8 +1409,9 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(hm.get("app_id"));
 		String query = "select customer_id customerId,customer_name customerName, mobile_number mobileNumber, "
-				+ " city customerCity, address customerAddress, customer_type customerType "
+				+ " city customerCity, address customerAddress, customer_type customerType,state_name customerstate "
 				+ " from mst_customer customer left outer join customer_group group1 on group1.group_id=customer.group_id and group1.app_id=customer.app_id"
+				+ " left outer join cmn_state_mst csm on csm.state_id=customer.state_id "
 				+ " where customer.activate_flag = 1 and   customer.app_id=? ";
 
 		if (hm.get("searchInput") != null && !hm.get("searchInput").equals("")) {
@@ -1478,12 +1487,13 @@ if(hm.get("user_id")!=null)
 		parameters.add(hm.get("alternate_mobile_no"));
 		parameters.add(hm.get("customer_reference"));
 		parameters.add(hm.get("txtgstno"));
+		parameters.add(hm.get("state"));
 
 		parameters.add(Long.valueOf(customerId));
 		insertUpdateDuablDB(
 				"UPDATE mst_customer  SET"
 						+ " customer_name=?, mobile_number = ?, city=?, address= ?, customer_type=?,updated_date=SYSDATE(),"
-						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?	 WHERE customer_id=?",
+						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?, state=?	 WHERE customer_id=?",
 				parameters, conWithF);
 		return "Customer Updated Succesfully";
 
@@ -1501,7 +1511,8 @@ if(hm.get("user_id")!=null)
 		parameters.add(hm.get("app_id"));
 		parameters.add(hm.get("customer_reference"));
 		parameters.add(hm.get("txtgstno"));
-		String insertQuery = "insert into mst_customer values (default,?,?,?,?,?,1,sysdate(),null,null,?,?,?,?,?)";
+		parameters.add(hm.get("state"));
+		String insertQuery = "insert into mst_customer values (default,?,?,?,?,?,1,sysdate(),null,null,?,?,?,?,?,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
 
@@ -1558,6 +1569,27 @@ if(hm.get("user_id")!=null)
 
 	}
 
+	public List<LinkedHashMap<String, Object>> getVehiclesThatAreNotUnderLoading(HashMap<String, Object> hm, Connection con)
+			throws ClassNotFoundException, SQLException {
+
+		ArrayList<Object> parameters = new ArrayList<>();
+
+		parameters.add(hm.get("app_id"));
+
+		return getListOfLinkedHashHashMap(parameters, "\r\n" + //
+						" select\r\n" + //
+						"\t*\r\n" + //
+						"from\r\n" + //
+						"\tmst_vehicle mv \r\n" + //
+						"\t\tleft outer join mst_customer mc on mc.customer_id=mv.customer_id\r\n" + //
+						"\t\tleft outer join trn_loading_register tlr on tlr.vehicle_id =mv.vehicle_id\r\n" + //
+						"where\r\n" + //
+						"\tmv.app_id = ?\r\n" + //
+						"\tand mv.activate_flag = 1\r\n" + //
+						"\tand (tlr.is_loading_complete =1 or tlr.is_loading_complete is null)", con);
+
+	}
+
 	public List<LinkedHashMap<String, Object>> getVehicleOfCustomer(HashMap<String, Object> hm, Connection con)
 			throws ClassNotFoundException, SQLException {
 
@@ -1598,7 +1630,7 @@ if(hm.get("user_id")!=null)
 		ArrayList<Object> parameters = new ArrayList<>();
 		parameters.add(Long.valueOf(customerId));
 		return getMap(parameters,
-				"select * from mst_customer where customer_id=?",
+				"select *,csm.state_name customerstatename from mst_customer mc left outer join cmn_state_mst csm on csm.state_id=mc.state_id where customer_id=?",
 				con);
 	}
 
@@ -2472,7 +2504,7 @@ if(hm.get("user_id")!=null)
 				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,\r\n"
 				+ "date_format(invoice_date,'%d/%m/%Y') theInvoiceDate,\r\n" + "sum(qty) totalQuantities,\r\n"
 				+ "paym.amount as paid_amount,date_format(invoice.updated_date,'%d/%m/%Y %h:%i%p') theUpdatedDate"
-				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage \r\n" + " from\r\n"
+				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage,ried.warranty electricwarranty \r\n" + " from\r\n"
 				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
 				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
 				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
@@ -2494,6 +2526,69 @@ if(hm.get("user_id")!=null)
 						+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
 						+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
 						+ "where\r\n" + "dtls.invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
+		return itemDetailsMap;
+
+	}
+
+	public LinkedHashMap<String, Object> getInvoiceElectric(String invoiceId, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+		LinkedHashMap<String, Object> itemDetailsMap = new LinkedHashMap<>();
+		itemDetailsMap = getMapReturnObject(parameters, "select \r\n" + "*,\r\n"
+				+ "case when cust.customer_id is null then \"\" else customer_name end  as customerName,cust.city customercityname,csm.state_name customerstatename, \r\n"
+				+ "date_format(invoice_date,'%d/%m/%Y') theInvoiceDate,\r\n" + "sum(qty) totalQuantities,\r\n"
+				+ "paym.amount as paid_amount,date_format(invoice.updated_date,'%d/%m/%Y %h:%i%p') theUpdatedDate"
+				+ ",dtls.sgst_amount ,dtls.sgst_percentage ,dtls.cgst_amount ,dtls.sgst_percentage,ried.warranty electricwarranty \r\n" + " from\r\n"
+				+ " trn_invoice_register invoice inner join mst_store store1 on store1.store_id=invoice.store_id left outer join  mst_customer cust on cust.customer_id=invoice.customer_id and invoice.activate_flag=1 \r\n"
+				+ " inner join  trn_invoice_details dtls on  dtls.invoice_id=invoice.invoice_id left outer join  trn_payment_register paym on paym.ref_id=invoice.invoice_id and paym.payment_for='Invoice'\r\n"
+				+ " left outer join rlt_invoice_fuel_details rifd on rifd.invoice_id=invoice.invoice_id \r\n"
+				+ " left outer join cmn_state_mst csm on csm.state_id=cust.state_id \r\n"
+				+ " left outer join rlt_invoice_electric_details ried on ried.invoice_id=invoice.invoice_id \r\n"
+				+ "where invoice.invoice_id=? order by dtls.details_id", con);
+
+		parameters = new ArrayList<>();
+		parameters.add(invoiceId);
+
+		itemDetailsMap.put("listOfItems",
+				getListOfLinkedHashHashMap(parameters, "select tsd.*,item.*,dtls.*,cat.*,return1.*,ribd.*,ried.*,ried.warranty as warrantyelectric,"
+						+ "(select case when concat(attachment_id, file_name) is null then 'dummyImage.jpg' else concat(attachment_id, file_name) end as ImagePath from tbl_attachment_mst tam2 "
+						+ "where tam2.file_id=item.item_id and tam2.type='Image' limit 1 ) ImagePath,"
+						+ " sum(coalesce(qty_to_return,0)) ReturnedQty,dtls.details_id theDetailsId \r\n"
+						+ "from mst_items item  inner join trn_invoice_details dtls on item.item_id=dtls.item_id "
+						+ "inner join mst_category cat on cat.category_id=item.parent_category_id \r\n"
+						+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
+						+ " left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
+						+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
+						+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
+						+ "where\r\n" + "dtls.invoice_id = ? group by dtls.details_id  order by dtls.details_id ", con));
+
+		List<LinkedHashMap<String, Object>> lst=getListOfLinkedHashHashMap(parameters, "select item.item_name,sum(dtls.custom_rate) setSumCustomRate,sum(dtls.qty) setQty,sum(custom_rate*qty) setSumAmount "								
+		+ "from mst_items item  inner join trn_invoice_details dtls on item.item_id=dtls.item_id "
+		+ "inner join mst_category cat on cat.category_id=item.parent_category_id \r\n"
+		+ "	left outer join trn_return_register return1 on return1.details_id=dtls.details_id"
+		+ " left outer join trn_sph_details tsd on tsd.details_id=dtls.details_id \r\n"
+		+ " left outer join rlt_invoice_battery_details ribd on ribd.details_id=dtls.details_id \r\n"
+		+ " left outer join rlt_invoice_electric_details ried on ried.details_id=dtls.details_id \r\n"
+		+ "where item.item_name like '%Set%' and \r\n" + "dtls.invoice_id = ? group by item_name"  , con);
+
+		itemDetailsMap.put("listOfSet",lst);
+
+		
+								HashMap<String, LinkedHashMap<String, Object>> resultMap = new HashMap<>();
+
+								for (LinkedHashMap<String, Object> item : lst) {
+									// Assuming the name of the item is in the "item_name" key
+									String itemName = (String) item.get("item_name");  // Replace "item_name" with the actual key for the item name
+						
+									if (itemName != null) {
+										resultMap.put(itemName, item);
+									}
+								}
+		
+		itemDetailsMap.put("resultMap",resultMap);
+
+
 		return itemDetailsMap;
 
 	}
@@ -2841,6 +2936,39 @@ if(hm.get("user_id")!=null)
 		String insertQuery = "insert into tbl_user_mst values (default,?,?,sysdate(),null,1,?,?,?,?,?)";
 		return insertUpdateDuablDB(insertQuery, parameters, conWithF);
 	}
+
+	public void saveLoadingDetails(Connection con, List<Map<String, Object>> items) throws Exception 
+	{    
+	
+    try 
+	{
+        // Iterate through the list of items
+        for (Map<String, Object> item : items) {
+            ArrayList<Object> parameters = new ArrayList<>();
+            parameters.add(item.get("loading_id")); // loading_id
+            parameters.add(item.get("line_no")); // line_no
+            parameters.add(item.get("order_id")); // order_id
+            parameters.add(item.get("item_id")); // item_id
+            parameters.add(item.get("pending_qty")); // pending_qty
+            parameters.add(item.get("loaded_qty")); // loaded_qty
+            parameters.add(item.get("current_line_qty")); // current_line_qty
+
+            // Insert query for trn_loading_details
+            String insertQuery = "INSERT INTO trn_loading_details " +
+                                 "(loading_id, line_no, order_id, item_id, pending_qty, loaded_qty, current_line_qty) " +
+                                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            
+            insertUpdateDuablDB(insertQuery, parameters, con);			
+        }		
+    } catch (Exception e) 
+	{
+        throw new Exception("Error saving loading details: " + e.getMessage(), e);
+    }    
+}
+
+
+
 
 	public long addDefaultUserConfigurations(Connection conWithF, HashMap<String, Object> hm) throws Exception {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -3915,6 +4043,14 @@ if(hm.get("user_id")!=null)
 				conWithF);
 		return "Routine Deleted Succesfully";
 	}
+	public String completeLoading(String loadingId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(loadingId);
+		insertUpdateDuablDB("update trn_loading_register set is_loading_complete=1,updated_date=sysdate() where loading_id=?", parameters,
+				conWithF);
+		return "Loading Completed Successfully";
+	}
+	
 
 	public LinkedHashMap<String, String> getRoutinepDetails(long routineId, Connection con) throws SQLException {
 		ArrayList<Object> parameters = new ArrayList<>();
@@ -7836,7 +7972,7 @@ ArrayList<Object> parameters = new ArrayList<>();
 parameters.add((getDateASYYYYMMDD(fromDate)));
 
 return getListOfLinkedHashHashMap(parameters,
-		"select *,case when is_loading_complete = '0' then 'In Progress' else 'Completed' end as LoadingStatus from trn_loading_register tlr,mst_vehicle mv  where loading_date =? and mv.vehicle_id=tlr.vehicle_id ",
+		"select *,count(tld.loading_details_id) cntlines,case when is_loading_complete = '0' then 'In Progress' else 'Completed' end as LoadingStatus from mst_vehicle mv,trn_loading_register tlr left outer join trn_loading_details tld on tld.loading_id=tlr.loading_id where loading_date =? and mv.vehicle_id=tlr.vehicle_id group by tlr.loading_id",
 		con);
 }
 
@@ -8078,9 +8214,69 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 										"\tand mi.parent_category_id =mc.category_id \r\n" + //
 										"\tand tsdd.activate_flag = 1\r\n" + //
 										"\tand tsdd.app_id =?\r\n" + //
+										"and category_name not like '%fuel%'\r\n" + //
+										"\tgroup by item_name" +
 										"\t",
 				con);
 	}
+
+
+	public LinkedHashMap<String, String> getPaymentDetails(String payment_id, Connection con)
+			throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(payment_id);
+		return getMap(parameters, "select\r\n" + //
+						"\tcustomer_name ,tpr.amount ,tpr.payment_mode ,tpr.ref_id,tpr.payment_for ,mc.mobile_number,tpr.payment_id,tpr.updated_by ,tpr.updated_date ,ms.store_id ,ms.store_name,ms.address_line_1,ms.address_line_2 ,ms.city,ms.pincode \r\n" + //
+						"from\r\n" + //
+						"\ttrn_payment_register tpr,\r\n" + //
+						"\tmst_customer mc ,\r\n" + //
+						"\ttbl_user_mst tum, \r\n" + //
+						"\tmst_store ms  \r\n" + //
+						"where\r\n" + //
+						"\tpayment_id = ? and mc.customer_id =tpr.customer_id and tpr.updated_by = tum.user_id and ms.store_id =tpr.store_id ", con);
+
+	}
+
+		public List<LinkedHashMap<String, Object>> getStatesList(Connection con) throws SQLException, ClassNotFoundException 
+		{
+			
+			
+			ArrayList<Object> parameters = new ArrayList<>();
+			String query="select state_id stateId,state_name stateName from cmn_state_mst";
+			return getListOfLinkedHashHashMap(parameters, query, con);		
+			
+		}
+
+		public LinkedHashMap<String, String> getLoadingDetails(long loadingId, Connection con) throws SQLException {
+			ArrayList<Object> parameters = new ArrayList<>();
+			parameters.add(Long.valueOf(loadingId));
+			return getMap(parameters,
+					"select * from trn_loading_register tlr,mst_vehicle mv  where loading_id=? and mv.vehicle_id =tlr.vehicle_id ",
+					con);
+		}
+
+		public List<LinkedHashMap<String, Object>> getLoadingItemDetails(String loadingId, Connection con) throws ClassNotFoundException, SQLException {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(loadingId);
+		parameters.add(loadingId);
+
+		String query="SELECT *\n" + //
+						"FROM trn_loading_details tld\n" + //
+						"WHERE loading_id = ?\n" + //
+						"  AND line_no = (\n" + //
+						"      SELECT MAX(line_no)\n" + //
+						"      FROM trn_loading_details\n" + //
+						"      WHERE loading_id = ?\n" + //
+						"  )";
+		return getListOfLinkedHashHashMap(parameters,query ,con);
+	}
+
+	public String getInProgressLoadingCount(Connection con) throws SQLException, ClassNotFoundException 
+	{
+		ArrayList<Object> parameters = new ArrayList<>();		
+		return getMap(parameters, "select count(*) cnt from trn_loading_register where is_loading_complete=0 ", con).get("cnt");
+	}
+		
 
 
 

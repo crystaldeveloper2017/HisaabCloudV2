@@ -1,8 +1,13 @@
 - roleId: 21
   roleName: "AdminSnacks"
   actions:
+    - completeLoading
+    - checkIfNewLoadOrExisting
+    - completeLine
     - checkIfUsernameAlreadyExist
     - showCurrentRmStock
+    - generatePaymentPDF
+    - generatePaymentPDFService
     - showShortcuts
     - deleteOrders
     - generateOrderForms

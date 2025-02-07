@@ -69,7 +69,7 @@ function addItem()
 	  	return;
 	  }
 	 
-	 if('${userdetails.app_type}' != 'Restaurant' && '${userdetails.app_type}' != 'SnacksProduction')
+	 if('${userdetails.app_type}' != 'Restaurant' && '${userdetails.app_type}' != 'SnacksProduction' && '${userdetails.app_type}' != 'Electric')
 	 {
 	 if(drpdebitin.value=="")
 	  {

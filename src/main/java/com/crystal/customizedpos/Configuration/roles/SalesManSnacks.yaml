@@ -6,6 +6,8 @@
     - showPendingRegister
     - showGenerateInvoice
     - saveInvoice
+    - generatePaymentPDF
+    - generatePaymentPDFService
   reports:
     - 1
     - 2

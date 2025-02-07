@@ -68,9 +68,9 @@ Currecnt Rm Stock (${HomePageContent.rmstock})<span class="float-right badge bg-
 </a>
 </li>
 
-<li class="nav-item" onclick="window.location='?a=showLoadingRegister'">
+<li class="nav-item" onclick="window.location='?a=checkIfNewLoadOrExisting'">
 <a href="#" class="nav-link">
-Loading Register<span class="float-right badge bg-success"></span>
+Loading<span class="float-right badge bg-success"></span>
 </a>
 </li>
 
