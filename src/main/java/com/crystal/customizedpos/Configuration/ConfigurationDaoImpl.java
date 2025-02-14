@@ -1493,7 +1493,7 @@ if(hm.get("user_id")!=null)
 		insertUpdateDuablDB(
 				"UPDATE mst_customer  SET"
 						+ " customer_name=?, mobile_number = ?, city=?, address= ?, customer_type=?,updated_date=SYSDATE(),"
-						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?, state=?	 WHERE customer_id=?",
+						+ "group_id=?,alternate_mobile_no=?,customer_reference=?,gst_no=?, state_id=?	 WHERE customer_id=?",
 				parameters, conWithF);
 		return "Customer Updated Succesfully";
 

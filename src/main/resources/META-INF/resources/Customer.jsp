@@ -208,8 +208,7 @@ function deleteCustomer(customerId)
             </div>
             
             
-            
-            
+           
 
 
 
