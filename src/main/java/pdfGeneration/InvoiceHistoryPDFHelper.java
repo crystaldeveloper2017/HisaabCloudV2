@@ -2287,7 +2287,25 @@ if (!invoiceHistoryDetails.get("remarks").equals(""))
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  table.addCell(cell);
 
+				  cell = new PdfPCell(new Phrase("---------------------------------------------------------------",font));	        
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(1);	        
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+
+
+				  cell = new PdfPCell(new Phrase("Powered By - hisaabcloud.in ", new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD)));
+
+				  cell.setBorder(Rectangle.NO_BORDER);
+				  cell.setPadding(0);
+				  cell.setColspan(1);	
+				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				  table.addCell(cell);
+
 				  document.add(table);
+
+				  
   
 				 document.close();
 		

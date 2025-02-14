@@ -246,7 +246,7 @@ function addCustomer()
 	<c:if test="${customerDetails.customer_id ne null}">
 		document.getElementById("divTitle").innerHTML="Update Customer";
 		document.title +=" Update Customer ";
-	   state.value="${customerDetails.state_id}";
+	 state.value="${customerDetails.state_id}";
 
 	</c:if>
 	
