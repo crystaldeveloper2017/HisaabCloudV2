@@ -2,6 +2,9 @@
   roleName: "Cashier Jwellery"
   actions:    
     - showHomePage
+    - showCollectPayment
+    - savePayment
+    - generatePaymentPDF
     - showShortcuts
     - generatePaymentPDF
     - generatePaymentPDFService
@@ -31,3 +34,5 @@
     - 700161
     - 700143
     - 700132
+    - 24
+    - 3
