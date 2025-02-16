@@ -1,6 +1,7 @@
 - roleId: 0
   roleName: "SuperAdmin"
   actions:
+    - showMemoryStats
     - deleteCheckin
     - generatePaymentPDF
     - generatePaymentPDFService
@@ -262,3 +263,4 @@
     - 700161
     - 700195
     - 700197
+    - 700315

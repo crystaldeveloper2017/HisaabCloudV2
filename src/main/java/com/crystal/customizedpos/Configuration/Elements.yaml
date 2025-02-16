@@ -631,3 +631,8 @@ elements:
   parentElementId: 26
   elementUrl: "?a=showReplacementRegister"
   orderNo: 1
+- elementId: 700315
+  elementName: "Memory Stats"
+  parentElementId: 29
+  elementUrl: "?a=showMemoryStats"
+  orderNo: 4
