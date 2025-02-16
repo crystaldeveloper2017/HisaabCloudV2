@@ -907,6 +907,28 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 		return rs;
 	}
 
+	
+
+	public CustomResultObject showMemoryStats(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		try 
+		{			
+			outputMap.put("memoryStats", cf.getMemoryStats());
+			outputMap.put("freeMemory", cf.getFreeMemory());
+			
+
+			rs.setViewName("../MemoryStats.jsp");
+
+			rs.setReturnObject(outputMap);
+
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
 	public CustomResultObject showAuditTrail(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
