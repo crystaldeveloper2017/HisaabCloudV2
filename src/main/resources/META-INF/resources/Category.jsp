@@ -120,8 +120,8 @@ function addCategory()
 
                      <th><b>Category Id</b></th>
                       </c:if>
-                     <th><b>Category Name</b></th>
-                     <th><b>Item Count</b></th>
+                     <th><b>Fenali</b></th>
+                     <th><b>Priya</b></th>
               <c:if test="${userdetails.app_type ne 'SnacksProduction'}">
       			
                      <th><b>Order No</b></th>
