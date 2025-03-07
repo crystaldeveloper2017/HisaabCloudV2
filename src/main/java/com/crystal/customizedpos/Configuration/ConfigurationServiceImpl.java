@@ -909,25 +909,40 @@ public class ConfigurationServiceImpl extends CommonFunctions {
 
 	
 
-	public CustomResultObject showMemoryStats(HttpServletRequest request, Connection con) throws SQLException {
-		CustomResultObject rs = new CustomResultObject();
-		HashMap<String, Object> outputMap = new HashMap<>();
-		try 
-		{			
-			outputMap.put("memoryStats", cf.getMemoryStats());
-			outputMap.put("freeMemory", cf.getFreeMemory());
-			
+	
 
-			rs.setViewName("../MemoryStats.jsp");
+public CustomResultObject showMemoryStats(HttpServletRequest request, Connection con) throws SQLException {
+    CustomResultObject rs = new CustomResultObject();
+    HashMap<String, Object> outputMap = new HashMap<>();
+    try {            
+        outputMap.put("memoryStats", cf.getMemoryStats());
+        outputMap.put("freeMemory", cf.getFreeMemory());
 
-			rs.setReturnObject(outputMap);
+        // Fetching disk usage stats
+        File root = new File("/");
+        long totalSpace = root.getTotalSpace(); // Total disk space in bytes
+        long freeSpace = root.getFreeSpace();   // Free disk space in bytes
+        long usedSpace = totalSpace - freeSpace; // Used disk space in bytes
 
-		} catch (Exception e) {
-			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
-			rs.setHasError(true);
-		}
-		return rs;
-	}
+        // Calculate disk usage percentage
+        double usedPercentage = (totalSpace > 0) ? ((double) usedSpace / totalSpace) * 100 : 0;
+        double freePercentage = 100 - usedPercentage;
+
+        HashMap<String, Object> diskUsage = new HashMap<>();               
+        diskUsage.put("diskUsagePercentage", String.format("%.2f", usedPercentage) + "%");        
+
+        outputMap.put("diskUsage", diskUsage);
+
+        rs.setViewName("../MemoryStats.jsp");
+        rs.setReturnObject(outputMap);
+
+    } catch (Exception e) {
+        request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+        rs.setHasError(true);
+    }
+    return rs;
+}
+
 
 	public CustomResultObject showAuditTrail(HttpServletRequest request, Connection con) throws SQLException {
 		CustomResultObject rs = new CustomResultObject();

@@ -9,6 +9,8 @@
 <c:set var="memoryStats" value='${requestScope["outputObject"].get("memoryStats")}' />
 <c:set var="activeConnections" value='${requestScope["outputObject"].get("activeConnections")}' />
 <c:set var="freeMemory" value='${requestScope["outputObject"].get("freeMemory")}' />
+<c:set var="diskUsage" value='${requestScope["outputObject"].get("diskUsage")}' />
+
 
 
 
@@ -69,6 +71,12 @@
 					
 					<td colspan="2">${freeMemory}</td>
 				</tr>
+
+        <tr>
+					
+					<td colspan="2">${diskUsage}</td>
+				</tr>
+
 			</tbody>
 		</table>
 	</div>
