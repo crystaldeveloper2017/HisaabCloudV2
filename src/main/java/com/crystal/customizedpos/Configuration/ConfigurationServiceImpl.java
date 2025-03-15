@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -43,6 +44,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -13037,6 +13039,119 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 
 		return outputMap;
 	}
+
+
+	public CustomResultObject registerClient(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		
+		try {
+			HashMap<String, Object> clientData = new HashMap<>();
+			clientData.put("uuid", request.getParameter("uuid"));
+			clientData.put("ip", request.getRemoteAddr()); // Auto-detect IP
+			clientData.put("username", request.getParameter("username"));
+			
+			long insertedId = lObjConfigDao.addClient(con, clientData);
+	
+			HashMap<String, Object> outputMap = new HashMap<>();
+			outputMap.put("client_id", insertedId);
+			outputMap.put("status", (insertedId > 0) ? "success" : "failure");
+	
+			rs.setAjaxData(mapper.writeValueAsString(outputMap));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	public CustomResultObject fetchCommand(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+	
+		try {
+			HashMap<String, Object> outputMap = new HashMap<>();
+			String uuid = request.getParameter("uuid");
+			outputMap.put("uuid", uuid);
+	
+			// Update last_poll_at via DAO
+			lObjConfigDao.updateLastPollTime(uuid, con);
+	
+			// Fetch latest pending command for the given UUID
+			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getPendingCommand(outputMap, con)));
+	
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	public CustomResultObject uploadFile(HttpServletRequest request, Connection con) throws FileUploadException 
+	{
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		FileItemFactory itemFacroty = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFacroty);
+		// String webInfPath = cf.getPathForAttachments();
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + File.separator;
+
+		HashMap<String, Object> hm = new HashMap<>();
+
+		List<FileItem> toUpload = new ArrayList<>();
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+
+				if (item.isFormField()) {
+					hm.put(item.getFieldName(), item.getString());
+				} else {
+					toUpload.add(item);
+				}
+			}
+		}
+
+		try {
+			
+			String uuid = hm.get("uuid").toString();
+			
+			
+			
+	
+			// Fetch client ID using UUID
+			HashMap<String, Object> inputMap = new HashMap<>();
+			inputMap.put("uuid", uuid);
+	
+			HashMap<String, String> clientData = lObjConfigDao.getClientDetailsByUuid(inputMap, con);
+			if (clientData == null || !clientData.containsKey("id")) {
+				// do some loguic here
+			}
+	
+			int clientId = Integer.parseInt(clientData.get("id"));
+	
+			// Read file bytes
+			InputStream fileContent = toUpload.get(0).getInputStream();
+			byte[] fileBytes = fileContent.readAllBytes();
+			fileContent.close();
+	
+			// Insert file details into the database
+			HashMap<String, Object> insertMap = new HashMap<>();
+			insertMap.put("client_id", clientId);
+			insertMap.put("file_data", fileBytes);
+	
+			boolean isInserted = lObjConfigDao.insertScreenshot(insertMap, con);
+			rs.setReturnObject(outputMap);
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		return rs;
+
+	}
+	
+	
+	
 
 
 
