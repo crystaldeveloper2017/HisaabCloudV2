@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -43,6 +44,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -13037,6 +13039,151 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 
 		return outputMap;
 	}
+
+
+	public CustomResultObject registerClient(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+		
+		try {
+			HashMap<String, Object> clientData = new HashMap<>();
+			clientData.put("ip", request.getRemoteAddr()); // Auto-detect IP
+			clientData.put("username", request.getParameter("username"));
+			
+			long insertedId = lObjConfigDao.addClient(con, clientData);
+	
+			HashMap<String, Object> outputMap = new HashMap<>();
+			outputMap.put("client_id", insertedId);
+			outputMap.put("status", (insertedId > 0) ? "success" : "failure");
+	
+			rs.setAjaxData(mapper.writeValueAsString(outputMap));
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	public CustomResultObject fetchCommand(HttpServletRequest request, Connection con) throws SQLException {
+		CustomResultObject rs = new CustomResultObject();
+	
+		try {
+			HashMap<String, Object> outputMap = new HashMap<>();
+			String client_id = request.getParameter("client_id");
+			outputMap.put("client_id", client_id);
+	
+			// Update last_poll_at via DAO
+			lObjConfigDao.updateLastPollTime(client_id, con);
+	
+			// Fetch latest pending command for the given Client Id
+			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getPendingCommand(outputMap, con)));
+	
+		} catch (Exception e) {
+			request.setAttribute("error_id", writeErrorToDB(e) + "-" + getDateTimeWithSeconds(con));
+			rs.setHasError(true);
+		}
+		return rs;
+	}
+
+
+	public CustomResultObject uploadFile(HttpServletRequest request, Connection con) throws FileUploadException 
+	{
+		CustomResultObject rs = new CustomResultObject();
+		HashMap<String, Object> outputMap = new HashMap<>();
+		FileItemFactory itemFacroty = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(itemFacroty);
+		// String webInfPath = cf.getPathForAttachments();
+		String DestinationPath = request.getServletContext().getRealPath("BufferedImagesFolder") + File.separator;
+
+		HashMap<String, Object> hm = new HashMap<>();
+
+		List<FileItem> toUpload = new ArrayList<>();
+		if (ServletFileUpload.isMultipartContent(request)) {
+			List<FileItem> items = upload.parseRequest(request);
+			for (FileItem item : items) {
+
+				if (item.isFormField()) {
+					hm.put(item.getFieldName(), item.getString());
+				} else {
+					toUpload.add(item);
+				}
+			}
+		}
+
+
+		
+
+
+		try {
+
+			String command_id=hm.get("command_id").toString();
+			if (!toUpload.isEmpty()) {
+				for (FileItem f : toUpload) {
+					f.write(new File(DestinationPath + f.getName()));
+					lObjConfigDao.uplodFileToDBprt(DestinationPath + f.getName(), con, command_id,f.getName());					
+				}
+			}
+
+			lObjConfigDao.updateSSStatus(command_id,con);
+			
+			
+			 rs.setReturnObject(outputMap);
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		rs.setReturnObject(outputMap);
+		rs.setAjaxData("Updated Successfully");
+		return rs;
+		
+
+	}
+
+
+	public static String listDirectoriesAndFiles(String location) {
+        File directory = new File(location);
+        StringBuilder result = new StringBuilder();
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] filesAndDirs = directory.listFiles();
+
+            if (filesAndDirs != null) {
+                List<String> directories = new ArrayList<>();
+                List<String> files = new ArrayList<>();
+
+                for (File file : filesAndDirs) {
+                    if (file.isDirectory()) {
+                        directories.add(file.getName());
+                    } else if (file.isFile()) {
+                        files.add(file.getName());
+                    }
+                }
+
+                result.append("Directories:\n");
+                for (String dir : directories) {
+                    result.append(dir).append("\n");
+                }
+
+                result.append("Files:\n");
+                for (String file : files) {
+                    result.append(file).append("\n");
+                }
+            } else {
+                result.append("No files or directories found in the specified location.");
+            }
+        } else {
+            result.append("The specified path is not a valid directory.");
+        }
+
+        return result.toString();
+    }
+
+
+
+	
+	
+	
 
 
 
