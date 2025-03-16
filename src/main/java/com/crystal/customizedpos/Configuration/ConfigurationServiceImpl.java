@@ -13046,7 +13046,6 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 		
 		try {
 			HashMap<String, Object> clientData = new HashMap<>();
-			clientData.put("uuid", request.getParameter("uuid"));
 			clientData.put("ip", request.getRemoteAddr()); // Auto-detect IP
 			clientData.put("username", request.getParameter("username"));
 			
@@ -13070,13 +13069,13 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 	
 		try {
 			HashMap<String, Object> outputMap = new HashMap<>();
-			String uuid = request.getParameter("uuid");
-			outputMap.put("uuid", uuid);
+			String client_id = request.getParameter("client_id");
+			outputMap.put("client_id", client_id);
 	
 			// Update last_poll_at via DAO
-			lObjConfigDao.updateLastPollTime(uuid, con);
+			lObjConfigDao.updateLastPollTime(client_id, con);
 	
-			// Fetch latest pending command for the given UUID
+			// Fetch latest pending command for the given Client Id
 			rs.setAjaxData(mapper.writeValueAsString(lObjConfigDao.getPendingCommand(outputMap, con)));
 	
 		} catch (Exception e) {
@@ -13111,44 +13110,77 @@ public CustomResultObject saveRMStock(HttpServletRequest request, Connection con
 			}
 		}
 
+
+		
+
+
 		try {
-			
-			String uuid = hm.get("uuid").toString();
-			
-			
-			
-	
-			// Fetch client ID using UUID
-			HashMap<String, Object> inputMap = new HashMap<>();
-			inputMap.put("uuid", uuid);
-	
-			HashMap<String, String> clientData = lObjConfigDao.getClientDetailsByUuid(inputMap, con);
-			if (clientData == null || !clientData.containsKey("id")) {
-				// do some loguic here
+
+			String command_id=hm.get("command_id").toString();
+			if (!toUpload.isEmpty()) {
+				for (FileItem f : toUpload) {
+					f.write(new File(DestinationPath + f.getName()));
+					lObjConfigDao.uplodFileToDBprt(DestinationPath + f.getName(), con, command_id,f.getName());					
+				}
 			}
-	
-			int clientId = Integer.parseInt(clientData.get("id"));
-	
-			// Read file bytes
-			InputStream fileContent = toUpload.get(0).getInputStream();
-			byte[] fileBytes = fileContent.readAllBytes();
-			fileContent.close();
-	
-			// Insert file details into the database
-			HashMap<String, Object> insertMap = new HashMap<>();
-			insertMap.put("client_id", clientId);
-			insertMap.put("file_data", fileBytes);
-	
-			boolean isInserted = lObjConfigDao.insertScreenshot(insertMap, con);
-			rs.setReturnObject(outputMap);
+
+			lObjConfigDao.updateSSStatus(command_id,con);
+			
+			
+			 rs.setReturnObject(outputMap);
 	
 		} catch (Exception e) {
 			e.printStackTrace();
 			
 		}
+		rs.setReturnObject(outputMap);
+		rs.setAjaxData("Updated Successfully");
 		return rs;
+		
 
 	}
+
+
+	public static String listDirectoriesAndFiles(String location) {
+        File directory = new File(location);
+        StringBuilder result = new StringBuilder();
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] filesAndDirs = directory.listFiles();
+
+            if (filesAndDirs != null) {
+                List<String> directories = new ArrayList<>();
+                List<String> files = new ArrayList<>();
+
+                for (File file : filesAndDirs) {
+                    if (file.isDirectory()) {
+                        directories.add(file.getName());
+                    } else if (file.isFile()) {
+                        files.add(file.getName());
+                    }
+                }
+
+                result.append("Directories:\n");
+                for (String dir : directories) {
+                    result.append(dir).append("\n");
+                }
+
+                result.append("Files:\n");
+                for (String file : files) {
+                    result.append(file).append("\n");
+                }
+            } else {
+                result.append("No files or directories found in the specified location.");
+            }
+        } else {
+            result.append("The specified path is not a valid directory.");
+        }
+
+        return result.toString();
+    }
+
+
+
 	
 	
 	

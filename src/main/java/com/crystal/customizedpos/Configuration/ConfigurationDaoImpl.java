@@ -1,5 +1,11 @@
 package com.crystal.customizedpos.Configuration;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8283,7 +8289,6 @@ public List<LinkedHashMap<String, Object>> getStockStatusBeverage(String fromDat
 	
 public long addClient(Connection con, HashMap<String, Object> hm) throws Exception {
     HashMap<String, Object> valuesMap = new HashMap<>();
-    valuesMap.put("uuid", hm.get("uuid"));
     valuesMap.put("ip", hm.get("ip"));
     valuesMap.put("username", hm.get("username"));
     valuesMap.put("registered_at", "~sysdate()");
@@ -8344,42 +8349,120 @@ public long addScreenshot(Connection con, HashMap<String, Object> hm) throws Exc
 public LinkedHashMap<String, String> getPendingCommand(HashMap<String, Object> hm, Connection con) throws SQLException, ClassNotFoundException {
     
     ArrayList<Object> parameters = new ArrayList<>();
-    parameters.add(hm.get("uuid").toString());
+    parameters.add(hm.get("client_id").toString());
 
-    String query = "SELECT c.id AS commandId, c.type, c.command " +
+    String query = "SELECT c.command_id AS commandId, c.type, c.command " +
                    "FROM prt_u_commands c " +
-                   "JOIN prt_u_clients cl ON c.client_id = cl.id " +
-                   "WHERE cl.uuid = ? AND c.status = 'pending' " +
+                   "JOIN prt_u_clients cl ON c.client_id = cl.client_id " +
+                   "WHERE cl.client_id = ? AND c.status = 'pending' " +
                    "ORDER BY c.created_at LIMIT 1";
 
     return getMap(parameters, query, con);
 }
 
-public void updateLastPollTime(String uuid, Connection con) throws Exception {
+public void updateLastPollTime(String clientId, Connection con) throws Exception {
     ArrayList<Object> parameters = new ArrayList<>();
-    parameters.add(uuid);
-    insertUpdateDuablDB("UPDATE prt_u_clients SET last_poll_at = NOW() WHERE uuid = ?", parameters, con);
+    parameters.add(clientId);
+    insertUpdateDuablDB("UPDATE prt_u_clients SET last_poll_at = NOW() WHERE client_id = ?", parameters, con);
 }
 
 
-public HashMap<String, String> getClientDetailsByUuid(HashMap<String, Object> hm, Connection con) throws SQLException {
+public HashMap<String, String> getClientDetailsByClientId(HashMap<String, Object> hm, Connection con) throws SQLException {
     ArrayList<Object> parameters = new ArrayList<>();
-    parameters.add(hm.get("uuid"));
+    parameters.add(hm.get("client_id"));
 
-    return getMap(parameters, "SELECT id FROM prt_u_clients WHERE uuid = ?", con);
+    return getMap(parameters, "SELECT id FROM prt_u_clients WHERE client_id = ?", con);
 }
 
 public boolean insertScreenshot(HashMap<String, Object> hm, Connection con) throws SQLException {
-    String sql = "INSERT INTO prt_u_screenshots (client_id, file_data, created_at) VALUES (?, ?, NOW())";
+    String sql = "INSERT INTO prt_u_screenshots (command_id, image_data, captured_at) VALUES (?, ?, NOW())";
     
     try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setInt(1, (Integer) hm.get("client_id")); // Assuming client_id is Integer
-        ps.setBlob(2, (Blob) hm.get("file_data"));   // Assuming file_data is a Blob
+        // Set the command_id as a string (assuming it's stored as a String or can be converted)
+        ps.setString(1, hm.get("command_id").toString());
         
+        // Get the byte array for the file data from the map
+        byte[] fileData = (byte[]) hm.get("file_data");
+        
+        // Check if fileData is null or empty
+        if (fileData == null || fileData.length == 0) {
+            System.out.println("No file data found or file is empty.");
+            ps.setNull(2, java.sql.Types.BLOB);  // Set NULL if file data is empty
+        } else {
+            System.out.println("File data size: " + fileData.length + " bytes");
+
+            // Create a Blob from the byte array
+            Blob blob = con.createBlob();
+            
+            // Use a ByteArrayInputStream to write the data to the Blob
+            try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData)) {
+                OutputStream blobOutputStream = blob.setBinaryStream(1);
+                byteArrayInputStream.transferTo(blobOutputStream);
+                System.out.println("Successfully wrote file data to Blob.");
+            } catch (IOException e) {
+                System.out.println("IOException while transferring data to Blob: " + e.getMessage());
+                return false; // Exit early in case of error
+            }
+
+            // Set the Blob in the PreparedStatement
+            ps.setBlob(2, blob);
+        }
+
+        // Execute the update and return true if the insert was successful
         int rowsAffected = ps.executeUpdate();
         return rowsAffected > 0;
+    } catch (SQLException e) {
+        System.out.println("SQLException: " + e.getMessage());
+        e.printStackTrace();
+        return false;
     }
 }
+
+
+public HashMap<String, Object> uplodFileToDBprt(String path, Connection con, String commandId,String fileName)
+				throws SQLException, IOException {
+			InputStream targetStream = null;
+			PreparedStatement preparedStatement = null;
+			HashMap<String, Object> hm=new HashMap<>();
+			try {
+				File f1 = new File(path);
+				targetStream = new FileInputStream(f1);
+				String insertTableSQL = "insert into prt_u_files values (default,?,?,?,now())";
+				preparedStatement = con.prepareStatement(insertTableSQL, Statement.RETURN_GENERATED_KEYS);
+				
+				preparedStatement.setString(1, commandId);
+				preparedStatement.setString(2, fileName);
+				preparedStatement.setBlob(3, targetStream);
+				preparedStatement.executeUpdate();
+				ResultSet rs = preparedStatement.getGeneratedKeys();
+				rs.next();
+				targetStream.close();
+				hm.put("preparedStatement", preparedStatement.toString());
+				hm.put("returnedPK", rs.getLong(1));
+				return hm;			
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				if (targetStream != null)
+					targetStream.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
+			}
+		}
+
+
+		
+	public String updateSSStatus(String categoryId, Connection conWithF) throws Exception {
+		ArrayList<Object> parameters = new ArrayList<>();
+		parameters.add(categoryId);
+		insertUpdateDuablDB("UPDATE prt_u_commands  SET status='executed' WHERE command_id=?",
+				parameters, conWithF);
+		return "Category updated Succesfully";
+	}
+	
+
+}
+
 
 
 
@@ -8388,4 +8471,3 @@ public boolean insertScreenshot(HashMap<String, Object> hm, Connection con) thro
 
 
 
-}
