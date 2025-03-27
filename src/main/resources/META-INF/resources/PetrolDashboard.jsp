@@ -308,37 +308,20 @@
 
 
 <script type="text/javascript">
-        $( function() 
-        		{
-            $( "#txtfromdate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-            $( "#txttodate" ).datepicker({ dateFormat: 'dd/mm/yy' });
-            
-                       
-            
-          } );
         
         
-        function reloadData()
-        {
-        	window.location="?a=showHomePage&fromDate="+txtfromdate.value+"&toDate="+txttodate.value;
-        }   
         
-        if('${param.fromDate}'!='')
-        	{
-		        txtfromdate.value='${param.fromDate}';
-		        txttodate.value='${param.toDate}';
-        	}
-        else
-        	{
-        	
-        	txtfromdate.value='${HomePageContent.get("todaysDate")}';
-        	txttodate.value='${HomePageContent.get("todaysDate")}';
-	        
-        	}
         
-         
-        	
-        	$(document).ready(function () {
+        
+        
+      
+        
+        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud (Petrol)</p1>";
+
+        	document.title +=" Petrol";
+
+
+          	$(document).ready(function () {
         		
         		
         		var validDays=Number("${userdetails.validDays}");        
@@ -354,14 +337,6 @@
                 	}
         		
         	  });
-        
-        
-        
-      
-        
-        	document.getElementById("divTitle").innerHTML="<p1 class='labelFonts'>Hisaab Cloud (Petrol)</p1>";
-
-        	document.title +=" Petrol";
           
         </script>
         
