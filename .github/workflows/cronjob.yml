@@ -38,7 +38,7 @@ jobs:
 
           # Shutdown Apache Tomcat
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Shutting down Apache Tomcat'
-          sudo ./apache-tomcat-9.0.85/bin/shutdown.sh
+          sudo ./apache-tomcat-9.0.102/bin/shutdown.sh
           sudo pkill java
 
           # Restart MySQL service to ensure a clean state
@@ -72,7 +72,7 @@ jobs:
           # Start Apache Tomcat again after the backup is done
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Starting Apache Tomcat again'
           cd ..
-          sudo ./apache-tomcat-9.0.85/bin/startup.sh
+          sudo ./apache-tomcat-9.0.102/bin/startup.sh
 
           echo \$(date +'%Y-%m-%d %H:%M:%S') ' - Backup completed successfully!'
         "
