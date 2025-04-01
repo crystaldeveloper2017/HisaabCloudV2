@@ -966,7 +966,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				  table.addCell(cell);
 				  
-				  cell = new PdfPCell(new Phrase("87116020",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
+				  cell = new PdfPCell(new Phrase("998314",new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL) ));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  cell.setBorderWidthBottom(0);
 				  cell.setBorderWidthTop(0);
@@ -2130,7 +2130,7 @@ public class InvoiceHistoryPDFHelper  extends PdfPageEventHelper
 				  String qtystring=prod.get("qty").toString();
 				  Double amount=Double.valueOf(custom_rate)*Double.valueOf(qtystring);
 				  
-				  cell = new PdfPCell(new Phrase(String.valueOf(amount), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
+				  cell = new PdfPCell(new Phrase(String.valueOf(prod.get("item_amount").toString()), new Font(Font.FontFamily.TIMES_ROMAN, 10)));
 				  cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				  cell.setBorder(Rectangle.NO_BORDER);
 

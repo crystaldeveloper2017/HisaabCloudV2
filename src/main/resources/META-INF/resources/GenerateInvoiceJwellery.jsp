@@ -1182,7 +1182,7 @@ if('${invoiceDetails.invoice_id}'!='')
     	var itemTotal=Number('${item.custom_rate}') * Number('${item.qty}');
     	itemTotal=Number(itemTotal).toFixed(0);
     	
-    	cell5.innerHTML = "<input type='tel' class='form-control form-control-sm' value='"+itemTotal+"' id='txtamount${item.item_id}' onfocus='checkforZero(this)' onkeyup='calculateCustomRateFromAmount(this.parentNode.parentNode)'>";
+    	cell5.innerHTML = "<input type='tel' class='form-control form-control-sm' value='${item.item_amount}' id='txtamount${item.item_id}' onfocus='checkforZero(this)' onkeyup='calculateCustomRateFromAmount(this.parentNode.parentNode)'>";
     	
     	//
 //    	cell6.innerHTML ="<input type='text' class='form-control form-control-sm' value='${item.gst_amount}' readonly id='gst${item.item_id}' onkeyup='calculateAmount(${item.item_id})'> <input type='hidden' id='hdngst${item.item_id}' value='${item.gst}'>";//
