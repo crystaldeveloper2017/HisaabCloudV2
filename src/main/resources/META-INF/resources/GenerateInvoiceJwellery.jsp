@@ -1665,8 +1665,7 @@ function printDirectAsFonts(invoiceNo,pendAmount)
 	    		}
     		}
     	
-    	var amountWithSpaces=listOfItems[m].item_amount;
-		alert(amountWithSpaces);
+    	var amountWithSpaces=listOfItems[m].item_amount;		
     	for(k=0;k<7;k++)
     		{
 	    		if(amountWithSpaces.toString().length<7)
