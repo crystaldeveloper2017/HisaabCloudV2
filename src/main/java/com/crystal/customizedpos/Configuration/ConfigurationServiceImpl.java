@@ -11219,7 +11219,7 @@ public CustomResultObject showMemoryStats(HttpServletRequest request, Connection
 		CustomResultObject rs = new CustomResultObject();
 		HashMap<String, Object> outputMap = new HashMap<>();
 
-		rs.setViewName("BankDetails.jsp");
+		rs.setViewName("../BankDetails.jsp");
 		rs.setReturnObject(outputMap);
 
 		rs.setReturnObject(outputMap);
